@@ -61,55 +61,54 @@ class Polls:
 
         try:
             question = re.search(r'(.*?)\?', str(questions_and_choices)).group(0)
-        except:
+            question = re.sub(r'[(|$|.|!|\'|,]', r'', str(question))
+            left_over = re.search(r'\?(.*$)', str(questions_and_choices)).group(0)
+            choices = re.sub(r'[(|$|.|!|\'|,|)]', r'', str(left_over))
+            choices = re.sub(r'[?]', r'', str(choices))
+            choices = choices.split(';')
+            answers = []
+            for choice in choices:
+                answers.append(choice)
+
+            if '' in answers:
+                answers.remove('')
+
+            if len(answers) < 2:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='You need atleast two answers',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
+            elif len(answers) > 21:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='You have more than 20 answers',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                return
+
+            choices = [(to_emoji(e), v) for e, v in enumerate(answers)]
+
+            try:
+                await ctx.message.delete()
+            except:
+                pass
+            embed = discord.Embed(title='{} asks:'.format(ctx.message.author.name),
+                                  description='**{}**'.format(question),
+                                  colour=0xf20006)
+            for key, c in choices:
+                embed.add_field(name='{} Answer:'.format(':gear:'), value='{} : {}\n'.format(key, c), inline=False)
+            a = await self.bot.say(embed=embed)
+            for emoji, _ in choices:
+                await self.bot.add_reaction(a, emoji)
+
+        except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Don\'t forget the question..\nQuestion: did you read the `{}help poll`?'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
-        question = re.sub(r'[(|$|.|!|\'|,]',r'',str(question))
-        left_over = re.search(r'\?(.*$)', str(questions_and_choices)).group(0)
-        choices = re.sub(r'[(|$|.|!|\'|,|)]', r'', str(left_over))
-        choices = re.sub(r'[?]', r'', str(choices))
-        choices = choices.split(';')
-
-        answers = []
-        for choice in choices:
-            answers.append(choice)
-
-        if '' in answers:
-            answers.remove('')
-
-        if len(answers) < 2:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You need atleast two answers',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-        elif len(answers) > 21:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You have more than 20 answers',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
-            return
-
-
-        choices = [(to_emoji(e), v) for e, v in enumerate(answers)]
-
-        try:
-            await ctx.message.delete()
-        except:
-            pass
-        embed = discord.Embed(title='{} asks:'.format(ctx.message.author.name),
-                              description='**{}**'.format(question),
-                              colour=0xf20006)
-        for key, c in choices:
-            embed.add_field(name='{} Answer:'.format(':gear:'), value='{} : {}\n'.format(key, c), inline=False)
-        a = await self.bot.say(embed=embed)
-        for emoji, _ in choices:
-            await self.bot.add_reaction(a, emoji)
 
 
 class Information:
