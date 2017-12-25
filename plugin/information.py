@@ -71,6 +71,9 @@ class Polls:
         for choice in choices:
             answers.append(choice)
 
+        if '' in answers:
+            answers.remove('')
+
         if len(answers) < 2:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You need atleast two answers',
