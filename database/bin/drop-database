@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DATABASE_NAME=gis
+
+set -e
+set -o pipefail
+
+#!/bin/bash
+set -e
+
+psql -d postgres -c "DROP DATABASE IF EXISTS $DATABASE_NAME;"

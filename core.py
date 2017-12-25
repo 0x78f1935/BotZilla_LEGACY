@@ -4,6 +4,8 @@ from discord.ext.commands import Bot
 import platform
 import json
 from options.opus_loader import load_opus_lib
+from urllib.parse import quote as uriquote
+import re
 
 load_opus_lib()
 
@@ -49,6 +51,23 @@ async def on_message_delete(message):
     for owners in config['owner-id']:
         owner = await bot.get_user_info(owners)
         await bot.send_message(owner, fmt.format(message))
+
+
+@bot.event
+async def on_message(message):
+    if message.author.bot: return
+    try:
+        if 'how' in message.content.lower():
+            search_term = re.search(r'\bhow\b.*$', message.content.lower()).group(0)
+            search_term = uriquote(search_term)
+            embed = discord.Embed(title='{}:'.format(message.author.name),
+                                  description='{}'.format('http://lmgtfy.com/?q={}'.format(search_term)),
+                                  colour=0xf20006)
+            last_message = await bot.send_message(message.channel, embed=embed)
+            await bot.add_reaction(last_message, emojiUnicode['succes'])
+        await bot.process_commands(message)
+    except:
+        pass
 
 
 if __name__ == '__main__':

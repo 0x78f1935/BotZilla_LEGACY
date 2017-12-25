@@ -1,0 +1,12 @@
+#!/bin/bash
+
+CONTAINER_ID=$1
+
+until PGHOST=127.0.0.1 PGPORT=6079 PGUSER=postgres PGDATABASE=gis psql -c 'select 42;'; do
+    #if [[ $(docker inspect --format '{{.State.Running}}' $CONTAINER_ID 2>&1 > /dev/null) != 'true' ]]; then
+    #    echo "Container died"
+    #    exit 2
+    #fi
+    echo "Waiting for Database to come online..."
+    sleep 1.0
+done

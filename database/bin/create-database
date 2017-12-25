@@ -1,0 +1,20 @@
+#!/bin/bash
+
+DATABASE_NAME=gis
+SOURCE_PATH=/database/src
+
+set -e
+set -o pipefail
+
+psql -d postgres -c "CREATE DATABASE $DATABASE_NAME ENCODING 'UTF-8' TEMPLATE template0;"
+psql -c "CREATE EXTENSION pgtap"
+psql -c "CREATE EXTENSION postgis"
+psql -c "CREATE EXTENSION postgis_topology"
+
+find $SOURCE_PATH -name '*.sql' | sort | while read filepath
+do
+    echo '#####################################'
+    echo $filepath
+    echo '#####################################'
+    psql -d $DATABASE_NAME -v ON_ERROR_STOP=1 -f $filepath
+done

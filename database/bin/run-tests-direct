@@ -1,0 +1,19 @@
+#!/bin/bash
+TESTS_DIR="/database/tests"
+
+if [ -n "$1" ];
+then
+  filepath="$TESTS_DIR/$1"
+  echo "* $filepath"
+  PGUSER=postgres PGDATABASE=gis pg_prove --verbose $filepath
+else
+    find $TESTS_DIR -type f -name '*.sql' | while read filepath
+    do
+      filename=${filepath##*/}
+      without_prefix=${filepath#*$TESTS_DIR}
+      without_prefix_and_ext=${without_prefix%.sql}
+      echo "* $filepath"
+      PGUSER=postgres PGDATABASE=gis pg_prove --verbose $filepath
+    done
+fi
+

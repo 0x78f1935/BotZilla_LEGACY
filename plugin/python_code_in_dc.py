@@ -151,7 +151,7 @@ class REPL:
                               description='{}'.format('Enter code to execute or evaluate. `exit()` or `quit` to exit.'),
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         while True:
             response = await self.bot.wait_for_message(author=msg.author, channel=msg.channel,
                                                        check=lambda m: m.content.startswith('`'))

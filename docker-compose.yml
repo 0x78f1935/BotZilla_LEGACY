@@ -1,0 +1,26 @@
+version: "2"
+services:
+  database:
+    container_name: bi-bricks.gis_database
+    build:
+      context: ./database
+      dockerfile: Database-Dockerfile
+    networks:
+      gis_network:
+        ipv4_address: 1.1.1.3
+    hostname: database
+    ports:
+      - "6079:5432"
+    volumes:
+      - "./database/src:/database/src"
+      - "./database/tests:/database/tests"
+      - "./database/input:/database/input"
+      - "./database/pgtap:/database/pgtap"
+
+networks:
+  gis_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 1.1.1.0/24

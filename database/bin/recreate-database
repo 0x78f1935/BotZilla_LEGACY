@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+export PGDATABASE=gis
+export PGUSER=postgres
+
+drop-database
+create-database
