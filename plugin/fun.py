@@ -31,7 +31,11 @@ class Image:
         if keywords:
             keywords = "+".join(keywords)
         else:
-            await self.bot.send_cmd_help(ctx)
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='sigh.. **`{}help gif`**'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
             return
 
         url = ("http://api.giphy.com/v1/gifs/random?&api_key={}&tag={}"

@@ -103,6 +103,9 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# .idea
+.idea
+
 # BotZilla Config
 .js
 /options/config.js
