@@ -5,11 +5,99 @@ import time
 import json
 import discord
 from discord.ext import commands
+import asyncio
 import urllib.request
 import urllib.parse
 import traceback
 import io
 import re
+
+
+def to_emoji(c):
+    base = 0x1f1e6
+    return chr(base + c)
+
+
+class NoPrivateMessages(commands.CheckFailure):
+    pass
+
+def guild_only():
+    async def predicate(ctx):
+        if ctx.guild is None:
+            raise NoPrivateMessages('Hey no DMs!')
+        return True
+    return commands.check(predicate)
+
+
+class Polls:
+    """Poll voting system."""
+
+    def __init__(self, bot):
+        self.bot = bot
+        self.tmp_config = json.loads(str(open('./options/config.js').read()))
+        self.config = self.tmp_config['config']
+        self.emojiUnicode = self.tmp_config['unicode']
+        self.exchange = self.tmp_config['exchange']
+        self.botzillaChannels = self.tmp_config['channels']
+        self.owner_list = self.config['owner-id']
+
+
+    @commands.command(pass_context=True)
+    async def poll(self, ctx, *questions_and_choices: str):
+        """Makes a poll quickly for your server.
+        The first argument is the question and the rest are the choices.
+        You can only have up to 20 choices and one question.
+        Use `;` as a delimiter.
+        Example: question? answerA; answer B; answerC
+        Do not end with a delimiter. This causes a empty answer
+        """
+        question = re.search(r'(.*?)\?', str(questions_and_choices)).group(0)
+        question = re.sub(r'[(|$|.|!|\'|,]',r'',str(question))
+
+
+        left_over = re.search(r'\?(.*$)', str(questions_and_choices)).group(0)
+        choices = re.sub(r'[(|$|.|!|\'|,|)]', r'', str(left_over))
+        choices = re.sub(r'[?]', r'', str(choices))
+        choices = choices.split(';')
+
+        answers = []
+        for choice in choices:
+            answers.append(choice)
+
+        answers.remove(answers[0])
+        first_answer_fix = answers.pop(0)
+        first_answer_fix = first_answer_fix.replace(' span=24 76 match="', '')
+        answers.insert(0, first_answer_fix)
+
+        choices = [(to_emoji(e), v) for e, v in enumerate(answers)]
+
+        if len(answers) < 3:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='It\'s not a bad idea to read `{}help poll` first'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+        elif len(answers) > 21:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='It\'s not a bad idea to read **`{}help poll`** first'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+
+        try:
+            await ctx.message.delete()
+        except:
+            pass
+
+        body = "\n".join(f"{key}: {c}\n" for key, c in choices)
+        embed = discord.Embed(title='{} asks:'.format(ctx.message.author.name),
+                              description=f'**{question}**\n\n{body}',
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        for emoji, _ in choices:
+            await self.bot.add_reaction(a, emoji)
 
 
 class Information:
@@ -133,3 +221,4 @@ class Information:
 
 def setup(bot):
     bot.add_cog(Information(bot))
+    bot.add_cog(Polls(bot))
