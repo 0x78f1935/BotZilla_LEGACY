@@ -105,3 +105,4 @@ venv.bak/
 
 # BotZilla Config
 .js
+/options/config.js
