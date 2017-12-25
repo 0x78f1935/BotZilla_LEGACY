@@ -49,7 +49,6 @@ class Polls:
         You can only have up to 20 choices and one question.
         Use `;` as a delimiter.
         Example: question? answerA; answer B; answerC
-        Do not end with a delimiter. This causes a empty answer
         """
 
         if str(questions_and_choices) == '()':
@@ -60,7 +59,14 @@ class Polls:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
 
-        question = re.search(r'(.*?)\?', str(questions_and_choices)).group(0)
+        try:
+            question = re.search(r'(.*?)\?', str(questions_and_choices)).group(0)
+        except:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Don\'t forget the question..\nQuestion: did you read the `{}help poll`?'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
         question = re.sub(r'[(|$|.|!|\'|,]',r'',str(question))
         left_over = re.search(r'\?(.*$)', str(questions_and_choices)).group(0)
         choices = re.sub(r'[(|$|.|!|\'|,|)]', r'', str(left_over))
