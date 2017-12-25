@@ -34,16 +34,9 @@ async def on_ready():
 
     #plugins
 
-    bot.load_extension('plugin.admin')
-    bot.load_extension('plugin.exchange')
-    bot.load_extension('plugin.fun')
-    bot.load_extension('plugin.games')
-    bot.load_extension('plugin.gamestats')
-    bot.load_extension('plugin.information')
-    bot.load_extension('plugin.music')
-    bot.load_extension('plugin.nsfw')
-    bot.load_extension('plugin.python_code_in_dc')
-    bot.load_extension('plugin.test')
+    plugins = ("admin", "exchange", "fun", "games", "gamestats", "information", "music", "nsfw", "python_code_in_dc", "test")
+    for p in plugins:
+        bot.load_extension("plugin.{}".format(p))
 
 @bot.event
 async def on_message_delete(message):

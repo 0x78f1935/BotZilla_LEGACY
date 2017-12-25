@@ -109,6 +109,8 @@ class Polls:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            await asyncio.sleep(10)
+            print(a.reaction.count-1)
 
 
 class Information:

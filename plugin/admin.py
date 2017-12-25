@@ -2,6 +2,7 @@ from discord.ext import commands
 import json
 import discord
 import traceback
+import psycopg2
 
 
 class AdminCommands:
@@ -13,7 +14,12 @@ class AdminCommands:
         self.exchange = self.tmp_config['exchange']
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
-
+        try:
+            conn = psycopg2.connect("dbname='bz' user='postgres' host='1.1.1.2' port='5342' password=''")
+            self.cur = conn.cursor()
+            print('Established Database connection')
+        except:
+            print('I am unable to connect to the Database')
 
 
     @commands.command(pass_context=True)
@@ -97,6 +103,11 @@ class AdminCommands:
         """
         Reload an extension.
         """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            self.bot.say(embed=embed)
         extension = extension.lower()
         try:
             self.bot.unload_extension("plugin.{}".format(extension))
