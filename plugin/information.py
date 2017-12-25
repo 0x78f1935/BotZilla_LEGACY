@@ -99,7 +99,7 @@ class Polls:
         print(choices)
 
         embed = discord.Embed(title='{} asks:'.format(ctx.message.author.name),
-                              description=f'**{question}**',
+                              description='**{}**'.format(question),
                               colour=0xf20006)
         for key, c in choices:
             embed.add_field(name='{} Answer:'.format(':gear:'), value='{} : {}\n'.format(key, c), inline=False)
