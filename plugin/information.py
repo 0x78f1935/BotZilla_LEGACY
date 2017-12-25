@@ -96,11 +96,13 @@ class Polls:
             await ctx.message.delete()
         except:
             pass
+        print(choices)
 
-        body = "\n".join(f"{key}: {c}\n" for key, c in choices)
         embed = discord.Embed(title='{} asks:'.format(ctx.message.author.name),
-                              description=f'**{question}**\n\n{body}',
+                              description=f'**{question}**',
                               colour=0xf20006)
+        for key, c in choices:
+            embed.add_field(name='{} Answer:'.format(':gear:'), value='{} : {}\n'.format(key, c), inline=False)
         a = await self.bot.say(embed=embed)
         for emoji, _ in choices:
             await self.bot.add_reaction(a, emoji)
