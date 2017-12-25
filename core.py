@@ -3,7 +3,7 @@ import discord
 from discord.ext.commands import Bot
 import platform
 import json
-from bot.options.opus_loader import load_opus_lib
+from options.opus_loader import load_opus_lib
 
 load_opus_lib()
 
