@@ -3,6 +3,7 @@ import json
 import discord
 import urllib.request
 import urllib.parse
+import os
 
 try:
     from imgurpython import ImgurClient
@@ -43,7 +44,12 @@ class Image:
 
         with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})) as response:
             source = response.read()
-        result = json.loads(source)
+
+        if os.name == 'nt':
+            result = json.loads(source)
+
+        if os.name == 'posix':
+            result = json.loads(str(source))
 
         if response.status == 200:
             if result["data"]:
