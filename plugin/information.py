@@ -51,6 +51,15 @@ class Polls:
         Example: question? answerA; answer B; answerC
         Do not end with a delimiter. This causes a empty answer
         """
+
+        if str(questions_and_choices) == '()':
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='It\'s not a bad idea to read `{}help poll` first'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+
         question = re.search(r'(.*?)\?', str(questions_and_choices)).group(0)
         question = re.sub(r'[(|$|.|!|\'|,]',r'',str(question))
 
@@ -64,27 +73,24 @@ class Polls:
         for choice in choices:
             answers.append(choice)
 
-        answers.remove(answers[0])
-        first_answer_fix = answers.pop(0)
-        first_answer_fix = first_answer_fix.replace(' span=24 76 match="', '')
-        answers.insert(0, first_answer_fix)
-
-        choices = [(to_emoji(e), v) for e, v in enumerate(answers)]
-
-        if len(answers) < 3:
+        if len(answers) < 2:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='It\'s not a bad idea to read `{}help poll` first'.format(self.config['prefix']),
+                                  description='You need atleast two answers',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         elif len(answers) > 21:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='It\'s not a bad idea to read **`{}help poll`** first'.format(self.config['prefix']),
+                                  description='You have more than 20 answers',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
+
+
+        choices = [(to_emoji(e), v) for e, v in enumerate(answers)]
+
 
         try:
             await ctx.message.delete()
