@@ -49,6 +49,7 @@ class Image:
             result = json.loads(source)
 
         if os.name == 'posix':
+            print('{}gif may not work on linux')
             result = json.loads(str(source))
 
         if response.status == 200:
