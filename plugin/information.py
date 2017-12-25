@@ -62,8 +62,6 @@ class Polls:
 
         question = re.search(r'(.*?)\?', str(questions_and_choices)).group(0)
         question = re.sub(r'[(|$|.|!|\'|,]',r'',str(question))
-
-
         left_over = re.search(r'\?(.*$)', str(questions_and_choices)).group(0)
         choices = re.sub(r'[(|$|.|!|\'|,|)]', r'', str(left_over))
         choices = re.sub(r'[?]', r'', str(choices))
@@ -91,13 +89,10 @@ class Polls:
 
         choices = [(to_emoji(e), v) for e, v in enumerate(answers)]
 
-
         try:
             await ctx.message.delete()
         except:
             pass
-        print(choices)
-
         embed = discord.Embed(title='{} asks:'.format(ctx.message.author.name),
                               description='**{}**'.format(question),
                               colour=0xf20006)
