@@ -65,11 +65,20 @@ class NSFW:
                     print("[NSFW] [RULE34] Sending {} 'GIF' image".format(ctx.message.author.name))
                     pass
 
-                image = "https:" + image
-                await self.bot.say(image)
+                image = "https:{}".format(image)
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='{}'.format(''),
+                                      colour=0xf20006)
+                embed.set_image(url=image)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                 return
             except ValueError:
-                await self.bot.say('No results found.')
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='{}'.format('No results found.'),
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                 return
 
 def setup(bot):

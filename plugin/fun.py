@@ -46,14 +46,21 @@ class Image:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='{}'.format(''),
                                       colour=0xf20006)
-                print(result['data']['url'])
                 embed.set_image(url=result["data"]["image_original_url"])
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             else:
-                await self.bot.say("No results found.")
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='{}'.format('No results found.'),
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
         else:
-            await self.bot.say("Error contacting the API")
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='{}'.format('Error contacting the API'),
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
 
 
     @commands.command(pass_context=True)
