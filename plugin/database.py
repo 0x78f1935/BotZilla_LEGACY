@@ -202,9 +202,9 @@ class Database:
             return
 
 
-        with csv.reader(open(self.database_import_location_users, 'r')) as reader:
+        with open(self.database_import_location_users, 'rb') as file:
+            reader = csv.reader(file, delimiter=',')
             for row in reader:
-                print(row)
                 self.cur.execute("INSERT INTO botzilla.users (ID, name, date_added) VALUES {}".format(row))
 
 
