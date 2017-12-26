@@ -144,7 +144,11 @@ class Database:
             except Exception as e:
                 print('Error gathering info user:\n{}'.format(e.args))
                 continue
-        print("Done with gathering user info")
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='Done with gathering user info!',
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
     @commands.command(pass_context=True)
