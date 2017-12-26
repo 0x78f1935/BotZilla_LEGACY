@@ -48,13 +48,13 @@ class AdminCommands:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
                                   colour=0xf20006)
-            self.bot.say(embed=embed)
+            await self.bot.say(embed=embed)
             return
         if game is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You stupid! use `{}help game` instead'.format(self.config['prefix']),
                                   colour=0xf20006)
-            self.bot.say(embed=embed)
+            await self.bot.say(embed=embed)
             return
 
         if not url:
@@ -76,7 +76,8 @@ class AdminCommands:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
                                   colour=0xf20006)
-            self.bot.say(embed=embed)
+            await self.bot.say(embed=embed)
+            return
         extension = extension.lower()
         try:
             self.bot.load_extension("plugin.{}".format(extension))
@@ -95,7 +96,8 @@ class AdminCommands:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
                                   colour=0xf20006)
-            self.bot.say(embed=embed)
+            await self.bot.say(embed=embed)
+            return
         extension = extension.lower()
         try:
             self.bot.unload_extension("plugin.{}".format(extension))
@@ -114,7 +116,8 @@ class AdminCommands:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
                                   colour=0xf20006)
-            self.bot.say(embed=embed)
+            await self.bot.say(embed=embed)
+            return
         extension = extension.lower()
         try:
             self.bot.unload_extension("plugin.{}".format(extension))
@@ -134,7 +137,8 @@ class AdminCommands:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
                                   colour=0xf20006)
-            self.bot.say(embed=embed)
+            await self.bot.say(embed=embed)
+            return
         for extension in self.bot.extensions:
             try:
                 self.bot.unload_extension(extension)
