@@ -7,6 +7,12 @@ from options.opus_loader import load_opus_lib
 from urllib.parse import quote as uriquote
 import re
 
+
+try:
+    from plugin.database import Database
+except:
+    pass
+
 load_opus_lib()
 
 ### Core
@@ -52,6 +58,13 @@ async def on_ready():
 
     for p in plugins:
         bot.load_extension("plugin.{}".format(p))
+
+    try:
+        database = Database()
+        print(database.music_channels)
+    except:
+        pass
+
 
 @bot.event
 async def on_message_delete(message):

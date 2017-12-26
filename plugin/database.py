@@ -22,6 +22,7 @@ class Database:
         self.database_import_location_users = './import/DBE_users.csv'
         self.database_export_location_music_channels = './export/DBE_music_channels.csv'
         self.database_import_location_music_channels = './import/DBE_music_channels.csv'
+        self.client = discord.Client()
 
         debounce = False
         reconnect_db_times = int(self.database_settings['reconnect_trys'])
@@ -50,13 +51,14 @@ class Database:
 
         ## autoconnect to music channel
         # select id from botzilla.music where type_channel = 'voice';
-        music_channels = []
+        # prep for auto join
+        self.music_channels = []
         self.cur.execute("select id from botzilla.music where type_channel = 'voice';")
         rows = self.cur.fetchall()
         for row in rows:
             for item in row:
-                music_channels.append(item)
-        print(music_channels)
+                self.music_channels.append(item)
+
 
 
     @commands.command(pass_context=True)
