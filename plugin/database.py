@@ -56,6 +56,8 @@ class Database:
         for row in rows:
             music_channels.append(row)
         print(music_channels)
+        for item in music_channels:
+            print(item)
 
 
     @commands.command(pass_context=True)
