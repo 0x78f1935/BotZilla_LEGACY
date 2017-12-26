@@ -117,7 +117,7 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
         except HTTPException as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='{}'.format(e.args),
+                                  description='Try to use `limit 10`. Output may be to big\n{}'.format(e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
