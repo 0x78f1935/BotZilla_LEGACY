@@ -135,7 +135,7 @@ class Database:
             except Exception as e:
                 print('While getting user info, Error :\n{}'.format(e.args))
                 continue
-            print("Done with gathering user info")
+        print("Done with gathering user info")
 
 
 def setup(bot):
