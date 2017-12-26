@@ -4,6 +4,10 @@ import discord
 import traceback
 import sys
 import io
+try:
+    from plugin.database import Database
+except:
+    pass
 
 class AdminCommands:
     def __init__(self, bot):
@@ -152,6 +156,36 @@ class AdminCommands:
 
         a = await self.bot.say("Reloaded all.")
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
+    @commands.command(pass_context=True)
+    async def reloadch(self, ctx, *, extension: str):
+        """
+        Reload an channels.
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        try:
+            database = Database(self.bot)
+            database.get_music()
+            for item in database.music_channels:
+                try:
+                    channel = self.bot.get_channel(str(item))
+                    if channel == None:
+                        pass
+                    else:
+                        print('Joined : {}'.format(channel))
+                        await self.bot.join_voice_channel(channel)
+                except Exception as e:
+                    continue
+        except Exception as e:
+            print(e.args)
 
 
 def setup(bot):

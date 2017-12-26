@@ -29,6 +29,7 @@ bot = Bot(description="BotZilla is build / maintained / self hosted by PuffDip",
 music_channels = botzillaChannels['music']
 
 
+
 @bot.event
 async def on_ready():
     print('Logged in as ' + bot.user.name + ' (ID:' + bot.user.id + ') | Connected to ' + str(
@@ -60,6 +61,7 @@ async def on_ready():
     for p in plugins:
         bot.load_extension("plugin.{}".format(p))
 
+
     try:
         database = Database(bot)
         for item in database.music_channels:
@@ -74,9 +76,6 @@ async def on_ready():
                 continue
     except Exception as e:
         print(e.args)
-
-
-
 
 
 @bot.event
