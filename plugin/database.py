@@ -57,6 +57,8 @@ class Database:
             music_channels.append(row)
         print(music_channels)
         for item in music_channels:
+            print(str(item))
+            item = str(item).replace('(,)', '')
             print(item)
 
 
