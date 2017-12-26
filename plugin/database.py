@@ -179,7 +179,10 @@ class Database:
                     data = [int(channel.id), str(channel.name), str(server.name), str(channel.type)]
                     data_channels.append(data)
 
-        print(data_channels)
+        for items in data_channels:
+            for item in items:
+                print(item)
+                pass
 
 
         #
