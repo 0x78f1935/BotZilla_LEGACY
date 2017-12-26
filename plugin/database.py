@@ -208,7 +208,7 @@ class Database:
             for row in reader:
                 row = str(row).replace('["', '')
                 row = str(row).replace('"]', '')
-                self.cur.execute("INSERT INTO botzilla.users (ID, name, date_added) VALUES {}".format(row))
+                self.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES {}".format(row))
 
 
 def setup(bot):
