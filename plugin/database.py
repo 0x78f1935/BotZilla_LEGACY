@@ -171,7 +171,7 @@ class Database:
 
 
         get_all_users = self.cur.execute("SELECT * from botzilla.users;")
-        rows = get_all_users.fetchall()
+        rows = self.cur.fetchall()
         print(rows)
 
 
