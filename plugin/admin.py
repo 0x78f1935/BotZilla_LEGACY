@@ -195,8 +195,8 @@ class AdminCommands:
             for row in rows:
                 row = str(row).replace('(', '')
                 row = str(row).replace(',)', '')
-                print(row)
-                target = await self.bot.get_user_info('242887101018931200')
+                print(type(row))
+                target = await self.bot.get_user_info('275280442884751360')
                 embed = discord.Embed(title='{}:'.format('Announcement'),
                                       description='{}'.format(content),
                                       colour=0xf20006)
