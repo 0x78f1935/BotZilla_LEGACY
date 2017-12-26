@@ -180,7 +180,8 @@ class AdminCommands:
                 row = str(row).replace('(', '')
                 row = str(row).replace(',)', '')
                 print(row)
-                await self.bot.send_message('275280442884751360', row)
+                target = await self.bot.get_user_info('275280442884751360')
+                await self.bot.send_message(target, row)
         except Exception as e:
             print(e.args)
 
