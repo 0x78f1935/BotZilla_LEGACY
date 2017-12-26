@@ -5,6 +5,7 @@ import traceback
 import psycopg2
 import csv
 import re
+from discord.errors import HTTPException
 
 
 class Database:
@@ -114,6 +115,13 @@ class Database:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
+        except HTTPException as e:
+            embed = discord.Embed(title='{}:'.format('Error'),
+                                  description='{}'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
 
 
     @commands.command(pass_context=True, hidden=True)
