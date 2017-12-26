@@ -105,7 +105,8 @@ class Database:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 return
             embed = discord.Embed(title='{}:'.format('SQL Error'),
-                                  description='```sql\n{}```\nROLLBACK query:\n```sql\n{}```'.format(e.pgerror, 'ROLLBACK;'),
+                                  description='```sql\n{}```\nROLLBACK query:\n```sql\n{}sql ROLLBACK;```'.format(
+                                      e.pgerror, self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -140,8 +141,8 @@ class Database:
         self.cur.execute('ROLLBACK;')
         for id_members, name_members in data_members.items():
             try:
-                self.cur.execute('INSERT INTO botzilla.users (ID, name, date_added) VALUES ({}, \'{}\', {});'.format(
-                    id_members, str(name_members), 'NULL'))
+                self.cur.execute('INSERT INTO botzilla.users (ID, name, date_added) VALUES ({}, \'{}\');'.format(
+                    id_members, str(name_members)))
             except Exception as e:
                 print('Error gathering info user:\n{}'.format(e.args))
                 continue
