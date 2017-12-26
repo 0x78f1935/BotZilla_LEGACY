@@ -151,7 +151,7 @@ class Database:
     @commands.command(pass_context=True)
     async def dbexport(self, ctx):
         """
-        Update datebase with current active users
+        Export database data to export folder
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -182,7 +182,7 @@ class Database:
     @commands.command(pass_context=True)
     async def dbimport(self, ctx):
         """
-        Update datebase with current active users
+        Import CSV data from import folder
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
