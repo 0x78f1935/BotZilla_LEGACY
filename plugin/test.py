@@ -1,8 +1,7 @@
 import discord
 from discord.ext import commands
 import json
-import time
-import asyncio
+import re
 
 
 tmp_config = json.loads(str(open('./options/config.js').read()))

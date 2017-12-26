@@ -37,6 +37,7 @@ async def on_ready():
     plugins = (
         "admin",
         "exchange",
+        "database",
         "fun",
         "games",
         "gamestats",

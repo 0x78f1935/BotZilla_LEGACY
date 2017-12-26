@@ -2,7 +2,6 @@ from discord.ext import commands
 import json
 import discord
 import traceback
-import psycopg2
 
 
 class AdminCommands:
@@ -14,36 +13,7 @@ class AdminCommands:
         self.exchange = self.tmp_config['exchange']
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
-        self.database_settings = self.tmp_config['database']
 
-        debounce = False
-        reconnect_db_times = int(self.database_settings['reconnect_trys'])
-        while True:
-            if not debounce:
-                debounce = True
-                try:
-                    self.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
-                        self.database_settings['db_name'],
-                        self.database_settings['user'],
-                        self.database_settings['ip'],
-                        self.database_settings['port'],
-                        self.database_settings['password']
-                    ))
-                    self.cur = self.conn.cursor()
-                    print('Established Database connection with:')
-                    print("dbname={}\nhost={}\nport={}".format(
-                        self.database_settings['db_name'],
-                        self.database_settings['ip'],
-                        self.database_settings['port']
-                    ))
-                    break
-                except:
-                    print('I am unable to connect to the Database')
-                    debounce = False
-                reconnect_db_times =- 1
-                if reconnect_db_times <= 0:
-                    print('failed to connect with the database giving up...')
-                    break
 
 
     @commands.command(pass_context=True)
@@ -109,6 +79,7 @@ class AdminCommands:
             a = await self.bot.say("Loaded cog `plugin.{}`.".format(extension))
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
+
     @commands.command(pass_context=True)
     async def unload(self, ctx, *, extension: str):
         """
@@ -131,6 +102,7 @@ class AdminCommands:
         else:
             a = await self.bot.say("Unloaded `{}`.".format(extension))
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 
     @commands.command(pass_context=True)
     async def reload(self, ctx, *, extension: str):
@@ -155,6 +127,7 @@ class AdminCommands:
         else:
             a = await self.bot.say("Reloaded `{}`.".format(extension))
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 
     @commands.command(pass_context=True)
     async def reloadall(self, ctx):
@@ -181,10 +154,10 @@ class AdminCommands:
 
 
     @commands.command(pass_context=True)
-    async def sql(self, ctx, *, query: str = None):
+    async def inspect(self, ctx, *, function: str = None):
         """
-        Acces database and run a query.
-        use a query psql based.
+        Inspect code in botzilla.
+        Add a function to inspect.
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -194,43 +167,19 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-        if query is None:
+        if function is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You should know what you are doing.\n Especially with this command! :angry:',
+                                  description='add a function to inspect',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
-        try:
-            self.cur.execute('{}'.format(str(query)))
-            result_cur = self.cur.fetchall()
-            if not result_cur:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='No data found :cry:',
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['error'])
-                return
 
-            embed = discord.Embed(title='{}:'.format('SQL Succes'),
-                                  description='```sql\n{}```'.format(result_cur),
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-        except psycopg2.Error as e:
-            if e.pgerror is None:
-                embed = discord.Embed(title='{}:'.format('SQL Succes'),
-                                      description='```sql\n{}```'.format(str(query)),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                return
-            embed = discord.Embed(title='{}:'.format('SQL Error'),
-                                  description='```sql\n{}```\nROLLBACK query:\n```sql\n{}```'.format(e.pgerror, 'ROLLBACK;'),
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
-
+        embed = discord.Embed(title='{}:'.format(function),
+                              description='{}'.format(help(function)),
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
 def setup(bot):
