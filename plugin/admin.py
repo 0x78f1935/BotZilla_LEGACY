@@ -201,7 +201,6 @@ class AdminCommands:
                                       description='{}'.format(content),
                                       colour=0xf20006)
                 last_message = await self.bot.send_message(target, embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                 await self.bot.add_reaction(last_message, self.red_B)
                 await self.bot.add_reaction(last_message, self.blue_O)
                 await self.bot.add_reaction(last_message, self.blue_T)
@@ -210,6 +209,7 @@ class AdminCommands:
                 await self.bot.add_reaction(last_message, self.blue_L)
                 await self.bot.add_reaction(last_message, self.arrow_up)
                 await self.bot.add_reaction(last_message, self.blue_A)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
         except Exception as e:
             print(e.args)
 
