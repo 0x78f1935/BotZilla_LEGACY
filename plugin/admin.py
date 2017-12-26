@@ -22,13 +22,6 @@ class AdminCommands:
             if not debounce:
                 debounce = True
                 try:
-                    print("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
-                        self.database_settings['db_name'],
-                        self.database_settings['user'],
-                        self.database_settings['ip'],
-                        self.database_settings['port'],
-                        self.database_settings['password']
-                    ))
                     self.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
                         self.database_settings['db_name'],
                         self.database_settings['user'],
@@ -37,7 +30,13 @@ class AdminCommands:
                         self.database_settings['password']
                     ))
                     self.cur = self.conn.cursor()
-                    print('Established Database connection')
+                    print('Established Database connection with:')
+                    print("dbname={} user={} host={} port={} password={}".format(
+                        self.database_settings['db_name'],
+                        self.database_settings['user'],
+                        self.database_settings['ip'],
+                        self.database_settings['port'],
+                        self.database_settings['password']))
                     break
                 except:
                     print('I am unable to connect to the Database')
