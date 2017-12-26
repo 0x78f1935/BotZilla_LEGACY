@@ -23,32 +23,30 @@ class Database:
         debounce = False
         reconnect_db_times = int(self.database_settings['reconnect_trys'])
         while True:
-            if not debounce:
-                debounce = True
-                try:
-                    self.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
-                        self.database_settings['db_name'],
-                        self.database_settings['user'],
-                        self.database_settings['ip'],
-                        self.database_settings['port'],
-                        self.database_settings['password']
-                    ))
-                    self.cur = self.conn.cursor()
-                    print('Established Database connection with:')
-                    print("dbname={}\nhost={}\nport={}".format(
-                        self.database_settings['db_name'],
-                        self.database_settings['ip'],
-                        self.database_settings['port']
-                    ))
-                    self.database_online = True
-                    break
-                except:
-                    print('I am unable to connect to the Database')
-                    debounce = False
-                reconnect_db_times -= 1
-                if reconnect_db_times <= 0:
-                    print('failed to connect with the database giving up...')
-                    break
+            try:
+                self.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
+                    self.database_settings['db_name'],
+                    self.database_settings['user'],
+                    self.database_settings['ip'],
+                    self.database_settings['port'],
+                    self.database_settings['password']
+                ))
+                self.cur = self.conn.cursor()
+                print('Established Database connection with:')
+                print("dbname={}\nhost={}\nport={}".format(
+                    self.database_settings['db_name'],
+                    self.database_settings['ip'],
+                    self.database_settings['port']
+                ))
+                self.database_online = True
+                break
+            except:
+                print('I am unable to connect to the Database')
+            reconnect_db_times -= 1
+            if reconnect_db_times <= 0:
+                print('failed to connect with the database giving up...')
+                break
+            continue
 
 
     @commands.command(pass_context=True)

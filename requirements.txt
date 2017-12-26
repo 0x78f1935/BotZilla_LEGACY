@@ -1,1 +1,3 @@
 imgurpython
+psycopg2
+discord
