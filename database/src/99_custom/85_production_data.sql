@@ -7,4 +7,3 @@
 --------------
 
 CREATE DATABASE botzilla;
-CREATE SCHEMA IF NOT EXISTS botzilla.users;
