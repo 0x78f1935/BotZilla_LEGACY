@@ -179,14 +179,14 @@ class Database:
                     data = [int(channel.id), str(channel.name), str(server.name), str(channel.type)]
                     data_channels.append(data)
 
+
+        self.cur.execute('ROLLBACK;')
         for items in data_channels:
-            for item in items:
-                print(item)
-                pass
-
-
-        #
-        # self.cur.execute('ROLLBACK;')
+            print(items)
+            self.cur.execute(
+                'INSERT INTO botzilla.music (ID, channel_name, server_name, total_users) VALUES ({}, \'{}\', \'{}\'. {});'.format(
+                    items[0], items[1], items[2], items[3]
+                ))
         # for id_members, name_members in data_members.items():
         #     try:
         #         self.cur.execute('INSERT INTO botzilla.music (ID, channel_name, server_name, total_users) VALUES ({}, \'{}\', \'{}\'. {});'.format(
