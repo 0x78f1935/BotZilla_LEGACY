@@ -63,7 +63,7 @@ async def on_ready():
         database = Database(bot)
         for item in database.music_channels:
             channel = bot.get_channel(item)
-            await bot.join_voice_channel('\'{}\''.format(channel))
+            await bot.join_voice_channel('{}'.format(channel))
     except Exception as e:
         print(e.args)
 
