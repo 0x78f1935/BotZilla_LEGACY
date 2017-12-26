@@ -13,5 +13,5 @@ CREATE TABLE botzilla.music(
     ID bigserial primary key,
     channel_name varchar(254),
     server_name varchar(254),
-    total_users varchar(24)
+    type_channel varchar(24)
 );
