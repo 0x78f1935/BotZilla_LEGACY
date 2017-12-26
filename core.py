@@ -29,7 +29,6 @@ bot = Bot(description="BotZilla is build / maintained / self hosted by PuffDip",
 music_channels = botzillaChannels['music']
 
 
-
 @bot.event
 async def on_ready():
     print('Logged in as ' + bot.user.name + ' (ID:' + bot.user.id + ') | Connected to ' + str(
