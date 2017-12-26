@@ -20,7 +20,7 @@ class AdminCommands:
             if not debounce:
                 debounce = True
                 try:
-                    conn = psycopg2.connect("dbname='botzilla' user='postgres' host='1.1.1.2' port='5432' password=''")
+                    conn = psycopg2.connect("dbname='bot' user='postgres' host='1.1.1.2' port='5432' password=''")
                     self.cur = conn.cursor()
                     print('Established Database connection')
                     break
