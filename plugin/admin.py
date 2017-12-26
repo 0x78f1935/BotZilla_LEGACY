@@ -207,12 +207,13 @@ class AdminCommands:
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                return
             embed = discord.Embed(title='{}'.format('SQL Error'),
-                                  description='```sql\n{}```'.format(e.pgerror),
+                                  description='```sql\n{}```\nUse the following query to reset:\n```sql{}```'.format(e.pgerror, 'ROLEBACK;'),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
-            self.cur.execute('ROLEBACK;')
+
 
 
 def setup(bot):
