@@ -209,7 +209,7 @@ class AdminCommands:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 return
             embed = discord.Embed(title='{}'.format('SQL Error'),
-                                  description='```sql\n{}```\nROLBACK query:\n```sql\n{}```'.format(e.pgerror, 'ROLEBACK;'),
+                                  description='```sql\n{}```\nROLLBACK query:\n```sql\n{}```'.format(e.pgerror, 'ROLLBACK;'),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
