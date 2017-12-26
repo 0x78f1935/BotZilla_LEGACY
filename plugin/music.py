@@ -8,6 +8,7 @@ from collections import namedtuple, deque
 import json
 from options import checks
 from discord.ext.commands.cooldowns import BucketType
+from datetime import timedelta
 try:
     from plugin.database import Database
 except:
@@ -215,7 +216,7 @@ class Music:
                 return
 
         try:
-            player = await state.voice.create_ytdl_player(song, ytdl_options=opts, after=state.toggle_next,
+            player = await VoiceState.create_ytdl_player(song, ytdl_options=opts, after=state.toggle_next,
                                                           use_avconv=self.USE_AVCONV)
         except Exception as e:
             fmt = 'An error occurred while processing this request: ```py\n{}: {}\n```'
