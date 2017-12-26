@@ -26,7 +26,7 @@ class AdminCommands:
                     break
                 except:
                     print('I am unable to connect to the Database')
-                debounce = False
+                    debounce = False
 
 
     @commands.command(pass_context=True)
