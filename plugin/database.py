@@ -172,6 +172,11 @@ class Database:
 
         get_all_users = self.cur.execute("SELECT * from botzilla.users;")
         rows = self.cur.fetchall()
+        with open(self.database_export_location_users, 'w') as output:
+            writer = csv.writer(output, lineterminator='\n')
+            for val in rows:
+                writer.writerow([val])
+
         print(rows)
 
 
