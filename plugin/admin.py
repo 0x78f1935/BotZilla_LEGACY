@@ -161,7 +161,7 @@ class AdminCommands:
     @commands.command(pass_context=True)
     async def reloadch(self, ctx, *, extension: str):
         """
-        Reload an channels.
+        Reload and reconnect music channels
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
