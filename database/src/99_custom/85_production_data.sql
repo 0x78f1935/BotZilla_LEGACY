@@ -7,7 +7,7 @@
 --------------
 
 CREATE DATABASE bot;
-CREATE SCHEMA bot.botzilla;
+CREATE SCHEMA botzilla;
 CREATE TABLE botzilla.users(
     ID bigserial primary key,
     name varchar(254),
