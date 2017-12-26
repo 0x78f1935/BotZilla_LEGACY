@@ -3,6 +3,8 @@ import json
 import discord
 import traceback
 import psycopg2
+import csv
+
 
 class Database:
     def __init__(self, bot):
@@ -15,6 +17,7 @@ class Database:
         self.owner_list = self.config['owner-id']
         self.database_settings = self.tmp_config['database']
         self.database_online = False
+        self.database_export_location_users = './export/DBE_users.csv'
 
         debounce = False
         reconnect_db_times = int(self.database_settings['reconnect_trys'])
@@ -108,7 +111,7 @@ class Database:
 
 
     @commands.command(pass_context=True, hidden=True)
-    async def a(self, ctx):
+    async def get_users(self, ctx):
         """
         Update datebase with current active users
         """
@@ -120,12 +123,18 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
+        if not self.database_online:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Could not connect to database.',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+
         data_members = {"id" : "name"}
         for server in self.bot.servers:
             for member in server.members:
-                # a = re.search(r'.+?(?=#)', str(member), flags=0).group(0)
                 data_members.update({member.id:member.name})
-
 
         self.cur.execute('ROLLBACK;')
         for id_members, name_members in data_members.items():
@@ -133,9 +142,37 @@ class Database:
                 self.cur.execute('INSERT INTO botzilla.users (ID, name, date_added) VALUES ({}, \'{}\', {});'.format(
                     id_members, str(name_members), 'current_timestamp'))
             except Exception as e:
-                print('While getting user info, Error :\n{}'.format(e.args))
+                print('Error gathering info user:\n{}'.format(e.args))
                 continue
         print("Done with gathering user info")
+
+
+    @commands.command(pass_context=True)
+    async def export(self, ctx):
+        """
+        Update datebase with current active users
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+
+        if not self.database_online:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Could not connect to database.',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+
+
+        get_all_users = self.cur.execute("SELECT * from botzilla.users;")
+        rows = get_all_users.fetchall()
+        print(rows)
 
 
 def setup(bot):
