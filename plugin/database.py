@@ -18,6 +18,7 @@ class Database:
         self.database_settings = self.tmp_config['database']
         self.database_online = False
         self.database_export_location_users = './export/DBE_users.csv'
+        self.database_import_location_users = './import/DBE_users.csv'
 
         debounce = False
         reconnect_db_times = int(self.database_settings['reconnect_trys'])
@@ -148,7 +149,7 @@ class Database:
 
 
     @commands.command(pass_context=True)
-    async def export(self, ctx):
+    async def dbexport(self, ctx):
         """
         Update datebase with current active users
         """
@@ -170,14 +171,43 @@ class Database:
             return
 
 
-        get_all_users = self.cur.execute("SELECT * from botzilla.users;")
+        self.cur.execute("SELECT * from botzilla.users;")
         rows = self.cur.fetchall()
         with open(self.database_export_location_users, 'w') as output:
             writer = csv.writer(output, lineterminator='\n')
             for val in rows:
                 writer.writerow([val])
 
-        print(rows)
+
+    @commands.command(pass_context=True)
+    async def dbimport(self, ctx):
+        """
+        Update datebase with current active users
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+
+        if not self.database_online:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Could not connect to database.',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+
+
+        self.cur.execute("SELECT * from botzilla.users;")
+        rows = self.cur.fetchall()
+        with open(self.database_import_location_users, 'r') as output:
+            writer = csv.writer(output, lineterminator='\n')
+            for val in rows:
+                self.cur.execute("INSERT INTO botzilla.users (ID, name, date_added) VALUES {}".format([val]))
 
 
 def setup(bot):
