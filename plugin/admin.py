@@ -195,13 +195,13 @@ class AdminCommands:
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
                 return
 
-            embed = discord.Embed(title='```sql\n{}```:'.format(ctx.message.author.name),
-                                  description='{}'.format(result_cur),
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='```sql\n{}```'.format(result_cur),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
         except psycopg2.Error as e:
             embed = discord.Embed(title='```sql\n{}```:'.format('Error'),
-                                  description='{}'.format(e.pgerror),
+                                  description='```sql\n{}```'.format(e.pgerror),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
