@@ -62,8 +62,8 @@ async def on_ready():
     try:
         database = Database()
         print(database.music_channels)
-    except:
-        pass
+    except Exception as e:
+        print(e.args)
 
 
 @bot.event
