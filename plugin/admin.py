@@ -186,6 +186,12 @@ class AdminCommands:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format('Error'),
+                                  description=f'{e.args}',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
 def setup(bot):
