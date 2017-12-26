@@ -50,8 +50,12 @@ class Database:
 
             ## autoconnect to music channel
             # select id from botzilla.music where type_channel = 'voice';
-            music_id = self.cur.execute("select id from botzilla.music where type_channel = 'voice';")
-            print(music_id)
+            music_channels = []
+            self.cur.execute("select id from botzilla.music where type_channel = 'voice';")
+            rows = self.cur.fetchall()
+            for row in rows:
+                music_channels.append(row)
+            print(music_channels)
 
 
     @commands.command(pass_context=True)
