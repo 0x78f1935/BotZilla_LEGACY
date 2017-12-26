@@ -133,6 +133,16 @@ class Music:
                 pass
 
     @commands.command(pass_context=True, no_pm=True)
+    async def summon(self, ctx):
+        """Summons the bot to join your voice channel."""
+        summoned_channel = ctx.message.author.voice_channel
+        if summoned_channel is None:
+            await self.bot.say('You are not in a voice channel.')
+            return False
+        return True
+
+
+    @commands.command(pass_context=True, no_pm=True)
     async def queue(self, ctx, *, args=''):
         """Says the music queue.
         Usage:
