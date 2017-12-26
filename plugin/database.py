@@ -177,14 +177,12 @@ class Database:
                 if 'music' in str(channel).lower():
                     channel_type = str(channel.type)
                     print(channel_type)
-                    data = [int(channel.id), str(channel.name), str(server.name), str(channel.type)]
+                    data = [int(channel.id), str(channel.name), re.sub('\W+', '', str(server.name)), str(channel.type)]
                     data_channels.append(data)
 
 
         self.cur.execute('ROLLBACK;')
         for items in data_channels:
-            re.sub('\W+', '', items[1])
-            re.sub('\W+', '', items[2])
             self.cur.execute(
                 'INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES ({}, \'{}\', \'{}\', \'{}\');'.format(
                     items[0], items[1], items[2], items[3]
