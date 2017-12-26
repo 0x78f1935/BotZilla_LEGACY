@@ -54,12 +54,9 @@ class Database:
         self.cur.execute("select id from botzilla.music where type_channel = 'voice';")
         rows = self.cur.fetchall()
         for row in rows:
-            music_channels.append(row)
-        print(music_channels)
-        for item in music_channels:
-            print(str(item))
-            item = str(item).replace('(,)', '')
-            print(item)
+            for item in row:
+                music_channels.append(item)
+                print(music_channels)
 
 
     @commands.command(pass_context=True)
