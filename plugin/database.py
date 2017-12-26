@@ -183,22 +183,20 @@ class Database:
 
         self.cur.execute('ROLLBACK;')
         for items in data_channels:
-            self.cur.execute(
-                'INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES ({}, \'{}\', \'{}\', \'{}\');'.format(
-                    items[0], items[1], items[2], items[3]
-                ))
-        # for id_members, name_members in data_members.items():
-        #     try:
-        #         self.cur.execute('INSERT INTO botzilla.music (ID, channel_name, server_name, total_users) VALUES ({}, \'{}\', \'{}\'. {});'.format(
-        #             id_members, str(name_members)))
-        #     except Exception as e:
-        #         print('Error gathering info user:\n{}'.format(e.args))
-        #         continue
-        # embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-        #                       description='Done with gathering user info!',
-        #                       colour=0xf20006)
-        # a = await self.bot.say(embed=embed)
-        # await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            try:
+                self.cur.execute(
+                    'INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES ({}, \'{}\', \'{}\', \'{}\');'.format(
+                        items[0], items[1], items[2], items[3]
+                    ))
+            except Exception as e:
+                print('Error gathering info music channels:\n{}'.format(e.args))
+                continue
+
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='Done with gathering music channel info!',
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
     @commands.command(pass_context=True)
