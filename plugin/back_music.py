@@ -151,16 +151,17 @@ class Music:
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
+        self.bot.send_typing(ctx.message.channel)
         state = self.get_voice_state(ctx.message.server)
         opts = {
             'default_search': 'auto',
             'quiet': True,
         }
 
-        # if state.voice is None:
-        #     success = await ctx.invoke(self.summon)
-        #     if not success:
-        #         return
+        if state.voice is None:
+            success = await ctx.invoke(self.summon)
+            if not success:
+                return
 
         try:
             player = await state.voice.create_ytdl_player(song, ytdl_options=opts, after=state.toggle_next)
