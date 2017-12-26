@@ -169,7 +169,7 @@ class AdminCommands:
     @commands.command(pass_context=True, hiddewn=True)
     async def sendalldm(self, ctx, *, content: str = None):
         """
-        Reload and reconnect music channels
+        Mass DM everyone in database
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -196,19 +196,11 @@ class AdminCommands:
                 row = str(row).replace('(', '')
                 row = str(row).replace(',)', '')
                 print(type(row))
-                target = await self.bot.get_user_info('275280442884751360')
+                target = await self.bot.get_user_info(row)
                 embed = discord.Embed(title='{}:'.format('Announcement'),
                                       description='{}'.format(content),
                                       colour=0xf20006)
                 last_message = await self.bot.send_message(target, embed=embed)
-                await self.bot.add_reaction(last_message, self.red_B)
-                await self.bot.add_reaction(last_message, self.blue_O)
-                await self.bot.add_reaction(last_message, self.blue_T)
-                await self.bot.add_reaction(last_message, self.blue_Z)
-                await self.bot.add_reaction(last_message, self.blue_I)
-                await self.bot.add_reaction(last_message, self.blue_L)
-                await self.bot.add_reaction(last_message, self.arrow_up)
-                await self.bot.add_reaction(last_message, self.blue_A)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
         except Exception as e:
             print(e.args)
