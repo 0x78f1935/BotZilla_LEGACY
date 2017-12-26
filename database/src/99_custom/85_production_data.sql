@@ -6,9 +6,6 @@
 --antennes.csv
 --------------
 
-
-CREATE DATABASE bot;
-\l database bot
 CREATE SCHEMA botzilla;
 CREATE TABLE botzilla.users(
     ID bigserial primary key,
