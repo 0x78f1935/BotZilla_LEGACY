@@ -2,10 +2,7 @@ from discord.ext import commands
 import json
 import discord
 import traceback
-try:
-    import psycopg2
-except:
-    psycopg2_available = False
+import psycopg2
 
 class Database:
     def __init__(self, bot):
@@ -44,7 +41,7 @@ class Database:
                 except:
                     print('I am unable to connect to the Database')
                     debounce = False
-                reconnect_db_times =- 1
+                reconnect_db_times -= 1
                 if reconnect_db_times <= 0:
                     print('failed to connect with the database giving up...')
                     break
@@ -136,7 +133,4 @@ class Database:
 
 
 def setup(bot):
-    if psycopg2_available is False:
-        raise RuntimeError("You need the psycopg2 module to use this.\n"
-                           "pip3 install psycopg2")
     bot.add_cog(Database(bot))
