@@ -128,7 +128,7 @@ class Database:
 
 
         self.cur.execute('ROLLBACK;')
-        for id_members, name_members in data_members:
+        for id_members, name_members in data_members.items():
             try:
                 self.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, "{}");'.format(id_members, name_members))
             except Exception as e:
