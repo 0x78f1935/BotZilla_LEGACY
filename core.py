@@ -34,7 +34,21 @@ async def on_ready():
 
     #plugins
 
-    plugins = ("admin", "exchange", "fun", "games", "gamestats", "information", "music", "nsfw", "python_code_in_dc", "test")
+    plugins = (
+        "admin",
+        "exchange",
+        "fun",
+        "games",
+        "gamestats",
+        "information",
+        "music",
+        "nsfw",
+        "python_code_in_dc",
+        "test"
+    )
+
+    # load plugins
+
     for p in plugins:
         bot.load_extension("plugin.{}".format(p))
 

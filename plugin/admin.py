@@ -14,19 +14,31 @@ class AdminCommands:
         self.exchange = self.tmp_config['exchange']
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
+        self.database_settings = self.tmp_config['database']
 
         debounce = False
+        reconnect_db_times = int(self.database_settings['reconnect_trys'])
         while True:
             if not debounce:
                 debounce = True
                 try:
-                    self.conn = psycopg2.connect("dbname='gis' user='postgres' host='1.1.1.2' port='5432' password=''")
+                    self.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
+                        str(self.database_settings['db_name']),
+                        str(self.database_settings['user']),
+                        str(self.database_settings['ip']),
+                        int(self.database_settings['port']),
+                        str(self.database_settings['password'])
+                    ))
                     self.cur = self.conn.cursor()
                     print('Established Database connection')
                     break
                 except:
                     print('I am unable to connect to the Database')
                     debounce = False
+                reconnect_db_times =- 1
+                if reconnect_db_times <= 0:
+                    print('failed to connect with the database giving up...')
+                    break
 
 
     @commands.command(pass_context=True)
