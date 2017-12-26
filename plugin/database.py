@@ -20,6 +20,8 @@ class Database:
         self.database_online = False
         self.database_export_location_users = './export/DBE_users.csv'
         self.database_import_location_users = './import/DBE_users.csv'
+        self.database_export_location_music_channels = './export/DBE_music_channels.csv'
+        self.database_import_location_music_channels = './import/DBE_music_channels.csv'
 
         debounce = False
         reconnect_db_times = int(self.database_settings['reconnect_trys'])
@@ -229,6 +231,20 @@ class Database:
             for val in rows:
                 writer.writerow([val])
 
+        self.cur.execute("SELECT * from botzilla.music;")
+        rows = self.cur.fetchall()
+        with open(self.database_export_location_users, 'w') as output:
+            writer = csv.writer(output, lineterminator='\n')
+            for val in rows:
+                writer.writerow([val])
+
+
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='Done!',
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 
     @commands.command(pass_context=True)
     async def dbimport(self, ctx):
@@ -260,8 +276,19 @@ class Database:
                 row = str(row).replace('"]', '')
                 self.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES {}".format(row))
 
+        with open(self.database_import_location_music_channels, 'r') as file:
+            reader = csv.reader(file, delimiter=',')
+            for row in reader:
+                row = str(row).replace('["', '')
+                row = str(row).replace('"]', '')
+                self.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES {}".format(row))
 
 
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='Done!',
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 def setup(bot):
     bot.add_cog(Database(bot))
