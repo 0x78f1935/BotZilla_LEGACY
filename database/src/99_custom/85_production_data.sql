@@ -5,6 +5,7 @@
 --------------
 --antennes.csv
 --------------
+\c database bot
 
 CREATE DATABASE bot;
 CREATE SCHEMA botzilla;

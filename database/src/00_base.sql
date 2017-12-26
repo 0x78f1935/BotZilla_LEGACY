@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS "directory"."pointset"
 CREATE TABLE IF NOT EXISTS "directory"."pointset_attribute"
 (
   "id" serial NOT NULL,
-  "pointset_id" integer NOT NULL,
+  "joindate" timestamp NOT NULL,
   "name" varchar(50) NOT NULL,
   PRIMARY KEY (id)
 );
