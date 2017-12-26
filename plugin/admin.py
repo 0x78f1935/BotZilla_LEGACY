@@ -185,7 +185,7 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         try:
-            self.cur.execute('{}'.format(psql))
+            self.cur.execute('{}'.format(str(psql)))
             result_cur = self.cur.fetchall()
             if not result_cur:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
