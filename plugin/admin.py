@@ -158,7 +158,7 @@ class AdminCommands:
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hiddewn=True)
     async def sendalldm(self, ctx):
         """
         Reload and reconnect music channels
@@ -175,8 +175,10 @@ class AdminCommands:
             database = Database(self.bot)
 
             clean_id = []
-            for item in database.cur.execute("select id from botzilla.users;"):
-                print(item)
+            database.cur.execute("select id from botzilla.users;")
+            rows = database.cur.fetchall()
+            for row in rows:
+                print(row)
         except Exception as e:
             print(e.args)
 
