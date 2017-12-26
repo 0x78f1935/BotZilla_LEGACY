@@ -154,45 +154,5 @@ class AdminCommands:
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True)
-    async def inspect(self, ctx, *, function: str = None):
-        """
-        Inspect code in botzilla.
-        Add a function to inspect.
-        """
-        if ctx.message.author.id not in self.owner_list:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may not use this command :angry: only admins!',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-
-        if function is None:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='add a function to inspect',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-
-        try:
-            help(function)
-            stdout = io.StringIO()
-            value = stdout.getvalue()
-
-            embed = discord.Embed(title='{}:'.format(function),
-                                  description=f'{value}',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-        except Exception as e:
-            embed = discord.Embed(title='{}:'.format('Error'),
-                                  description=f'{e.args}',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
-
-
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
