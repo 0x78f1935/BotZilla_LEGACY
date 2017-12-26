@@ -23,11 +23,11 @@ class AdminCommands:
                 debounce = True
                 try:
                     self.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
-                        str(self.database_settings['db_name']),
-                        str(self.database_settings['user']),
-                        str(self.database_settings['ip']),
-                        int(self.database_settings['port']),
-                        str(self.database_settings['password'])
+                        self.database_settings['db_name'],
+                        self.database_settings['user'],
+                        self.database_settings['ip'],
+                        self.database_settings['port'],
+                        self.database_settings['password']
                     ))
                     self.cur = self.conn.cursor()
                     print('Established Database connection')
