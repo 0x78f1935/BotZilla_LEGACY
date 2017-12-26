@@ -60,7 +60,7 @@ async def on_ready():
         bot.load_extension("plugin.{}".format(p))
 
     try:
-        database = Database()
+        database = Database(bot)
         print(database.music_channels)
     except Exception as e:
         print(e.args)
