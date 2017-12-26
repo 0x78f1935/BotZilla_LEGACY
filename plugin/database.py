@@ -129,7 +129,7 @@ class Database:
         print(b)
         for items in b:
             print(items)
-            self.conn.exec('INSERT INTO botzilla.users (ID) VALUES ({});'.format(items))
+            self.conn.execute('INSERT INTO botzilla.users (ID) VALUES ({});'.format(items))
 
 
 def setup(bot):
