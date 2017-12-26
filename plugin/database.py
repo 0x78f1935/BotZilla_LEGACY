@@ -132,7 +132,7 @@ class Database:
             try:
                 self.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, "{}");'.format(id_members, str(name_members)))
             except Exception as e:
-                print('While getting user info, Error : {}'.format(e.args))
+                print('While getting user info, Error :\n{}'.format(e.args))
                 continue
             print("Done with gathering user info")
 
