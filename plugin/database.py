@@ -48,6 +48,9 @@ class Database:
                 print('I am unable to connect to the Database')
             print('failed to connect with the database giving up...')
 
+            ## autoconnect to music channel
+            # select id from botzilla.music where type_channel = 'voice';
+
 
 
     @commands.command(pass_context=True)
@@ -223,20 +226,34 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
 
+        try:
+            self.cur.execute("SELECT * from botzilla.users;")
+            rows = self.cur.fetchall()
+            with open(self.database_export_location_users, 'w') as output:
+                writer = csv.writer(output, lineterminator='\n')
+                for val in rows:
+                    writer.writerow([val])
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format('Error'),
+                                  description='{}'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-        self.cur.execute("SELECT * from botzilla.users;")
-        rows = self.cur.fetchall()
-        with open(self.database_export_location_users, 'w') as output:
-            writer = csv.writer(output, lineterminator='\n')
-            for val in rows:
-                writer.writerow([val])
 
-        self.cur.execute("SELECT * from botzilla.music;")
-        rows = self.cur.fetchall()
-        with open(self.database_export_location_music_channels, 'w') as output:
-            writer = csv.writer(output, lineterminator='\n')
-            for val in rows:
-                writer.writerow([val])
+        try:
+            self.cur.execute("SELECT * from botzilla.music;")
+            rows = self.cur.fetchall()
+            with open(self.database_export_location_music_channels, 'w') as output:
+                writer = csv.writer(output, lineterminator='\n')
+                for val in rows:
+                    writer.writerow([val])
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format('Error'),
+                                  description='{}'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -268,27 +285,41 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
 
+        try:
+            with open(self.database_import_location_users, 'r') as file:
+                reader = csv.reader(file, delimiter=',')
+                for row in reader:
+                    row = str(row).replace('["', '')
+                    row = str(row).replace('"]', '')
+                    self.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES {}".format(row))
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format('Error'),
+                                  description='{}'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-        with open(self.database_import_location_users, 'r') as file:
-            reader = csv.reader(file, delimiter=',')
-            for row in reader:
-                row = str(row).replace('["', '')
-                row = str(row).replace('"]', '')
-                self.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES {}".format(row))
 
-        with open(self.database_import_location_music_channels, 'r') as file:
-            reader = csv.reader(file, delimiter=',')
-            for row in reader:
-                row = str(row).replace('["', '')
-                row = str(row).replace('"]', '')
-                self.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES {}".format(row))
-
+        try:
+            with open(self.database_import_location_music_channels, 'r') as file:
+                reader = csv.reader(file, delimiter=',')
+                for row in reader:
+                    row = str(row).replace('["', '')
+                    row = str(row).replace('"]', '')
+                    self.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES {}".format(row))
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format('Error'),
+                                  description='{}'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Done!',
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 
 def setup(bot):
     bot.add_cog(Database(bot))
