@@ -43,7 +43,7 @@ class Database:
                     self.database_settings['port']
                 ))
                 self.database_online = True
-                break
+                continue
             except:
                 print('I am unable to connect to the Database')
             print('failed to connect with the database giving up...')
