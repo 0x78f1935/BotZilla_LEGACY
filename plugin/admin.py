@@ -173,7 +173,6 @@ class AdminCommands:
 
         try:
             database = Database(self.bot)
-
             clean_id = []
             database.cur.execute("select id from botzilla.users;")
             rows = database.cur.fetchall()
@@ -181,6 +180,7 @@ class AdminCommands:
                 row = str(row).replace('(', '')
                 row = str(row).replace(',)', '')
                 print(row)
+                await self.bot.send_message('275280442884751360', row)
         except Exception as e:
             print(e.args)
 
