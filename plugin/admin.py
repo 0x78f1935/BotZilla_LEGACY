@@ -177,7 +177,7 @@ class AdminCommands:
             return
 
         embed = discord.Embed(title='{}:'.format(function),
-                              description=sys.stdout(help(function)),
+                              description=sys.stdout(str(help(function))),
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
