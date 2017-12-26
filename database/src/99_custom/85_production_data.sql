@@ -8,7 +8,7 @@
 
 
 CREATE DATABASE bot;
-\c database bot
+\l database bot
 CREATE SCHEMA botzilla;
 CREATE TABLE botzilla.users(
     ID bigserial primary key,
