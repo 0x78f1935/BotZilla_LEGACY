@@ -141,7 +141,7 @@ class Database:
         self.cur.execute('ROLLBACK;')
         for id_members, name_members in data_members.items():
             try:
-                self.cur.execute('INSERT INTO botzilla.users (ID, name, date_added) VALUES ({}, \'{}\');'.format(
+                self.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, \'{}\');'.format(
                     id_members, str(name_members)))
             except Exception as e:
                 print('Error gathering info user:\n{}'.format(e.args))
