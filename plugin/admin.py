@@ -189,7 +189,6 @@ class AdminCommands:
 
         try:
             database = Database(self.bot)
-            clean_id = []
             database.cur.execute("select id from botzilla.users;")
             rows = database.cur.fetchall()
             for row in rows:
@@ -209,6 +208,7 @@ class AdminCommands:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         except Exception as e:
             print(e.args)
+
 
 
 def setup(bot):
