@@ -36,12 +36,7 @@ class Database:
                     self.database_settings['password']
                 ))
                 self.cur = self.conn.cursor()
-                print('Established Database connection with:')
-                print("dbname={}\nhost={}\nport={}".format(
-                    self.database_settings['db_name'],
-                    self.database_settings['ip'],
-                    self.database_settings['port']
-                ))
+                print('Established Database connection with')
                 self.database_online = True
                 continue
             except:
