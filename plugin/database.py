@@ -185,7 +185,7 @@ class Database:
             print(items)
             self.cur.execute(
                 'INSERT INTO botzilla.music (ID, channel_name, server_name, total_users) VALUES ({}, \'{}\', \'{}\', {});'.format(
-                    items[0], items[1], items[2], items[3]
+                    items[0], items[1], items[2], str(items[3])
                 ))
         # for id_members, name_members in data_members.items():
         #     try:
