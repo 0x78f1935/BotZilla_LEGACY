@@ -18,6 +18,14 @@ class AdminCommands:
         self.exchange = self.tmp_config['exchange']
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
+        self.blue_A = '\U0001f1e6'
+        self.red_B = '\U0001f171'
+        self.blue_I = '\U0001f1ee'
+        self.blue_L = '\U0001f1f1'
+        self.blue_O = '\U0001f1f4'
+        self.blue_T = '\U0001f1f9'
+        self.blue_Z = '\U0001f1ff'
+        self.arrow_up = '\u2b06'
 
 
 
@@ -192,8 +200,16 @@ class AdminCommands:
                 embed = discord.Embed(title='{}:'.format('Announcement'),
                                       description='{}'.format(content),
                                       colour=0xf20006)
-                a = await self.bot.send_message(target, embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                last_message = await self.bot.send_message(target, embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+                await self.bot.add_reaction(last_message, self.red_B)
+                await self.bot.add_reaction(last_message, self.blue_O)
+                await self.bot.add_reaction(last_message, self.blue_T)
+                await self.bot.add_reaction(last_message, self.blue_Z)
+                await self.bot.add_reaction(last_message, self.blue_I)
+                await self.bot.add_reaction(last_message, self.blue_L)
+                await self.bot.add_reaction(last_message, self.arrow_up)
+                await self.bot.add_reaction(last_message, self.blue_A)
         except Exception as e:
             print(e.args)
 
