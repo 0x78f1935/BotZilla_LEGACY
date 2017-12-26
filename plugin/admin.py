@@ -173,7 +173,7 @@ class AdminCommands:
 
         if content is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may want to read **`{}help sendalldm for more info`**'.format(self.config['prefix']),
+                                  description='You may want to read **`{}help sendalldm`** for more info'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -189,12 +189,11 @@ class AdminCommands:
                 row = str(row).replace(',)', '')
                 print(row)
                 target = await self.bot.get_user_info('275280442884751360')
-                embed = discord.Embed(title='{}:'.format('Announcement:'),
+                embed = discord.Embed(title='{}:'.format('Announcement'),
                                       description='{}'.format(content),
                                       colour=0xf20006)
-                a = await self.bot.say(embed=embed)
+                a = await self.bot.send_message(target, embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                await self.bot.send_message(target, embed=embed)
         except Exception as e:
             print(e.args)
 
