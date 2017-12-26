@@ -159,7 +159,7 @@ class AdminCommands:
 
 
     @commands.command(pass_context=True)
-    async def reloadch(self, ctx, *, extension: str):
+    async def reloadch(self, ctx):
         """
         Reload and reconnect music channels
         """
