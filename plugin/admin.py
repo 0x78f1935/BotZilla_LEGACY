@@ -179,7 +179,7 @@ class AdminCommands:
             rows = database.cur.fetchall()
             for row in rows:
                 row = str(row).replace('(', '')
-                row = str(row).replace(',)')
+                row = str(row).replace(',)', '')
                 print(row)
         except Exception as e:
             print(e.args)
