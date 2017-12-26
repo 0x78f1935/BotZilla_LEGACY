@@ -31,12 +31,11 @@ class AdminCommands:
                     ))
                     self.cur = self.conn.cursor()
                     print('Established Database connection with:')
-                    print("dbname={} user={} host={} port={} password={}".format(
+                    print("dbname={}\nhost={}\nport={}".format(
                         self.database_settings['db_name'],
-                        self.database_settings['user'],
                         self.database_settings['ip'],
-                        self.database_settings['port'],
-                        self.database_settings['password']))
+                        self.database_settings['port']
+                    ))
                     break
                 except:
                     print('I am unable to connect to the Database')
