@@ -120,17 +120,17 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-        b = []
+        data_members = {"id" : "name"}
         for server in self.bot.servers:
             for member in server.members:
                 # a = re.search(r'.+?(?=#)', str(member), flags=0).group(0)
-                b.append(member.id)
+                data_members.update({member.id:member.name})
 
-        print(b)
-        for items in b:
-            print(items)
+
+        self.cur.execute('ROLLBACK;')
+        for id_members, name_members in data_members:
             try:
-                self.cur.execute('INSERT INTO botzilla.users (ID) VALUES ({});'.format(items))
+                self.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, "{}");'.format(id_members, name_members))
             except Exception as e:
                 print('While getting user info, Error : {}'.format(e.args))
                 continue
