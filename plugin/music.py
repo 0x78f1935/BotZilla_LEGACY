@@ -90,7 +90,7 @@ class VoiceState:
             self.current = await self.songs.get()  # grab the current song
             await self.bot.send_typing(self.current.channel)
             if self.current.playerType == PlayerType.YOUTUBE:
-                self.current.player = await self.voice.create_ytdl_player(self.current.player.url,
+                self.current.player = await Music.voice.create_ytdl_player(self.current.player.url,
                                                                           ytdl_options=self.opts,
                                                                           after=self.toggle_next, use_avconv=True)
             await self.bot.send_message(self.current.channel, 'Now playing ' + str(self.current))
