@@ -1,3 +1,4 @@
 imgurpython
 psycopg2
 discord
+youtube_dl
