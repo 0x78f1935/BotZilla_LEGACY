@@ -24,6 +24,7 @@ class Database:
         self.database_export_location_music_channels = './export/DBE_music_channels.csv'
         self.database_import_location_music_channels = './import/DBE_music_channels.csv'
         self.client = discord.Client()
+        self.music_channels = []
 
         reconnect_db_times = int(self.database_settings['reconnect_trys'])
         print('Loading database')
@@ -37,7 +38,12 @@ class Database:
                     self.database_settings['password']
                 ))
                 self.cur = self.conn.cursor()
-                print('Established Database connection with')
+                print('Established Database connection')
+                self.cur.execute("select id from botzilla.music where type_channel = 'voice';")
+                rows = self.cur.fetchall()
+                for row in rows:
+                    for item in row:
+                        self.music_channels.append(item)
                 self.database_online = True
                 continue
             except:
@@ -47,12 +53,7 @@ class Database:
         ## autoconnect to music channel
         # select id from botzilla.music where type_channel = 'voice';
         # prep for autojoin
-        self.music_channels = []
-        self.cur.execute("select id from botzilla.music where type_channel = 'voice';")
-        rows = self.cur.fetchall()
-        for row in rows:
-            for item in row:
-                self.music_channels.append(item)
+
 
 
 
