@@ -48,13 +48,15 @@ class AdminCommands:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
                                   colour=0xf20006)
-            await self.bot.say(embed=embed)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         if game is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You stupid! use `{}help game` instead'.format(self.config['prefix']),
                                   colour=0xf20006)
-            await self.bot.say(embed=embed)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
 
         if not url:
@@ -76,16 +78,19 @@ class AdminCommands:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
                                   colour=0xf20006)
-            await self.bot.say(embed=embed)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         extension = extension.lower()
         try:
             self.bot.load_extension("plugin.{}".format(extension))
         except Exception as e:
             traceback.print_exc()
-            await self.bot.say("Could not load `{}` -> `{}`".format(extension, e))
+            a = await self.bot.say("Could not load `{}` -> `{}`".format(extension, e))
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
         else:
-            await self.bot.say("Loaded cog `plugin.{}`.".format(extension))
+            a = await self.bot.say("Loaded cog `plugin.{}`.".format(extension))
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
     @commands.command(pass_context=True)
     async def unload(self, ctx, *, extension: str):
@@ -96,16 +101,19 @@ class AdminCommands:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
                                   colour=0xf20006)
-            await self.bot.say(embed=embed)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         extension = extension.lower()
         try:
             self.bot.unload_extension("plugin.{}".format(extension))
         except Exception as e:
             traceback.print_exc()
-            await self.bot.say("Could not unload `{}` -> `{}`".format(extension, e))
+            a = await self.bot.say("Could not unload `{}` -> `{}`".format(extension, e))
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
         else:
-            await self.bot.say("Unloaded `{}`.".format(extension))
+            a = await self.bot.say("Unloaded `{}`.".format(extension))
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
     @commands.command(pass_context=True)
     async def reload(self, ctx, *, extension: str):
@@ -116,7 +124,8 @@ class AdminCommands:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
                                   colour=0xf20006)
-            await self.bot.say(embed=embed)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         extension = extension.lower()
         try:
@@ -124,9 +133,11 @@ class AdminCommands:
             self.bot.load_extension("plugin.{}".format(extension))
         except Exception as e:
             traceback.print_exc()
-            await self.bot.say("Could not reload `{}` -> `{}`".format(extension, e))
+            a = await self.bot.say("Could not reload `{}` -> `{}`".format(extension, e))
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
         else:
-            await self.bot.say("Reloaded `{}`.".format(extension))
+            a = await self.bot.say("Reloaded `{}`.".format(extension))
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
     @commands.command(pass_context=True)
     async def reloadall(self, ctx):
@@ -137,16 +148,19 @@ class AdminCommands:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
                                   colour=0xf20006)
-            await self.bot.say(embed=embed)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         for extension in self.bot.extensions:
             try:
                 self.bot.unload_extension(extension)
                 self.bot.load_extension(extension)
             except Exception as e:
-                await self.bot.say("Could not reload `{}` -> `{}`".format(extension, e))
+                a = await self.bot.say("Could not reload `{}` -> `{}`".format(extension, e))
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-        await self.bot.say("Reloaded all.")
+        a = await self.bot.say("Reloaded all.")
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
     @commands.command(pass_context=True)
@@ -159,30 +173,38 @@ class AdminCommands:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
                                   colour=0xf20006)
-            await self.bot.say(embed=embed)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
         if psql is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You should know what you are doing.\n Especially with this command! :angry:',
                                   colour=0xf20006)
-            await self.bot.say(embed=embed)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
+        try:
+            self.cur.execute('{}'.format(psql))
+            result_cur = self.cur.fetchall()
+            if not result_cur:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='No data found :cry:',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                return
 
-        self.cur.execute('{}'.format(psql))
-        result_cur = self.cur.fetchall()
-        if not result_cur:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='No data found :cry:',
+                                  description='{}'.format(result_cur),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+        except psycopg2.Error as e:
+            embed = discord.Embed(title='{}:'.format('Error'),
+                                  description='{}'.format(e.pgerror),
                                   colour=0xf20006)
             await self.bot.say(embed=embed)
-            return
-
-        print(result_cur)
-        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='{}'.format(result_cur),
-                              colour=0xf20006)
-        await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
