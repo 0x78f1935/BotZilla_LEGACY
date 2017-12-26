@@ -5,9 +5,10 @@
 --------------
 --antennes.csv
 --------------
-\c database bot
+
 
 CREATE DATABASE bot;
+\c database bot
 CREATE SCHEMA botzilla;
 CREATE TABLE botzilla.users(
     ID bigserial primary key,
