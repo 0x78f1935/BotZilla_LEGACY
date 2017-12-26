@@ -203,7 +203,7 @@ class AdminCommands:
             embed = discord.Embed(title='```sql\n{}```:'.format('Error'),
                                   description='{}'.format(e.pgerror),
                                   colour=0xf20006)
-            await self.bot.say(embed=embed)
+            a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 def setup(bot):
