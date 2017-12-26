@@ -170,14 +170,16 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
 
-        data_members = {"id" : "channel_name" , "server_name" : "total_users"}
+        data_channels = [["id", "channel_name", "server_name", "total_users"]]
         for server in self.bot.servers:
             for channel in server.channels:
                 if 'music' in str(channel).lower():
                     print(str(channel.server.name).lower())
-                    data_members.update({channel.id: channel.name, server.name: str(len(set(self.bot.get_all_members())))})
+                    data = '[{}, {}, {}, {}]'.format(channel.id, channel.name, server.name, str(len(set(self.bot.get_all_members()))))
+                    data = data.replace('\'', '')
+                    data_channels.append(data)
 
-        print(data_members)
+        print(data_channels)
 
         #
         # self.cur.execute('ROLLBACK;')
