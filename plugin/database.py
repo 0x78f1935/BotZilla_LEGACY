@@ -131,7 +131,7 @@ class Database:
         for id_members, name_members in data_members.items():
             try:
                 self.cur.execute('INSERT INTO botzilla.users (ID, name, date_added) VALUES ({}, \'{}\', {});'.format(
-                    id_members, str(name_members), 'NULL'))
+                    id_members, str(name_members), 'current_timestamp'))
             except Exception as e:
                 print('While getting user info, Error :\n{}'.format(e.args))
                 continue
