@@ -178,6 +178,7 @@ class AdminCommands:
             await self.bot.say(embed=embed)
             return
 
+        print(result_cur)
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='{}'.format(result_cur),
                               colour=0xf20006)
