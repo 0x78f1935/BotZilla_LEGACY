@@ -159,13 +159,21 @@ class AdminCommands:
 
 
     @commands.command(pass_context=True, hiddewn=True)
-    async def sendalldm(self, ctx):
+    async def sendalldm(self, ctx, *, content: str = None):
         """
         Reload and reconnect music channels
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        if content is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may want to read **`{}help sendalldm for more info`**'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -181,7 +189,12 @@ class AdminCommands:
                 row = str(row).replace(',)', '')
                 print(row)
                 target = await self.bot.get_user_info('275280442884751360')
-                await self.bot.send_message(target, row)
+                embed = discord.Embed(title='{}:'.format('Announcement:'),
+                                      description='{}'.format(content),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                await self.bot.send_message(target, embed=embed)
         except Exception as e:
             print(e.args)
 
