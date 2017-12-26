@@ -51,7 +51,7 @@ class Database:
 
         ## autoconnect to music channel
         # select id from botzilla.music where type_channel = 'voice';
-        # prep for auto join
+        # prep for autojoin
         self.music_channels = []
         self.cur.execute("select id from botzilla.music where type_channel = 'voice';")
         rows = self.cur.fetchall()

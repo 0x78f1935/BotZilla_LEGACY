@@ -97,11 +97,7 @@ async def on_message(message):
                                   description='{}'.format('http://lmgtfy.com/?q={}'.format(search_term)),
                                   colour=0xf20006)
             last_message = await bot.send_message(message.channel, embed=embed)
-            try:
-                database = Database(bot)
-                await bot.add_reaction(last_message, emojiUnicode['succes'], after=database.get_music())
-            except:
-                await bot.add_reaction(last_message, emojiUnicode['succes'])
+            await bot.add_reaction(last_message, emojiUnicode['succes'])
         await bot.process_commands(message)
     except:
         pass
