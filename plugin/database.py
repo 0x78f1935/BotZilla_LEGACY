@@ -22,7 +22,8 @@ class Database:
 
         debounce = False
         reconnect_db_times = int(self.database_settings['reconnect_trys'])
-        while True:
+        print('Loading database')
+        for i in str(reconnect_db_times):
             try:
                 self.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
                     self.database_settings['db_name'],
@@ -42,11 +43,8 @@ class Database:
                 break
             except:
                 print('I am unable to connect to the Database')
-            reconnect_db_times -= 1
-            if reconnect_db_times <= 0:
-                print('failed to connect with the database giving up...')
-                break
-            continue
+            print('failed to connect with the database giving up...')
+
 
 
     @commands.command(pass_context=True)
@@ -151,6 +149,52 @@ class Database:
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
+    @commands.command(pass_context=True, hidden=True)
+    async def get_music(self, ctx):
+        """
+        Update datebase with current active music channels
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        if not self.database_online:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Could not connect to database.',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+
+        data_members = {"id" : "channel_name" , "server_name" : "total_users"}
+        for server in self.bot.servers:
+            for channel in server.channels:
+                if 'music' in str(channel).lower():
+                    print(str(channel.server.name).lower())
+                    data_members.update({channel.id: channel.name, server.name: str(len(set(self.bot.get_all_members())))})
+
+        print(data_members)
+
+        #
+        # self.cur.execute('ROLLBACK;')
+        # for id_members, name_members in data_members.items():
+        #     try:
+        #         self.cur.execute('INSERT INTO botzilla.music (ID, channel_name, server_name, total_users) VALUES ({}, \'{}\', \'{}\'. {});'.format(
+        #             id_members, str(name_members)))
+        #     except Exception as e:
+        #         print('Error gathering info user:\n{}'.format(e.args))
+        #         continue
+        # embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+        #                       description='Done with gathering user info!',
+        #                       colour=0xf20006)
+        # a = await self.bot.say(embed=embed)
+        # await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
     @commands.command(pass_context=True)
     async def dbexport(self, ctx):
         """
@@ -211,6 +255,8 @@ class Database:
                 row = str(row).replace('["', '')
                 row = str(row).replace('"]', '')
                 self.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES {}".format(row))
+
+
 
 
 def setup(bot):
