@@ -129,7 +129,12 @@ class Database:
         print(b)
         for items in b:
             print(items)
-            self.cur.execute('INSERT INTO botzilla.users (ID) VALUES ({});'.format(items))
+            try:
+                self.cur.execute('INSERT INTO botzilla.users (ID) VALUES ({});'.format(items))
+            except Exception as e:
+                print('While getting user info, Error : {}'.format(e.args))
+                continue
+            print("Done with gathering user info")
 
 
 def setup(bot):
