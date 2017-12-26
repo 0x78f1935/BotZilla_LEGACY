@@ -159,7 +159,7 @@ class AdminCommands:
 
 
     @commands.command(pass_context=True)
-    async def reloadch(self, ctx):
+    async def sendalldm(self, ctx):
         """
         Reload and reconnect music channels
         """
@@ -173,17 +173,10 @@ class AdminCommands:
 
         try:
             database = Database(self.bot)
-            database.get_music()
-            for item in database.music_channels:
-                try:
-                    channel = self.bot.get_channel(str(item))
-                    if channel == None:
-                        pass
-                    else:
-                        print('Joined : {}'.format(channel))
-                        await self.bot.join_voice_channel(channel)
-                except Exception as e:
-                    continue
+
+            clean_id = []
+            for item in database.cur.execute("select id from botzilla.users;"):
+                print(item)
         except Exception as e:
             print(e.args)
 

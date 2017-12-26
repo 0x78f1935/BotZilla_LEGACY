@@ -68,7 +68,7 @@ async def on_ready():
             try:
                 channel = bot.get_channel(str(item))
                 if channel == None:
-                    pass
+                    print('Mis Match Music channel')
                 else:
                     print('Joined : {}'.format(channel))
                     await bot.join_voice_channel(channel)
