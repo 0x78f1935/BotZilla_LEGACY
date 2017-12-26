@@ -181,7 +181,7 @@ class AdminCommands:
 
 
     @commands.command(pass_context=True)
-    async def query(self, ctx, *, psql: str = None):
+    async def sql(self, ctx, *, query: str = None):
         """
         Acces database and run a query.
         use a query psql based.
@@ -194,7 +194,7 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-        if psql is None:
+        if query is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You should know what you are doing.\n Especially with this command! :angry:',
                                   colour=0xf20006)
@@ -202,7 +202,7 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         try:
-            self.cur.execute('{}'.format(str(psql)))
+            self.cur.execute('{}'.format(str(query)))
             result_cur = self.cur.fetchall()
             if not result_cur:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -220,7 +220,7 @@ class AdminCommands:
         except psycopg2.Error as e:
             if e.pgerror is None:
                 embed = discord.Embed(title='{}:'.format('SQL Succes'),
-                                      description='```sql\n{}```'.format(str(psql)),
+                                      description='```sql\n{}```'.format(str(query)),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
