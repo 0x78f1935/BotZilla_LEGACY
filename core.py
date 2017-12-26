@@ -6,6 +6,7 @@ import json
 from options.opus_loader import load_opus_lib
 from urllib.parse import quote as uriquote
 import re
+import asyncio
 
 
 try:
@@ -62,9 +63,9 @@ async def on_ready():
     try:
         database = Database(bot)
         for item in database.music_channels:
-            channel = bot.get_channel(item)
+            channel = bot.get_channel(str(item))
             print(channel)
-            await bot.join_voice_channel(str(channel))
+            await bot.join_voice_channel(channel)
     except Exception as e:
         print(e.args)
 
