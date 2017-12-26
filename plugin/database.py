@@ -176,7 +176,7 @@ class Database:
                 if 'music' in str(channel).lower():
                     channel_type = str(channel.type)
                     print(channel_type)
-                    data = [int(channel.id), str(channel.name), str(server.name), str(channel.type)]
+                    data = [int(channel.id), str(channel.name), str(server.name), str(channel.type).replace('.', '')]
                     data_channels.append(data)
 
 
