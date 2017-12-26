@@ -4,6 +4,7 @@ import discord
 import traceback
 import psycopg2
 import csv
+import re
 
 
 class Database:
@@ -183,6 +184,10 @@ class Database:
         self.cur.execute('ROLLBACK;')
         for items in data_channels:
             print(items)
+            items[0] = items[0].replace("#$;'%","")
+            items[1] = items[1].replace("#$;'%", "")
+            items[2] = items[2].replace("#$;'%", "")
+            items[3] = items[3].replace("#$;'%", "")
             self.cur.execute(
                 'INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES ({}, \'{}\', \'{}\', \'{}\');'.format(
                     items[0], items[1], items[2], items[3]
