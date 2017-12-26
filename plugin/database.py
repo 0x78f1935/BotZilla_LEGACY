@@ -176,7 +176,7 @@ class Database:
                 if 'music' in str(channel).lower():
                     channel_type = str(channel.type)
                     print(channel_type)
-                    data = [int(channel.id), str(channel.name), str(server.name), str(channel.type).replace('.', '')]
+                    data = [int(channel.id), str(channel.name), str(server.name), str(channel.type)]
                     data_channels.append(data)
 
 
@@ -184,7 +184,7 @@ class Database:
         for items in data_channels:
             print(items)
             self.cur.execute(
-                'INSERT INTO botzilla.music (ID, channel_name, server_name, total_users) VALUES ({}, \'{}\', \'{}\'. {});'.format(
+                'INSERT INTO botzilla.music (ID, channel_name, server_name, total_users) VALUES ({}, \'{}\', \'{}\', {});'.format(
                     items[0], items[1], items[2], items[3]
                 ))
         # for id_members, name_members in data_members.items():
