@@ -24,7 +24,6 @@ class Database:
         self.database_import_location_music_channels = './import/DBE_music_channels.csv'
         self.client = discord.Client()
 
-        debounce = False
         reconnect_db_times = int(self.database_settings['reconnect_trys'])
         print('Loading database')
         for i in str(reconnect_db_times):
