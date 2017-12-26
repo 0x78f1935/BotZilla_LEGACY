@@ -149,5 +149,39 @@ class AdminCommands:
         await self.bot.say("Reloaded all.")
 
 
+    @commands.command(pass_context=True)
+    async def query(self, ctx, *, psql: str = None):
+        """
+        Acces database and run a query.
+        use a query psql based.
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            await self.bot.say(embed=embed)
+            return
+
+        if psql is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You should know what you are doing.\n Especially with this command! :angry:',
+                                  colour=0xf20006)
+            await self.bot.say(embed=embed)
+            return
+
+        self.cur.execute('{}'.format(psql))
+        result_cur = self.cur.fetchall()
+        if not result_cur:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='No data found :cry:',
+                                  colour=0xf20006)
+            await self.bot.say(embed=embed)
+            return
+
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='{}'.format(result_cur),
+                              colour=0xf20006)
+        await self.bot.say(embed=embed)
+
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
