@@ -20,8 +20,8 @@ class AdminCommands:
             if not debounce:
                 debounce = True
                 try:
-                    conn = psycopg2.connect("dbname='gis' user='postgres' host='1.1.1.2' port='5432' password=''")
-                    self.cur = conn.cursor()
+                    self.conn = psycopg2.connect("dbname='gis' user='postgres' host='1.1.1.2' port='5432' password=''")
+                    self.cur = self.conn.cursor()
                     print('Established Database connection')
                     break
                 except:
@@ -205,6 +205,40 @@ class AdminCommands:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
+    @commands.command(pass_context=True)
+    async def insert(self, ctx, *, table: str = None, columns: str = None, content: str = None):
+        """
+        Acces database and insert into a table.
+        Insert data in table `table, colums, content`.
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        if table or columns or content is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You should know what you are doing.\n Especially with this command! :angry:',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+
+        self.cur.execute('INSERT INTO {} ({}) VALUES ({});'.format(table, columns, content))
+        self.conn.commit()
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='Data import in table: {}'. format(table),
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
 
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
