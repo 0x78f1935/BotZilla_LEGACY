@@ -9,7 +9,6 @@
 CREATE SCHEMA botzilla;
 CREATE TABLE botzilla.users(
     ID bigserial primary key,
-    name varchar(254),
-    date_added timestamp default NULL
+    name varchar(254)
 );
--- INSERT INTO botzilla.users (ID, name, date_added) VALUES (456164513, 'test15', NULL);
+-- INSERT INTO botzilla.users (ID, name,) VALUES (456164513, 'test15');
