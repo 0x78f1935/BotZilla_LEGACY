@@ -202,12 +202,10 @@ class Database:
             return
 
 
-        self.cur.execute("SELECT * from botzilla.users;")
-        rows = self.cur.fetchall()
         with open(self.database_import_location_users, 'r') as output:
-            writer = csv.writer(output, lineterminator='\n')
-            for val in rows:
-                self.cur.execute("INSERT INTO botzilla.users (ID, name, date_added) VALUES {}".format([val]))
+            reader = csv.DictReader(output)
+            for row in reader:
+                self.cur.execute("INSERT INTO botzilla.users (ID, name, date_added) VALUES {}".format(row))
 
 
 def setup(bot):
