@@ -3,7 +3,7 @@ import json
 import discord
 import traceback
 import sys
-
+import io
 
 class AdminCommands:
     def __init__(self, bot):
@@ -176,11 +176,16 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-        embed = discord.Embed(title='{}:'.format(function),
-                              description=sys.stdout(str(help(function))),
-                              colour=0xf20006)
-        a = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        try:
+            help(function)
+            stdout = io.StringIO()
+            value = stdout.getvalue()
+
+            embed = discord.Embed(title='{}:'.format(function),
+                                  description=f'{value}',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
 def setup(bot):
