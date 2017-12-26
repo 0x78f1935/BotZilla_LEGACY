@@ -14,12 +14,19 @@ class AdminCommands:
         self.exchange = self.tmp_config['exchange']
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
-        try:
-            conn = psycopg2.connect("dbname='bz' user='postgres' host='1.1.1.2' port='5342' password=''")
-            self.cur = conn.cursor()
-            print('Established Database connection')
-        except:
-            print('I am unable to connect to the Database')
+
+        debounce = False
+        while True:
+            if not debounce:
+                debounce = True
+                try:
+                    conn = psycopg2.connect("dbname='bz' user='postgres' host='1.1.1.2' port='5432' password=''")
+                    self.cur = conn.cursor()
+                    print('Established Database connection')
+                    break
+                except:
+                    print('I am unable to connect to the Database')
+                debounce = False
 
 
     @commands.command(pass_context=True)
