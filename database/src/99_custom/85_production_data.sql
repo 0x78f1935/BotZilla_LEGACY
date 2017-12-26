@@ -6,5 +6,5 @@
 --antennes.csv
 --------------
 
-CREATE DATABASE IF NOT EXISTS botzilla;
+CREATE DATABASE botzilla;
 CREATE SCHEMA IF NOT EXISTS botzilla.users;
