@@ -376,10 +376,8 @@ class Database:
                 reader = csv.reader(file, delimiter=',')
                 for row in reader:
                     b = re.search(r'^(.*)', str(row)).group()
-                    b = b.replace('[', '')
-                    b = b.replace(']', '')
-                    b = b.replace(',', '')
-                    row = b.replace("'", '')
+                    print(b)
+                    print(type(b))
 
                     self.cur.execute("INSERT INTO botzilla.musicque(url) VALUES('{}');".format(row))
 
