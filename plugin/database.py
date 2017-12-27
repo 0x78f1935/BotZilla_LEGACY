@@ -375,18 +375,18 @@ class Database:
             with open(self.database_import_musicque, 'r') as file:
                 reader = csv.reader(file, delimiter=',')
                 for row in reader:
-                    b = re.search(r'^(.*)', row).group()
+                    b = re.search(r'^(.*)', str(row)).group()
                     b = b.replace('[', '')
                     b = b.replace(']', '')
                     row = b.replace(',', '')
-                    print(row)
-                    print(type(row))
-                    self.cur.execute("INSERT INTO botzilla.musicque(url) VALUES('{}');".format(str(row)))
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Done!',
-                                          colour=0xf20006)
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                    self.cur.execute("INSERT INTO botzilla.musicque(url) VALUES('{}');".format(row))
+
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Done!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
                                   description='```Python\n{}```'.format(e.args),
