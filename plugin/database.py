@@ -22,8 +22,8 @@ class Database:
         self.database_import_location_users = './import/DBE_users.csv'
         self.database_export_location_music_channels = './export/DBE_music_channels.csv'
         self.database_import_location_music_channels = './import/DBE_music_channels.csv'
-        self.database_export_musicque = './import/DBE_music_que.cxv'
-        self.database_import_musicque = './import/DBE_music_que.cxv'
+        self.database_export_musicque = './import/DBE_music_que.csv'
+        self.database_import_musicque = './import/DBE_music_que.csv'
         self.client = discord.Client()
         self.music_channels = []
         self.reconnect_db_times = int(self.database_settings['reconnect_trys'])
