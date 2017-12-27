@@ -30,7 +30,7 @@ class Database:
 
         self.reconnect_db_times = int(self.database_settings['reconnect_trys'])
         print('Loading database')
-        for i in str(self.reconnect_db_times):
+        for i in range(self.reconnect_db_times):
             try:
                 self.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
                     self.database_settings['db_name'],

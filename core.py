@@ -62,7 +62,7 @@ async def on_ready():
 
     print('Try auto connect music channel...')
 
-    for i in len('BotZilla'):
+    for i in range(database.reconnect_db_times):
         try:
             database = Database(bot)
             for item in database.music_channels:
