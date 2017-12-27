@@ -77,7 +77,7 @@ class REPL:
             exec(to_compile, env)
         except SyntaxError as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='{}'.format(self.get_syntax_error(e)),
+                                  description='```Python\n{}\n```'.format(self.get_syntax_error(e)),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -90,7 +90,7 @@ class REPL:
         except Exception as e:
             value = stdout.getvalue()
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='```py\n{}{}\n```'.format(value, traceback.format_exc()),
+                                  description='```Python\n{}{}\n```'.format(value, traceback.format_exc()),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -103,14 +103,14 @@ class REPL:
             if ret is None:
                 if value:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='```py\n{}\n```'.format(value),
+                                          description='```Python\n{}\n```'.format(value),
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             else:
                 self._last_result = ret
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='```py\n{}{}\n```'.format(value, ret),
+                                      description='```Python\n{}{}\n```'.format(value, ret),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])

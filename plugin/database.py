@@ -375,6 +375,11 @@ class Database:
             with open(self.database_import_musicque, 'r') as file:
                 reader = csv.reader(file, delimiter=',')
                 for row in reader:
+                    b = re.search(r'^(.*)', row).group()
+                    b = b.replace('[', '')
+                    b = b.replace(']', '')
+                    b = b.replace(',', '')
+                    row = b.replace("'", '')
                     row = str(row).replace('[\ "', '')
                     row = str(row).replace('"]', '')
                     self.cur.execute("INSERT INTO botzilla.musicque (url) VALUES {}".format(row[0]))
