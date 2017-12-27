@@ -378,7 +378,14 @@ class Database:
                     b = re.search(r'^(.*)', str(row)).group()
                     b = b.replace('["(\'', '')
                     row = b.replace('\',)"]', '')
-                    self.cur.execute("INSERT INTO botzilla.musicque(url) VALUES('{}');".format(row))
+                    try:
+                        self.cur.execute("INSERT INTO botzilla.musicque(url) VALUES('{}');".format(row))
+                    except Exception as e:
+                        embed = discord.Embed(title='{}:'.format('Warning'),
+                                              description='```Python\n{}\n```',
+                                              colour=0xf20006)
+                        a = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(a, self.emojiUnicode['warning']
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Done!',
