@@ -376,9 +376,8 @@ class Database:
                 reader = csv.reader(file, delimiter=',')
                 for row in reader:
                     b = re.search(r'^(.*)', str(row)).group()
-                    print(b)
-                    print(type(b))
-
+                    b = b.replace('["(\'', '')
+                    row = b.replace('\',)"]', '')
                     self.cur.execute("INSERT INTO botzilla.musicque(url) VALUES('{}');".format(row))
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
