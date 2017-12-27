@@ -93,6 +93,13 @@ async def on_message_delete(message):
         owner = await bot.get_user_info(owners)
         await bot.send_message(owner, fmt.format(message))
 
+    if 'Last' in message:
+        embed = discord.Embed(title='{}:'.format(message.author.name),
+                              description='{}'.format('Last!'),
+                              colour=0xf20006)
+        last_message = await bot.send_message(message.channel, embed=embed)
+        await bot.add_reaction(last_message, emojiUnicode['succes'])
+
 
 @bot.event
 async def on_message(message):
