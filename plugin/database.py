@@ -375,7 +375,7 @@ class Database:
             with open(self.database_import_musicque, 'r') as file:
                 reader = csv.reader(file, delimiter=',')
                 for row in reader:
-                    self.cur.execute("INSERT INTO botzilla.musicque (url) VALUES {}".format(row))
+                    self.cur.execute("INSERT INTO botzilla.musicque (url) VALUES {}".format(str(row)))
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Done!',
                                           colour=0xf20006)

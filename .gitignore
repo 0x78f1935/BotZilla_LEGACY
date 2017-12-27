@@ -112,3 +112,4 @@ venv.bak/
 /options/config.js
 /export/*
 /data/*
+*~*
