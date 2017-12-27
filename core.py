@@ -111,7 +111,7 @@ async def on_message(message):
         pass
 
     try:
-        if 'Last' in message:
+        if 'Last' in message.content:
             embed = discord.Embed(title='{}:'.format(message.author.name),
                                   description='{}'.format('Last!'),
                                   colour=0xf20006)
