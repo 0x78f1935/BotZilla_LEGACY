@@ -23,6 +23,8 @@ class Database:
         self.database_import_location_users = './import/DBE_users.csv'
         self.database_export_location_music_channels = './export/DBE_music_channels.csv'
         self.database_import_location_music_channels = './import/DBE_music_channels.csv'
+        self.database_export_musicque = './import/DBE_music_que.cxv'
+        self.database_import_musicque = './import/DBE_music_que.cxv'
         self.client = discord.Client()
         self.music_channels = []
 
@@ -267,6 +269,21 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
+        try:
+            self.cur.execute("SELECT * from botzilla.musicque;")
+            rows = self.cur.fetchall()
+            with open(self.database_export_musicque, 'w') as output:
+                writer = csv.writer(output, lineterminator='\n')
+                for val in rows:
+                    writer.writerow([val])
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format('Error'),
+                                  description='{}'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Done!',
                               colour=0xf20006)
@@ -324,6 +341,22 @@ class Database:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
+        try:
+            with open(self.database_import_musicque, 'r') as file:
+                reader = csv.reader(file, delimiter=',')
+                for row in reader:
+                    row = str(row).replace('["', '')
+                    row = str(row).replace('"]', '')
+                    self.cur.execute("INSERT INTO botzilla.musicque (url) VALUES {}".format(row))
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format('Error'),
+                                  description='{}'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Done!',
