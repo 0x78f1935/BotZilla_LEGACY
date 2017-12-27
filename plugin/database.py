@@ -28,9 +28,9 @@ class Database:
         self.client = discord.Client()
         self.music_channels = []
 
-        reconnect_db_times = int(self.database_settings['reconnect_trys'])
+        self.reconnect_db_times = int(self.database_settings['reconnect_trys'])
         print('Loading database')
-        for i in str(reconnect_db_times):
+        for i in str(self.reconnect_db_times):
             try:
                 self.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
                     self.database_settings['db_name'],
