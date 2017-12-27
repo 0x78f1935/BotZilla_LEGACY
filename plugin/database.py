@@ -382,7 +382,7 @@ class Database:
                         self.cur.execute("INSERT INTO botzilla.musicque(url) VALUES('{}');".format(row))
                     except Exception as e:
                         embed = discord.Embed(title='{}:'.format('Warning'),
-                                              description='```Python\n{}\n```',
+                                              description='```Python\n{}\n```'.format(e.args),
                                               colour=0xf20006)
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, self.emojiUnicode['warning']
