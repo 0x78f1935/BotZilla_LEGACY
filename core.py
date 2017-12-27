@@ -27,6 +27,13 @@ botzillaChannels = tmp_config['channels']
 # If you would like to change that, change "pm_help = True" to "pm_help = False" on line 9.
 bot = Bot(description="BotZilla is build / maintained / self hosted by PuffDip", command_prefix=config['prefix'], pm_help=False)
 music_channels = botzillaChannels['music']
+database_file_found = False
+try:
+    database = Database(bot)
+    database_file_found = True
+except:
+    pass
+
 
 
 @bot.event
@@ -62,11 +69,9 @@ async def on_ready():
 
     print('Try auto connect music channel...')
 
-    try:
-        database = Database(bot)
+    if database_file_found:
         for i in range(database.reconnect_db_times):
             try:
-                database = Database(bot)
                 for item in database.music_channels:
                     try:
                         channel = bot.get_channel(str(item))
@@ -78,9 +83,7 @@ async def on_ready():
                     except Exception as e:
                         continue
             except Exception as e:
-                continue
-    except Exception as e:
-        print('Database seems offline:\n{}'.format(e.args))
+                print('Database seems offline:\n{}'.format(e.args))
 
 @bot.event
 async def on_message_delete(message):
