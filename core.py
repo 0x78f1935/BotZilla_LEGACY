@@ -73,6 +73,7 @@ async def on_ready():
         for i in range(database.reconnect_db_times):
             try:
                 for item in database.music_channels:
+                    print(f'item {item} found')
                     try:
                         channel = bot.get_channel(str(item))
                         if channel == None:
