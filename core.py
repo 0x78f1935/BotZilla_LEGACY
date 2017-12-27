@@ -25,7 +25,7 @@ exchange = tmp_config['exchange']
 botzillaChannels = tmp_config['channels']
 # The help command is currently set to be Direct Messaged.
 # If you would like to change that, change "pm_help = True" to "pm_help = False" on line 9.
-bot = Bot(description="BotZilla is build / maintained / self hosted by PuffDip", command_prefix=config['prefix'], pm_help=False)
+bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip", command_prefix=config['prefix'], pm_help=False)
 music_channels = botzillaChannels['music']
 database_file_found = False
 try:
@@ -113,3 +113,6 @@ async def on_message(message):
 
 if __name__ == '__main__':
     bot.run(config['bot-key'])
+
+
+for
