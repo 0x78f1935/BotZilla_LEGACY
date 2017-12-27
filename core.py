@@ -78,7 +78,7 @@ async def on_ready():
                     try:
                         channel = bot.get_channel(str(item[0]))
                         if channel == None:
-                            print('Mis Match Music channel')
+                            print(f'item {item[0]} MISMATCH, can\'t joining {channel.server.name} : {channel.name}')
                         else:
                             print(f'item {item[0]} found, joining {channel.server.name} : {channel.name}')
                             print('Joined : {}'.format(channel))
