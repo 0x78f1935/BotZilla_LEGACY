@@ -340,12 +340,41 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='Done!',
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
+    @commands.command(pass_context=True)
+    async def musicimport(self, ctx):
+        """
+        Import CSV data from import folder
+        Imports music
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+
+        if not self.database_online:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Could not connect to database.',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+
+
         try:
             with open(self.database_import_musicque, 'r') as file:
                 reader = csv.reader(file, delimiter=',')
                 for row in reader:
-                    row = str(row).replace('["', '')
-                    row = str(row).replace('"]', '')
                     self.cur.execute("INSERT INTO botzilla.musicque (url) VALUES {}".format(row))
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
@@ -360,6 +389,7 @@ class Database:
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 
 
 def setup(bot):
