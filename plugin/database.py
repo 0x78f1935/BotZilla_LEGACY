@@ -1,14 +1,10 @@
 from discord.ext import commands
 import json
 import discord
-import traceback
 import psycopg2
 import csv
 import re
-from io import BytesIO
 from discord.errors import HTTPException
-from options.utils import chat_formatting, dataIO, downloader
-from collections import defaultdict
 
 
 class Database:
@@ -30,8 +26,8 @@ class Database:
         self.database_import_musicque = './import/DBE_music_que.cxv'
         self.client = discord.Client()
         self.music_channels = []
-        self.downloader = downloader.Downloader()
         self.reconnect_db_times = int(self.database_settings['reconnect_trys'])
+
 
         for i in range(self.reconnect_db_times):
             print('Loading database')
@@ -59,8 +55,6 @@ class Database:
         ## autoconnect to music channel
         # select id from botzilla.music where type_channel = 'voice';
         # prep for autojoin
-
-
 
 
     @commands.command(pass_context=True)
@@ -128,7 +122,6 @@ class Database:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
-
 
 
     @commands.command(pass_context=True, hidden=True)
@@ -216,85 +209,6 @@ class Database:
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Done with gathering music channel info!',
-                              colour=0xf20006)
-        a = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-
-
-    @commands.command(pass_context=True)
-    async def pldumpdb(self, ctx, *, song_url):
-        """
-        Dumps the individual urls of a playlist
-        into the database botzilla.musicque
-        """
-        if ctx.message.author.id not in self.owner_list:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may not use this command :angry: only admins!',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-
-        try:
-            info = await self.downloader.extract_info(self.loop, song_url.strip('<>'), download=False, process=False)
-        except Exception as e:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Could not extract info from input url\nError:\n```Python\n{}```\n'.format(e.args),
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
-            return
-
-        if not info:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Could not extract info from input url, No data',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
-            return
-
-        if not info.get('entries', None):
-            # TODO: Retarded playlist checking
-            # set(url, webpageurl).difference(set(url))
-
-            if info.get('url', None) != info.get('webpage_url', info.get('url', None)):
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='This does not seems to be a playlist\nI\'m confident you could use **`{}help pldump`** instead'.format(self.config['prefix']),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['error'])
-                return
-            else:
-                return await self.cmd_pldump(ctx.message.channel, info.get(''))
-
-        linegens = defaultdict(lambda: None, **{
-            "youtube":    lambda d: 'https://www.youtube.com/watch?v=%s' % d['id'],
-            "soundcloud": lambda d: d['url'],
-            "bandcamp":   lambda d: d['url']
-        })
-
-        exfunc = linegens[info['extractor'].split(':')[0]]
-
-        if not exfunc:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Could not extract info from input url, unsupported playlist type.',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
-            return
-
-        with BytesIO() as fcontent:
-            for item in info['entries']:
-                fcontent.write(exfunc(item).encode('utf8') + b'\n')
-
-            fcontent.seek(0)
-            await self.bot.send_file(ctx.message.channel,
-                                     fcontent,
-                                     filename='playlist.txt',
-                                     content="Here's the url dump for {}".format(song_url))
-
-        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description=':mailbox_with_mail:',
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
