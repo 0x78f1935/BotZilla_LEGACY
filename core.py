@@ -70,23 +70,22 @@ async def on_ready():
     print('Try auto connect music channel...')
 
     if database_file_found:
-        for i in range(database.reconnect_db_times):
-            try:
-                database.cur.execute('select id from botzilla.music where type_channel = \'voice\';')
-                music_channel_ids = database.cur.fetchall()
-                for item in music_channel_ids:
-                    try:
-                        channel = bot.get_channel(str(item[0]))
-                        if channel == None:
-                            print(f'item {item[0]} MISMATCH, can\'t joining {channel.server.name} : {channel.name}')
-                        else:
-                            print(f'item {item[0]} found, joining {channel.server.name} : {channel.name}')
-                            print('Joined : {}'.format(channel))
-                            await bot.join_voice_channel(channel)
-                    except Exception as e:
-                        continue
-            except Exception as e:
-                print('Database file seems missing:\n{}'.format(e.args))
+        try:
+            database.cur.execute('select id from botzilla.music where type_channel = \'voice\';')
+            music_channel_ids = database.cur.fetchall()
+            for item in music_channel_ids:
+                try:
+                    channel = bot.get_channel(str(item[0]))
+                    if channel == None:
+                        print(f'item {item[0]} MISMATCH, can\'t joining {channel.server.name} : {channel.name}')
+                    else:
+                        print(f'item {item[0]} found, joining {channel.server.name} : {channel.name}')
+                        print('Joined : {}'.format(channel))
+                        await bot.join_voice_channel(channel)
+                except Exception as e:
+                    continue
+        except Exception as e:
+            print('Database seems offline:\n{}'.format(e.args))
 
 @bot.event
 async def on_message_delete(message):
