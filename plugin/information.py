@@ -254,7 +254,7 @@ class Information:
             info = await self.downloader.extract_info(self.loop, song_url.strip('<>'), download=False, process=False)
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Could not extract info from input url\n{}\n'.format(e.args),
+                                  description='Could not extract info from input url\n I\'m confident you could use ```{}help pldumpdb``` instead'.format(e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])

@@ -239,7 +239,7 @@ class Database:
             info = await self.downloader.extract_info(self.loop, song_url.strip('<>'), download=False, process=False)
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Could not extract info from input url\n{}\n'.format(e.args),
+                                  description='Could not extract info from input url\nError:\n```Python\n{}```\n'.format(e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -259,7 +259,7 @@ class Database:
 
             if info.get('url', None) != info.get('webpage_url', info.get('url', None)):
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='This does not seem to be a playlist.',
+                                      description='This does not seems to be a playlist\n I\'m confident you could use ```{}help pldumpdb``` instead',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
