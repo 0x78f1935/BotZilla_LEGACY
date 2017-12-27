@@ -75,9 +75,11 @@ async def on_ready():
                 database.cur.execute('select id from botzilla.music where type_channel = \'voice\';')
                 music_channel_ids = database.cur.fetchall()
                 for item in music_channel_ids:
-                    print(f'item {item} found')
+                    clean_id = item.replace('(')
+                    clean_id = item.replace(',)')
+                    print(f'item {clean_id} found')
                     try:
-                        channel = bot.get_channel(str(item))
+                        channel = bot.get_channel(str(clean_id))
                         if channel == None:
                             print('Mis Match Music channel')
                         else:
