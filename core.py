@@ -62,22 +62,22 @@ async def on_ready():
 
     print('Try auto connect music channel...')
 
-    for i in range(database.reconnect_db_times):
-        try:
-            database = Database(bot)
-            for item in database.music_channels:
-                try:
-                    channel = bot.get_channel(str(item))
-                    if channel == None:
-                        print('Mis Match Music channel')
-                    else:
-                        print('Joined : {}'.format(channel))
-                        await bot.join_voice_channel(channel)
-                except Exception as e:
-                    continue
-        except Exception as e:
-            print(e.args)
-            continue
+
+    try:
+        database = Database(bot)
+        for i in range(database.reconnect_db_times):
+            try:
+                channel = bot.get_channel(str(i))
+                if channel == None:
+                    print('Mis Match Music channel')
+                else:
+                    print('Joined : {}'.format(channel))
+                    await bot.join_voice_channel(channel)
+            except Exception as e:
+                continue
+    except Exception as e:
+        print(e.args)
+        print('Can\'t connect to database.. Giving up ..')
 
 @bot.event
 async def on_message_delete(message):
