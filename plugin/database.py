@@ -118,7 +118,7 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
         except HTTPException as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='Try to use `limit 10`. Output may be to big\n{}'.format(e.args),
+                                  description='Try to use `limit 10`. Output may be to big\n```Python\n{}```'.format(e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -156,7 +156,7 @@ class Database:
                 self.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, \'{}\');'.format(
                     id_members, str(name_members)))
             except Exception as e:
-                print('Error gathering info user:\n{}'.format(e.args))
+                print('Error gathering info user:\n```Python\n{}```'.format(e.args))
                 continue
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Done with gathering user info!',
@@ -204,7 +204,7 @@ class Database:
                         items[0], items[1], items[2], items[3]
                     ))
             except Exception as e:
-                print('Error gathering info music channels:\n{}'.format(e.args))
+                print('Error gathering info music channels:\n```Python\n{}```'.format(e.args))
                 continue
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -245,7 +245,7 @@ class Database:
                     writer.writerow([val])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='{}'.format(e.args),
+                                  description='```Python\n{}\n```'.format(e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -260,7 +260,7 @@ class Database:
                     writer.writerow([val])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='{}'.format(e.args),
+                                  description='```Python\n{}\n```'.format(e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -275,7 +275,7 @@ class Database:
                     writer.writerow([val])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='{}'.format(e.args),
+                                  description='```Python\n{}\n```'.format(e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -319,7 +319,7 @@ class Database:
                     self.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES {}".format(row))
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='{}'.format(e.args),
+                                  description='```Python\n{}\n```'.format(e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -334,7 +334,7 @@ class Database:
                     self.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES {}".format(row))
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='{}'.format(e.args),
+                                  description='```Python\n{}\n```'.format(e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -375,6 +375,8 @@ class Database:
             with open(self.database_import_musicque, 'r') as file:
                 reader = csv.reader(file, delimiter=',')
                 for row in reader:
+                    row = str(row).replace('["', '')
+                    row = str(row).replace('"]', '')
                     self.cur.execute("INSERT INTO botzilla.musicque (url) VALUES {}".format(str(row)))
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Done!',
@@ -383,7 +385,7 @@ class Database:
                     await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='{}'.format(e.args),
+                                  description='```Python\n{}```'.format(e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
