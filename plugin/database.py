@@ -381,7 +381,7 @@ class Database:
                     row = b.replace(',', '')
 
 
-                    self.cur.execute("INSERT INTO botzilla.musicque(url) VALUES('{row}');".format(row))
+                    self.cur.execute("INSERT INTO botzilla.musicque(url) VALUES('{row}');".format(str(row)))
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Done!',
                                           colour=0xf20006)
