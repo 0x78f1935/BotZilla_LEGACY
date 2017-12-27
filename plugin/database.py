@@ -222,7 +222,7 @@ class Database:
 
 
     @commands.command(pass_context=True)
-    async def pldump(self, ctx, *, song_url):
+    async def pldumpdb(self, ctx, *, song_url):
         """
         Dumps the individual urls of a playlist
         into the database botzilla.musicque
