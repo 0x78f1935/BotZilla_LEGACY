@@ -376,6 +376,11 @@ class Database:
                 reader = csv.reader(file, delimiter=',')
                 for row in reader:
                     self.cur.execute("INSERT INTO botzilla.musicque (url) VALUES {}".format(row))
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Done!',
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
                                   description='{}'.format(e.args),
@@ -384,11 +389,7 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
-        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='Done!',
-                              colour=0xf20006)
-        a = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 
 
 
