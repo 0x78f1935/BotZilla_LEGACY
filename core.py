@@ -75,12 +75,12 @@ async def on_ready():
                 database.cur.execute('select id from botzilla.music where type_channel = \'voice\';')
                 music_channel_ids = database.cur.fetchall()
                 for item in music_channel_ids:
-                    print(f'item {item[0]} found')
                     try:
                         channel = bot.get_channel(str(item[0]))
                         if channel == None:
                             print('Mis Match Music channel')
                         else:
+                            print(f'item {item[0]} found, joining {channel.server.name} : {channel.name}')
                             print('Joined : {}'.format(channel))
                             await bot.join_voice_channel(channel)
                     except Exception as e:
