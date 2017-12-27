@@ -80,7 +80,6 @@ async def on_ready():
                         print(f'item {item[0]} MISMATCH, can\'t joining {channel.server.name} : {channel.name}')
                     else:
                         print(f'item {item[0]} found, joining {channel.server.name} : {channel.name}')
-                        print('Joined : {}'.format(channel))
                         await bot.join_voice_channel(channel)
                 except Exception as e:
                     continue
