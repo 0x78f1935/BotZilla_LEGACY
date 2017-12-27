@@ -22,7 +22,10 @@ class NSFW:
 
     @commands.command(pass_context=True)
     async def rule34(self, ctx, *, content=None):
-
+        """"
+        Shows graphical content NSFW.
+        Rule#34 : If it exists there is porn of it. If not, start uploading.
+        """
         if ctx.message.channel.id not in nsfw_channels:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You do not have the permission to use this command outside a NSFW channel.',

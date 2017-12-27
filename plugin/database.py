@@ -397,9 +397,5 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
-
-
-
-
 def setup(bot):
     bot.add_cog(Database(bot))
