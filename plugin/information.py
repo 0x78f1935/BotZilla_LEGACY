@@ -200,7 +200,7 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-    @commands.command(pass_context=True, hidden=True)
+    @commands.command(pass_context=True)
     async def emoji(self, ctx, *, emoji : str =None):
         """
         Shows information about the emoji.
@@ -209,27 +209,23 @@ class Information:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Try `{}help emoji`, That would help..'.format(self.config['prefix']),
                                   colour=0xf20006)
-            self.bot.say(embed=embed)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-        url = 'https://canary.discordapp.com/api/v6/channels/{}/messages/{}/reactions/emoji/@me'.format(ctx.message.channel, emoji)
-
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})) as response:
-                source = response.read()
-            data = json.loads(source)
-
-            print(json.dumps(data, indent=2))
-
-        except Exception as e:
-            stdout = io.StringIO()
-            value = stdout.getvalue()
-            log_new = re.search(r'.+?(?= in position)', str(traceback.format_exc()), flags=0).group(0)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='```py\n{}{}\n```'.format(value, log_new),
+                                  description='```asci\n{}\n```'.format(ascii(emoji)),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='**Error:**\n```Python\n{}\n```'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
 
 
 def setup(bot):

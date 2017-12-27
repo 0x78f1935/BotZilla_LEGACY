@@ -110,15 +110,6 @@ async def on_message(message):
     except:
         pass
 
-    try:
-        if 'Last' in message.content:
-            embed = discord.Embed(title='{}:'.format(message.author.name),
-                                  description='{}'.format('Last!'),
-                                  colour=0xf20006)
-            last_message = await bot.send_message(message.channel, embed=embed)
-            await bot.add_reaction(last_message, emojiUnicode['succes'])
-    except:
-        pass
 
 if __name__ == '__main__':
     bot.run(config['bot-key'])
