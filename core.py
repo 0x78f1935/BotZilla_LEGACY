@@ -73,7 +73,8 @@ async def on_ready():
         for i in range(database.reconnect_db_times):
             try:
                 database.cur.execute('select id from botzilla.music where type_channel = \'voice\';')
-                for item in database.music_channels:
+                music_channel_ids = database.cur.fetchall()
+                for item in music_channel_ids:
                     print(f'item {item} found')
                     try:
                         channel = bot.get_channel(str(item))
