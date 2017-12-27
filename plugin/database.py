@@ -47,7 +47,7 @@ class Database:
                     for item in row:
                         self.music_channels.append(item)
                 self.database_online = True
-                return
+                break
             except:
                 print('I am unable to connect to the Database')
             print('failed to connect with the database giving up...')
