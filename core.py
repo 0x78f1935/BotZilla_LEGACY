@@ -72,6 +72,7 @@ async def on_ready():
     if database_file_found:
         for i in range(database.reconnect_db_times):
             try:
+                database.cur.execute('select id from botzilla.music where type_channel = \'voice\';')
                 for item in database.music_channels:
                     print(f'item {item} found')
                     try:
@@ -84,7 +85,7 @@ async def on_ready():
                     except Exception as e:
                         continue
             except Exception as e:
-                print('Database seems offline:\n{}'.format(e.args))
+                print('Database file seems missing:\n{}'.format(e.args))
 
 @bot.event
 async def on_message_delete(message):
