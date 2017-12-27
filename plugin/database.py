@@ -378,11 +378,8 @@ class Database:
                     b = re.search(r'^(.*)', row).group()
                     b = b.replace('[', '')
                     b = b.replace(']', '')
-                    b = b.replace(',', '')
-                    row = b.replace("'", '')
-                    row = str(row).replace('[\ "', '')
-                    row = str(row).replace('"]', '')
-                    self.cur.execute("INSERT INTO botzilla.musicque (url) VALUES {}".format(str(row)))
+                    row = b.replace(',', '')
+                    self.cur.execute("INSERT INTO botzilla.musicque (url) VALUES {}".format(row))
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Done!',
                                           colour=0xf20006)
