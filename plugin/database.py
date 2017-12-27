@@ -378,7 +378,9 @@ class Database:
                     b = re.search(r'^(.*)', str(row)).group()
                     b = b.replace('[', '')
                     b = b.replace(']', '')
-                    row = b.replace(',', '')
+                    b = b.replace(',', '')
+                    row = b.replace("'", '')
+
                     self.cur.execute("INSERT INTO botzilla.musicque(url) VALUES({});".format(row))
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
