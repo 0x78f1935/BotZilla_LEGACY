@@ -215,13 +215,13 @@ class Information:
 
         try:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='```asci\n{}\n```'.format(ascii(emoji)),
+                                  description='```asci\n{}\n```'.format(ascii(str(emoji))),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='**Error:**\n```Python\n{}\n```'.format(e.args),
+                                  description='```Python\n{}\n```'.format(e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
