@@ -259,7 +259,7 @@ class Database:
 
             if info.get('url', None) != info.get('webpage_url', info.get('url', None)):
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='This does not seems to be a playlist\n I\'m confident you could use ```{}help pldumpdb``` instead',
+                                      description='This does not seems to be a playlist\nI\'m confident you could use **`{}help pldump`** instead'.format(self.config['prefix']),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
