@@ -136,9 +136,18 @@ async def on_ready():
                                 rows = str(rows).replace('\',)]', '')
                                 print(rows)
                                 player = await voice.create_ytdl_player(f"{rows}")
+                                print(player.is_live)
                                 player.start()
+                                print(player.is_live)
+                                a = await player.is_done()
+                                print('{}\n{}'.format(a, player.is_live))
                     except Exception as e:
                         print(f'Database seems offline:\n{e.args}')
+
+
+
+
+
 
 
 @bot.event

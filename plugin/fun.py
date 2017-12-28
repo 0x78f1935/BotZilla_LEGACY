@@ -38,16 +38,13 @@ class Image:
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
             return
-
+        await self.bot.send_typing(ctx.message.channel)
         url = ("http://api.giphy.com/v1/gifs/random?&api_key={}&tag={}"
                "".format(self.config['giphy-api-key'], keywords))
 
         with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})) as response:
             source = response.read()
-
-
         result = json.loads(source)
-
 
         if response.status == 200:
             if result["data"]:
