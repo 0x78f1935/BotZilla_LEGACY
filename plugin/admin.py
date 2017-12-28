@@ -228,7 +228,7 @@ class AdminCommands:
 
 
     @commands.command(pass_context=True, hiddewn=True)
-    async def senddm(self, ctx, *, id: int = None, content: str = None):
+    async def senddm(self, ctx, *, id: str = None, content: str = None):
         """
         DM single user
         """
