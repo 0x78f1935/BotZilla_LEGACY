@@ -65,6 +65,21 @@ def dbimport():
     except Exception as e:
         print('Could not load music data\n{}'.format(e.args))
 
+    try:
+        with open(database.database_import_musicque, 'r') as file:
+            reader = csv.reader(file, delimiter=',')
+            for row in reader:
+                b = re.search(r'^(.*)', str(row)).group()
+                b = b.replace('[', '')
+                b = b.replace('"(', '')
+                b = b.replace(',)"', '')
+                row = b.replace(']', '')
+                database.cur.execute("INSERT INTO botzilla.musicque(url) VALUES({});".format(row))
+                database.cur.execute("ROLLBACK;")
+    except Exception as e:
+        print('Could not load music que:\n{}'.format(e.args))
+
+
 
 @bot.event
 async def on_ready():
