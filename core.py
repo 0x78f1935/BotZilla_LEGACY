@@ -42,6 +42,7 @@ def dbimport():
     Import CSV data from import folder
     """
 
+    # Users
     try:
         with open(database.database_import_location_users, 'r') as file:
             reader = csv.reader(file, delimiter=',')
@@ -51,9 +52,10 @@ def dbimport():
                 database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{};".format(row))
                 database.cur.execute("ROLLBACK;")
     except Exception as e:
-        print('Could not load data users\n{}'.format(e.args))
+        pass
 
 
+    #music channels
     try:
         with open(database.database_import_location_music_channels, 'r') as file:
             reader = csv.reader(file, delimiter=',')
@@ -63,8 +65,10 @@ def dbimport():
                 database.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES{};".format(row))
                 database.cur.execute("ROLLBACK;")
     except Exception as e:
-        print('Could not load music data\n{}'.format(e.args))
+        pass
 
+
+    # music urls
     try:
         with open(database.database_import_musicque, 'r') as file:
             reader = csv.reader(file, delimiter=',')
@@ -77,7 +81,7 @@ def dbimport():
                 database.cur.execute("INSERT INTO botzilla.musicque(url) VALUES({});".format(row))
                 database.cur.execute("ROLLBACK;")
     except Exception as e:
-        print('Could not load music que:\n{}'.format(e.args))
+        pass
 
 
 
