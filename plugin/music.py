@@ -1436,6 +1436,7 @@ class Audio:
 
     @commands.command(pass_context=True, no_pm=True)
     async def play(self, ctx, *, url_or_search_terms):
+        await self.bot.send_typing(ctx.message.channel)
         """Plays a link / searches and play"""
         url = url_or_search_terms
         server = ctx.message.server
@@ -1454,19 +1455,32 @@ class Audio:
         try:
             self.has_connect_perm(author, server)
         except AuthorNotConnected:
-            await self.bot.say("You must join a voice channel before I can"
-                               " play anything.")
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You must join a voice channel before I can play anything',
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
         except UnauthorizedConnect:
-            await self.bot.say("I don't have permissions to join your"
-                               " voice channel.")
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='I don\'t have permissions to join your voice channel',
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
         except UnauthorizedSpeak:
-            await self.bot.say("I don't have permissions to speak in your"
-                               " voice channel.")
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='I don\'t have permissions to speak in your voice channel',
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
         except ChannelUserLimit:
-            await self.bot.say("Your voice channel is full.")
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Your voice channel is full',
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
 
         if not self.voice_connected(server):
@@ -1480,14 +1494,22 @@ class Audio:
         #   downloading the next song
 
         if self.currently_downloading(server):
-            await self.bot.say("I'm already downloading a file!")
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='I\'m already downloading a file!',
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
 
         url = url.strip("<>")
 
         if self._match_any_url(url):
             if not self._valid_playable_url(url):
-                await self.bot.say("That's not a valid URL.")
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='That\'s not a valid URL',
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                 return
         else:
             url = url.replace("/", "&#47")
