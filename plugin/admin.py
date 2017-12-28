@@ -220,7 +220,7 @@ class AdminCommands:
 
 
     @commands.command(pass_context=True, hiddewn=True)
-    async def senddm(self, ctx, *, id: str = None, content: str = None):
+    async def senddm(self, ctx, *, user_id: str = None, content: str = None):
         """
         DM single user
         """
@@ -233,8 +233,9 @@ class AdminCommands:
             return
 
 
-        id = [int(s) for s in id.split() if s.isdigit()]
-        print(id)
+        id = [int(s) for s in user_id.split() if s.isdigit()]
+        id = str(id).replace('[', '')
+        id = id.replace(']', '')
         content = content.replace(id[0], '')
         target = await self.bot.get_user_info(id)
         embed = discord.Embed(title='{}:'.format('Announcement'),
