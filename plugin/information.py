@@ -175,7 +175,7 @@ class Information:
         """Give information on how many servers Botzilla is active in.
         Also shows additional information"""
         if self.database_file_found:
-            self.database.cur.execute("select id from botzilla.music where type_channel = 'voice';")
+            self.database.cur.execute("select count(*) from botzilla.users;")
             rows = self.database.cur.fetchall()
             a = str(rows).replace('[(', '')
             self.total_users = a.replace(',)]', '')
