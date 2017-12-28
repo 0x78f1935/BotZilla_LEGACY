@@ -48,7 +48,7 @@ def dbimport():
             for row in reader:
                 row = str(row).replace('["', '')
                 row = str(row).replace('"]', '')
-                database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES({});".format(row))
+                database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{};".format(row))
     except Exception as e:
         print('Could not load data users\n{}'.format(e.args))
 
@@ -59,7 +59,7 @@ def dbimport():
             for row in reader:
                 row = str(row).replace('["', '')
                 row = str(row).replace('"]', '')
-                database.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES({});".format(row))
+                database.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES{};".format(row))
     except Exception as e:
         print('Could not load music data\n{}'.format(e.args))
 

@@ -316,7 +316,7 @@ class Database:
                 for row in reader:
                     row = str(row).replace('["', '')
                     row = str(row).replace('"]', '')
-                    self.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES({})".format(row))
+                    self.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{}".format(row))
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
                                   description='```Python\n{}\n```'.format(e.args),
@@ -331,7 +331,7 @@ class Database:
                 for row in reader:
                     row = str(row).replace('["', '')
                     row = str(row).replace('"]', '')
-                    self.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES({})".format(row))
+                    self.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES{}".format(row))
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
                                   description='```Python\n{}\n```'.format(e.args),
