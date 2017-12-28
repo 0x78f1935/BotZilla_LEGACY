@@ -240,13 +240,11 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-        try:
-            target = await self.bot.get_user_info(id)
-            a = await self.bot.send_message(target, content)
-            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-        except Exception as e:
-            a = await self.bot.say(e.args)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+        target = await self.bot.get_user_info(id)
+        a = await self.bot.send_message(target, str(content))
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 
 
 
