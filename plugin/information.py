@@ -180,7 +180,7 @@ class Information:
             a = str(rows).replace('[(', '')
             self.total_users = a.replace(',)]', '')
             embed = discord.Embed(title="{}".format("Server Count"),
-                                  description="We are in **{}** servers\nWe have **{}** members\nWe had in total **{}** users.".format(
+                                  description="We are in **{}** servers\nWe have **{}** members\nWe had a total of **{}** users.".format(
                                       str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users),
                                   color=0xf20006)
             a = await self.bot.say(embed=embed)
