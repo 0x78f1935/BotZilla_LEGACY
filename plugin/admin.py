@@ -233,6 +233,7 @@ class AdminCommands:
             return
 
         id = [int(s) for s in id.split() if s.isdigit()]
+        print(id)
         content = content.replace(id, '')
         target = await self.bot.get_user_info(id)
         embed = discord.Embed(title='{}:'.format('Announcement'),
