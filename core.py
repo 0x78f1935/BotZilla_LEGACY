@@ -135,7 +135,7 @@ async def on_ready():
                                 rows = str(rows).replace('[(\'', '')
                                 rows = str(rows).replace('\',)]', '')
                                 print(rows)
-                                player = await voice.create_ytdl_player(f"'{rows}'")
+                                player = await voice.create_ytdl_player(f"{rows}")
                                 player.start()
                     except Exception as e:
                         print(f'Database seems offline:\n{e.args}')
