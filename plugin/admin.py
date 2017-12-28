@@ -208,21 +208,13 @@ class AdminCommands:
                                       colour=0xf20006)
                 last_message = await self.bot.send_message(target, embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                if self.database_file_found:
-                    self.database.cur.execute("select count(*) from botzilla.users;")
-                    self.database.cur.execute("ROLLBACK;")
-                    rows = self.database.cur.fetchall()
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Done ',
-                                          colour=0xf20006)
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                else:
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Done',
-                                          colour=0xf20006)
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Done',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         except Exception as e:
             print(e.args)
 
@@ -240,10 +232,19 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-
+        id = [int(s) for s in id.split() if s.isdigit()]
+        content = content.replace(id, '')
         target = await self.bot.get_user_info(id)
-        a = await self.bot.send_message(target, str(content))
-        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        embed = discord.Embed(title='{}:'.format('Announcement'),
+                              description='{}'.format(content),
+                              colour=0xf20006)
+        last_message = await self.bot.send_message(target, embed=embed)
+        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
+        target = await self.bot.get_user_info(str(self.config['owner-id']))
+        last_message = await self.bot.send_message(target, embed=embed)
+        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
 
 
 
