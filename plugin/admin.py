@@ -245,9 +245,9 @@ class AdminCommands:
                               colour=0xf20006)
         last_message = await self.bot.send_message(target, embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-        target = await self.bot.get_user_info(self.config['owner-id'])
-        last_message = await self.bot.send_message(target, embed=embed)
-        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+        for owner in self.config['owner-id']:
+            last_message = await self.bot.send_message(target, '{}'.format(owner))
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
 
 
