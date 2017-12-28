@@ -139,7 +139,7 @@ async def on_ready():
                                 print(player.is_live)
                                 player.start()
                                 print(player.is_live)
-                                a = await player.is_done()
+                                a = player.is_done()
                                 print('{}\n{}'.format(a, player.is_live))
                     except Exception as e:
                         print(f'Database seems offline:\n{e.args}')
