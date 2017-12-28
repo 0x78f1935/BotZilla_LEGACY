@@ -232,9 +232,10 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
+
         id = [int(s) for s in id.split() if s.isdigit()]
         print(id)
-        content = content.replace(id, '')
+        content = content.replace(id[0], '')
         target = await self.bot.get_user_info(id)
         embed = discord.Embed(title='{}:'.format('Announcement'),
                               description='{}'.format(content),
