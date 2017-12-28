@@ -45,12 +45,9 @@ class Image:
         with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})) as response:
             source = response.read()
 
-        if os.name == 'nt':
-            result = json.loads(source)
 
-        if os.name == 'posix':
-            print('{}gif may not work on linux'.format(self.config['prefix']))
-            result = json.loads(str(source))
+        result = json.loads(source)
+
 
         if response.status == 200:
             if result["data"]:
