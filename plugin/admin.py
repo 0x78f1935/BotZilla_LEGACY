@@ -198,6 +198,7 @@ class AdminCommands:
             database = Database(self.bot)
             database.cur.execute("select id from botzilla.users;")
             rows = database.cur.fetchall()
+            database.cur.execute("ROLLBACK;")
             for row in rows:
                 row = str(row).replace('(', '')
                 row = str(row).replace(',)', '')
