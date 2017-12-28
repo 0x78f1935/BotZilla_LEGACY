@@ -108,6 +108,7 @@ async def on_ready():
                     try:
                         if database_file_found:
                             if database.database_online:
+                                dbimport()
                                 database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
                                 rows = database.cur.fetchall()
                                 rows = str(rows).replace('[(\'', '')
@@ -116,27 +117,6 @@ async def on_ready():
                                 voice.create_ytdl_player(f'{rows}')
                     except Exception as e:
                         print(f'Database seems offline:\n{e.args}')
-
-
-    # if database_file_found:
-    #     print('DatabaseFile found!')
-    #     if database.database_online:
-    #         try:
-    #             dbimport()
-    #             database.cur.execute("select id from botzilla.music where type_channel = 'voice';")
-    #             music_channel_ids = database.cur.fetchall()
-    #             for item in music_channel_ids:
-    #                 try:
-    #                     channel = bot.get_channel(str(item[0]))
-    #                     if channel == None:
-    #                         print(f'item {item[0]} MISMATCH, can\'t joining {channel.server.name} : {channel.name}')
-    #                     else:
-    #                         print(f'item {item[0]} found, joining {channel.server.name} : {channel.name}')
-    #                         await bot.join_voice_channel(channel)
-    #                 except Exception as e:
-    #                     continue
-    #         except Exception as e:
-    #             print('Database seems offline:\n{}'.format(e.args))
 
 
 @bot.event
