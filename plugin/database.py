@@ -43,6 +43,7 @@ class Database:
                 print('Established Database connection')
                 self.cur.execute("select id from botzilla.music where type_channel = 'voice';")
                 rows = self.cur.fetchall()
+                self.cur.execute("ROLLBACK;")
                 for row in rows:
                     for item in row:
                         self.music_channels.append(item)
@@ -89,6 +90,7 @@ class Database:
         try:
             self.cur.execute('{}'.format(str(query)))
             result_cur = self.cur.fetchall()
+            self.cur.execute("ROLLBACK;")
             if not result_cur:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='No data found :cry:',
@@ -150,11 +152,11 @@ class Database:
             for member in server.members:
                 data_members.update({member.id:member.name})
 
-        self.cur.execute('ROLLBACK;')
         for id_members, name_members in data_members.items():
             try:
                 self.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, \'{}\');'.format(
                     id_members, str(name_members)))
+                self.cur.execute("ROLLBACK;")
             except Exception as e:
                 print('Error gathering info user:\n```Python\n{}```'.format(e.args))
                 continue
@@ -203,6 +205,7 @@ class Database:
                     'INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES ({}, \'{}\', \'{}\', \'{}\');'.format(
                         items[0], items[1], items[2], items[3]
                     ))
+                self.cur.execute("ROLLBACK;")
             except Exception as e:
                 print('Error gathering info music channels:\n```Python\n{}```'.format(e.args))
                 continue
@@ -239,6 +242,7 @@ class Database:
         try:
             self.cur.execute("SELECT * from botzilla.users;")
             rows = self.cur.fetchall()
+            self.cur.execute("ROLLBACK;")
             with open(self.database_export_location_users, 'w') as output:
                 writer = csv.writer(output, lineterminator='\n')
                 for val in rows:
@@ -254,6 +258,7 @@ class Database:
         try:
             self.cur.execute("SELECT * from botzilla.music;")
             rows = self.cur.fetchall()
+            self.cur.execute("ROLLBACK;")
             with open(self.database_export_location_music_channels, 'w') as output:
                 writer = csv.writer(output, lineterminator='\n')
                 for val in rows:
@@ -269,6 +274,7 @@ class Database:
         try:
             self.cur.execute("SELECT * from botzilla.musicque;")
             rows = self.cur.fetchall()
+            self.cur.execute("ROLLBACK;")
             with open(self.database_export_musicque, 'w') as output:
                 writer = csv.writer(output, lineterminator='\n')
                 for val in rows:
@@ -317,6 +323,7 @@ class Database:
                     row = str(row).replace('["', '')
                     row = str(row).replace('"]', '')
                     self.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{}".format(row))
+                    self.cur.execute("ROLLBACK;")
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
                                   description='```Python\n{}\n```'.format(e.args),
@@ -332,6 +339,7 @@ class Database:
                     row = str(row).replace('["', '')
                     row = str(row).replace('"]', '')
                     self.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES{}".format(row))
+                    self.cur.execute("ROLLBACK;")
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
                                   description='```Python\n{}\n```'.format(e.args),
@@ -380,6 +388,7 @@ class Database:
                     row = b.replace(']', '')
                     try:
                         self.cur.execute("INSERT INTO botzilla.musicque(url) VALUES({});".format(row))
+                        self.cur.execute("ROLLBACK;")
                     except Exception as e:
                         pass
 
