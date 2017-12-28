@@ -241,7 +241,7 @@ class AdminCommands:
             return
 
         try:
-            target = await self.bot.get_user_info(str(id))
+            target = await self.bot.get_user_info(id)
             a = await self.bot.send_message(target, content)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         except Exception as e:
