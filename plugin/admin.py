@@ -27,6 +27,12 @@ class AdminCommands:
         self.blue_T = '\U0001f1f9'
         self.blue_Z = '\U0001f1ff'
         self.arrow_up = '\u2b06'
+        try:
+            self.database = Database(self.bot)
+            self.database_file_found = True
+        except:
+            print('AdminPanel: Database files not found')
+            pass
 
 
 
@@ -202,13 +208,47 @@ class AdminCommands:
                                       colour=0xf20006)
                 last_message = await self.bot.send_message(target, embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Done',
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                if self.database_file_found:
+                    self.database.cur.execute("select count(*) from botzilla.users;")
+                    self.database.cur.execute("ROLLBACK;")
+                    rows = self.database.cur.fetchall()
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Done ',
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                else:
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Done',
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         except Exception as e:
             print(e.args)
+
+
+    @commands.command(pass_context=True, hiddewn=True)
+    async def senddm(self, ctx, *, id: int = None, content: str = None):
+        """
+        DM single user
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        try:
+            target = await self.bot.get_user_info(str(id))
+            a = await self.bot.send_message(target, content)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        except Exception as e:
+            a = await self.bot.say(e.args)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
 
 
 def setup(bot):

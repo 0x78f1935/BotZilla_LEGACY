@@ -135,7 +135,7 @@ class Information:
             self.database = Database(self.bot)
             self.database_file_found = True
         except:
-            print('Database files not found')
+            print('Information: Database files not found')
             pass
 
     # ========================
@@ -176,6 +176,7 @@ class Information:
         Also shows additional information"""
         if self.database_file_found:
             self.database.cur.execute("select count(*) from botzilla.users;")
+            self.database.cur.execute("ROLLBACK;")
             rows = self.database.cur.fetchall()
             a = str(rows).replace('[(', '')
             self.total_users = a.replace(',)]', '')
