@@ -180,7 +180,7 @@ class Information:
             a = str(rows).replace('[(', '')
             self.total_users = a.replace(',)]', '')
             embed = discord.Embed(title="{}".format("Server Count"),
-                                  description=f"We are in **{str(len(self.bot.servers))}** servers\nWe have **{str(len(set(self.bot.get_all_members()))))}** members\nWe had ever in total **{self.total_users}** users.",
+                                  description=f"We are in **{len(self.bot.servers))}** servers\nWe have **{str(len(set(self.bot.get_all_members()))))}** members\nWe had ever in total **{self.total_users}** users.",
                                   color=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
