@@ -177,7 +177,7 @@ class Information:
         if self.database_file_found:
             self.database.cur.execute("select count(*) from botzilla.users;")
             self.database.cur.execute("ROLLBACK;")
-            rows = self.database.cur.fetchone()
+            rows = self.database.cur.fetchall()
             a = str(rows).replace('[(', '')
             self.total_users = a.replace(',)]', '')
             embed = discord.Embed(title="{}".format("Server Count"),
