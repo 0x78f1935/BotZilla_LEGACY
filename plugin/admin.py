@@ -238,7 +238,7 @@ class AdminCommands:
         id = str(id).replace('[', '')
         id = id.replace(']', '')
         content = user_id.replace('{}'.format(id), '')
-        self.bot.delete_message(ctx.message)
+        await self.bot.delete_message(ctx.message)
         target = await self.bot.get_user_info(id)
         embed = discord.Embed(title='{}:'.format('Announcement'),
                               description='{}'.format(content),
@@ -246,7 +246,7 @@ class AdminCommands:
         last_message = await self.bot.send_message(target, embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
         for owner in self.config['owner-id']:
-            last_message = await self.bot.send_message('{}'.format(owner), embed=embed)
+            last_message = await self.bot.send_message(owner, embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
 
