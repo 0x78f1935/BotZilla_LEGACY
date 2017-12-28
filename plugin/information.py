@@ -185,12 +185,13 @@ class Information:
                                   color=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-        embed = discord.Embed(title="{}".format("Server Count"),
-                              description="We are in **{}** servers \nWe have **{}** members".format(
-                                  str(len(self.bot.servers)), str(len(set(self.bot.get_all_members())))),
-                              color=0xf20006)
-        a = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        else:
+            embed = discord.Embed(title="{}".format("Server Count"),
+                                  description="We are in **{}** servers \nWe have **{}** members".format(
+                                      str(len(self.bot.servers)), str(len(set(self.bot.get_all_members())))),
+                                  color=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
     @commands.command(pass_context=True)
