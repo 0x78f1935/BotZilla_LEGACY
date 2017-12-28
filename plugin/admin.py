@@ -220,9 +220,10 @@ class AdminCommands:
 
 
     @commands.command(pass_context=True, hiddewn=True)
-    async def senddm(self, ctx, *, user_id: str = None, content: str = None):
+    async def senddm(self, ctx, *, user_id: str = None, Message: str = None):
         """
         DM single user
+        First ID after ID message
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -237,15 +238,14 @@ class AdminCommands:
         id = str(id).replace('[', '')
         id = id.replace(']', '')
         content = user_id.replace('{}'.format(id), '')
-        self.bot.delete_message(user_id)
+        self.bot.delete_message(ctx.message)
         target = await self.bot.get_user_info(id)
         embed = discord.Embed(title='{}:'.format('Announcement'),
                               description='{}'.format(content),
                               colour=0xf20006)
         last_message = await self.bot.send_message(target, embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-
-        target = await self.bot.get_user_info(str(self.config['owner-id']))
+        target = await self.bot.get_user_info(self.config['owner-id'])
         last_message = await self.bot.send_message(target, embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
