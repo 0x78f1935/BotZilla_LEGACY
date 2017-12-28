@@ -33,7 +33,7 @@ try:
     database = Database(bot)
     database_file_found = True
 except:
-    print('Database files not found')
+    print('Core: Database files not found')
     pass
 
 

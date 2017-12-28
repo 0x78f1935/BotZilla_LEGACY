@@ -11,6 +11,10 @@ import urllib.parse
 import traceback
 import io
 import re
+try:
+    from plugin.database import Database
+except:
+    pass
 
 
 def to_emoji(c):
@@ -127,6 +131,13 @@ class Information:
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
 
+        try:
+            self.database = Database(self.bot)
+            self.database_file_found = True
+        except:
+            print('Database files not found')
+            pass
+
     # ========================
     #   Bot related commands
 
@@ -163,6 +174,16 @@ class Information:
     async def count(self, ctx):
         """Give information on how many servers Botzilla is active in.
         Also shows additional information"""
+        if self.database_file_found:
+            self.database.cur.execute("select count(*) from botzilla.users;")
+            rows = self.database.cur.fetchall()
+            a = str(rows).replace('[(', '')
+            self.total_users = a.replace(',)]', '')
+            embed = discord.Embed(title="{}".format("Server Count"),
+                                  description=f"We are in **{str(len(self.bot.servers))}** servers\nWe have **{str(len(set(self.bot.get_all_members()))))}** members\nWe had ever in total **{self.total_users}** users.",
+                                  color=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         embed = discord.Embed(title="{}".format("Server Count"),
                               description="We are in **{}** servers \nWe have **{}** members".format(
                                   str(len(self.bot.servers)), str(len(set(self.bot.get_all_members())))),
@@ -199,6 +220,7 @@ class Information:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 
     @commands.command(pass_context=True)
     async def emoji(self, ctx, *, emoji : str =None):
