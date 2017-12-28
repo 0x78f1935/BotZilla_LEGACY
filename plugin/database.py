@@ -356,7 +356,7 @@ class Database:
 
 
     @commands.command(pass_context=True)
-    async def musicimport(self, ctx):
+    async def importmusic(self, ctx):
         """
         Import CSV data from import folder
         Imports music
@@ -385,6 +385,8 @@ class Database:
                 for row in reader:
                     b = re.search(r'^(.*)', str(row)).group()
                     b = b.replace('[', '')
+                    b = b.replace('"(', '')
+                    b = b.replace(',)"', '')
                     row = b.replace(']', '')
                     try:
                         self.cur.execute("INSERT INTO botzilla.musicque(url) VALUES({});".format(row))
