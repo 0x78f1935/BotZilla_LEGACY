@@ -237,6 +237,7 @@ class AdminCommands:
         id = str(id).replace('[', '')
         id = id.replace(']', '')
         content = user_id.replace('{}'.format(id), '')
+        self.bot.delete_message(user_id)
         target = await self.bot.get_user_info(id)
         embed = discord.Embed(title='{}:'.format('Announcement'),
                               description='{}'.format(content),
