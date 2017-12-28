@@ -175,12 +175,13 @@ class Information:
         """Give information on how many servers Botzilla is active in.
         Also shows additional information"""
         if self.database_file_found:
-            self.database.cur.execute("select count(*) from botzilla.users;")
+            self.database.cur.execute("select id from botzilla.music where type_channel = 'voice';")
             rows = self.database.cur.fetchall()
             a = str(rows).replace('[(', '')
             self.total_users = a.replace(',)]', '')
             embed = discord.Embed(title="{}".format("Server Count"),
-                                  description=f"We are in **{len(self.bot.servers))}** servers\nWe have **{str(len(set(self.bot.get_all_members()))))}** members\nWe had ever in total **{self.total_users}** users.",
+                                  description="We are in **{}** servers\nWe have **{}** members\nWe had in total **{}** users.".format(
+                                      str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users),
                                   color=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
