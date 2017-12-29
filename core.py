@@ -156,7 +156,7 @@ async def on_player_finished_playing(voice, player, **_):
             rows = str(rows).replace('[(\'', '')
             rows = str(rows).replace('\',)]', '')
             try:
-                player = await voice.create_ytdl_player(f"{rows}")
+                player = await voice.create_ytdl_player(rows)
                 if not player.is_playing():
                     player.start()
                 await on_player_finished_playing(rows, player)
