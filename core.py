@@ -87,6 +87,23 @@ async def dbimport():
         pass
 
 
+async def start_music(channel_id):
+    channel = bot.get_channel(f'{channel_id}')
+    voice = await bot.join_voice_channel(channel)
+    try:
+        if database_file_found:
+            if database.database_online:
+                await dbimport()
+                await start_music(channel.id)
+                try:
+                    pass
+                    player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}")
+                    if player.is_playing():
+                        player.start()
+                except Exception as e:
+                    print(e.args)
+    except Exception as e:
+        print(e.args)
 
 @bot.event
 async def on_ready():
@@ -144,19 +161,11 @@ async def on_ready():
             if 'music' in channel.name.lower():
                 if str(channel.type) == 'voice':
                     print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
-                    channel = bot.get_channel(channel.id)
-                    voice = await bot.join_voice_channel(channel)
                     try:
                         if database_file_found:
                             if database.database_online:
                                 await dbimport()
-                                try:
-                                    pass
-                                    player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}")
-                                    if player.is_playing():
-                                        player.start()
-                                except Exception as e:
-                                    print(f'item {channel.id} found, FAILED to join {channel.server.name} : {channel.name}\n{e.args}')
+                                await start_music(channel.id)
                     except Exception as e:
                         print(f'Database seems offline:\n{e.args}')
 
