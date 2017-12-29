@@ -40,7 +40,7 @@ except:
     pass
 
 
-def dbimport():
+async def dbimport():
     """
     Import CSV data from import folder
     """
@@ -120,8 +120,25 @@ async def on_ready():
         bot.load_extension("plugin.{}".format(p))
 
     print('Try auto connect music channel...')
-    joined_servers = []
-    music_list = []
+
+    # get playlist
+    global music_playlist
+    music_playlist = []
+    if database_file_found:
+        if database.database_online:
+            await dbimport()
+            database.cur.execute('select * from botzilla.musicque;')
+            rows = database.cur.fetchall()
+            database.cur.execute("ROLLBACK;")
+            rows = str(rows).replace('[(\'', '')
+            rows = rows.replace(',)', '')
+            rows = rows.replace('(', '')
+            rows = rows.replace('\'', '')
+            links = rows.replace(' ', '')
+            clean_links = links.split(',')
+            for item in clean_links:
+                music_playlist.append(item)
+
     for server in bot.servers:
         for channel in server.channels:
             if 'music' in channel.name.lower():
@@ -132,14 +149,7 @@ async def on_ready():
                     try:
                         if database_file_found:
                             if database.database_online:
-                                dbimport()
-                                database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
-                                rows = database.cur.fetchall()
-                                database.cur.execute("ROLLBACK;")
-                                rows = str(rows).replace('[(\'', '')
-                                rows = rows.replace('\',)]', '')
-                                music_list.append(rows)
-                                print(music_list)
+                                await dbimport()
                                 try:
                                     pass
                                     # player = await voice.create_ytdl_player(f"{rows}")
