@@ -65,8 +65,7 @@ class Music:
                 for item in clean_links:
                     self.music_playlist.append(item)
 
-
-    @commands.Bot.event()
+    @Bot.bot.event
     async def autojoin_music_channels(self):
         for server in self.bot.servers:
             for channel in server.channels:
