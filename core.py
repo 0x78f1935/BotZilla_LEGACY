@@ -9,7 +9,7 @@ import re
 import random
 import csv
 import asyncio
-from plugin import music
+from plugin.music import Music
 
 
 try:
@@ -31,14 +31,7 @@ botzillaChannels = tmp_config['channels']
 bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip", command_prefix=config['prefix'], pm_help=False)
 music_channels = botzillaChannels['music']
 database_file_found = False
-
-async def done_playing(channel_id):
-    channel = bot.get_channel(channel_id)
-    voice = bot.join_voice_channel(channel)
-    player = voice.create_ytdl_player(f"{random.choice(music_playlist)}", after=done_playing(channel_id))
-    if player.is_playing():
-        player.start()
-
+music = Music()
 
 try:
     database = Database(bot)
@@ -116,7 +109,7 @@ async def on_ready():
         "games",
         "gamestats",
         "information",
-        #"music",
+        "music",
         "nsfw",
         "python_code_in_dc",
         "test"
@@ -127,46 +120,8 @@ async def on_ready():
     for p in plugins:
         bot.load_extension("plugin.{}".format(p))
 
-    print('Try auto connect music channel...')
-
-    # get playlist
-    global music_playlist
-    music_playlist = []
-    if database_file_found:
-        if database.database_online:
-            await dbimport()
-            database.cur.execute('select * from botzilla.musicque;')
-            rows = database.cur.fetchall()
-            database.cur.execute("ROLLBACK;")
-            rows = str(rows).replace('[(\'', '')
-            rows = rows.replace(',)', '')
-            rows = rows.replace('(', '')
-            rows = rows.replace('\'', '')
-            links = rows.replace(' ', '')
-            clean_links = links.split(',')
-            for item in clean_links:
-                music_playlist.append(item)
-
-    for server in bot.servers:
-        for channel in server.channels:
-            if 'music' in channel.name.lower():
-                if str(channel.type) == 'voice':
-                    print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
-                    channel_id = channel.id
-                    channel = bot.get_channel(channel.id)
-                    voice = bot.join_voice_channel(channel)
-                    try:
-                        if database_file_found:
-                            if database.database_online:
-                                await dbimport()
-                                try:
-                                    player = voice.create_ytdl_player(f"{random.choice(music_playlist)}", after=await done_playing(channel_id))
-                                    if player.is_playing():
-                                        player.start()
-                                except Exception as e:
-                                    print(f'item {channel.id} found, FAILED to join {channel.server.name} : {channel.name}\n{e.args}')
-                    except Exception as e:
-                        print(f'Database seems offline:\n{e.args}')
+    music.get_playlist(bot)
+    music.autojoin_music_channels(bot)
 
 
 @bot.event

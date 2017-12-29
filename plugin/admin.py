@@ -252,9 +252,5 @@ class AdminCommands:
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
 
-
-
-
-
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
