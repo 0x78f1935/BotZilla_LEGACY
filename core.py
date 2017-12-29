@@ -32,7 +32,8 @@ bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip",
 music_channels = botzillaChannels['music']
 database_file_found = False
 
-async def done_playing(player:object):
+async def done_playing(player):
+    print(type(player))
     print(player.duration())
 
 try:
