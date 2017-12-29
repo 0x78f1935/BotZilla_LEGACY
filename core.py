@@ -90,10 +90,11 @@ async def create_player(channel_id):
     channel = bot.get_channel(f'{channel_id}')
     voice = await bot.join_voice_channel(channel)
     player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}")
-    if not player.is_playing():
+    if player.is_playing():
         player.start()
     await asyncio.sleep(player.duration)
     print('Song finished playing')
+    player.yt(f"{random.choice(music_playlist)}")
 
 
 async def start_music(channel_id):
