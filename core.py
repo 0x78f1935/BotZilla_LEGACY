@@ -122,7 +122,7 @@ async def on_ready():
         bot.load_extension("plugin.{}".format(p))
 
     await music.get_playlist()
-    await music.autojoin_music_channels(bot)
+    await music.autojoin_music_channels()
 
 
 @bot.event
