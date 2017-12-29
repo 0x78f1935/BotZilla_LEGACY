@@ -3,7 +3,6 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 import json
 import random
-from core import dbimport
 
 try:
     from plugin.database import Database
@@ -52,7 +51,7 @@ class Music:
 
         if database_file_found:
             if self.database.database_online:
-                await dbimport()
+                await Database.dbimport()
                 self.database.cur.execute('select * from botzilla.musicque;')
                 rows = self.database.cur.fetchall()
                 self.database.cur.execute("ROLLBACK;")
@@ -80,7 +79,7 @@ class Music:
                         try:
                             if database_file_found:
                                 if self.database.database_online:
-                                    await dbimport()
+                                    await Database.dbimport()
                                     try:
                                         player = voice.create_ytdl_player(f"{random.choice(music_playlist)}", after=await Music.done_playing(self, channel_id))
                                         if player.is_playing():
