@@ -160,7 +160,8 @@ async def on_ready():
                         if database_file_found:
                             if database.database_online:
                                 await dbimport()
-                                await start_music(channel.id, loop=asyncio.get_event_loop())
+                                loop = asyncio.get_event_loop()
+                                await start_music(channel.id, loop=loop)
                     except Exception as e:
                         print(f'Database seems offline:\n{e.args}')
 
