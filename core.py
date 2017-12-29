@@ -136,10 +136,9 @@ async def on_ready():
                                 database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
                                 rows = database.cur.fetchall()
                                 database.cur.execute("ROLLBACK;")
-                                rows = str(rows).replace('(\'', '')
-                                rows = rows.replace('\',)', '')
-                                for row in rows:
-                                    music_list.append(row)
+                                rows = str(rows).replace('[(\'', '')
+                                rows = rows.replace('\',)]', '')
+                                music_list.append(rows)
                                 print(music_list)
                                 try:
                                     pass
