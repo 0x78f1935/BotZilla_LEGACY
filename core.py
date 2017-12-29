@@ -32,9 +32,13 @@ bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip",
 music_channels = botzillaChannels['music']
 database_file_found = False
 
-async def done_playing(player):
-    print(type(player))
-    print(player.duration())
+async def done_playing(channel_id):
+    channel = bot.get_channel(channel_id)
+    voice = await bot.join_voice_channel(channel)
+    player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}", after=done_playing(channel_id))
+    if player.is_playing():
+        player.start()
+
 
 try:
     database = Database(bot)
@@ -148,6 +152,7 @@ async def on_ready():
             if 'music' in channel.name.lower():
                 if str(channel.type) == 'voice':
                     print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
+                    channel_id = channel.id
                     channel = bot.get_channel(channel.id)
                     voice = await bot.join_voice_channel(channel)
                     try:
@@ -156,10 +161,9 @@ async def on_ready():
                                 await dbimport()
                                 try:
                                     pass
-                                    player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}")
+                                    player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}", after=done_playing(channel_id))
                                     if player.is_playing():
                                         player.start()
-                                        await done_playing(player)
                                 except Exception as e:
                                     print(f'item {channel.id} found, FAILED to join {channel.server.name} : {channel.name}\n{e.args}')
                     except Exception as e:
