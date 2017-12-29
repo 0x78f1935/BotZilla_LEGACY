@@ -94,11 +94,45 @@ async def create_player(channel_id):
         player.start()
     await asyncio.sleep(player.duration)
     print('Song finished playing')
+    player.stop()
 
 
 async def start_music(channel_id):
     while bot.loop:
         bot.loop.run_until_complete(create_player(channel_id))
+
+async def play_music():
+    # get playlist
+    global music_playlist
+    music_playlist = []
+    if database_file_found:
+        if database.database_online:
+            await dbimport()
+            database.cur.execute('select * from botzilla.musicque;')
+            rows = database.cur.fetchall()
+            database.cur.execute("ROLLBACK;")
+            rows = str(rows).replace('[(\'', '')
+            rows = rows.replace(',)', '')
+            rows = rows.replace('(', '')
+            rows = rows.replace('\'', '')
+            links = rows.replace(' ', '')
+            clean_links = links.split(',')
+            for item in clean_links:
+                music_playlist.append(item)
+
+    for server in bot.servers:
+        for channel in server.channels:
+            if 'music' in channel.name.lower():
+                if str(channel.type) == 'voice':
+                    print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
+                    try:
+                        if database_file_found:
+                            if database.database_online:
+                                await dbimport()
+
+                                await start_music(channel.id)
+                    except Exception as e:
+                        print(f'Database seems offline:\n{e.args}')
 
 
 @bot.event
@@ -133,38 +167,8 @@ async def on_ready():
         bot.load_extension("plugin.{}".format(p))
 
     print('Try auto connect music channel...')
+    await play_music()
 
-    # get playlist
-    global music_playlist
-    music_playlist = []
-    if database_file_found:
-        if database.database_online:
-            await dbimport()
-            database.cur.execute('select * from botzilla.musicque;')
-            rows = database.cur.fetchall()
-            database.cur.execute("ROLLBACK;")
-            rows = str(rows).replace('[(\'', '')
-            rows = rows.replace(',)', '')
-            rows = rows.replace('(', '')
-            rows = rows.replace('\'', '')
-            links = rows.replace(' ', '')
-            clean_links = links.split(',')
-            for item in clean_links:
-                music_playlist.append(item)
-
-    for server in bot.servers:
-        for channel in server.channels:
-            if 'music' in channel.name.lower():
-                if str(channel.type) == 'voice':
-                    print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
-                    try:
-                        if database_file_found:
-                            if database.database_online:
-                                await dbimport()
-
-                                await start_music(channel.id)
-                    except Exception as e:
-                        print(f'Database seems offline:\n{e.args}')
 
 
 @bot.event
