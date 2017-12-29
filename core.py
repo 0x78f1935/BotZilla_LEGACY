@@ -86,17 +86,20 @@ async def dbimport():
     except Exception as e:
         pass
 
-
-async def start_music(channel_id):
+async def create_player(channel_id):
     channel = bot.get_channel(f'{channel_id}')
     voice = await bot.join_voice_channel(channel)
     player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}")
     if player.is_playing():
         player.start()
-    while True:
-        await asyncio.sleep(1)
-        print('slept')
-        await start_music(channel_id)
+    await asyncio.sleep(1)
+    print('Song finished playing')
+    await start_music(channel_id)
+
+async def start_music(channel_id):
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(create_player(channel_id))
+
 
 
 @bot.event
