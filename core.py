@@ -128,7 +128,7 @@ async def on_ready():
                     print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
                     # channel = bot.get_channel(channel.id)
                     # voice = await bot.join_voice_channel(channel)
-                    music.Music.create_voice_client(channel=channel)
+                    music.Music.create_voice_client(bot, channel=channel)
                     try:
                         if database_file_found:
                             if database.database_online:
