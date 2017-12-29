@@ -160,7 +160,6 @@ async def on_ready():
                             if database.database_online:
                                 await dbimport()
                                 try:
-                                    pass
                                     player = voice.create_ytdl_player(f"{random.choice(music_playlist)}", after=await done_playing(channel_id))
                                     if player.is_playing():
                                         player.start()
