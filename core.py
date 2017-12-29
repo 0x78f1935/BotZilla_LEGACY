@@ -120,8 +120,8 @@ async def on_ready():
     for p in plugins:
         bot.load_extension("plugin.{}".format(p))
 
-    music.get_playlist()
-    music.autojoin_music_channels(bot)
+    await music.get_playlist()
+    await music.autojoin_music_channels(bot)
 
 
 @bot.event
