@@ -117,8 +117,7 @@ async def on_ready():
         bot.load_extension("plugin.{}".format(p))
 
     print('Try auto connect music channel...')
-
-    players = {}
+    joined_servers = []
     for server in bot.servers:
         for channel in server.channels:
             if 'music' in channel.name.lower():
@@ -134,20 +133,44 @@ async def on_ready():
                                 rows = database.cur.fetchall()
                                 rows = str(rows).replace('[(\'', '')
                                 rows = str(rows).replace('\',)]', '')
-                                print(rows)
-                                player = await voice.create_ytdl_player(f"{rows}")
-                                print(player.is_live)
-                                player.start()
-                                print(player.is_live)
-                                a = player.is_done()
-                                print('{}\n{}'.format(a, player.is_live))
+                                try:
+                                    player = await voice.create_ytdl_player(f"{rows}")
+                                    if player.is_stopped():
+                                        player.play()
+                                    await on_player_finished_playing(player)
+                                    joined_servers.append(channel.server.name)
+                                except Exception as e:
+                                    print(f'item {channel.id} found, FAILED to join {channel.server.name} : {channel.name}\n{e.args}')
+
                     except Exception as e:
                         print(f'Database seems offline:\n{e.args}')
 
 
+async def on_player_finished_playing(self, player, **_):
+    if not player.playlist.entries and not player.current_entry:
+        if database_file_found:
+            while database.database_online:
+                database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
+                rows = database.cur.fetchall()
+                rows = str(rows).replace('[(\'', '')
+                rows = str(rows).replace('\',)]', '')
 
 
+                info = await self.downloader.safe_extract_info(player.playlist.loop, rows, download=False,
+                                                           process=False)
+                print(info)
+                # TODO: Autoremove false link
 
+                try:
+                    await player.playlist.add_entry(rows, channel=None, author=None)
+                except Exception as e:
+                    print("Error adding song from autoplaylist:", e)
+                    continue
+
+                break
+
+            if not database.database_online:
+                print("No playable songs Database offline.")
 
 
 @bot.event
