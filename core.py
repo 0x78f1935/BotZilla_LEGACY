@@ -135,8 +135,8 @@ async def on_ready():
                                 rows = str(rows).replace('\',)]', '')
                                 try:
                                     player = await voice.create_ytdl_player(f"{rows}")
-                                    if player.is_stopped():
-                                        player.play()
+                                    if player.is_playing():
+                                        player.start()
                                     await on_player_finished_playing(player)
                                     joined_servers.append(channel.server.name)
                                 except Exception as e:
