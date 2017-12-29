@@ -152,10 +152,9 @@ async def on_ready():
                                 await dbimport()
                                 try:
                                     pass
-                                    # player = await voice.create_ytdl_player(f"{rows}")
-                                    # if player.is_playing():
-                                    #     player.start()
-                                    #     joined_servers.append(channel.server.name)
+                                    player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}")
+                                    if player.is_playing():
+                                        player.start()
                                 except Exception as e:
                                     print(f'item {channel.id} found, FAILED to join {channel.server.name} : {channel.name}\n{e.args}')
                     except Exception as e:
