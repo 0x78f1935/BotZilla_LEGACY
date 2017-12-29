@@ -3,6 +3,8 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 import json
 import random
+from discord.ext.commands import Bot
+
 
 try:
     from plugin.database import Database
@@ -64,6 +66,7 @@ class Music:
                     self.music_playlist.append(item)
 
 
+    @commands.Bot.event()
     async def autojoin_music_channels(self):
         for server in self.bot.servers:
             for channel in server.channels:
