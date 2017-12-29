@@ -105,7 +105,7 @@ async def on_ready():
         "games",
         "gamestats",
         "information",
-        "musicown",
+        "music",
         "nsfw",
         "python_code_in_dc",
         "test"
