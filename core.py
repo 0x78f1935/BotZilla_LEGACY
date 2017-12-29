@@ -29,6 +29,8 @@ botzillaChannels = tmp_config['channels']
 bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip", command_prefix=config['prefix'], pm_help=False)
 music_channels = botzillaChannels['music']
 database_file_found = False
+
+
 try:
     database = Database(bot)
     database_file_found = True
@@ -160,9 +162,11 @@ async def on_player_finished_playing(player, **_):
                 if player.is_playing():
                     player.start()
                 await on_player_finished_playing(player)
+
             except Exception as e:
                 print(f'Failed to load new song\n{e.args}')
                 await on_player_finished_playing(player)
+
 
 
 @bot.event
