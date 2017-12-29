@@ -146,7 +146,7 @@ async def on_ready():
                         print(f'Database seems offline:\n{e.args}')
 
 
-async def on_player_finished_playing(self, player, **_):
+async def on_player_finished_playing(player, **_):
     if not player.playlist.entries and not player.current_entry:
         if database_file_found:
             while database.database_online:
@@ -155,10 +155,6 @@ async def on_player_finished_playing(self, player, **_):
                 rows = str(rows).replace('[(\'', '')
                 rows = str(rows).replace('\',)]', '')
 
-
-                info = await self.downloader.safe_extract_info(player.playlist.loop, rows, download=False,
-                                                           process=False)
-                print(info)
                 # TODO: Autoremove false link
 
                 try:
