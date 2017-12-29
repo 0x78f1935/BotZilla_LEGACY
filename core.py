@@ -147,26 +147,25 @@ async def on_ready():
 
 
 async def on_player_finished_playing(player, **_):
-    if not player.playlist.entries and not player.current_entry:
-        if database_file_found:
-            while database.database_online:
-                database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
-                rows = database.cur.fetchall()
-                rows = str(rows).replace('[(\'', '')
-                rows = str(rows).replace('\',)]', '')
+    if database_file_found:
+        while database.database_online:
+            database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
+            rows = database.cur.fetchall()
+            rows = str(rows).replace('[(\'', '')
+            rows = str(rows).replace('\',)]', '')
 
-                # TODO: Autoremove false link
+            # TODO: Autoremove false link
 
-                try:
-                    await player.playlist.add_entry(rows, channel=None, author=None)
-                except Exception as e:
-                    print("Error adding song from autoplaylist:", e)
-                    continue
+            try:
+                await player.playlist.add_entry(rows, channel=None, author=None)
+            except Exception as e:
+                print("Error adding song from autoplaylist:", e)
+                continue
 
-                break
+            break
 
-            if not database.database_online:
-                print("No playable songs Database offline.")
+        if not database.database_online:
+            print("No playable songs Database offline.")
 
 
 @bot.event
