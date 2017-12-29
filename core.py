@@ -126,9 +126,8 @@ async def on_ready():
             if 'music' in channel.name.lower():
                 if str(channel.type) == 'voice':
                     print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
-                    # channel = bot.get_channel(channel.id)
-                    # voice = await bot.join_voice_channel(channel)
-                    await music.Music.create_voice_client(channel=channel)
+                    channel = bot.get_channel(channel.id)
+                    #voice = await bot.join_voice_channel(channel)
                     try:
                         if database_file_found:
                             if database.database_online:
@@ -139,7 +138,7 @@ async def on_ready():
                                 rows = str(rows).replace('[(\'', '')
                                 rows = rows.replace('\',)]', '')
                                 try:
-                                    await music.Music.play_ai(music.Music, channel=channel, song=str(rows))
+                                    pass
                                     # player = await voice.create_ytdl_player(f"{rows}")
                                     # if player.is_playing():
                                     #     player.start()
