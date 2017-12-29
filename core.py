@@ -139,7 +139,7 @@ async def on_ready():
                                     if not player.is_playing():
                                         player.start()
                                         joined_servers.append(channel.server.name)
-                                    await on_player_finished_playing(voice, player)
+                                    await on_player_finished_playing(voice)
                                 except Exception as e:
                                     print(f'item {channel.id} found, FAILED to join {channel.server.name} : {channel.name}\n{e.args}')
 
@@ -147,7 +147,7 @@ async def on_ready():
                         print(f'Database seems offline:\n{e.args}')
 
 
-async def on_player_finished_playing(voice, player, **_):
+async def on_player_finished_playing(voice, **_):
     if database_file_found:
         if database.database_online:
             database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
@@ -157,13 +157,13 @@ async def on_player_finished_playing(voice, player, **_):
             rows = rows.replace('\',)]', '')
             try:
                 print(rows)
-                player = await voice.create_ytdl_player(rows)
+                player = await voice.create_ytdl_player(f"{rows}")
                 if not player.is_playing():
                     player.start()
-                await on_player_finished_playing(rows, player)
+                await on_player_finished_playing(voice)
             except Exception as e:
                 print(f'Failed to load new song\n{e.args}')
-                await on_player_finished_playing(rows, player)
+                await on_player_finished_playing(voice)
 
 
 @bot.event
