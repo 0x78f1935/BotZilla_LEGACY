@@ -150,7 +150,6 @@ async def on_ready():
 async def on_player_finished_playing(voice, player, **_):
     if database_file_found:
         if database.database_online:
-            await asyncio.sleep(player.duration)
             database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
             rows = database.cur.fetchall()
             database.cur.execute("ROLLBACK;")
