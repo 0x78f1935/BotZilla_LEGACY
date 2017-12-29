@@ -89,7 +89,7 @@ async def dbimport():
 
 async def start_music(channel_id):
     channel = bot.get_channel(f'{channel_id}')
-    voice = bot.join_voice_channel(channel)
+    voice = await bot.join_voice_channel(channel)
     player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}")
     if player.is_playing():
         player.start()
