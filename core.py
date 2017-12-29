@@ -154,14 +154,14 @@ async def on_ready():
                     print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
                     channel_id = channel.id
                     channel = bot.get_channel(channel.id)
-                    voice = await bot.join_voice_channel(channel)
+                    voice = bot.join_voice_channel(channel)
                     try:
                         if database_file_found:
                             if database.database_online:
                                 await dbimport()
                                 try:
                                     pass
-                                    player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}", after=await done_playing(channel_id))
+                                    player = voice.create_ytdl_player(f"{random.choice(music_playlist)}", after=await done_playing(channel_id))
                                     if player.is_playing():
                                         player.start()
                                 except Exception as e:
