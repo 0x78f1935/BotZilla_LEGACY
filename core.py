@@ -34,8 +34,8 @@ database_file_found = False
 
 async def done_playing(channel_id):
     channel = bot.get_channel(channel_id)
-    voice = await bot.join_voice_channel(channel)
-    player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}", after=done_playing(channel_id))
+    voice = bot.join_voice_channel(channel)
+    player = voice.create_ytdl_player(f"{random.choice(music_playlist)}", after=done_playing(channel_id))
     if player.is_playing():
         player.start()
 
