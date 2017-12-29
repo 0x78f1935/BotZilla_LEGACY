@@ -148,21 +148,21 @@ async def on_ready():
 
 
 async def on_player_finished_playing(voice, player, **_):
-    if not player.playlist.entries and not player.current_entry:
-        if database_file_found:
-            if database.database_online:
-                database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
-                rows = database.cur.fetchall()
-                database.cur.execute("ROLLBACK;")
-                rows = str(rows).replace('[(\'', '')
-                rows = str(rows).replace('\',)]', '')
-                try:
-                    player = await voice.create_ytdl_player(f"{rows}")
-                    if not player.is_playing():
-                        player.start()
-                    await on_player_finished_playing(rows, player)
-                except Exception as e:
-                    print(f'Failed to load new song\n{e.args}')
+    if database_file_found:
+        if database.database_online:
+            database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
+            rows = database.cur.fetchall()
+            database.cur.execute("ROLLBACK;")
+            rows = str(rows).replace('[(\'', '')
+            rows = str(rows).replace('\',)]', '')
+            try:
+                player = await voice.create_ytdl_player(f"{rows}")
+                if not player.is_playing():
+                    player.start()
+                await on_player_finished_playing(rows, player)
+            except Exception as e:
+                print(f'Failed to load new song\n{e.args}')
+                await on_player_finished_playing(rows, player)
 
 
 @bot.event
