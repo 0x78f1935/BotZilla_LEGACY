@@ -92,7 +92,7 @@ async def create_player(channel_id):
     player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}")
     if player.is_playing():
         player.start()
-    await asyncio.sleep(1)
+    await asyncio.sleep(player.duration)
     print('Song finished playing')
     await start_music(channel_id)
 
