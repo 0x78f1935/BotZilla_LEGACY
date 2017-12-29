@@ -121,13 +121,14 @@ async def on_ready():
 
     print('Try auto connect music channel...')
     joined_servers = []
+    music_list = []
     for server in bot.servers:
         for channel in server.channels:
             if 'music' in channel.name.lower():
                 if str(channel.type) == 'voice':
                     print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
                     channel = bot.get_channel(channel.id)
-                    #voice = await bot.join_voice_channel(channel)
+                    voice = await bot.join_voice_channel(channel)
                     try:
                         if database_file_found:
                             if database.database_online:
@@ -135,8 +136,11 @@ async def on_ready():
                                 database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
                                 rows = database.cur.fetchall()
                                 database.cur.execute("ROLLBACK;")
-                                rows = str(rows).replace('[(\'', '')
-                                rows = rows.replace('\',)]', '')
+                                rows = str(rows).replace('(\'', '')
+                                rows = rows.replace('\',)', '')
+                                for row in rows:
+                                    music_list.append(row)
+                                print(music_list)
                                 try:
                                     pass
                                     # player = await voice.create_ytdl_player(f"{rows}")
