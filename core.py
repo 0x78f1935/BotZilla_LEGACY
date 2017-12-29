@@ -101,9 +101,9 @@ async def start_music(channel_id):
                     if player.is_playing():
                         player.start()
                 except Exception as e:
-                    print(e.args)
+                    print(e)
     except Exception as e:
-        print(e.args)
+        print(e)
 
 @bot.event
 async def on_ready():
