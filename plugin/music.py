@@ -76,7 +76,7 @@ class Music:
 
         return state
 
-    async def create_voice_client(self, channel):
+    async def create_voice_client(self, channel: str):
         voice = await self.bot.join_voice_channel(channel)
         state = self.get_voice_state(channel.server)
         state.voice = voice
@@ -138,7 +138,7 @@ class Music:
             await state.songs.put(entry)
 
 
-    async def play_ai(self, ctx, *, song : str):
+    async def play_ai(self, song : str):
         """Plays a song.
         If there is a song currently in the queue, then it is
         queued until the next song is done playing.
