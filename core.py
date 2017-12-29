@@ -165,7 +165,7 @@ async def on_ready():
                         if database_file_found:
                             if database.database_online:
                                 await dbimport()
-                                await start_music(channel.id)
+                                #await start_music(channel.id)
                     except Exception as e:
                         print(f'Database seems offline:\n{e.args}')
 
