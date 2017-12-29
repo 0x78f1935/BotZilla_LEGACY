@@ -65,7 +65,6 @@ class Music:
         print(self.music_playlist)
 
 
-    @commands.command(pass_context=True)
     async def autojoin_music_channels(self, ctx):
         for server in self.bot.servers:
             for channel in server.channels:
