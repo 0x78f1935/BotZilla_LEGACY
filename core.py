@@ -166,7 +166,7 @@ async def on_ready():
 
                                 await start_music(channel.id)
                     except Exception as e:
-                        print(f'Database seems offline:\n{e.args}')
+                        pass
 
 
 @bot.event
