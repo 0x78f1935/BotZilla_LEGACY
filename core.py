@@ -31,7 +31,7 @@ botzillaChannels = tmp_config['channels']
 bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip", command_prefix=config['prefix'], pm_help=False)
 music_channels = botzillaChannels['music']
 database_file_found = False
-music = Music()
+music = Music(bot)
 
 try:
     database = Database(bot)
