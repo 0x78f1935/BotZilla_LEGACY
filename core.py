@@ -33,7 +33,7 @@ music_channels = botzillaChannels['music']
 database_file_found = False
 
 async def done_playing(player:object):
-    print(player.__getattribute__(player))
+    print(player.duration())
 
 try:
     database = Database(bot)
