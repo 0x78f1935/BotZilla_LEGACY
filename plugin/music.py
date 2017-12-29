@@ -77,7 +77,7 @@ class Music:
         return state
 
     async def create_voice_client(self, channel: str):
-        voice = await self.bot.join_voice_channel(channel)
+        voice = await self.bot.join_voice_channel(self, channel)
         state = self.get_voice_state(channel.server)
         state.voice = voice
 
