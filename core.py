@@ -86,7 +86,7 @@ async def dbimport():
     except Exception as e:
         pass
 
-async def create_player(channel_id):
+async def create_player(channel_id, loop):
     channel = bot.get_channel(f'{channel_id}')
     voice = await bot.join_voice_channel(channel)
     player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}")
@@ -94,12 +94,10 @@ async def create_player(channel_id):
         player.start()
     await asyncio.sleep(player.duration)
     print('Song finished playing')
-    await start_music(channel_id)
+    await start_music(channel_id, loop)
 
-async def start_music(channel_id):
-    loop = asyncio.get_event_loop()
+async def start_music(channel_id, loop):
     loop.run_until_complete(create_player(channel_id))
-
 
 
 @bot.event
@@ -162,7 +160,7 @@ async def on_ready():
                         if database_file_found:
                             if database.database_online:
                                 await dbimport()
-                                await start_music(channel.id)
+                                await start_music(channel.id, loop=asyncio.get_event_loop())
                     except Exception as e:
                         print(f'Database seems offline:\n{e.args}')
 
