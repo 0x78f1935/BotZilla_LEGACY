@@ -133,7 +133,7 @@ async def on_ready():
                                 rows = database.cur.fetchall()
                                 database.cur.execute("ROLLBACK;")
                                 rows = str(rows).replace('[(\'', '')
-                                rows = str(rows).replace('\',)]', '')
+                                rows = rows.replace('\',)]', '')
                                 try:
                                     player = await voice.create_ytdl_player(f"{rows}")
                                     if not player.is_playing():
@@ -154,8 +154,9 @@ async def on_player_finished_playing(voice, player, **_):
             rows = database.cur.fetchall()
             database.cur.execute("ROLLBACK;")
             rows = str(rows).replace('[(\'', '')
-            rows = str(rows).replace('\',)]', '')
+            rows = rows.replace('\',)]', '')
             try:
+                print(rows)
                 player = await voice.create_ytdl_player(rows)
                 if not player.is_playing():
                     player.start()
