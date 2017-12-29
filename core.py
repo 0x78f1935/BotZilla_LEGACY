@@ -97,7 +97,7 @@ async def create_player(channel_id, loop):
     await start_music(channel_id, loop)
 
 async def start_music(channel_id, loop):
-    loop.run_until_complete(create_player(channel_id))
+    loop.run_until_complete(create_player(channel_id, loop))
 
 
 @bot.event
