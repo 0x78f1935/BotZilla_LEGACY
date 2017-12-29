@@ -105,7 +105,7 @@ async def on_ready():
         "games",
         "gamestats",
         "information",
-        "music",
+        "musicown",
         "nsfw",
         "python_code_in_dc",
         "test"
@@ -131,14 +131,15 @@ async def on_ready():
                                 dbimport()
                                 database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
                                 rows = database.cur.fetchall()
+                                database.cur.execute("ROLLBACK;")
                                 rows = str(rows).replace('[(\'', '')
                                 rows = str(rows).replace('\',)]', '')
                                 try:
                                     player = await voice.create_ytdl_player(f"{rows}")
-                                    if player.is_playing():
+                                    if not player.is_playing():
                                         player.start()
-                                    await on_player_finished_playing(player)
-                                    joined_servers.append(channel.server.name)
+                                        joined_servers.append(channel.server.name)
+                                    await on_player_finished_playing(voice, player)
                                 except Exception as e:
                                     print(f'item {channel.id} found, FAILED to join {channel.server.name} : {channel.name}\n{e.args}')
 
@@ -146,26 +147,22 @@ async def on_ready():
                         print(f'Database seems offline:\n{e.args}')
 
 
-async def on_player_finished_playing(player, **_):
-    if database_file_found:
-        while database.database_online:
-            database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
-            rows = database.cur.fetchall()
-            rows = str(rows).replace('[(\'', '')
-            rows = str(rows).replace('\',)]', '')
-
-            # TODO: Autoremove false link
-
-            try:
-                await player.playlist.add_entry(rows, channel=None, author=None)
-            except Exception as e:
-                print("Error adding song from autoplaylist:", e)
-                continue
-
-            break
-
-        if not database.database_online:
-            print("No playable songs Database offline.")
+async def on_player_finished_playing(voice, player, **_):
+    if not player.playlist.entries and not player.current_entry:
+        if database_file_found:
+            if database.database_online:
+                database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
+                rows = database.cur.fetchall()
+                database.cur.execute("ROLLBACK;")
+                rows = str(rows).replace('[(\'', '')
+                rows = str(rows).replace('\',)]', '')
+                try:
+                    player = await voice.create_ytdl_player(f"{rows}")
+                    if not player.is_playing():
+                        player.start()
+                    await on_player_finished_playing(rows, player)
+                except Exception as e:
+                    print(f'Failed to load new song\n{e.args}')
 
 
 @bot.event
