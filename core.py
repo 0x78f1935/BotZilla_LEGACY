@@ -151,6 +151,7 @@ async def on_ready():
             for item in clean_links:
                 music_playlist.append(item)
 
+    loop = asyncio.get_event_loop()
     for server in bot.servers:
         for channel in server.channels:
             if 'music' in channel.name.lower():
@@ -160,7 +161,7 @@ async def on_ready():
                         if database_file_found:
                             if database.database_online:
                                 await dbimport()
-                                loop = asyncio.get_event_loop()
+
                                 await start_music(channel.id, loop=loop)
                     except Exception as e:
                         print(f'Database seems offline:\n{e.args}')
