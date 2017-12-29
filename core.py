@@ -6,6 +6,7 @@ import json
 from options.opus_loader import load_opus_lib
 from urllib.parse import quote as uriquote
 import re
+import random
 import csv
 import asyncio
 from plugin import music
