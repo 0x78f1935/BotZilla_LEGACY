@@ -62,10 +62,9 @@ class Music:
                 clean_links = links.split(',')
                 for item in clean_links:
                     self.music_playlist.append(item)
-        print(self.music_playlist)
 
 
-    async def autojoin_music_channels(self, ctx):
+    async def autojoin_music_channels(self):
         for server in self.bot.servers:
             for channel in server.channels:
                 if 'music' in channel.name.lower():
