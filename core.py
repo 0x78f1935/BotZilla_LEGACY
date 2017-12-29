@@ -95,7 +95,7 @@ async def create_player(channel_id):
         player.start()
     await asyncio.sleep(player.duration-5)
     print('Song finished playing')
-    player.start(f"{random.choice(music_playlist)}")
+    player.start('{}'.format(random.choice(music_playlist))
 
 
 async def start_music(channel_id):
