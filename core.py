@@ -8,6 +8,7 @@ from urllib.parse import quote as uriquote
 import re
 import csv
 import asyncio
+from plugin import music
 
 
 try:
@@ -125,8 +126,9 @@ async def on_ready():
             if 'music' in channel.name.lower():
                 if str(channel.type) == 'voice':
                     print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
-                    channel = bot.get_channel(channel.id)
-                    voice = await bot.join_voice_channel(channel)
+                    # channel = bot.get_channel(channel.id)
+                    # voice = await bot.join_voice_channel(channel)
+                    music.Music.create_voice_client(channel)
                     try:
                         if database_file_found:
                             if database.database_online:
@@ -137,36 +139,15 @@ async def on_ready():
                                 rows = str(rows).replace('[(\'', '')
                                 rows = rows.replace('\',)]', '')
                                 try:
-                                    player = await voice.create_ytdl_player(f"{rows}")
-                                    if player.is_playing():
-                                        player.start()
-                                        joined_servers.append(channel.server.name)
-                                    await on_player_finished_playing(player)
+                                    music.Music.play_ai(rows)
+                                    # player = await voice.create_ytdl_player(f"{rows}")
+                                    # if player.is_playing():
+                                    #     player.start()
+                                    #     joined_servers.append(channel.server.name)
                                 except Exception as e:
                                     print(f'item {channel.id} found, FAILED to join {channel.server.name} : {channel.name}\n{e.args}')
-
                     except Exception as e:
                         print(f'Database seems offline:\n{e.args}')
-
-
-async def on_player_finished_playing(player, **_):
-    if database_file_found:
-        if database.database_online:
-            database.cur.execute("SELECT * from botzilla.musicque ORDER BY random() limit 1;")
-            rows = database.cur.fetchall()
-            database.cur.execute("ROLLBACK;")
-            rows = str(rows).replace('[(\'', '')
-            rows = rows.replace('\',)]', '')
-            try:
-                player.yt(f"{rows}")
-                if player.is_playing():
-                    player.start()
-                await on_player_finished_playing(player)
-
-            except Exception as e:
-                print(f'Failed to load new song\n{e.args}')
-                await on_player_finished_playing(player)
-
 
 
 @bot.event
