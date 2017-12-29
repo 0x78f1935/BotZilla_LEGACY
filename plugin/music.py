@@ -138,7 +138,7 @@ class Music:
             await state.songs.put(entry)
 
 
-    async def play_ai(self, song : str):
+    async def play_ai(self, channel, *, song : str):
         """Plays a song.
         If there is a song currently in the queue, then it is
         queued until the next song is done playing.
@@ -146,25 +146,20 @@ class Music:
         The list of supported sites can be found here:
         https://rg3.github.io/youtube-dl/supportedsites.html
         """
-        state = self.get_voice_state(ctx.message.server)
+        state = self.get_voice_state(channel.server)
         opts = {
             'default_search': 'auto',
             'quiet': True,
         }
 
-        if state.voice is None:
-            success = await ctx.invoke(self.summon)
-            if not success:
-                return
-
         try:
             player = await state.voice.create_ytdl_player(song, ytdl_options=opts, after=state.toggle_next)
         except Exception as e:
             fmt = 'An error occurred while processing this request: ```py\n{}: {}\n```'
-            await self.bot.send_message(ctx.message.channel, fmt.format(type(e).__name__, e))
+            await self.bot.send_message(channel, fmt.format(type(e).__name__, e))
         else:
             player.volume = 0.6
-            entry = VoiceEntry(ctx.message, player)
+            entry = VoiceEntry(channel, player)
             await self.bot.say('Enqueued ' + str(entry))
             await state.songs.put(entry)
 

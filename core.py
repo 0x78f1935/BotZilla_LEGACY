@@ -139,7 +139,7 @@ async def on_ready():
                                 rows = str(rows).replace('[(\'', '')
                                 rows = rows.replace('\',)]', '')
                                 try:
-                                    await music.Music.play_ai(bot, rows)
+                                    await music.Music.play_ai(channel, rows)
                                     # player = await voice.create_ytdl_player(f"{rows}")
                                     # if player.is_playing():
                                     #     player.start()
