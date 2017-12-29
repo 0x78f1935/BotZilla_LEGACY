@@ -161,7 +161,7 @@ async def on_ready():
                                 await dbimport()
                                 try:
                                     pass
-                                    player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}", after=done_playing(channel_id))
+                                    player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}", after=await done_playing(channel_id))
                                     if player.is_playing():
                                         player.start()
                                 except Exception as e:
