@@ -4,6 +4,7 @@ import discord
 import urllib.request
 import urllib.parse
 import random
+import xml.etree.ElementTree
 try:
     from imgurpython import ImgurClient
 except:
