@@ -135,7 +135,7 @@ async def get_users():
             print('Error gathering info user:\n{}'.format(e.args))
 
 
-async def get_player(channel, create=False) -> MusicPlayer:
+async def get_player(channel, music_playlist, create=False) -> MusicPlayer:
     server = channel.server
     print(f'{channel} : {server}')
 
@@ -143,7 +143,7 @@ async def get_player(channel, create=False) -> MusicPlayer:
 
     playlist = Playlist(bot)
     print(playlist)
-    player = MusicPlayer(bot, voice_client, playlist) \
+    player = MusicPlayer(bot, voice_client, music_playlist) \
         .on('play', bot.on_player_play) \
         .on('resume', bot.on_player_resume) \
         .on('pause', bot.on_player_pause) \
@@ -157,7 +157,7 @@ async def get_player(channel, create=False) -> MusicPlayer:
     return bot.players[server.id]
 
 
-async def on_player_finished_playing(player, **_):
+async def on_player_finished_playing(player, music_playlist, **_,):
     while True:
         song_url = random.choice(music_playlist)
         info = await downloader.Downloader.safe_extract_info(player.playlist.loop, song_url, download=False, process=False)
@@ -199,7 +199,7 @@ async def start_music(channel_id):
     while bot.loop:
         bot.loop.run_until_complete(create_player(channel_id))
 
-async def auto_join_channels():
+async def auto_join_channels(music_playlist):
     for server in bot.servers:
         for channel in server.channels:
             if 'music' in channel.name.lower():
@@ -211,7 +211,7 @@ async def auto_join_channels():
                                 await dbimport()
                                 channel = bot.get_channel(f'{channel.id}')
                                 await bot.join_voice_channel(channel)
-                                await on_player_finished_playing(await get_player(channel))
+                                await on_player_finished_playing(await get_player(channel, music_playlist))
                     except Exception as e:
                         pass
 
@@ -264,7 +264,7 @@ async def on_ready():
             for item in clean_links:
                 music_playlist.append(item)
 
-    await auto_join_channels()
+    await auto_join_channels(music_playlist)
 
 
 @bot.event
