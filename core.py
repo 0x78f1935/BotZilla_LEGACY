@@ -152,7 +152,7 @@ async def get_player(channel, create=False) -> MusicPlayer:
 
     player.skip_state = SkipState()
     bot.players[server.id] = player
-
+    print(f'{bot.players[server.id]} : {server}')
     return bot.players[server.id]
 
 
