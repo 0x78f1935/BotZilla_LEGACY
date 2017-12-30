@@ -116,9 +116,9 @@ async def create_player(channel_id):
         print('Song finished playing')
 
 
-async def start_music(channel_id):
-    while bot.loop:
-        bot.loop.run_until_complete(create_player(channel_id))
+# async def start_music(channel_id):
+#     while bot.loop:
+#         bot.loop.run_until_complete(create_player(channel_id))
 
 async def auto_join_channels():
     for server in bot.servers:
@@ -131,7 +131,7 @@ async def auto_join_channels():
                             if database.database_online:
                                 await dbimport()
 
-                                await start_music(channel.id)
+                                await create_player(channel.id)
                     except Exception as e:
                         pass
 
