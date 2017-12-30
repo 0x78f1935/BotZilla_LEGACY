@@ -34,7 +34,7 @@ class AdminCommands:
 
 
     @commands.command(pass_context=True, hidden=True)
-    async def kick(self, ctx, member:discord.Member):
+    async def kick(self, ctx, member:discord.Member = None):
         """
         Kicks a `Member` from the server they belong to.
         This function kicks the `Member` based on the server it belongs to,
@@ -48,11 +48,18 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
+        if member is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You forgot a user to kick :rofl:',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
         try:
             await self.bot.kick(member)
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may not use this command you do not have permission in server:"\n{}'.format(ctx.message.server.name),
+                                  description='You may not use this command you do not have permission in server:\n{}'.format(ctx.message.server.name),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
