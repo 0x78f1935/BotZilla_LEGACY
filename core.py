@@ -190,6 +190,9 @@ async def on_message(message):
     except:
         pass
 
+@bot.event
+async def on_server_join(server):
+    print(server.name)
 
 if __name__ == '__main__':
     bot.run(config['bot-key'])
