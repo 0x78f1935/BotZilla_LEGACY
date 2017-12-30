@@ -199,6 +199,7 @@ class Information:
         else:
             username = username.replace('<@', '')
             username = username.replace('>', '')
+            username = username.replace('!', '')
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='The ID you looking for is:\n**{}**'.format(str(username)),
                                   colour=0xf20006)
