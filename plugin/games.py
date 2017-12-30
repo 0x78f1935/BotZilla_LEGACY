@@ -221,8 +221,6 @@ class Games:
     async def joke(self, ctx):
         """
         Ever heard a Chuck Norris joke?
-        :param ctx:
-        :return:
         """
         url = 'http://api.icndb.com/jokes/random%22'
         with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})) as response:
