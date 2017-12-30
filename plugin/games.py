@@ -28,7 +28,7 @@ class Games:
 
         if question is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You did not fully address your question!\n:8ball:',
+                                  description=':8ball: You did not fully address your question!',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['Warning'])
@@ -36,7 +36,7 @@ class Games:
 
         if ball == 1:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='It is certain\n:8ball:',
+                                  description=':8ball: It is certain',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -45,7 +45,7 @@ class Games:
 
         if ball == 2:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='It is decidedly so\n:8ball:',
+                                  description=':8ball: It is decidedly so',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -54,7 +54,7 @@ class Games:
 
         if ball == 3:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Without a doubt\n:8ball:',
+                                  description=':8ball: Without a doubt',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -63,7 +63,7 @@ class Games:
 
         if ball == 4:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Yes, definitely!\n:8ball:',
+                                  description=':8ball: Yes, definitely!',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -72,7 +72,7 @@ class Games:
 
         if ball == 5:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may rely on it\n:8ball:',
+                                  description=':8ball: You may rely on it',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -81,7 +81,7 @@ class Games:
 
         if ball == 6:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='As I see it, yes\n:8ball:',
+                                  description=':8ball: As I see it, yes',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -90,7 +90,7 @@ class Games:
 
         if ball == 7:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Most likely\n:8ball:',
+                                  description=':8ball: Most likely',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -99,7 +99,7 @@ class Games:
 
         if ball == 8:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Outlook good\n:8ball:',
+                                  description=':8ball: Outlook good',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -108,7 +108,7 @@ class Games:
 
         if ball == 9:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Yes\n:8ball:',
+                                  description=':8ball: Yes',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -117,7 +117,7 @@ class Games:
 
         if ball == 10:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Signs point to yes\n:8ball:',
+                                  description=':8ball: Signs point to yes',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -126,7 +126,7 @@ class Games:
 
         if ball == 11:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Reply hazy try again\n:8ball:',
+                                  description=':8ball: Reply hazy try again',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -135,7 +135,7 @@ class Games:
 
         if ball == 12:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Ask again later\n:8ball:',
+                                  description=':8ball: Ask again later',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -144,7 +144,7 @@ class Games:
 
         if ball == 13:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Better not tell you now\n:8ball:',
+                                  description=':8ball: Better not tell you now',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -153,7 +153,7 @@ class Games:
 
         if ball == 14:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Cannot predict now\n:8ball:',
+                                  description=':8ball: Cannot predict now',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -162,7 +162,7 @@ class Games:
 
         if ball == 15:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Concentrate and ask again\n:8ball:',
+                                  description=':8ball: Concentrate and ask again',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -171,7 +171,7 @@ class Games:
 
         if ball == 16:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Don\'t count on it\n:8ball:',
+                                  description=':8ball: Don\'t count on it',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -180,7 +180,7 @@ class Games:
 
         if ball == 17:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='My reply is no\n:8ball:',
+                                  description=':8ball: My reply is no',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -189,7 +189,7 @@ class Games:
 
         if ball == 18:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='My sources say no\n:8ball:',
+                                  description=':8ball: My sources say no',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -198,7 +198,7 @@ class Games:
 
         if ball == 19:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Outlook not so good\n:8ball:',
+                                  description=':8ball: Outlook not so good',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -207,7 +207,7 @@ class Games:
 
         if ball == 20:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Very doubtful\n:8ball:',
+                                  description=':8ball: Very doubtful',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
