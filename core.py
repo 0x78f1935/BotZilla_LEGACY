@@ -214,8 +214,8 @@ async def auto_join_channels():
                             if database.database_online:
                                 await dbimport()
                                 channel = bot.get_channel(f'{channel.id}')
-                                voice = await bot.join_voice_channel(channel)
-                                await on_player_finished_playing(await get_player(voice))
+                                await bot.join_voice_channel(channel)
+                                await on_player_finished_playing(await get_player(channel))
                     except Exception as e:
                         pass
 
