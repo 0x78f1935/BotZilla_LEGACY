@@ -1,4 +1,5 @@
 from discord.ext import commands
+from discord.ext.commands.errors import CommandInvokeError
 import json
 import discord
 import traceback
@@ -47,7 +48,15 @@ class AdminCommands:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
-        await self.bot.kick(member)
+
+        try:
+            await self.bot.kick(member)
+        except discord.ext.commands.CommandInvokeError as e:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command you do not have permission in server:"\n{}'.format(ctx.message.server.name),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
     @commands.command(pass_context=True, hidden=True)
