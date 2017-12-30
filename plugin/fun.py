@@ -106,10 +106,9 @@ class Images:
             rget = rget.read()
             root = xml.etree.ElementTree.fromstring(rget)
             print("[NSFW] [RULE34] %s" % (link))
+            image = root[random.randint(0, len(root) - 1)].attrib['file_url']
 
             try:
-                image = root[random.randint(0, len(root) - 1)].attrib['file_url']
-                print(image)
                 if image.endswith(".webm"):
                     await self.bot.say("Naughty boy grrrr tiger :tiger:")
                     return
@@ -130,7 +129,7 @@ class Images:
                     print("[NSFW] [RULE34] Sending {} 'GIF' image".format(ctx.message.author.name))
                     pass
 
-                image = "https:{}".format(image)
+                
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       colour=0xf20006)
                 embed.set_image(url=image)
@@ -144,6 +143,9 @@ class Images:
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                 return
+            except Exception as e:
+                a = await self.bot.say(image)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
 
