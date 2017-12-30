@@ -7,6 +7,8 @@ import discord
 from discord.ext import commands
 import asyncio
 import re
+import random
+import ddg3 as duckduckgo3
 try:
     from plugin.database import Database
 except:
@@ -123,6 +125,44 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             await asyncio.sleep(10)
+
+
+    @commands.command(pass_context=True)
+    async def wiki(self, ctx, *, search_term):
+        search_term = search_term.lower()
+
+        if search_term == "botzilla":
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Best bot on the market right now! \nNo need for more information!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, '\U0001f44c')
+            return
+
+        try:
+            search_number = random.randint(0, 1)
+            r = duckduckgo3.query(search_term)
+            related_type = r.type
+            related_text = r.related[search_number].text
+            'Python (programming language), a computer programming language'
+
+            related_related = r.related[search_number].url
+            print("Type: %s \nText: %s \nSource: %s" % (related_type, related_text, related_related))
+            message2user = "Type: %s \nText: %s \nSource: %s" % (related_type, related_text, related_related)
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='{}'.format(message2user),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            return
+
+        except IndexError:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Nothing found...',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
 
 
     @commands.command(pass_context=True, aliases=["oauth", "invite"])
