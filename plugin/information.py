@@ -6,10 +6,6 @@ import json
 import discord
 from discord.ext import commands
 import asyncio
-import urllib.request
-import urllib.parse
-import traceback
-import io
 import re
 try:
     from plugin.database import Database
@@ -33,8 +29,10 @@ def guild_only():
     return commands.check(predicate)
 
 
-class Polls:
-    """Poll voting system."""
+class Information:
+    """
+    Informative commands for the bot.
+    """
 
     def __init__(self, bot):
         self.bot = bot
@@ -45,10 +43,21 @@ class Polls:
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
 
+        try:
+            self.database = Database(self.bot)
+            self.database_file_found = True
+        except:
+            print('Information: Database files not found')
+            pass
+
+    # ========================
+    #   Bot related commands
+
 
     @commands.command(pass_context=True)
     async def poll(self, ctx, *questions_and_choices: str):
-        """Makes a poll quickly for your server.
+        """
+        Makes a poll quickly for your server.
         The first argument is the question and the rest are the choices.
         You can only have up to 20 choices and one question.
         Use `;` as a delimiter.
@@ -117,34 +126,14 @@ class Polls:
             print(a.reaction.count-1)
 
 
-class Information:
-    """
-    Informative commands for the bot.
-    """
-
-    def __init__(self, bot):
-        self.bot = bot
-        self.tmp_config = json.loads(str(open('./options/config.js').read()))
-        self.config = self.tmp_config['config']
-        self.emojiUnicode = self.tmp_config['unicode']
-        self.exchange = self.tmp_config['exchange']
-        self.botzillaChannels = self.tmp_config['channels']
-        self.owner_list = self.config['owner-id']
-
-        try:
-            self.database = Database(self.bot)
-            self.database_file_found = True
-        except:
-            print('Information: Database files not found')
-            pass
-
-    # ========================
-    #   Bot related commands
-
     @commands.command(pass_context=True, aliases=["oauth", "invite"])
     async def join(self, ctx):
-        """Add BotZilla to your channel!
-        Gives BotZilla OAuth url. Use this to add him to your channel!"""
+        """
+        Add BotZilla to your server!
+        Gives BotZilla OAuth url. Use this to add him to your server!
+        When the database restarts botzilla will automatically join voice channels
+        with 'music' or 'Music' in the name.
+        """
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Use the following url to add BotZilla V2 to your guild!\n**{}**'.format(
@@ -156,9 +145,11 @@ class Information:
 
     @commands.command(pass_context=True)
     async def ping(self, ctx):
-        """Check server response.
+        """
+        Check server response.
         Sends a package to the discord server.
-        Calculates response time"""
+        Calculates response time
+        """
         before = time.monotonic()
         await (await self.bot.ws.ping())
         after = time.monotonic()
@@ -172,8 +163,10 @@ class Information:
 
     @commands.command(pass_context=True)
     async def count(self, ctx):
-        """Give information on how many servers Botzilla is active in.
-        Also shows additional information"""
+        """
+        Give information about Botzilla.
+        Count's the community, servers and more!
+        """
         if self.database_file_found:
             self.database.cur.execute("select count(*) from botzilla.users;")
             rows = self.database.cur.fetchall()
@@ -196,21 +189,30 @@ class Information:
 
 
     @commands.command(pass_context=True)
-    async def id(self, ctx):
-        """Shows your ID.
-        Get users ID."""
-        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='Your ID is **{}**'.format(str(ctx.message.author.id)),
-                              colour=0xf20006)
-        a = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+    async def id(self, ctx, *, username=None):
+        """Shows your ID or the id of the user."""
+        if username is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Your ID is **{}**'.format(str(ctx.message.author.id)),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        else:
+            username = username.replace('<@', '')
+            username = username.replace('>', '')
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='The ID you looking for is"\n**{}**'.format(str(ctx.message.author.id)),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
     @commands.command(pass_context=True, hidden=True)
     async def say(self, ctx, *, message=None):
         """Say something as BotZilla.
-        This only works in the direct
-        channel the command is used in."""
+        This only works in the direct channel the command is used in.
+        Secret egg ;)
+        """
 
         if message is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -228,7 +230,8 @@ class Information:
     @commands.command(pass_context=True)
     async def emoji(self, ctx, *, emoji : str =None):
         """
-        Shows information about the emoji.
+        Shows ASCII information about the emoji.
+        Usefull for developers.
         """
         if emoji is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -252,7 +255,5 @@ class Information:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
-
 def setup(bot):
     bot.add_cog(Information(bot))
-    bot.add_cog(Polls(bot))

@@ -21,7 +21,7 @@ class TestScripts:
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
 
-    @commands.group(pass_context=True)
+    @commands.group(pass_context=True, hidden=True)
     async def hello(self, ctx):
         """This is a group with commands"""
         if ctx.invoked_subcommand is None:

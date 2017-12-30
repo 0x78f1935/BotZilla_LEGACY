@@ -120,11 +120,9 @@ async def on_ready():
         "exchange",
         "database",
         "fun",
-        "games",
+        #"games",
         "gamestats",
         "information",
-        #"music",
-        "nsfw",
         "python_code_in_dc",
         "test"
     )
@@ -135,7 +133,6 @@ async def on_ready():
         bot.load_extension("plugin.{}".format(p))
 
     print('Try auto connect music channel...')
-
     # get playlist
     global music_playlist
     music_playlist = []

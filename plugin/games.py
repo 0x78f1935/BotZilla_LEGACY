@@ -1,15 +1,7 @@
 from discord.ext import commands
 import json
-import urllib.request
 import discord
-import random
-import discord
-from discord.ext import commands
-import operator
 
-tmp_config = json.loads(str(open('./options/config.js').read()))
-config = tmp_config['config']
-owner_list = config['owner-id']
 
 class Games:
     def __init__(self, bot):

@@ -5,7 +5,7 @@ from discord.ext import commands
 import discord
 
 
-class Game_Stats:
+class Leagues:
     def __init__(self, bot):
         self.bot = bot
         self.tmp_config = json.loads(str(open('./options/config.js').read()))
@@ -14,6 +14,7 @@ class Game_Stats:
         self.exchange = self.tmp_config['exchange']
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
+
 
     @commands.command(pass_context=True)
     async def r6s(self, ctx, *, uplay_name):
@@ -107,4 +108,4 @@ Stats >>
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
 def setup(bot):
-    bot.add_cog(Game_Stats(bot))
+    bot.add_cog(Leagues(bot))

@@ -7,7 +7,7 @@ tmp_config = json.loads(str(open('./options/config.js').read()))
 config = tmp_config['config']
 owner_list = config['owner-id']
 
-class Exchange:
+class MoneyMaker:
     def __init__(self, bot):
         self.bot = bot
         self.tmp_config = json.loads(str(open('./options/config.js').read()))
@@ -35,4 +35,4 @@ class Exchange:
 
 
 def setup(bot):
-    bot.add_cog(Exchange(bot))
+    bot.add_cog(MoneyMaker(bot))

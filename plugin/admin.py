@@ -2,13 +2,11 @@ from discord.ext import commands
 import json
 import discord
 import traceback
-import sys
-import io
 try:
     from plugin.database import Database
 except:
     pass
-from options.utils import chat_formatting, dataIO, downloader
+
 
 class AdminCommands:
     def __init__(self, bot):
@@ -35,18 +33,19 @@ class AdminCommands:
             pass
 
 
-
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def kick(self, ctx, member:discord.Member):
-        """Kicks a `Member` from the server they belong to.
+        """
+        Kicks a `Member` from the server they belong to.
         This function kicks the `Member` based on the server it belongs to,
-        So you must have the proper permissions in that server."""
+        So you must have the proper permissions in that server.
+        """
         if ctx.message.author.id not in self.owner_list:
             return
         await self.bot.kick(member)
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def game(self, ctx, game: str = None, *, url: str = None):
         """
         Change the bots game.
@@ -76,7 +75,7 @@ class AdminCommands:
     #   Module related commands
     # ===========================
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def load(self, ctx,  *, extension: str):
         """
         Load an extension.
@@ -100,7 +99,7 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def unload(self, ctx, *, extension: str):
         """
         Unload an extension.
@@ -124,7 +123,7 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def reload(self, ctx, *, extension: str):
         """
         Reload an extension.
@@ -149,7 +148,7 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def reloadall(self, ctx):
         """
         Reload all extensions.
@@ -173,7 +172,7 @@ class AdminCommands:
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True, hiddewn=True)
+    @commands.command(pass_context=True, hidden=True)
     async def sendalldm(self, ctx, *, content: str = None):
         """
         Mass DM everyone in database
@@ -220,7 +219,7 @@ class AdminCommands:
             print(e.args)
 
 
-    @commands.command(pass_context=True, hiddewn=True)
+    @commands.command(pass_context=True, hidden=True)
     async def senddm(self, ctx, *, user_id: str = None, Message: str = None):
         """
         DM single user

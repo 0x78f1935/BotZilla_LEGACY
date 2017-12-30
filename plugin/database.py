@@ -58,7 +58,7 @@ class Database:
         # prep for autojoin
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def sql(self, ctx, *, query: str = None):
         """
         Acces database and run a query.
@@ -217,7 +217,7 @@ class Database:
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def dbexport(self, ctx):
         """
         Export database data to export folder
@@ -294,7 +294,7 @@ class Database:
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def dbimport(self, ctx):
         """
         Import CSV data from import folder
@@ -355,7 +355,7 @@ class Database:
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def importmusic(self, ctx):
         """
         Import CSV data from import folder
