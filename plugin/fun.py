@@ -99,6 +99,7 @@ class Images:
                                   description='Maybe you should considering using `{}help rule34` instead'.format(self.config['prefix']),
                                   colour=0xf20006)
             await self.bot.say(embed=embed)
+
         else:
             link = 'http://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=' + content
             rget = urllib.request.urlopen(link.replace(' ', '_').replace('+', ' '))
@@ -108,7 +109,7 @@ class Images:
 
             try:
                 image = root[random.randint(0, len(root) - 1)].attrib['file_url']
-
+                print(image)
                 if image.endswith(".webm"):
                     await self.bot.say("Naughty boy grrrr tiger :tiger:")
                     return
@@ -131,7 +132,6 @@ class Images:
 
                 image = "https:{}".format(image)
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='{}'.format(''),
                                       colour=0xf20006)
                 embed.set_image(url=image)
                 last_message = await self.bot.say(embed=embed)
@@ -144,6 +144,7 @@ class Images:
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                 return
+
 
 
 def setup(bot):
