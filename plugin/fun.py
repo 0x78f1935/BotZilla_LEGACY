@@ -80,7 +80,7 @@ class Images:
 
     @commands.command(pass_context=True)
     async def rule34(self, ctx, *, content=None):
-        """"
+        """
         Shows graphical content NSFW.
         Rule#34 : If it exists there is porn of it. If not, start uploading.
         Works only in channels with nsfw in the name.

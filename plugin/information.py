@@ -201,7 +201,7 @@ class Information:
             username = username.replace('<@', '')
             username = username.replace('>', '')
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='The ID you looking for is"\n**{}**'.format(str(ctx.message.author.id)),
+                                  description='The ID you looking for is"\n**{}**'.format(str(username)),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
