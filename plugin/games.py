@@ -17,7 +17,7 @@ class Games:
         self.owner_list = self.config['owner-id']
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, name='8ball')
     async def ball8(self, ctx , *, question: str = None):
         """
         8ball! Ask BotZilla Any question.
