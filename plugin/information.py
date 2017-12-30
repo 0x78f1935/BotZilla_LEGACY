@@ -128,7 +128,21 @@ class Information:
 
 
     @commands.command(pass_context=True)
-    async def wiki(self, ctx, *, search_term):
+    async def fact(self, ctx, *, search_term: str = None):
+        """
+        Search for a fact!
+        Use this command in combination with a subject you like
+        to get a fact for that subject
+        """
+
+        if search_term is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You really should reconsider reading the `**{}help fact**`'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
         search_term = search_term.lower()
 
         if search_term == "botzilla":
@@ -138,6 +152,7 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\U0001f44c')
             return
+
 
         try:
             search_number = random.randint(0, 1)
