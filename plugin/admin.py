@@ -1,5 +1,4 @@
 from discord.ext import commands
-from discord.ext.commands.errors import CommandInvokeError
 import json
 import discord
 import traceback
@@ -51,7 +50,7 @@ class AdminCommands:
 
         try:
             await self.bot.kick(member)
-        except discord.ext.commands.CommandInvokeError as e:
+        except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command you do not have permission in server:"\n{}'.format(ctx.message.server.name),
                                   colour=0xf20006)
