@@ -20,7 +20,7 @@ class Images:
         self.imgur = ImgurClient(self.config['giphy-id'], self.config['giphy-secret'])
         self.emojiUnicode = self.tmp_config['unicode']
         self.exchange = self.tmp_config['exchange']
-        self.botzillaChannels = self.tmp_config['channels']
+        self.channels = self.tmp_config['channels']
         self.emojiUnicode = self.tmp_config['unicode']
         self.owner_list = self.config['owner-id']
         self.nsfw_channels = self.channels['nsfw']
