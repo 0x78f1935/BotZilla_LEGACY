@@ -22,8 +22,8 @@ class Leagues:
         Use your Uplay username for this command"""
 
         if uplay_name is None:
-            embed = discord.Embed(title="{}".format("Bitcoin :currency_exchange:"),
-                                  description="I hope you play the tutorial if you play a new game..\nTry ```{}help r6s``` instead".format(self.config['prefix']),
+            embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                  description="I hope you play the tutorial if you play a new game..\nTry `{}help r6s` instead".format(self.config['prefix']),
                                   color=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
