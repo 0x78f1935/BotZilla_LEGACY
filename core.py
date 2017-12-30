@@ -87,12 +87,12 @@ async def dbimport():
         pass
 
 
-async def get_users(self, ctx):
+async def get_users():
     """
     Update datebase with current active users
     """
     data_members = {"id" : "name"}
-    for server in self.bot.servers:
+    for server in bot.servers:
         for member in server.members:
             data_members.update({member.id:member.name})
 
