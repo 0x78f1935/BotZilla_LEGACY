@@ -135,7 +135,7 @@ async def on_ready():
         "exchange",
         "database",
         "fun",
-        #"games",
+        "games",
         "gamestats",
         "information",
         "python_code_in_dc",
