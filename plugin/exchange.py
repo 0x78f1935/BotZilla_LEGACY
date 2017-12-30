@@ -21,8 +21,6 @@ class MoneyMaker:
     async def bitcoin(self, ctx):
         """Shows current bitcoin value
         Show bitcoin valua from exchange"""
-        if ctx.message.author.id not in owner_list:
-            return
         url = tmp_config['exchange']['api-url']
         with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})) as response:
             source = response.read().decode('utf-8')
