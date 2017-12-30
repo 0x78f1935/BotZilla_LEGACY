@@ -137,7 +137,7 @@ class Information:
 
         if search_term is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You really should reconsider reading the `**{}help fact**`'.format(self.config['prefix']),
+                                  description='You really should reconsider reading the **`{}help fact`**'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
