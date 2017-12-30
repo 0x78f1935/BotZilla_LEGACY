@@ -94,7 +94,7 @@ class Images:
 
         if content == None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Maybe you should considering using `{}help rule34` instead'.format(self.channels['prefix']),
+                                  description='Maybe you should considering using `{}help rule34` instead'.format(self.config['prefix']),
                                   colour=0xf20006)
             await self.bot.say(embed=embed)
         else:
