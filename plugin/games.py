@@ -1,4 +1,6 @@
 from discord.ext import commands
+import urllib.request
+import urllib.parse
 import json
 import random
 import discord
@@ -213,6 +215,20 @@ class Games:
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f61f') # Done
             return
+
+
+    @commands.command(pass_context=True)
+    async def joke(self, ctx):
+        url = 'http://api.icndb.com/jokes/random%22'
+        with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})) as response:
+            source = response.read().decode('utf-8')
+        data = json.loads(source)
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description="{}".format(data['value']['joke']),
+                              colour=0xf20006)
+        last_message = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+        return
 
 
 def setup(bot):
