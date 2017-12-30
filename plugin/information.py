@@ -193,7 +193,7 @@ class Information:
         """Shows your ID or the id of the user."""
         if username is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Your ID is **{}**'.format(str(ctx.message.author.id)),
+                                  description='Your ID is:\n**{}**'.format(str(ctx.message.author.id)),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -201,7 +201,7 @@ class Information:
             username = username.replace('<@', '')
             username = username.replace('>', '')
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='The ID you looking for is"\n**{}**'.format(str(username)),
+                                  description='The ID you looking for is:\n**{}**'.format(str(username)),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
