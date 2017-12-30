@@ -102,6 +102,21 @@ async def start_music(channel_id):
     while bot.loop:
         bot.loop.run_until_complete(create_player(channel_id))
 
+async def auto_join_channels():
+    for server in bot.servers:
+        for channel in server.channels:
+            if 'music' in channel.name.lower():
+                if str(channel.type) == 'voice':
+                    print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
+                    try:
+                        if database_file_found:
+                            if database.database_online:
+                                await dbimport()
+
+                                await start_music(channel.id)
+                    except Exception as e:
+                        pass
+
 
 @bot.event
 async def on_ready():
@@ -151,19 +166,7 @@ async def on_ready():
             for item in clean_links:
                 music_playlist.append(item)
 
-    for server in bot.servers:
-        for channel in server.channels:
-            if 'music' in channel.name.lower():
-                if str(channel.type) == 'voice':
-                    print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
-                    try:
-                        if database_file_found:
-                            if database.database_online:
-                                await dbimport()
-
-                                await start_music(channel.id)
-                    except Exception as e:
-                        pass
+    await auto_join_channels()
 
 
 @bot.event
@@ -190,8 +193,20 @@ async def on_message(message):
     except:
         pass
 
+
 @bot.event
 async def on_server_join(server):
+    for channel in server.channels:
+        if 'music' in channel.name.lower():
+            if str(channel.type) == 'voice':
+                print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
+                try:
+                    if database_file_found:
+                        if database.database_online:
+                            await start_music(channel.id)
+                except Exception as e:
+                    pass
+
     print(server.name)
 
 if __name__ == '__main__':
