@@ -41,6 +41,11 @@ class AdminCommands:
         So you must have the proper permissions in that server.
         """
         if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         await self.bot.kick(member)
 
