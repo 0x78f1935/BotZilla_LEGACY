@@ -87,6 +87,24 @@ async def dbimport():
         pass
 
 
+async def get_users(self, ctx):
+    """
+    Update datebase with current active users
+    """
+    data_members = {"id" : "name"}
+    for server in self.bot.servers:
+        for member in server.members:
+            data_members.update({member.id:member.name})
+
+    for id_members, name_members in data_members.items():
+        try:
+            database.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, \'{}\');'.format(
+                id_members, str(name_members)))
+            database.cur.execute("ROLLBACK;")
+        except Exception as e:
+            print('Error gathering info user:\n{}'.format(e.args))
+
+
 async def create_player(channel_id):
     channel = bot.get_channel(f'{channel_id}')
     voice = await bot.join_voice_channel(channel)
@@ -196,6 +214,9 @@ async def on_message(message):
 
 @bot.event
 async def on_server_join(server):
+    if database_file_found:
+        if database.database_online:
+            await get_users()
     for channel in server.channels:
         if 'music' in channel.name.lower():
             if str(channel.type) == 'voice':
