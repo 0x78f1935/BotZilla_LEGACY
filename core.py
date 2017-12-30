@@ -142,6 +142,7 @@ async def get_player(channel, create=False) -> MusicPlayer:
     voice_client = await bot.get_voice_client(channel)
 
     playlist = Playlist(bot)
+    print(playlist)
     player = MusicPlayer(bot, voice_client, playlist) \
         .on('play', bot.on_player_play) \
         .on('resume', bot.on_player_resume) \
@@ -149,7 +150,7 @@ async def get_player(channel, create=False) -> MusicPlayer:
         .on('stop', bot.on_player_stop) \
         .on('finished-playing', bot.on_player_finished_playing) \
         .on('entry-added', bot.on_player_entry_added)
-
+    print(player)
     player.skip_state = SkipState()
     bot.players[server.id] = player
     print(f'{bot.players[server.id]} : {server}')
