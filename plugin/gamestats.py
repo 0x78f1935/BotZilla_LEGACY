@@ -34,6 +34,7 @@ class Leagues:
                 source = response.read()
             data = json.loads(source)
             template = """
+```Python
 Player : [PLAYER]
 Platform : [PLATFORM]
 Level : [LVL]
@@ -75,6 +76,7 @@ Stats >>
         Melee Kills : [MELEE]
         Penetration Kills : [PENKILL]
         Assists : [ASSIST]
+```
         """
             template = template.replace("[PLAYER]", str(data['player']['username']))
             template = template.replace("[PLATFORM]", str(data['player']['platform']))
