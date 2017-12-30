@@ -129,7 +129,7 @@ class Images:
                     print("[NSFW] [RULE34] Sending {} 'GIF' image".format(ctx.message.author.name))
                     pass
 
-                
+
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       colour=0xf20006)
                 embed.set_image(url=image)
@@ -146,6 +146,7 @@ class Images:
             except Exception as e:
                 a = await self.bot.say(image)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        return
 
 
 
