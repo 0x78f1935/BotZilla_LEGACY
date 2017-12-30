@@ -137,26 +137,21 @@ async def get_users():
 
 async def get_player(channel, create=False) -> MusicPlayer:
     server = channel.server
+    print(f'{channel} : {server}')
 
-    if server.id not in bot.players:
-        if not create:
-            raise exceptions.CommandError(
-                'The bot is not in a voice channel.  '
-                'Use %ssummon to summon it to your voice channel.' % bot.config['prefix'])
+    voice_client = await bot.get_voice_client(channel)
 
-        voice_client = await bot.get_voice_client(channel)
+    playlist = Playlist(bot)
+    player = MusicPlayer(bot, voice_client, playlist) \
+        .on('play', bot.on_player_play) \
+        .on('resume', bot.on_player_resume) \
+        .on('pause', bot.on_player_pause) \
+        .on('stop', bot.on_player_stop) \
+        .on('finished-playing', bot.on_player_finished_playing) \
+        .on('entry-added', bot.on_player_entry_added)
 
-        playlist = Playlist(bot)
-        player = MusicPlayer(bot, voice_client, playlist) \
-            .on('play', bot.on_player_play) \
-            .on('resume', bot.on_player_resume) \
-            .on('pause', bot.on_player_pause) \
-            .on('stop', bot.on_player_stop) \
-            .on('finished-playing', bot.on_player_finished_playing) \
-            .on('entry-added', bot.on_player_entry_added)
-
-        player.skip_state = SkipState()
-        bot.players[server.id] = player
+    player.skip_state = SkipState()
+    bot.players[server.id] = player
 
     return bot.players[server.id]
 
