@@ -9,7 +9,10 @@ import re
 import random
 import csv
 import asyncio
-
+from options import exceptions
+from options.player import MusicPlayer
+from options.playlist import Playlist
+from options import downloader
 
 try:
     from plugin.database import Database
@@ -30,6 +33,33 @@ botzillaChannels = tmp_config['channels']
 bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip\nUserdata may be stored for better experience.", command_prefix=config['prefix'], pm_help=False)
 music_channels = botzillaChannels['music']
 database_file_found = False
+downloader = downloader.Downloader(download_folder='audio_cache')
+
+
+class SkipState:
+    def __init__(self):
+        self.skippers = set()
+        self.skip_msgs = set()
+
+    @property
+    def skip_count(self):
+        return len(self.skippers)
+
+    def reset(self):
+        self.skippers.clear()
+        self.skip_msgs.clear()
+
+    def add_skipper(self, skipper, msg):
+        self.skippers.add(skipper)
+        self.skip_msgs.add(msg)
+        return self.skip_count
+
+
+class Response:
+    def __init__(self, content, reply=False, delete_after=0):
+        self.content = content
+        self.reply = reply
+        self.delete_after = delete_after
 
 
 try:
@@ -105,6 +135,59 @@ async def get_users():
             print('Error gathering info user:\n{}'.format(e.args))
 
 
+async def get_player(channel, create=False) -> MusicPlayer:
+    server = channel.server
+
+    if server.id not in bot.players:
+        if not create:
+            raise exceptions.CommandError(
+                'The bot is not in a voice channel.  '
+                'Use %ssummon to summon it to your voice channel.' % bot.config['prefix'])
+
+        voice_client = await bot.get_voice_client(channel)
+
+        playlist = Playlist(bot)
+        player = MusicPlayer(bot, voice_client, playlist) \
+            .on('play', bot.on_player_play) \
+            .on('resume', bot.on_player_resume) \
+            .on('pause', bot.on_player_pause) \
+            .on('stop', bot.on_player_stop) \
+            .on('finished-playing', bot.on_player_finished_playing) \
+            .on('entry-added', bot.on_player_entry_added)
+
+        player.skip_state = SkipState()
+        bot.players[server.id] = player
+
+    return bot.players[server.id]
+
+
+async def on_player_finished_playing(player, **_):
+    while True:
+        song_url = random.choice(music_playlist)
+        info = await downloader.Downloader.safe_extract_info(player.playlist.loop, song_url, download=False, process=False)
+
+        if not info:
+            print("[Info] Removing unplayable song from autoplaylist: {}".format(song_url))
+            music_playlist.remove(song_url)
+            continue
+
+        if info.get('entries', None):  # or .get('_type', '') == 'playlist'
+            pass  # Wooo playlist
+            # Blarg how do I want to do this
+
+        # TODO: better checks here
+        try:
+            await player.playlist.add_entry(song_url, channel=None, author=None)
+        except exceptions.ExtractionError as e:
+            print("Error adding song from autoplaylist:", e)
+            continue
+
+        break
+
+    if not music_playlist:
+        print("[Warning] No playable songs in the autoplaylist, disabling.")
+
+
 async def create_player(channel_id):
     channel = bot.get_channel(f'{channel_id}')
     voice = await bot.join_voice_channel(channel)
@@ -130,8 +213,7 @@ async def auto_join_channels():
                         if database_file_found:
                             if database.database_online:
                                 await dbimport()
-
-                                await start_music(channel.id)
+                                await on_player_finished_playing(await get_player(channel.id))
                     except Exception as e:
                         pass
 
