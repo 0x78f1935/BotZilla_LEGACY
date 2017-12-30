@@ -86,7 +86,8 @@ class Images:
         Rule#34 : If it exists there is porn of it. If not, start uploading.
         Works only in channels with nsfw in the name.
         """
-        if ctx.message.channel.id not in self.nsfw_channels:
+
+        if 'nsfw' not in str(ctx.message.channel.name).lower():
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You do not have the permission to use this command outside a NSFW channel.',
                                   colour=0xf20006)
