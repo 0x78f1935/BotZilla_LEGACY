@@ -233,9 +233,22 @@ async def on_message(message):
     row = str(row).replace('[(', '')
     row = row.replace(',)]', '')
     database.cur.execute("ROLLBACK;")
-    print(row)
     if str(message.author.id) in row:
-        print('{} : {}'.format(str(message.author.id), row))
+        database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(row))
+        reason = database.cur.fetchall()
+        database.cur.execute("ROLLBACK;")
+        database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(row))
+        votes = database.cur.fetchall()
+        database.cur.execute("ROLLBACK;")
+        reason = str(reason).replace("[('", '')
+        reason = reason.replace("',)]", '')
+        votes = str(votes).replace('[(', '')
+        votes = votes.replace(',)]', '')
+        embed = discord.Embed(title='{}:'.format(message.author.name),
+                              description='You have been blacklisted with **`{}`** votes,\nReason:\n\n```{}```'.format(votes, reason),
+                              colour=0xf20006)
+        last_message = await bot.send_message(message.channel, embed=embed)
+        await bot.add_reaction(last_message, emojiUnicode['warning'])
         return
 
 
