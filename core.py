@@ -137,6 +137,7 @@ async def on_ready():
         "exchange",
         "database",
         "fun",
+        "music",
         "games",
         "gamestats",
         "information",
