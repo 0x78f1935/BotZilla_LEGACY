@@ -50,10 +50,13 @@ async def dbimport():
         with open(database.database_import_location_users, 'r') as file:
             reader = csv.reader(file, delimiter=',')
             for row in reader:
-                row = str(row).replace('["', '')
-                row = str(row).replace('"]', '')
-                database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{};".format(row))
-                database.cur.execute("ROLLBACK;")
+                try:
+                    row = str(row).replace('["', '')
+                    row = str(row).replace('"]', '')
+                    database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{};".format(row))
+                    database.cur.execute("ROLLBACK;")
+                except:
+                    pass
     except Exception as e:
         pass
 
@@ -63,10 +66,13 @@ async def dbimport():
         with open(database.database_import_location_music_channels, 'r') as file:
             reader = csv.reader(file, delimiter=',')
             for row in reader:
-                row = str(row).replace('["', '')
-                row = str(row).replace('"]', '')
-                database.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES{};".format(row))
-                database.cur.execute("ROLLBACK;")
+                try:
+                    row = str(row).replace('["', '')
+                    row = str(row).replace('"]', '')
+                    database.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES{};".format(row))
+                    database.cur.execute("ROLLBACK;")
+                except:
+                    pass
     except Exception as e:
         pass
 
@@ -74,11 +80,14 @@ async def dbimport():
         with open(database.database_import_location_blacklist, 'r') as file:
             reader = csv.reader(file, delimiter=',')
             for row in reader:
-                row = str(row).replace('["', '')
-                row = str(row).replace('"]', '')
-                print(row)
-                database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES{};".format(row))
-                database.cur.execute("ROLLBACK;")
+                try:
+                    row = str(row).replace('["', '')
+                    row = str(row).replace('"]', '')
+                    print(row)
+                    database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES{};".format(row))
+                    database.cur.execute("ROLLBACK;")
+                except:
+                    pass
     except Exception as e:
         pass
 
