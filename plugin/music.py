@@ -138,7 +138,7 @@ class Music:
         return True
 
     @commands.command(pass_context=True, no_pm=True)
-    async def play(self, ctx, *, song : str):
+    async def play(self, ctx, *, song : str = None):
         """
         Plays a song.
         If there is a song currently in the queue, then it is
@@ -147,6 +147,14 @@ class Music:
         The list of supported sites can be found here:
         https://rg3.github.io/youtube-dl/supportedsites.html
         """
+        if song is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Perhaps you want to read the **`{}help play`** function'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+
+
         await self.bot.send_typing(ctx.message.channel)
         state = self.get_voice_state(ctx.message.server)
         opts = {
@@ -172,7 +180,7 @@ class Music:
             player.volume = 0.6
             entry = VoiceEntry(ctx.message, player)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Enqueued:\n```Python\n{}\n```'.format(str(entry)),
+                                  description='Enqueued:\n```{}```'.format(str(entry)),
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -185,7 +193,7 @@ class Music:
         """
         if value is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='If you don\'t know how loud you want your volume\nI can\'t help you. Maybe `{}help volume` can'.format(self.config['prefix']),
+                                  description='If you don\'t know how loud you want your volume\nI can\'t help you. Maybe **`{}help volume`** can'.format(self.config['prefix']),
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
@@ -196,7 +204,7 @@ class Music:
             player = state.player
             player.volume = value / 100
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Set the volume to `{:.0%}`'.format(player.volume),
+                                  description='Set the volume to **`{:.0%}`**'.format(player.volume),
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -212,7 +220,7 @@ class Music:
             player.pause()
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='Done. Use `{}resume` if u like to listen again'.format(self.config['prefix']),
+                              description='Done. Use **`{}resume`** if u like to listen again'.format(self.config['prefix']),
                               colour=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -228,7 +236,7 @@ class Music:
             player.resume()
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='Done. You can pause anytime you want.\nJust use `{}pause` to pause'.format(self.config['prefix']),
+                              description='Done. You can pause anytime you want.\nJust use **`{}pause`** to pause'.format(self.config['prefix']),
                               colour=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -297,7 +305,7 @@ class Music:
                 state.skip()
             else:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Skip vote added, currently at [{}/3]'.format(total_votes),
+                                      description='Skip vote added, currently at {}/3'.format(total_votes),
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
@@ -324,7 +332,7 @@ class Music:
         else:
             skip_count = len(state.skip_votes)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Now playing {} [skips: {}/3]'.format(state.current, skip_count),
+                                  description='Now playing\n```{}```\nSkips: {}/3'.format(state.current, skip_count),
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
