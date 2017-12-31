@@ -234,7 +234,7 @@ async def on_message(message):
     row = row.replace(',)]', '')
     database.cur.execute("ROLLBACK;")
     if str(message.author.id) in row:
-        if str(message).startswith('{}'.format(config['prefix'])):
+        if str(message.content).startswith('{}'.format(config['prefix'])):
             database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(message.author.id))
             reason = database.cur.fetchall()
             database.cur.execute("ROLLBACK;")
