@@ -134,7 +134,7 @@ class Music:
         }
 
         if state.voice is None:
-            success = Music.summon(ctx.message.channel)
+            success = Music.summon(self, ctx.message.channel)
             if not success:
                 return
 
