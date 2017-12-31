@@ -68,7 +68,7 @@ async def dbimport():
                 database.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES{};".format(row))
                 database.cur.execute("ROLLBACK;")
     except Exception as e:
-        print(f'{e.args}')
+        pass
 
     try:
         with open(database.database_import_location_blacklist, 'r') as file:
