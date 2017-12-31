@@ -21,7 +21,7 @@ class VoiceEntry:
         fmt = '{0.title}'
         duration = self.player.duration
         if duration:
-            fmt = fmt + '```Python\n[length: {0[0]}m {0[1]}s]\n```'.format(divmod(duration, 60))
+            fmt = fmt + 'length: {0[0]}m {0[1]}s'.format(divmod(duration, 60))
         return fmt.format(self.player, self.requester)
 
 class VoiceState:
