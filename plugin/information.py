@@ -374,7 +374,7 @@ class Information:
 
             if total >= vote_policy:
                 try:
-                    self.database.cur.execute("INSERT INTO botzilla.blacklist (ID, 'server_name', 'reason', total_votes) VALUES ({}, {}, {}, {});".format(name.id, str(name), str(reason), total))
+                    self.database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, '{}', '{}', {});".format(name.id, str(name), str(reason), total))
                     self.database.cur.execute("ROLLBACK;")
                     print(f'Vote approved for {username}')
                 except:
