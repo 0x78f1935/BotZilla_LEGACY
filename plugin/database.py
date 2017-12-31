@@ -66,6 +66,9 @@ class Database:
             except Exception as e:
                 print(f'Can\'t find database{e.args}')
 
+    async def is_blacklisted(self, author_id):
+        if author_id in self.blacklist:
+            return
 
     @commands.command(pass_context=True, hidden=True)
     async def sql(self, ctx, *, query: str = None):

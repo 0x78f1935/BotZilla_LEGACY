@@ -218,7 +218,7 @@ async def on_message_delete(message):
 @bot.event
 async def on_message(message):
     if message.author.bot: return
-    if message.author.id in database.blacklist: return
+    await database.is_blacklisted(message.author.id)
 
     try:
         if 'how' in message.content.lower():

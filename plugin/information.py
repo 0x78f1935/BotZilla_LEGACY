@@ -391,7 +391,7 @@ class Information:
                     print(f'Vote approved for {username}')
                     self.database.blacklist.append(str(name.id))
                 except:
-                    self.database.blacklist.append(str(name.id))
+                    self.database.blacklist.append(str(username))
                 finally:
                     embed = discord.Embed(title='Blacklist vote approved:',
                                           description='Blacklist vote has been approved for **`{}`**'.format(name),
