@@ -11,3 +11,9 @@ CREATE TABLE botzilla.music(
     server_name varchar(254),
     type_channel varchar(24)
 );
+
+CREATE TABLE botzilla.blacklist(
+    ID bigserial primary key,
+    server_name varchar(254),
+    reason varchar(2000)
+);
