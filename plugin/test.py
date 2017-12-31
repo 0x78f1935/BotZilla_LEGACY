@@ -66,7 +66,7 @@ class TestScripts:
             await self.bot.add_reaction(a, '\U0001f1fd')
             await asyncio.sleep(10)
             message = await self.bot.get_message(ctx.message.channel, a.id)
-            total = message.reactions[0].count
+            total = message.reactions[0].count - 1
             #
             vote_policy = len(ctx.message.server.members) / 100 * 5
             if total >= vote_policy:
