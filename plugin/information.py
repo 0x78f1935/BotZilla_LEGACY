@@ -345,7 +345,7 @@ class Information:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         else:
-            vote_policy = len(ctx.message.server.members) / 100 * 20
+            vote_policy = len(ctx.message.server.members) / 100 * 5
             username = username.replace('<@', '')
             username = username.replace('>', '')
             username = username.replace('!', '')
