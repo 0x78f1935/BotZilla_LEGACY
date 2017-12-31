@@ -106,19 +106,16 @@ class Music:
 
 
     async def summon(self, voice_channel):
-        """Summons the bot to join your voice channel."""
-        print(voice_channel)
+        """
+        Summons the bot on start to join voice channel.
+        All voice channels are valid with music in the name
+        """
         summoned_channel = voice_channel
-        if summoned_channel is None:
-            await self.bot.say('You are not in a voice channel.')
-            return False
-
         state = Music.get_voice_state(self, voice_channel.server)
         if state.voice is None:
             state.voice = await self.bot.join_voice_channel(summoned_channel)
         else:
             await state.voice.move_to(summoned_channel)
-
         return True
 
     @commands.command(pass_context=True, no_pm=True)
@@ -137,7 +134,7 @@ class Music:
         }
 
         if state.voice is None:
-            success = True
+            success = Music.summon(ctx.message.channel)
             if not success:
                 return
 
