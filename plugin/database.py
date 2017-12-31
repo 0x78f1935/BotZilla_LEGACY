@@ -60,7 +60,8 @@ class Database:
             for item in rows:
                 item = str(item).replace('(', '')
                 item = item.replace(',)', '')
-                print(item)
+                self.blacklist.append(item)
+                print(self.blacklist)
         except Exception as e:
             print(f'Can\'t find database{e.args}')
 
