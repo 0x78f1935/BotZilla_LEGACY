@@ -6,6 +6,7 @@ try:
     from plugin.database import Database
 except:
     pass
+import asyncio
 
 
 class AdminCommands:
@@ -241,7 +242,8 @@ So where are you waiting for? Are you joining my adventure?
                 row = str(row).replace('(', '')
                 row = str(row).replace(',)', '')
                 try:
-                    target = await self.bot.get_user_info(row)
+                    target = await self.bot.get_user_info(int(row))
+                    await asyncio.sleep(1)
                     embed = discord.Embed(title='{}:'.format('Announcement'),
                                           description='{}'.format(content),
                                           colour=0xf20006)
