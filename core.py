@@ -141,7 +141,6 @@ async def get_users():
 async def get_player(channel, create=False) -> MusicPlayer:
     server = channel.server
     print(f'{channel} : {server}')
-
     voice_client = await bot.get_voice_client(channel)
     print(voice_client)
     player = MusicPlayer(bot=bot, voice_client=voice_client, playlist=music_playlist) \
@@ -265,7 +264,7 @@ async def auto_join_channels(music_playlist):
                             if database.database_online:
                                 await dbimport()
                                 channel = bot.get_channel(f'{channel.id}')
-                                await bot.join_voice_channel(channel)
+
                                 player = await get_player(channel=channel, create=True)
                                 print('player ready')
                                 if player.is_stopped:
