@@ -18,10 +18,10 @@ class VoiceEntry:
         self.player = player
 
     def __str__(self):
-        fmt = '*{0.title}* uploaded by {0.uploader} and requested by {1.display_name}'
+        fmt = '{0.title}'
         duration = self.player.duration
         if duration:
-            fmt = fmt + ' [length: {0[0]}m {0[1]}s]'.format(divmod(duration, 60))
+            fmt = fmt + '```Python\n[length: {0[0]}m {0[1]}s]\n```'.format(divmod(duration, 60))
         return fmt.format(self.player, self.requester)
 
 class VoiceState:
@@ -57,7 +57,11 @@ class VoiceState:
         while True:
             self.play_next_song.clear()
             self.current = await self.songs.get()
-            await self.bot.send_message(self.current.channel, 'Now playing ' + str(self.current))
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Requester:\n{1.display_name}\nNow playing: **`{}`**'.format(self.current),
+                                  colour=0xf20006)
+            last_message = await self.bot.send_message(self.current.channel, embed=embed)
+            await self.bot.add_reaction(last_message, '\U0001f3b5')
             self.current.player.start()
             await self.play_next_song.wait()
 
@@ -109,7 +113,7 @@ class Music:
         summoned_channel = ctx.message.author.voice_channel
         if summoned_channel is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You are not in a voice channel.\nConsider the **`{}help gif`** option..'.format(self.config['prefix']),
+                                  description='You are not in a voice channel.\nConsider the **`{}help summon`** option..'.format(self.config['prefix']),
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
@@ -118,8 +122,18 @@ class Music:
         state = self.get_voice_state(ctx.message.server)
         if state.voice is None:
             state.voice = await self.bot.join_voice_channel(summoned_channel)
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You can stop me at any time.\nUse `{}stop` to stop me. You can also pause and resume me\n use `{}help Music` for more information'.format(self.config['prefix'], self.config['prefix']),
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
         else:
-            await state.voice.move_to(summoned_channel)
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Music is already playing in another voice channel.\nJoin that one instead :smile:',
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+            #wait state.voice.move_to(summoned_channel)
 
         return True
 
@@ -158,7 +172,7 @@ class Music:
             player.volume = 0.6
             entry = VoiceEntry(ctx.message, player)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Enqueued ' + str(entry),
+                                  description='Enqueued:\n```Python\n{}\n```'.format(str(entry)),
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -182,7 +196,7 @@ class Music:
             player = state.player
             player.volume = value / 100
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Set the volume to {:.0%}'.format(player.volume),
+                                  description='Set the volume to `{:.0%}`'.format(player.volume),
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
