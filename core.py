@@ -218,15 +218,12 @@ async def on_message_delete(message):
 @bot.event
 async def on_message(message):
     if message.author.bot: return
-    try:
-        database.cur.execute("SELECT * FROM botzilla.blacklist;")
-        row = database.cur.fetchall()
-        database.cur.execute("ROLLBACK;")
-        if str(message.author.id) in row:
-            return
-    except Exception as e:
-        print(e.args)
-        pass
+    database.cur.execute("SELECT * FROM botzilla.blacklist;")
+    row = database.cur.fetchall()
+    database.cur.execute("ROLLBACK;")
+    if str(message.author.id) in row:
+        return
+
 
     try:
         if 'how' in message.content.lower():
