@@ -65,12 +65,14 @@ class TestScripts:
             await self.bot.add_reaction(a, '\u2705')
             await self.bot.add_reaction(a, '\U0001f1fd')
             await asyncio.sleep(10)
-            print(a.reactions)
-            message = await self.bot.get_message(ctx.message.channel, a)
-            print(message.reactions[0].emoji)
-
-            total = a.count(a.reactions.emoji('\u2705'))
-            print(total)
+            message = await self.bot.get_message(ctx.message.channel, a.id)
+            total = message.reactions[0].count
+            #
+            vote_policy = len(ctx.message.server.members) / 100 * 20
+            if total >= vote_policy:
+                print('Vote approved')
+            else:
+                print(f'No blacklist for {username}')
             # except:
             #     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
             #                           description='Invalid username'.format(str(username)),
