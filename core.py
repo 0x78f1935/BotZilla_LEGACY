@@ -268,7 +268,11 @@ async def auto_join_channels(music_playlist):
                                 await dbimport()
                                 channel = bot.get_channel(f'{channel.id}')
                                 await bot.join_voice_channel(channel)
-                                await on_player_finished_playing(await get_player(channel, music_playlist))
+                                player = get_player(channel, create=True)
+                                if player.is_stopped:
+                                    player.play()
+
+                                await on_player_finished_playing(player)
                     except Exception as e:
                         pass
 
