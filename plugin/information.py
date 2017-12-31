@@ -252,14 +252,21 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         else:
-            username = username.replace('<@', '')
-            username = username.replace('>', '')
-            username = username.replace('!', '')
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='The ID you looking for is:\n**{}**'.format(str(username)),
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            try:
+                username = username.replace('<@', '')
+                username = username.replace('>', '')
+                username = username.replace('!', '')
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='The ID you looking for is:\n**{}**'.format(str(username)),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            except:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Invalid username'.format(str(username)),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
     @commands.command(pass_context=True, hidden=True)

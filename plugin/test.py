@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import json
 import re
+import asyncio
 
 
 tmp_config = json.loads(str(open('./options/config.js').read()))
@@ -35,5 +36,47 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
+    @commands.command(pass_context=True, hidden=True)
+    async def blacklist(self, ctx, *, username=None):
+        """Starts a blacklist vote"""
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+
+        if username is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Read **`{}help blacklist`** thats a command!'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+        else:
+            try:
+                username = username.replace('<@', '')
+                username = username.replace('>', '')
+                username = username.replace('!', '')
+                embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
+                                      description='Your vote is needed\nWould you like to blacklist:\n\n**{}**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(str(username)),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, '\u2705')
+                await(self.bot.add_reaction(a, '\U0001f1fd'))
+                await asyncio.sleep(10)
+                if self.bot.reaction.count('\u2705') >= 2:
+                    print('test')
+
+            except:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Invalid username'.format(str(username)),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
 def setup(bot):
     bot.add_cog(TestScripts(bot))
+
+
