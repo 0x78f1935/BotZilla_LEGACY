@@ -247,7 +247,7 @@ async def on_message(message):
         votes = votes.replace(',)]', '')
 
         embed = discord.Embed(title='{}:'.format(message.author.name),
-                              description='You have been blacklisted with **`{}`** votes,\nReason:\n\n```{}```'.format(votes, reason),
+                              description='You have been blacklisted with **`{}`** votes,\n\nReason:\n```{}```'.format(votes, reason),
                               colour=0xf20006)
         last_message = await bot.send_message(message.channel, embed=embed)
         await bot.add_reaction(last_message, emojiUnicode['warning'])
