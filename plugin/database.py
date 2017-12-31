@@ -351,7 +351,7 @@ class Database:
                 for row in reader:
                     row = str(row).replace('["', '')
                     row = str(row).replace('"]', '')
-                    self.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES{}".format(row))
+                    self.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES{};".format(row))
                     self.cur.execute("ROLLBACK;")
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
