@@ -373,16 +373,16 @@ class Information:
             total = message.reactions[0].count - 1
 
             if total >= vote_policy:
-                # try:
-                Database.database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, 'name', 'test test test', 45);".format(name.id, str(name), str(reason), total))
-                Database.database.cur.execute("ROLLBACK;")
-                print(f'Vote approved for {username}')
-                # except:
-                #     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                #                           description='Blacklist seems impossible at this time...\nDatabase seems offline',
-                #                           colour=0xf20006)
-                #     a = await self.bot.say(embed=embed)
-                #     await self.bot.add_reaction(a, '\u2705')
+                try:
+                    self.database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, 'name', 'test test test', 45);".format(name.id, str(name), str(reason), total))
+                    self.database.cur.execute("ROLLBACK;")
+                    print(f'Vote approved for {username}')
+                except:
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Blacklist seems impossible at this time...\nDatabase seems offline',
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, '\u2705')
             else:
                 embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
                                       description='Blacklist vote has been declined for **`{}`**'.format(name),
