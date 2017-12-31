@@ -355,6 +355,13 @@ class Information:
 
             try:
                 name = await self.bot.get_user_info(username)
+                if name.id in self.database.blacklist:
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='*`{}` already on the blacklist*'.format(name),
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, '\U0001f605')
+                    return
             except:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Invalid username'.format(str(username)),
@@ -362,6 +369,7 @@ class Information:
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
+
 
             embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
                                   description='Total votes are needed: **{}**\n**2** Minutes remaining..\n\nWould you like to blacklist:\n\n**`{}`**\n\nReason:\n\n**`{}`**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(
@@ -376,18 +384,20 @@ class Information:
             total = message.reactions[0].count - 1
 
             if float(total) >= vote_policy:
-                # try:
-                reason = str(reason).replace(';', '')
-                self.database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, '{}', '{}', {});".format(name.id, str(name), str(reason), total))
-                self.database.cur.execute("ROLLBACK;")
-                print(f'Vote approved for {username}')
-                self.database.blacklist.append(username)
-                # except:
-                #     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                #                           description='Blacklist seems impossible at this time...\nDatabase seems offline',
-                #                           colour=0xf20006)
-                #     a = await self.bot.say(embed=embed)
-                #     await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                try:
+                    reason = str(reason).replace(';', '')
+                    self.database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, '{}', '{}', {});".format(name.id, str(name), str(reason), total))
+                    self.database.cur.execute("ROLLBACK;")
+                    print(f'Vote approved for {username}')
+                    self.database.blacklist.append(name.id)
+                except:
+                    self.database.blacklist.append(name.id)
+                finally:
+                    embed = discord.Embed(title='Blacklist vote approved:',
+                                          description='Blacklist vote has been approved for **`{}`**'.format(name),
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, '\U0001f44b')
             else:
                 embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
                                       description='Blacklist vote has been declined for **`{}`**'.format(name),
