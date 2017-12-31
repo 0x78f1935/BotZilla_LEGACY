@@ -107,6 +107,7 @@ class Music:
 
     async def summon(self, voice_channel):
         """Summons the bot to join your voice channel."""
+        print(voice_channel)
         summoned_channel = voice_channel
         if summoned_channel is None:
             await self.bot.say('You are not in a voice channel.')
