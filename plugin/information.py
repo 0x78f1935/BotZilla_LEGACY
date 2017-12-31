@@ -317,7 +317,7 @@ class Information:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
-    @commands.command(pass_context=True, hidden=True)
+    @commands.command(pass_context=True)
     async def blacklist(self, ctx, username=None, *, reason: str = None):
         """
         Starts a blacklist vote. Ban people from making use of BotZilla.
@@ -381,7 +381,9 @@ class Information:
                     self.database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, '{}', '{}', {});".format(name.id, str(name), str(reason), total))
                     self.database.cur.execute("ROLLBACK;")
                     print(f'Vote blacklist approved for {username}')
+                    await self.bot.delete_message(message)
                 except:
+                    await self.bot.delete_message(message)
                     pass
                 finally:
                     embed = discord.Embed(title='Blacklist vote approved:',
