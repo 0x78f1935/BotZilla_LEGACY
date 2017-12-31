@@ -70,6 +70,17 @@ async def dbimport():
     except Exception as e:
         pass
 
+    try:
+        with open(database.database_import_location_blacklist, 'r') as file:
+            reader = csv.reader(file, delimiter=',')
+            for row in reader:
+                # row = str(row).replace('["', '')
+                # row = str(row).replace('"]', '')
+                print(row)
+                database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{}".format(row))
+                database.cur.execute("ROLLBACK;")
+    except Exception as e:
+        pass
 
     # music urls
     try:

@@ -346,6 +346,20 @@ class Database:
 
 
         try:
+            with open(self.database_import_location_users, 'r') as file:
+                reader = csv.reader(file, delimiter=',')
+                for row in reader:
+                    self.cur.execute("INSERT INTO botzilla.users (ID, server_name, reason, total_votes) VALUES{}".format(row))
+                    self.cur.execute("ROLLBACK;")
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format('Error'),
+                                  description='```Python\n{}\n```'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
+        try:
             with open(self.database_import_location_music_channels, 'r') as file:
                 reader = csv.reader(file, delimiter=',')
                 for row in reader:
