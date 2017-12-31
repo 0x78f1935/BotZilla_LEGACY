@@ -173,7 +173,7 @@ async def on_ready():
             for item in clean_links:
                 music_playlist.append(item)
 
-    await auto_join_channels(music_playlist)
+    # await auto_join_channels(music_playlist)
 
 
 @bot.event
@@ -206,17 +206,17 @@ async def on_server_join(server):
     if database_file_found:
         if database.database_online:
             await get_users()
-    for channel in server.channels:
-        if 'music' in channel.name.lower():
-            if str(channel.type) == 'voice':
-                print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
-                try:
-                    if database_file_found:
-                        if database.database_online:
-                            # auto stats music here
-                            pass
-                except Exception as e:
-                    pass
+    # for channel in server.channels:
+    #     if 'music' in channel.name.lower():
+    #         if str(channel.type) == 'voice':
+    #             print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
+    #             try:
+    #                 if database_file_found:
+    #                     if database.database_online:
+    #                         # auto stats music here
+    #                         pass
+    #             except Exception as e:
+    #                 pass
 
     print(server.name)
 

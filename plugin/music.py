@@ -2,8 +2,6 @@ import asyncio
 import discord
 from discord.ext import commands
 
-
-
 if not discord.opus.is_loaded():
     # the 'opus' library here is opus.dll on windows
     # or libopus.so on linux in the current directory
@@ -92,31 +90,21 @@ class Music:
             except:
                 pass
 
+
     @commands.command(pass_context=True, no_pm=True)
-    async def joinchannel(self, ctx, *, channel : discord.Channel):
-        """Joins a voice channel."""
-        try:
-            await self.create_voice_client(channel)
-        except discord.ClientException:
-            await self.bot.say('Already in a voice channel...')
-        except discord.InvalidArgument:
-            await self.bot.say('This is not a voice channel...')
-        else:
-            await self.bot.say('Ready to play audio in ' + channel.name)
+    async def summon(self, ctx):
+        """Summons the bot to join your voice channel."""
+        summoned_channel = ctx.message.author.voice_channel
+        if summoned_channel is None:
+            await self.bot.say('You are not in a voice channel.')
+            return False
 
-
-    async def summon(self, voice_channel):
-        """
-        Summons the bot on start to join voice channel.
-        All voice channels are valid with music in the name
-        """
-
-        summoned_channel = voice_channel
-        state = Music.get_voice_state(self, voice_channel.server)
+        state = self.get_voice_state(ctx.message.server)
         if state.voice is None:
             state.voice = await self.bot.join_voice_channel(summoned_channel)
         else:
             await state.voice.move_to(summoned_channel)
+
         return True
 
     @commands.command(pass_context=True, no_pm=True)
@@ -128,16 +116,14 @@ class Music:
         The list of supported sites can be found here:
         https://rg3.github.io/youtube-dl/supportedsites.html
         """
-        if ctx.message.server.id in self.voice_states:
-            print(self.voice_states.get(ctx.message.server.id))
-        state = self.get_voice_state(server=ctx.message.server)
+        state = self.get_voice_state(ctx.message.server)
         opts = {
             'default_search': 'auto',
             'quiet': True,
         }
 
         if state.voice is None:
-            success = await Music.summon(self, ctx.message.channel)
+            success = await ctx.invoke(self.summon)
             if not success:
                 return
 
