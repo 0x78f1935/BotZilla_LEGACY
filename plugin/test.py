@@ -68,7 +68,7 @@ class TestScripts:
             message = await self.bot.get_message(ctx.message.channel, a.id)
             total = message.reactions[0].count
             #
-            vote_policy = len(ctx.message.server.members) / 100 * 20
+            vote_policy = len(ctx.message.server.members) / 100 * 5
             if total >= vote_policy:
                 print('Vote approved')
             else:
