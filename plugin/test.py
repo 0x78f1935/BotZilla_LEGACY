@@ -48,20 +48,20 @@ class TestScripts:
             return
 
 
-        if reason is None:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You have to give up a reason..\nI recommend reading **`{}help blacklist`**'.format(self.config['prefix']),
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-
-
         if username is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Read **`{}help blacklist`** that would help..'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+        elif reason is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You have to give up a reason..\nI recommend reading **`{}help blacklist`**'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
         else:
             username = username.replace('<@', '')
             username = username.replace('>', '')
