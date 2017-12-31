@@ -234,24 +234,27 @@ async def on_message(message):
     row = row.replace(',)]', '')
     database.cur.execute("ROLLBACK;")
     if str(message.author.id) in row:
-        database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(message.author.id))
-        reason = database.cur.fetchall()
-        database.cur.execute("ROLLBACK;")
-        reason = str(reason).replace("[('", '')
-        reason = reason.replace("',)]", '')
+        if str(message).startswith('{}'.format(config['prefix'])):
+            database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(message.author.id))
+            reason = database.cur.fetchall()
+            database.cur.execute("ROLLBACK;")
+            reason = str(reason).replace("[('", '')
+            reason = reason.replace("',)]", '')
 
-        database.cur.execute("SELECT total_votes FROM botzilla.blacklist where ID = {};".format(message.author.id))
-        votes = database.cur.fetchall()
-        database.cur.execute("ROLLBACK;")
-        votes = str(votes).replace('[(', '')
-        votes = votes.replace(',)]', '')
+            database.cur.execute("SELECT total_votes FROM botzilla.blacklist where ID = {};".format(message.author.id))
+            votes = database.cur.fetchall()
+            database.cur.execute("ROLLBACK;")
+            votes = str(votes).replace('[(', '')
+            votes = votes.replace(',)]', '')
 
-        embed = discord.Embed(title='{}:'.format(message.author.name),
-                              description='You have been blacklisted with **`{}`** votes,\n\nReason:\n```{}```'.format(votes, reason),
-                              colour=0xf20006)
-        last_message = await bot.send_message(message.channel, embed=embed)
-        await bot.add_reaction(last_message, emojiUnicode['warning'])
-        return
+            embed = discord.Embed(title='{}:'.format(message.author.name),
+                                  description='You have been blacklisted with **`{}`** votes,\n\nReason:\n```{}```'.format(votes, reason),
+                                  colour=0xf20006)
+            last_message = await bot.send_message(message.channel, embed=embed)
+            await bot.add_reaction(last_message, emojiUnicode['warning'])
+            return
+        else:
+            return
 
 
     try:
