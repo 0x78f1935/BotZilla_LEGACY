@@ -144,7 +144,7 @@ async def get_player(channel, music_playlist, create=False) -> MusicPlayer:
 
     voice_client = await bot.get_voice_client(channel)
 
-    player = MusicPlayer(bot, voice_client, music_playlist) \
+    player = MusicPlayer(bot=bot, voice_client=voice_client, playlist=music_playlist) \
         .on('play', bot.on_player_play) \
         .on('resume', bot.on_player_resume) \
         .on('pause', bot.on_player_pause) \
