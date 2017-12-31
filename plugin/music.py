@@ -128,6 +128,8 @@ class Music:
         The list of supported sites can be found here:
         https://rg3.github.io/youtube-dl/supportedsites.html
         """
+        if ctx.message.server.id in self.voice_states:
+            print(self.voice_states.get(ctx.message.server.id))
         state = self.get_voice_state(server=ctx.message.server)
         opts = {
             'default_search': 'auto',
