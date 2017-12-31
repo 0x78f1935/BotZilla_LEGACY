@@ -137,6 +137,14 @@ class Music:
 
         return True
 
+
+    @commands.command(pass_context=True, no_pm=True)
+    async def que(self, ctx):
+        state = self.get_voice_state(ctx.message.server)
+        await self.bot.say(state)
+
+
+
     @commands.command(pass_context=True, no_pm=True)
     async def play(self, ctx, *, song : str = None):
         """
