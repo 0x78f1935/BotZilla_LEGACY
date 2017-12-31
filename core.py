@@ -106,7 +106,7 @@ async def get_users():
 
 
 async def auto_join_channels(music_playlist):
-    music = Music()
+    music = Music(bot)
     for server in bot.servers:
         for channel in server.channels:
             if 'music' in channel.name.lower():
@@ -117,7 +117,7 @@ async def auto_join_channels(music_playlist):
                             await dbimport()
                             # channel = bot.get_channel(f'{channel.id}')
                             music.voice_states.update({'ID' : server.id})
-                            await Music.summon(bot, channel)
+                            await music.summon(channel)
 
 
 
