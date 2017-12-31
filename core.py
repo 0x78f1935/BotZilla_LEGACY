@@ -115,7 +115,7 @@ async def auto_join_channels(music_playlist):
                         if database_file_found:
                             if database.database_online:
                                 await dbimport()
-                                channel = bot.get_channel(f'{channel.id}')
+                                # channel = bot.get_channel(f'{channel.id}')
                                 await Music.summon(channel)
 
                     except Exception as e:
