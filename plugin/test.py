@@ -65,9 +65,8 @@ class TestScripts:
             await self.bot.add_reaction(a, '\u2705')
             await(self.bot.add_reaction(a, '\U0001f1fd'))
             await asyncio.sleep(10)
-            if self.bot.reaction.count('\u2705') >= 2:
-                print('test')
-
+            total = a.reactions.emoji('\u2705').count()
+            print(total)
             # except:
             #     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
             #                           description='Invalid username'.format(str(username)),
