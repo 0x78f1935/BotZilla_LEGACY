@@ -13,6 +13,7 @@ from options import exceptions
 from options.player import MusicPlayer
 from options.playlist import Playlist
 from options import downloader
+from collections import defaultdict
 
 try:
     from plugin.database import Database
@@ -34,6 +35,8 @@ bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip\n
 music_channels = botzillaChannels['music']
 database_file_found = False
 downloader = downloader.Downloader(download_folder='audio_cache')
+ssd_defaults = {'last_np_msg': None, 'auto_paused': False}
+server_specific_data = defaultdict(lambda: dict(ssd_defaults))
 
 
 class SkipState:
@@ -54,6 +57,10 @@ class SkipState:
         self.skip_msgs.add(msg)
         return self.skip_count
 
+
+class ConfigDefaults:
+    now_playing_mentions = False
+now_playing_mentions = config.getboolean('MusicBot', 'NowPlayingMentions', fallback=ConfigDefaults.now_playing_mentions)
 
 class Response:
     def __init__(self, content, reply=False, delete_after=0):
@@ -155,6 +162,67 @@ async def get_player(channel, music_playlist, create=False) -> MusicPlayer:
     bot.players[server.id] = player
     print(f'{bot.players[server.id]} : {server}')
     return bot.players[server.id]
+
+
+async def safe_delete_message(message, *, quiet=False):
+    try:
+        return await bot.delete_message(message)
+
+    except discord.Forbidden:
+        if not quiet:
+            print("Warning: Cannot delete message \"{}\", no permission".format(message.clean_content))
+
+    except discord.NotFound:
+        if not quiet:
+            print("Warning: Cannot delete message \"{}\", message not found".format(message.clean_content))
+
+
+async def on_player_play(player, entry):
+    await update_now_playing(entry)
+    player.skip_state.reset()
+
+    channel = entry.meta.get('channel', None)
+    author = entry.meta.get('author', None)
+
+    if channel and author:
+        last_np_msg = server_specific_data[channel.server]['last_np_msg']
+        if last_np_msg and last_np_msg.channel == channel:
+
+            async for lmsg in bot.logs_from(channel, limit=1):
+                if lmsg != last_np_msg and last_np_msg:
+                    await safe_delete_message(last_np_msg)
+                    server_specific_data[channel.server]['last_np_msg'] = None
+                break  # This is probably redundant
+
+        if now_playing_mentions:
+            embed = discord.Embed(title='{}:'.format(entry.meta['author'].name),
+                                  description='Your song **{}** is now playing in **{}**!'.format(entry.title, player.voice_client.channel.name),
+                                  colour=0xf20006)
+            last_message = await bot.say(embed=embed)
+            await bot.add_reaction(last_message, emojiUnicode['succes'])
+        else:
+            embed = discord.Embed(title='{}:'.format(entry.title),
+                                  description='Now playing: **{}**'.format(player.voice_client.channel.name, ),
+                                  colour=0xf20006)
+            last_message = await bot.say(embed=embed)
+            await bot.add_reaction(last_message, emojiUnicode['succes'])
+
+async def update_now_playing(self, entry=None, is_paused=False):
+    await self.change_presence(game=discord.Game(name='Powerd by PuffDip'))
+
+async def on_player_resume(self, entry, **_):
+    await self.update_now_playing(entry)
+
+async def on_player_pause(self, entry, **_):
+    await self.update_now_playing(entry, True)
+
+async def on_player_stop(self, **_):
+    await self.update_now_playing()
+
+async def on_player_entry_added(self, playlist, entry, **_):
+    pass
+
+
 
 
 async def on_player_finished_playing(player, music_playlist, **_,):
