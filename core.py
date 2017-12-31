@@ -10,6 +10,7 @@ import csv
 import asyncio
 from collections import defaultdict
 from plugin.music import Music
+import psycopg2
 
 try:
     from plugin.database import Database
@@ -30,7 +31,7 @@ botzillaChannels = tmp_config['channels']
 bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip\nUserdata may be stored for better experience.", command_prefix=config['prefix'], pm_help=False)
 music_channels = botzillaChannels['music']
 database_file_found = False
-
+database_settings = tmp_config['database']
 
 try:
     database = Database(bot)
@@ -218,6 +219,13 @@ async def on_message_delete(message):
 @bot.event
 async def on_message(message):
     if message.author.bot: return
+    database.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
+        database_settings['db_name'],
+        database_settings['user'],
+        database_settings['ip'],
+        database_settings['port'],
+        database_settings['password']
+    ))
     database.cur.execute("SELECT * FROM botzilla.blacklist;")
     row = database.cur.fetchall()
     database.cur.execute("ROLLBACK;")
@@ -244,6 +252,7 @@ async def on_server_join(server):
     if database_file_found:
         if database.database_online:
             await get_users()
+
     # for channel in server.channels:
     #     if 'music' in channel.name.lower():
     #         if str(channel.type) == 'voice':
