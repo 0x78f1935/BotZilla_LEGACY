@@ -113,7 +113,7 @@ class Music:
             await self.bot.say('You are not in a voice channel.')
             return False
 
-        state = Music.get_voice_state(voice_channel.server)
+        state = Music.get_voice_state(self, voice_channel.server)
         if state.voice is None:
             state.voice = await self.bot.join_voice_channel(summoned_channel)
         else:
