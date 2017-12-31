@@ -52,19 +52,6 @@ class Database:
                 print('I am unable to connect to the Database')
             print('failed to connect with the database giving up...')
 
-        # Blacklist
-        try:
-            self.cur.execute("SELECT ID from botzilla.blacklist;")
-            rows = self.cur.fetchall()
-            self.cur.execute("ROLLBACK;")
-            for item in rows:
-                item = str(item).replace('(', '')
-                item = item.replace(',)', '')
-                self.blacklist.append(item)
-                print(self.blacklist)
-        except Exception as e:
-            print(f'Can\'t find database{e.args}')
-
 
     @commands.command(pass_context=True, hidden=True)
     async def sql(self, ctx, *, query: str = None):

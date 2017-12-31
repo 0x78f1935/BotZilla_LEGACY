@@ -174,6 +174,18 @@ async def on_ready():
 
     # await auto_join_channels(music_playlist)
 
+    # Blacklist
+    try:
+        database.cur.execute("SELECT ID from botzilla.blacklist;")
+        rows = database.cur.fetchall()
+        database.cur.execute("ROLLBACK;")
+        for item in rows:
+            item = str(item).replace('(', '')
+            item = item.replace(',)', '')
+            database.blacklist.append(item)
+    except Exception as e:
+        print(f'Can\'t find database{e.args}')
+
 
 @bot.event
 async def on_message_delete(message):
@@ -186,6 +198,8 @@ async def on_message_delete(message):
 @bot.event
 async def on_message(message):
     if message.author.bot: return
+    if message.author.id in database.blacklist: return
+
     try:
         if 'how' in message.content.lower():
             search_term = re.search(r'\bhow\b.*[?]', message.content.lower()).group(0)
