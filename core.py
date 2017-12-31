@@ -234,10 +234,10 @@ async def on_message(message):
     row = row.replace(',)]', '')
     database.cur.execute("ROLLBACK;")
     if str(message.author.id) in row:
-        database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(row))
+        database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(message.author.id))
         reason = database.cur.fetchall()
         database.cur.execute("ROLLBACK;")
-        database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(row))
+        database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(message.author.id))
         votes = database.cur.fetchall()
         database.cur.execute("ROLLBACK;")
         reason = str(reason).replace("[('", '')
