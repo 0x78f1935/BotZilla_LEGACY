@@ -110,6 +110,7 @@ class Music:
         Summons the bot on start to join voice channel.
         All voice channels are valid with music in the name
         """
+
         summoned_channel = voice_channel
         state = Music.get_voice_state(self, voice_channel.server)
         if state.voice is None:

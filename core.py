@@ -118,6 +118,8 @@ async def auto_join_channels(music_playlist):
                             # channel = bot.get_channel(f'{channel.id}')
                             music.voice_states.update({'ID' : server.id})
                             await music.summon(channel)
+                else:
+                    pass
 
 
 
