@@ -93,7 +93,7 @@ class Music:
                 pass
 
     @commands.command(pass_context=True, no_pm=True)
-    async def join(self, ctx, *, channel : discord.Channel):
+    async def joinchannel(self, ctx, *, channel : discord.Channel):
         """Joins a voice channel."""
         try:
             await self.create_voice_client(channel)
