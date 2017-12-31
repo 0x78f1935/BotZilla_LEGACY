@@ -319,7 +319,10 @@ class Information:
 
     @commands.command(pass_context=True, hidden=True)
     async def blacklist(self, ctx, username=None, *, reason: str = None):
-        """Starts a blacklist vote"""
+        """
+        Starts a blacklist vote. Ban people from making use of BotZilla.
+        5 % of your server has to agree.
+        """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
