@@ -14,6 +14,7 @@ from options.player import MusicPlayer
 from options.playlist import Playlist
 from options import downloader
 from collections import defaultdict
+import traceback
 
 try:
     from plugin.database import Database
@@ -37,6 +38,8 @@ database_file_found = False
 downloader = downloader.Downloader(download_folder='audio_cache')
 ssd_defaults = {'last_np_msg': None, 'auto_paused': False}
 server_specific_data = defaultdict(lambda: dict(ssd_defaults))
+voice_client_connect_lock = asyncio.Lock()
+the_voice_clients = {}
 
 
 class SkipState:
@@ -138,10 +141,70 @@ async def get_users():
             print('Error gathering info user:\n{}'.format(e.args))
 
 
+async def get_voice_client(channel):
+    if isinstance(channel, discord.Object):
+        channel = bot.get_channel(channel.id)
+
+    if getattr(channel, 'type', discord.ChannelType.text) != discord.ChannelType.voice:
+        raise AttributeError('Channel passed must be a voice channel')
+
+    with await voice_client_connect_lock:
+        server = channel.server
+        if server.id in the_voice_clients:
+            return the_voice_clients[server.id]
+
+        s_id = bot.ws.wait_for('VOICE_STATE_UPDATE', lambda d: d.get('user_id') == bot.user.id)
+        _voice_data = bot.ws.wait_for('VOICE_SERVER_UPDATE', lambda d: True)
+
+        await bot.ws.voice_state(server.id, channel.id)
+
+        s_id_data = await asyncio.wait_for(s_id, timeout=10, loop=bot.loop)
+        voice_data = await asyncio.wait_for(_voice_data, timeout=10, loop=bot.loop)
+        session_id = s_id_data.get('session_id')
+
+        kwargs = {
+            'user': bot.user,
+            'channel': channel,
+            'data': voice_data,
+            'loop': bot.loop,
+            'session_id': session_id,
+            'main_ws': bot.ws
+        }
+        voice_client = discord.VoiceClient(**kwargs)
+        the_voice_clients[server.id] = voice_client
+
+        retries = 3
+        for x in range(retries):
+            try:
+                print("Attempting connection...")
+                await asyncio.wait_for(voice_client.connect(), timeout=10, loop=bot.loop)
+                print("Connection established.")
+                break
+            except:
+                traceback.print_exc()
+                print("Failed to connect, retrying (%s/%s)..." % (x+1, retries))
+                await asyncio.sleep(1)
+                await bot.ws.voice_state(server.id, None, self_mute=True)
+                await asyncio.sleep(1)
+
+                if x == retries-1:
+                    raise exceptions.HelpfulError(
+                        "Cannot establish connection to voice chat.  "
+                        "Something may be blocking outgoing UDP connections.",
+
+                        "This may be an issue with a firewall blocking UDP.  "
+                        "Figure out what is blocking UDP and disable it.  "
+                        "It's most likely a system firewall or overbearing anti-virus firewall.  "
+                    )
+
+        return voice_client
+
+
 async def get_player(channel, create=False) -> MusicPlayer:
     server = channel.server
     print(f'{channel} : {server}')
-    voice_client = await bot.get_voice_client(channel)
+
+    voice_client = await get_voice_client(channel)
     print(voice_client)
     player = MusicPlayer(bot=bot, voice_client=voice_client, playlist=music_playlist) \
         .on('play', bot.on_player_play) \
@@ -264,7 +327,7 @@ async def auto_join_channels(music_playlist):
                             if database.database_online:
                                 await dbimport()
                                 channel = bot.get_channel(f'{channel.id}')
-
+                                await bot.join_voice_channel(channel)
                                 player = await get_player(channel=channel, create=True)
                                 print('player ready')
                                 if player.is_stopped:
