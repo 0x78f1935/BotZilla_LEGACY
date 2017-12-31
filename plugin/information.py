@@ -381,13 +381,13 @@ class Information:
                     self.database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, '{}', '{}', {});".format(name.id, str(name), str(reason), total))
                     self.database.cur.execute("ROLLBACK;")
                     print(f'Vote approved for {username}')
-                    self.blacklist.append(username)
+                    self.database.blacklist.append(username)
                 except:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Blacklist seems impossible at this time...\nDatabase seems offline',
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, '\u2705')
+                    await self.bot.add_reaction(a, self.emojiUnicode['error'])
             else:
                 embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
                                       description='Blacklist vote has been declined for **`{}`**'.format(name),
