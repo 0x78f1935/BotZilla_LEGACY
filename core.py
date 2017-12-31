@@ -106,6 +106,18 @@ async def dbimport():
     except Exception as e:
         pass
 
+    # Blacklist
+    try:
+        database.cur.execute("SELECT ID from botzilla.blacklist;")
+        rows = database.cur.fetchall()
+        database.cur.execute("ROLLBACK;")
+        for item in rows:
+            item = str(item).replace('(', '')
+            item = item.replace(',)', '')
+            database.blacklist.append(item)
+    except Exception as e:
+        print(f'Can\'t find database{e.args}')
+
 
 async def get_users():
     """
