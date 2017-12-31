@@ -345,7 +345,7 @@ class Information:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         else:
-            vote_policy = len(ctx.message.server.members) / 100 * 5
+            vote_policy = len(ctx.message.server.members) / 100 * 20
             username = username.replace('<@', '')
             username = username.replace('>', '')
             username = username.replace('!', '')
@@ -374,7 +374,7 @@ class Information:
 
             if total >= vote_policy:
                 try:
-                    self.database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, 'name', 'test test test', 45);".format(name.id, str(name), str(reason), total))
+                    self.database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, {}, {}, {});".format(name.id, str(name), str(reason), total))
                     self.database.cur.execute("ROLLBACK;")
                     print(f'Vote approved for {username}')
                 except:
