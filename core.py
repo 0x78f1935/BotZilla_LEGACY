@@ -222,9 +222,10 @@ async def on_message(message):
         database.cur.execute("SELECT * FROM botzilla.blacklist;")
         row = database.cur.fetchall()
         database.cur.execute("ROLLBACK;")
-        if message.author.id in row:
+        if str(message.author.id) in row:
             return
-    except:
+    except Exception as e:
+        print(e.args)
         pass
 
     try:
