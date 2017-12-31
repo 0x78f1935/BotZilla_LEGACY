@@ -240,21 +240,16 @@ So where are you waiting for? Are you joining my adventure?
             for row in rows:
                 row = str(row).replace('(', '')
                 row = str(row).replace(',)', '')
-                print(row)
-                target = await self.bot.get_user_info(275280442884751360)
-                embed = discord.Embed(title='{}:'.format('Announcement'),
-                                      description='{}'.format(content),
-                                      colour=0xf20006)
-                last_message = await self.bot.send_message(target, embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                print('succesfull')
-
-
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Done',
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                try:
+                    target = await self.bot.get_user_info(row)
+                    embed = discord.Embed(title='{}:'.format('Announcement'),
+                                          description='{}'.format(content),
+                                          colour=0xf20006)
+                    last_message = await self.bot.send_message(target, embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+                    print(f'succesfull send {row}')
+                except Exception as e:
+                    print(f'can\'t send to {row}\n{e.args}')
         except Exception as e:
             print(e.args)
 
