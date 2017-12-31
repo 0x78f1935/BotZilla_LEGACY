@@ -67,9 +67,10 @@ class TestScripts:
             username = username.replace('<@', '')
             username = username.replace('>', '')
             username = username.replace('!', '')
+            name = await self.bot.get_user_info(username)
             embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
-                                  description='Total votes are needed: **{}**\nWould you like to blacklist:\n\n**`{}`**\n\nReason:\n**`{}`**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(
-                                      vote_policy, str(username), str(reason)),
+                                  description='Total votes are needed: **{}**\nWould you like to blacklist:\n\n**`{}`**\n\nReason:\n\n**`{}`**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(
+                                      vote_policy, name, str(reason)),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\u2705')
@@ -83,11 +84,10 @@ class TestScripts:
                 print(f'Vote approved for {username}')
             else:
                 embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
-                                      description='Blacklist vote has been declined for **`{}`**'.format(str(reason)),
+                                      description='Blacklist vote has been declined for **`{}`**'.format(name),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\u2705')
-                print(f'Blacklist vote has been declined for {username}')
             # except:
             #     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
             #                           description='Invalid username'.format(str(username)),
