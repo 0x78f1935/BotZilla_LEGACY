@@ -6,15 +6,9 @@ import json
 from options.opus_loader import load_opus_lib
 from urllib.parse import quote as uriquote
 import re
-import random
 import csv
 import asyncio
-from options import exceptions
-from options.player import MusicPlayer
-from options.playlist import Playlist
-from options import downloader
 from collections import defaultdict
-import traceback
 
 try:
     from plugin.database import Database
@@ -35,37 +29,6 @@ botzillaChannels = tmp_config['channels']
 bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip\nUserdata may be stored for better experience.", command_prefix=config['prefix'], pm_help=False)
 music_channels = botzillaChannels['music']
 database_file_found = False
-downloader = downloader.Downloader(download_folder='audio_cache')
-ssd_defaults = {'last_np_msg': None, 'auto_paused': False}
-server_specific_data = defaultdict(lambda: dict(ssd_defaults))
-voice_client_connect_lock = asyncio.Lock()
-the_voice_clients = {}
-
-
-class SkipState:
-    def __init__(self):
-        self.skippers = set()
-        self.skip_msgs = set()
-
-    @property
-    def skip_count(self):
-        return len(self.skippers)
-
-    def reset(self):
-        self.skippers.clear()
-        self.skip_msgs.clear()
-
-    def add_skipper(self, skipper, msg):
-        self.skippers.add(skipper)
-        self.skip_msgs.add(msg)
-        return self.skip_count
-
-
-class Response:
-    def __init__(self, content, reply=False, delete_after=0):
-        self.content = content
-        self.reply = reply
-        self.delete_after = delete_after
 
 
 try:
@@ -141,175 +104,6 @@ async def get_users():
             print('Error gathering info user:\n{}'.format(e.args))
 
 
-async def get_voice_client(channel):
-    server = channel.server
-    print(server)
-    if server.id in the_voice_clients:
-        return the_voice_clients[server.id]
-
-    s_id = bot.ws.wait_for('VOICE_STATE_UPDATE', lambda d: d.get('user_id') == bot.user.id)
-    _voice_data = bot.ws.wait_for('VOICE_SERVER_UPDATE', lambda d: True)
-
-    await bot.ws.voice_state(server.id, channel.id)
-
-    s_id_data = await asyncio.wait_for(s_id, timeout=10, loop=bot.loop)
-    voice_data = await asyncio.wait_for(_voice_data, timeout=10, loop=bot.loop)
-    session_id = s_id_data.get('session_id')
-
-    kwargs = {
-        'user': bot.user,
-        'channel': channel,
-        'data': voice_data,
-        'loop': bot.loop,
-        'session_id': session_id,
-        'main_ws': bot.ws
-    }
-    voice_client = discord.VoiceClient(**kwargs)
-    the_voice_clients[server.id] = voice_client
-
-    retries = 3
-    for x in range(retries):
-        try:
-            print("Attempting connection...")
-            await asyncio.wait_for(voice_client.connect(), timeout=10, loop=bot.loop)
-            print("Connection established.")
-            break
-        except:
-            traceback.print_exc()
-            print("Failed to connect, retrying (%s/%s)..." % (x+1, retries))
-            await asyncio.sleep(1)
-            await bot.ws.voice_state(server.id, None, self_mute=True)
-            await asyncio.sleep(1)
-
-            if x == retries-1:
-                raise exceptions.HelpfulError(
-                    "Cannot establish connection to voice chat.  "
-                    "Something may be blocking outgoing UDP connections.",
-
-                    "This may be an issue with a firewall blocking UDP.  "
-                    "Figure out what is blocking UDP and disable it.  "
-                    "It's most likely a system firewall or overbearing anti-virus firewall.  "
-                )
-
-    return voice_client
-
-
-async def get_player(channel, create=False) -> MusicPlayer:
-    server = channel.server
-    print(f'{channel} : {server}')
-
-    voice_client = await get_voice_client(channel)
-    print(voice_client)
-    player = MusicPlayer(bot=bot, voice_client=voice_client, playlist=music_playlist) \
-        .on('play', bot.on_player_play) \
-        .on('resume', bot.on_player_resume) \
-        .on('pause', bot.on_player_pause) \
-        .on('stop', bot.on_player_stop) \
-        .on('finished-playing', bot.on_player_finished_playing) \
-        .on('entry-added', bot.on_player_entry_added)
-    print(player)
-    player.skip_state = SkipState()
-    bot.players[server.id] = player
-    print(f'{bot.players[server.id]} : {server}')
-    return bot.players[server.id]
-
-
-async def safe_delete_message(message, *, quiet=False):
-    try:
-        return await bot.delete_message(message)
-
-    except discord.Forbidden:
-        if not quiet:
-            print("Warning: Cannot delete message \"{}\", no permission".format(message.clean_content))
-
-    except discord.NotFound:
-        if not quiet:
-            print("Warning: Cannot delete message \"{}\", message not found".format(message.clean_content))
-
-
-async def on_player_play(player, entry):
-    await update_now_playing(entry)
-    player.skip_state.reset()
-
-    channel = entry.meta.get('channel', None)
-    author = entry.meta.get('author', None)
-
-    if channel and author:
-        last_np_msg = server_specific_data[channel.server]['last_np_msg']
-        if last_np_msg and last_np_msg.channel == channel:
-
-            async for lmsg in bot.logs_from(channel, limit=1):
-                if lmsg != last_np_msg and last_np_msg:
-                    await safe_delete_message(last_np_msg)
-                    server_specific_data[channel.server]['last_np_msg'] = None
-                break  # This is probably redundant
-
-        embed = discord.Embed(title='{}:'.format(entry.title),
-                              description='Now playing: **{}**'.format(player.voice_client.channel.name, ),
-                              colour=0xf20006)
-        last_message = await bot.say(embed=embed)
-        await bot.add_reaction(last_message, emojiUnicode['succes'])
-
-async def update_now_playing(self, entry=None, is_paused=False):
-    await self.change_presence(game=discord.Game(name='Powerd by PuffDip'))
-
-async def on_player_resume(self, entry, **_):
-    await self.update_now_playing(entry)
-
-async def on_player_pause(self, entry, **_):
-    await self.update_now_playing(entry, True)
-
-async def on_player_stop(self, **_):
-    await self.update_now_playing()
-
-async def on_player_entry_added(self, playlist, entry, **_):
-    pass
-
-
-
-
-async def on_player_finished_playing(player, music_playlist, **_,):
-    while True:
-        song_url = random.choice(music_playlist)
-        info = await downloader.Downloader.safe_extract_info(player.playlist.loop, song_url, download=False, process=False)
-
-        if not info:
-            print("[Info] Removing unplayable song from autoplaylist: {}".format(song_url))
-            music_playlist.remove(song_url)
-            continue
-
-        if info.get('entries', None):  # or .get('_type', '') == 'playlist'
-            pass  # Wooo playlist
-            # Blarg how do I want to do this
-
-        # TODO: better checks here
-        try:
-            await player.playlist.add_entry(song_url, channel=None, author=None)
-        except exceptions.ExtractionError as e:
-            print("Error adding song from autoplaylist:", e)
-            continue
-
-        break
-
-    if not music_playlist:
-        print("[Warning] No playable songs in the autoplaylist, disabling.")
-
-
-async def create_player(channel_id):
-    channel = bot.get_channel(f'{channel_id}')
-    voice = await bot.join_voice_channel(channel)
-    while True:
-        player = await voice.create_ytdl_player(f"{random.choice(music_playlist)}")
-        if player.is_playing():
-            player.start()
-        await asyncio.sleep(player.duration)
-        print('Song finished playing')
-
-
-async def start_music(channel_id):
-    while bot.loop:
-        bot.loop.run_until_complete(create_player(channel_id))
-
 async def auto_join_channels(music_playlist):
     for server in bot.servers:
         for channel in server.channels:
@@ -322,13 +116,6 @@ async def auto_join_channels(music_playlist):
                                 await dbimport()
                                 channel = bot.get_channel(f'{channel.id}')
                                 await bot.join_voice_channel(channel)
-                                player = await get_player(channel=channel, create=True)
-                                print('player ready')
-                                if player.is_stopped:
-                                    player.play()
-                                    print('play')
-
-                                await on_player_finished_playing(player)
                     except Exception as e:
                         pass
 
@@ -421,7 +208,8 @@ async def on_server_join(server):
                 try:
                     if database_file_found:
                         if database.database_online:
-                            await start_music(channel.id)
+                            # auto stats music here
+                            pass
                 except Exception as e:
                     pass
 
