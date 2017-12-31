@@ -66,7 +66,7 @@ class TestScripts:
             await self.bot.add_reaction(a, '\U0001f1fd')
             await asyncio.sleep(10)
             print(a.reactions)
-            total = a.reactions.count()
+            total = a.reactions.count('\u2705')
             print(total)
             # except:
             #     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
