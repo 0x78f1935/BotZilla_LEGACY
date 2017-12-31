@@ -9,6 +9,7 @@ import re
 import csv
 import asyncio
 from collections import defaultdict
+from plugin.music import Music
 
 try:
     from plugin.database import Database
@@ -115,7 +116,8 @@ async def auto_join_channels(music_playlist):
                             if database.database_online:
                                 await dbimport()
                                 channel = bot.get_channel(f'{channel.id}')
-                                await bot.join_voice_channel(channel)
+                                await Music.summon(channel)
+
                     except Exception as e:
                         pass
 
