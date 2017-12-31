@@ -142,62 +142,56 @@ async def get_users():
 
 
 async def get_voice_client(channel):
-    if isinstance(channel, discord.Object):
-        channel = bot.get_channel(channel.id)
+    server = channel.server
+    print(server)
+    if server.id in the_voice_clients:
+        return the_voice_clients[server.id]
 
-    if getattr(channel, 'type', discord.ChannelType.text) != discord.ChannelType.voice:
-        raise AttributeError('Channel passed must be a voice channel')
+    s_id = bot.ws.wait_for('VOICE_STATE_UPDATE', lambda d: d.get('user_id') == bot.user.id)
+    _voice_data = bot.ws.wait_for('VOICE_SERVER_UPDATE', lambda d: True)
 
-    with await voice_client_connect_lock:
-        server = channel.server
-        if server.id in the_voice_clients:
-            return the_voice_clients[server.id]
+    await bot.ws.voice_state(server.id, channel.id)
 
-        s_id = bot.ws.wait_for('VOICE_STATE_UPDATE', lambda d: d.get('user_id') == bot.user.id)
-        _voice_data = bot.ws.wait_for('VOICE_SERVER_UPDATE', lambda d: True)
+    s_id_data = await asyncio.wait_for(s_id, timeout=10, loop=bot.loop)
+    voice_data = await asyncio.wait_for(_voice_data, timeout=10, loop=bot.loop)
+    session_id = s_id_data.get('session_id')
 
-        await bot.ws.voice_state(server.id, channel.id)
+    kwargs = {
+        'user': bot.user,
+        'channel': channel,
+        'data': voice_data,
+        'loop': bot.loop,
+        'session_id': session_id,
+        'main_ws': bot.ws
+    }
+    voice_client = discord.VoiceClient(**kwargs)
+    the_voice_clients[server.id] = voice_client
 
-        s_id_data = await asyncio.wait_for(s_id, timeout=10, loop=bot.loop)
-        voice_data = await asyncio.wait_for(_voice_data, timeout=10, loop=bot.loop)
-        session_id = s_id_data.get('session_id')
+    retries = 3
+    for x in range(retries):
+        try:
+            print("Attempting connection...")
+            await asyncio.wait_for(voice_client.connect(), timeout=10, loop=bot.loop)
+            print("Connection established.")
+            break
+        except:
+            traceback.print_exc()
+            print("Failed to connect, retrying (%s/%s)..." % (x+1, retries))
+            await asyncio.sleep(1)
+            await bot.ws.voice_state(server.id, None, self_mute=True)
+            await asyncio.sleep(1)
 
-        kwargs = {
-            'user': bot.user,
-            'channel': channel,
-            'data': voice_data,
-            'loop': bot.loop,
-            'session_id': session_id,
-            'main_ws': bot.ws
-        }
-        voice_client = discord.VoiceClient(**kwargs)
-        the_voice_clients[server.id] = voice_client
+            if x == retries-1:
+                raise exceptions.HelpfulError(
+                    "Cannot establish connection to voice chat.  "
+                    "Something may be blocking outgoing UDP connections.",
 
-        retries = 3
-        for x in range(retries):
-            try:
-                print("Attempting connection...")
-                await asyncio.wait_for(voice_client.connect(), timeout=10, loop=bot.loop)
-                print("Connection established.")
-                break
-            except:
-                traceback.print_exc()
-                print("Failed to connect, retrying (%s/%s)..." % (x+1, retries))
-                await asyncio.sleep(1)
-                await bot.ws.voice_state(server.id, None, self_mute=True)
-                await asyncio.sleep(1)
+                    "This may be an issue with a firewall blocking UDP.  "
+                    "Figure out what is blocking UDP and disable it.  "
+                    "It's most likely a system firewall or overbearing anti-virus firewall.  "
+                )
 
-                if x == retries-1:
-                    raise exceptions.HelpfulError(
-                        "Cannot establish connection to voice chat.  "
-                        "Something may be blocking outgoing UDP connections.",
-
-                        "This may be an issue with a firewall blocking UDP.  "
-                        "Figure out what is blocking UDP and disable it.  "
-                        "It's most likely a system firewall or overbearing anti-virus firewall.  "
-                    )
-
-        return voice_client
+    return voice_client
 
 
 async def get_player(channel, create=False) -> MusicPlayer:
