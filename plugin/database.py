@@ -23,7 +23,7 @@ class Database:
         self.database_export_location_music_channels = './export/DBE_music_channels.csv'
         self.database_import_location_music_channels = './import/DBE_music_channels.csv'
         self.database_export_location_blacklist = './export/DBE_blacklist.csv'
-        self.database_import_location_blacklist = './import/DBE/blacklist.csv'
+        self.database_import_location_blacklist = './import/DBE_blacklist.csv'
         self.database_export_musicque = './import/DBE_music_que.csv'
         self.database_import_musicque = './import/DBE_music_que.csv'
         self.client = discord.Client()
