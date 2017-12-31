@@ -153,6 +153,7 @@ class Music:
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+            return
 
 
         await self.bot.send_typing(ctx.message.channel)
