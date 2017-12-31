@@ -41,7 +41,6 @@ class Games:
                                   description=':8ball: It is certain',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f605') # Done
             return
 
@@ -50,7 +49,6 @@ class Games:
                                   description=':8ball: It is decidedly so',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f913') # Done
             return
 
@@ -59,7 +57,6 @@ class Games:
                                   description=':8ball: Without a doubt',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f611') # Done
             return
 
@@ -68,7 +65,6 @@ class Games:
                                   description=':8ball: Yes, definitely!',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f98b') # Done
             return
 
@@ -77,7 +73,6 @@ class Games:
                                   description=':8ball: You may rely on it',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f60c') # Done
             return
 
@@ -86,7 +81,6 @@ class Games:
                                   description=':8ball: As I see it, yes',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f48d') # Done
             return
 
@@ -95,7 +89,6 @@ class Games:
                                   description=':8ball: Most likely',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f609') # Done
             return
 
@@ -104,7 +97,6 @@ class Games:
                                   description=':8ball: Outlook good',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f44c') # done
             return
 
@@ -113,7 +105,6 @@ class Games:
                                   description=':8ball: Yes',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f525') # Done
             return
 
@@ -122,7 +113,6 @@ class Games:
                                   description=':8ball: Signs point to yes',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f607') # Done
             return
 
@@ -131,7 +121,6 @@ class Games:
                                   description=':8ball: Reply hazy try again',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f47b') # Done
             return
 
@@ -140,7 +129,6 @@ class Games:
                                   description=':8ball: Ask again later',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f550') # Done
             return
 
@@ -149,7 +137,6 @@ class Games:
                                   description=':8ball: Better not tell you now',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\u2620') # Done
             return
 
@@ -158,7 +145,6 @@ class Games:
                                   description=':8ball: Cannot predict now',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f914') # Done
             return
 
@@ -167,7 +153,6 @@ class Games:
                                   description=':8ball: Concentrate and ask again',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f616') # Done
             return
 
@@ -176,7 +161,6 @@ class Games:
                                   description=':8ball: Don\'t count on it',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f625') # Done
             return
 
@@ -185,7 +169,6 @@ class Games:
                                   description=':8ball: My reply is no',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f4a9') # Done
             return
 
@@ -194,7 +177,6 @@ class Games:
                                   description=':8ball: My sources say no',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f614') # Done
             return
 
@@ -203,7 +185,6 @@ class Games:
                                   description=':8ball: Outlook not so good',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f60f') # Done
             return
 
@@ -212,7 +193,6 @@ class Games:
                                   description=':8ball: Very doubtful',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(last_message, '\U0001f61f') # Done
             return
 
