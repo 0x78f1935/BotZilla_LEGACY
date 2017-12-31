@@ -37,7 +37,7 @@ class TestScripts:
 
 
     @commands.command(pass_context=True, hidden=True)
-    async def blacklist(self, ctx, *, username=None):
+    async def blacklist(self, ctx, username=None, *, reason: str = None):
         """Starts a blacklist vote"""
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -48,9 +48,17 @@ class TestScripts:
             return
 
 
+        if reason is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You have to give up a reason..\nI recommend reading **`{}help blacklist`**'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
+
         if username is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Read **`{}help blacklist`** thats a command!'.format(self.config['prefix']),
+                                  description='Read **`{}help blacklist`** that would help..'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -68,11 +76,17 @@ class TestScripts:
             message = await self.bot.get_message(ctx.message.channel, a.id)
             total = message.reactions[0].count - 1
             #
-            vote_policy = len(ctx.message.server.members) / 100 * 5
+            vote_policy = len(ctx.message.server.members) / 100 * 20
             if total >= vote_policy:
-                print('Vote approved')
+                print(f'Vote approved for {username}')
             else:
-                print(f'No blacklist for {username}')
+                embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
+                                      description='Total votes are needed: **{}**\nWould you like to blacklist:\n\n**{}**\nReason:\n**{}**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(
+                                          vote_policy, str(username), str(reason),
+                                      colour=0xf20006))
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, '\u2705')
+                print(f'Blacklist vote has been declined for {username}')
             # except:
             #     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
             #                           description='Invalid username'.format(str(username)),
