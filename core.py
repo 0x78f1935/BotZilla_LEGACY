@@ -194,18 +194,6 @@ async def on_ready():
 
     # await auto_join_channels(music_playlist)
 
-    # Blacklist
-    try:
-        database.cur.execute("SELECT ID from botzilla.blacklist;")
-        rows = database.cur.fetchall()
-        database.cur.execute("ROLLBACK;")
-        for item in rows:
-            item = str(item).replace('(', '')
-            item = item.replace(',)', '')
-            database.blacklist.append(item)
-    except Exception as e:
-        print(f'Can\'t find database{e.args}')
-
 
 @bot.event
 async def on_message_delete(message):
