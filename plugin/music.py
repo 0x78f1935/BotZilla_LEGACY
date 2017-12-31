@@ -18,10 +18,10 @@ class VoiceEntry:
         self.player = player
 
     def __str__(self):
-        fmt = '{0.title}'
+        fmt = '*{0.title}* uploaded by {0.uploader} and requested by {}'
         duration = self.player.duration
         if duration:
-            fmt = fmt + 'length: {0[0]}m {0[1]}s'.format(divmod(duration, 60))
+            fmt = fmt + ' [length: {0[0]}m {0[1]}s]'.format(divmod(duration, 60))
         return fmt.format(self.player, self.requester)
 
 class VoiceState:
@@ -58,7 +58,7 @@ class VoiceState:
             self.play_next_song.clear()
             self.current = await self.songs.get()
             embed = discord.Embed(title='MusicPlayer:',
-                                  description='Requester:\n{1.display_name}\nNow playing: **`{}`**'.format(self.current),
+                                  description='Now playing: **`{}`**'.format(self.current),
                                   colour=0xf20006)
             last_message = await self.bot.send_message(self.current.channel, embed=embed)
             await self.bot.add_reaction(last_message, '\U0001f3b5')
@@ -172,7 +172,7 @@ class Music:
             player.volume = 0.6
             entry = VoiceEntry(ctx.message, player)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='**Enqueued:**\n```{}```'.format(str(entry)),
+                                  description='Enqueued:\n```Python\n{}\n```'.format(str(entry)),
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
