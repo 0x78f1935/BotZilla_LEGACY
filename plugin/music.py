@@ -140,60 +140,6 @@ class Music:
         return True
 
 
-    @commands.command(pass_context=True, no_pm=True, name='que')
-    async def queue(self, ctx):
-        """
-        Usage:
-            {command_prefix}queue
-        Prints the current song queue.
-        """
-        player = self.get_voice_state(ctx.message.server)
-        lines = []
-        unlisted = 0
-        andmoretext = '* ... and {} more*'.format('x' * len(player.voice.playlist.entries))
-
-        if player.current_entry:
-            song_progress = str(timedelta(seconds=player.progress)).lstrip('0').lstrip(':')
-            song_total = str(timedelta(seconds=player.current_entry.duration)).lstrip('0').lstrip(':')
-            prog_str = '`[%s/%s]`' % (song_progress, song_total)
-
-            if player.current_entry.meta.get('channel', False) and player.current_entry.meta.get('author', False):
-                lines.append("Now Playing: **%s** added by **%s** %s\n" % (
-                    player.current_entry.title, player.current_entry.meta['author'].name, prog_str))
-            else:
-                lines.append("Now Playing: **%s** %s\n" % (player.current_entry.title, prog_str))
-
-        for i, item in enumerate(player.playlist, 1):
-            if item.meta.get('channel', False) and item.meta.get('author', False):
-                nextline = '`{}.` **{}** added by **{}**'.format(i, item.title, item.meta['author'].name).strip()
-            else:
-                nextline = '`{}.` **{}**'.format(i, item.title).strip()
-
-            currentlinesum = sum(len(x) + 1 for x in lines)  # +1 is for newline char
-
-            if currentlinesum + len(nextline) + len(andmoretext) > 2000:
-                if currentlinesum + len(andmoretext):
-                    unlisted += 1
-                    continue
-
-            lines.append(nextline)
-
-        if unlisted:
-            lines.append('\n*... and {} more*'.format(unlisted))
-
-        if not lines:
-            lines.append(
-                'There are no songs queued! Queue something with **`{}play`**'.format(self.config['prefix']))
-
-        message = '\n'.join(lines)
-        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description=message,
-                              colour=0xf20006)
-        last_message = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-        return
-
-
     @commands.command(pass_context=True, no_pm=True)
     async def play(self, ctx, *, song : str = None):
         """
