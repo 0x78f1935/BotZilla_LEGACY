@@ -55,26 +55,25 @@ class TestScripts:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
         else:
-            try:
-                username = username.replace('<@', '')
-                username = username.replace('>', '')
-                username = username.replace('!', '')
-                embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
-                                      description='Your vote is needed\nWould you like to blacklist:\n\n**{}**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(str(username)),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, '\u2705')
-                await(self.bot.add_reaction(a, '\U0001f1fd'))
-                await asyncio.sleep(10)
-                if self.bot.reaction.count('\u2705') >= 2:
-                    print('test')
+            username = username.replace('<@', '')
+            username = username.replace('>', '')
+            username = username.replace('!', '')
+            embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
+                                  description='Your vote is needed\nWould you like to blacklist:\n\n**{}**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(str(username)),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, '\u2705')
+            await(self.bot.add_reaction(a, '\U0001f1fd'))
+            await asyncio.sleep(10)
+            if self.bot.reaction.count('\u2705') >= 2:
+                print('test')
 
-            except:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Invalid username'.format(str(username)),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            # except:
+            #     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+            #                           description='Invalid username'.format(str(username)),
+            #                           colour=0xf20006)
+            #     a = await self.bot.say(embed=embed)
+            #     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
