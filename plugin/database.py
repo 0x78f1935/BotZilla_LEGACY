@@ -22,6 +22,8 @@ class Database:
         self.database_import_location_users = './import/DBE_users.csv'
         self.database_export_location_music_channels = './export/DBE_music_channels.csv'
         self.database_import_location_music_channels = './import/DBE_music_channels.csv'
+        self.database_export_location_blacklist = './export/DBE_blacklist.csv'
+        self.database_import_location_blacklist = './import/DBE/blacklist.csv'
         self.database_export_musicque = './import/DBE_music_que.csv'
         self.database_import_musicque = './import/DBE_music_que.csv'
         self.client = discord.Client()
@@ -255,6 +257,22 @@ class Database:
             rows = self.cur.fetchall()
             self.cur.execute("ROLLBACK;")
             with open(self.database_export_location_music_channels, 'w') as output:
+                writer = csv.writer(output, lineterminator='\n')
+                for val in rows:
+                    writer.writerow([val])
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format('Error'),
+                                  description='```Python\n{}\n```'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
+        try:
+            self.cur.execute("SELECT * from botzilla.blacklist;")
+            rows = self.cur.fetchall()
+            self.cur.execute("ROLLBACK;")
+            with open(self.database_export_location_blacklist, 'w') as output:
                 writer = csv.writer(output, lineterminator='\n')
                 for val in rows:
                     writer.writerow([val])
