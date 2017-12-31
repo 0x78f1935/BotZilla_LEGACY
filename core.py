@@ -155,8 +155,6 @@ async def auto_join_channels(music_playlist):
                     pass
 
 
-
-
 @bot.event
 async def on_ready():
     print('Logged in as ' + bot.user.name + ' (ID:' + bot.user.id + ') | Connected to ' + str(

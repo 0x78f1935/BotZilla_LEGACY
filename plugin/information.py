@@ -323,14 +323,6 @@ class Information:
         Starts a blacklist vote. Ban people from making use of BotZilla.
         5 % of your server has to agree.
         """
-        if ctx.message.author.id not in self.owner_list:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may not use this command :angry: only admins!',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-
         if username is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Read **`{}help blacklist`** that would help..'.format(
