@@ -58,10 +58,6 @@ class SkipState:
         return self.skip_count
 
 
-class ConfigDefaults:
-    now_playing_mentions = False
-now_playing_mentions = config.getboolean('MusicBot', 'NowPlayingMentions', fallback=ConfigDefaults.now_playing_mentions)
-
 class Response:
     def __init__(self, content, reply=False, delete_after=0):
         self.content = content
@@ -194,18 +190,11 @@ async def on_player_play(player, entry):
                     server_specific_data[channel.server]['last_np_msg'] = None
                 break  # This is probably redundant
 
-        if now_playing_mentions:
-            embed = discord.Embed(title='{}:'.format(entry.meta['author'].name),
-                                  description='Your song **{}** is now playing in **{}**!'.format(entry.title, player.voice_client.channel.name),
-                                  colour=0xf20006)
-            last_message = await bot.say(embed=embed)
-            await bot.add_reaction(last_message, emojiUnicode['succes'])
-        else:
-            embed = discord.Embed(title='{}:'.format(entry.title),
-                                  description='Now playing: **{}**'.format(player.voice_client.channel.name, ),
-                                  colour=0xf20006)
-            last_message = await bot.say(embed=embed)
-            await bot.add_reaction(last_message, emojiUnicode['succes'])
+        embed = discord.Embed(title='{}:'.format(entry.title),
+                              description='Now playing: **{}**'.format(player.voice_client.channel.name, ),
+                              colour=0xf20006)
+        last_message = await bot.say(embed=embed)
+        await bot.add_reaction(last_message, emojiUnicode['succes'])
 
 async def update_now_playing(self, entry=None, is_paused=False):
     await self.change_presence(game=discord.Game(name='Powerd by PuffDip'))
