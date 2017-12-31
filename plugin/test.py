@@ -63,11 +63,13 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         else:
+            vote_policy = len(ctx.message.server.members) / 100 * 20
             username = username.replace('<@', '')
             username = username.replace('>', '')
             username = username.replace('!', '')
             embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
-                                  description='Your vote is needed\nWould you like to blacklist:\n\n**{}**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(str(username)),
+                                  description='Total votes are needed: **{}**\nWould you like to blacklist:\n\n**`{}`**\n\nReason:\n**`{}`**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(
+                                      vote_policy, str(username), str(reason)),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\u2705')
@@ -76,14 +78,13 @@ class TestScripts:
             message = await self.bot.get_message(ctx.message.channel, a.id)
             total = message.reactions[0].count - 1
             #
-            vote_policy = len(ctx.message.server.members) / 100 * 20
+
             if total >= vote_policy:
                 print(f'Vote approved for {username}')
             else:
                 embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
-                                      description='Total votes are needed: **{}**\nWould you like to blacklist:\n\n**{}**\nReason:\n**{}**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(
-                                          vote_policy, str(username), str(reason),
-                                      colour=0xf20006))
+                                      description='Blacklist vote has been declined for **`{}`**'.format(str(reason)),
+                                      colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\u2705')
                 print(f'Blacklist vote has been declined for {username}')
