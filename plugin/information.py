@@ -389,9 +389,9 @@ class Information:
                     self.database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, '{}', '{}', {});".format(name.id, str(name), str(reason), total))
                     self.database.cur.execute("ROLLBACK;")
                     print(f'Vote approved for {username}')
-                    self.database.blacklist.append(name.id)
+                    self.database.blacklist.append(str(name.id))
                 except:
-                    self.database.blacklist.append(name.id)
+                    self.database.blacklist.append(str(name.id))
                 finally:
                     embed = discord.Embed(title='Blacklist vote approved:',
                                           description='Blacklist vote has been approved for **`{}`**'.format(name),
