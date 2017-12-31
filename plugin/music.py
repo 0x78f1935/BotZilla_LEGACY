@@ -141,7 +141,8 @@ class Music:
     @commands.command(pass_context=True, no_pm=True)
     async def que(self, ctx):
         state = self.get_voice_state(ctx.message.server)
-        await self.bot.say(state)
+        for item in state
+            await self.bot.say(item)
 
 
 
