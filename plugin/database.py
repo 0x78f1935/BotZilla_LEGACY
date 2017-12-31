@@ -58,6 +58,8 @@ class Database:
             rows = self.cur.fetchall()
             self.cur.execute("ROLLBACK;")
             for item in rows:
+                item = str(item).replace('(', '')
+                item = item.replace(',)', '')
                 print(item)
         except Exception as e:
             print(f'Can\'t find database{e.args}')
