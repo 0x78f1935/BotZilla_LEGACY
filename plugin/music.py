@@ -150,7 +150,7 @@ class Music:
         player = self.get_voice_state(ctx.message.server)
         lines = []
         unlisted = 0
-        andmoretext = '* ... and %s more*' % ('x' * len(player.playlist.entries))
+        andmoretext = '* ... and {} more*'.format('x' * len(player.voice.playlist.entries))
 
         if player.current_entry:
             song_progress = str(timedelta(seconds=player.progress)).lstrip('0').lstrip(':')
