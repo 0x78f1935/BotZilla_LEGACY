@@ -62,11 +62,11 @@ class TestScripts:
                                   description='Your vote is needed\nWould you like to blacklist:\n\n**{}**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(str(username)),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
-            a = await self.bot.add_reaction(a, '\u2705')
+            yes = await self.bot.add_reaction(a, '\u2705')
             await self.bot.add_reaction(a, '\U0001f1fd')
             await asyncio.sleep(10)
             print(a.reactions)
-            total = self.bot.reactions.count(a.message)
+            total = self.bot.reactions.count(yes)
             print(total)
             # except:
             #     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
