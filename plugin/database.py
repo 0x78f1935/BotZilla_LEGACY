@@ -52,9 +52,14 @@ class Database:
                 print('I am unable to connect to the Database')
             print('failed to connect with the database giving up...')
 
-        ## autoconnect to music channel
-        # select id from botzilla.music where type_channel = 'voice';
-        # prep for autojoin
+        # Blacklist
+        try:
+            self.cur.execute("SELECT ID from botzilla.blacklist;")
+            rows = self.cur.fetchall()
+            self.cur.execute("ROLLBACK;")
+            print(rows)
+        except Exception as e:
+            print(f'Can\'t find database{e.args}')
 
 
     @commands.command(pass_context=True, hidden=True)
