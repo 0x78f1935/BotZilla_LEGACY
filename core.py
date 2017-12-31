@@ -115,7 +115,7 @@ async def auto_join_channels(music_playlist):
                         if database.database_online:
                             await dbimport()
                             # channel = bot.get_channel(f'{channel.id}')
-                            await Music.summon(channel)
+                            await Music.summon(bot, channel)
 
 
 
