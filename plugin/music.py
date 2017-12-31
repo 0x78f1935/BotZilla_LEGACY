@@ -133,7 +133,7 @@ class Music:
         The list of supported sites can be found here:
         https://rg3.github.io/youtube-dl/supportedsites.html
         """
-
+        await self.bot.send_typing(ctx.message.channel)
         state = self.get_voice_state(ctx.message.server)
         opts = {
             'default_search': 'auto',
@@ -146,7 +146,7 @@ class Music:
                 return
 
         try:
-            player = await self.bot.send_typing(ctx.message.channel, state.voice.create_ytdl_player(song, ytdl_options=opts, after=state.toggle_next))
+            player = await state.voice.create_ytdl_player(song, ytdl_options=opts, after=state.toggle_next)
         except Exception as e:
             fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```'
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
