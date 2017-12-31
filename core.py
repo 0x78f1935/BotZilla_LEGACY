@@ -111,15 +111,13 @@ async def auto_join_channels(music_playlist):
             if 'music' in channel.name.lower():
                 if str(channel.type) == 'voice':
                     print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
-                    try:
-                        if database_file_found:
-                            if database.database_online:
-                                await dbimport()
-                                # channel = bot.get_channel(f'{channel.id}')
-                                await Music.summon(channel)
+                    if database_file_found:
+                        if database.database_online:
+                            await dbimport()
+                            # channel = bot.get_channel(f'{channel.id}')
+                            await Music.summon(channel)
 
-                    except Exception as e:
-                        pass
+
 
 
 @bot.event
