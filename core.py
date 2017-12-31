@@ -138,12 +138,12 @@ async def get_users():
             print('Error gathering info user:\n{}'.format(e.args))
 
 
-async def get_player(channel, music_playlist, create=False) -> MusicPlayer:
+async def get_player(channel, create=False) -> MusicPlayer:
     server = channel.server
     print(f'{channel} : {server}')
 
     voice_client = await bot.get_voice_client(channel)
-
+    print(voice_client)
     player = MusicPlayer(bot=bot, voice_client=voice_client, playlist=music_playlist) \
         .on('play', bot.on_player_play) \
         .on('resume', bot.on_player_resume) \
