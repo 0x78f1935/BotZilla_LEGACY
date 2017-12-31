@@ -198,25 +198,7 @@ class AdminCommands:
         """
         Mass DM everyone in database
         """
-        content = """
-What a wonderfull year. First of all I wish you a wonderfull 2018! Second of all. I have some exciting news. BotZilla version 2 is open for the public.
-What does this mean?
 
-Brand new features! Very own blacklist system.
-Search for game stats and show your ran or go right into the crypto currency.
-Music, Discord text games, Giveaways, Rainbow Six stats, BitCoins, polls, jokes and a lot more.
-Most important is that you do not have to configure me :rofl: 
-
-Just use the following link to add me to your server:
-`https://discordapp.com/oauth2/authorize?client_id=397149515192205324&scope=bot`
-When added use !!help to get started!
-
-Bot2illa is created on `22-12-2017`.
-All code is opensource and can be found here: `https://github.com/Annihilator708/DiscordBot-BotZilla`
-My owner is still making adjustments and adding new features.
-
-So where are you waiting for? Are you joining my adventure?
-        """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You may not use this command :angry: only admins!',
