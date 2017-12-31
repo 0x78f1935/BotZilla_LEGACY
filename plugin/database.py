@@ -27,6 +27,7 @@ class Database:
         self.client = discord.Client()
         self.music_channels = []
         self.reconnect_db_times = int(self.database_settings['reconnect_trys'])
+        self.blacklist = []
 
 
         for i in range(self.reconnect_db_times):

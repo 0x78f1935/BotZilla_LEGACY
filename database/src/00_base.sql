@@ -15,5 +15,6 @@ CREATE TABLE botzilla.music(
 CREATE TABLE botzilla.blacklist(
     ID bigserial primary key,
     server_name varchar(254),
-    reason varchar(2000)
+    reason varchar(2000),
+    total_votes integer
 );
