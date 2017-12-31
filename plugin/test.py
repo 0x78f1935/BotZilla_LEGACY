@@ -66,6 +66,9 @@ class TestScripts:
             await self.bot.add_reaction(a, '\U0001f1fd')
             await asyncio.sleep(10)
             print(a.reactions)
+            message = await self.bot.get_message(ctx.message.channel, a)
+            print(message.reactions[0].emoji)
+
             total = a.count(a.reactions.emoji('\u2705'))
             print(total)
             # except:
