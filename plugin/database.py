@@ -57,7 +57,8 @@ class Database:
             self.cur.execute("SELECT ID from botzilla.blacklist;")
             rows = self.cur.fetchall()
             self.cur.execute("ROLLBACK;")
-            print(rows)
+            for item in rows:
+                print(item)
         except Exception as e:
             print(f'Can\'t find database{e.args}')
 
