@@ -94,7 +94,7 @@ class MusicPlayer(EventEmitter):
         self.voice_client = voice_client
         self.playlist = playlist
         self.playlist.on('entry-added', self.on_entry_added)
-        self._volume = bot.config.default_volume
+        self._volume = 15
 
         self._play_lock = asyncio.Lock()
         self._current_player = None
@@ -173,13 +173,6 @@ class MusicPlayer(EventEmitter):
         if not self.is_stopped and not self.is_dead:
             self.play(_continue=True)
 
-        if not self.bot.config.save_videos and entry:
-            if any([entry.filename == e.filename for e in self.playlist.entries]):
-                print("[Config:SaveVideos] Skipping deletion, found song in queue")
-
-            else:
-                # print("[Config:SaveVideos] Deleting file: %s" % os.path.relpath(entry.filename))
-                asyncio.ensure_future(self._delete_file(entry.filename))
 
         self.emit('finished-playing', player=self, entry=entry)
 
@@ -278,7 +271,7 @@ class MusicPlayer(EventEmitter):
             self._current_player._connected.set()
 
     async def websocket_check(self):
-        if self.bot.config.debug_mode:
+        if True:
             print("[Debug] Creating websocket check loop")
 
         while not self.is_dead:
@@ -286,7 +279,7 @@ class MusicPlayer(EventEmitter):
                 self.voice_client.ws.ensure_open()
                 assert self.voice_client.ws.open
             except:
-                if self.bot.config.debug_mode:
+                if True:
                     print("[Debug] Voice websocket is %s, reconnecting" % self.voice_client.ws.state_name)
                 await self.bot.reconnect_voice_client(self.voice_client.channel.server)
                 await asyncio.sleep(4)
