@@ -30,7 +30,6 @@ class Database:
 
 
         for i in range(self.reconnect_db_times):
-            print('Loading database')
             try:
                 self.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
                     self.database_settings['db_name'],
@@ -40,7 +39,6 @@ class Database:
                     self.database_settings['password']
                 ))
                 self.cur = self.conn.cursor()
-                print('Established Database connection')
                 self.cur.execute("select id from botzilla.music where type_channel = 'voice';")
                 rows = self.cur.fetchall()
                 self.cur.execute("ROLLBACK;")

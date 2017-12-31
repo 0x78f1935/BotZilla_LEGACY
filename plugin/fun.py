@@ -24,7 +24,6 @@ class Images:
         self.channels = self.tmp_config['channels']
         self.emojiUnicode = self.tmp_config['unicode']
         self.owner_list = self.config['owner-id']
-        self.nsfw_channels = self.channels['nsfw']
 
 
     @commands.command(pass_context=True, no_pm=True)

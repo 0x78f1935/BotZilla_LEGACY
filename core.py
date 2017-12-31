@@ -154,7 +154,6 @@ async def on_ready():
     for p in plugins:
         bot.load_extension("plugin.{}".format(p))
 
-    print('Try auto connect music channel...')
     # get playlist
     global music_playlist
     music_playlist = []
