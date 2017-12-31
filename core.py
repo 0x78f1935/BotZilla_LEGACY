@@ -218,7 +218,14 @@ async def on_message_delete(message):
 @bot.event
 async def on_message(message):
     if message.author.bot: return
-    await database.is_blacklisted(message.author.id)
+    try:
+        database.cur.execute("SELECT * FROM botzilla.blacklist;")
+        row = database.cur.fetchall()
+        database.cur.execute("ROLLBACK;")
+        if message.author.id in row:
+            return
+    except:
+        pass
 
     try:
         if 'how' in message.content.lower():
