@@ -346,7 +346,7 @@ class Database:
 
 
         try:
-            with open(self.database_import_location_users, 'r') as file:
+            with open(self.database_import_location_blacklist, 'r') as file:
                 reader = csv.reader(file, delimiter=',')
                 for row in reader:
                     row = str(row).replace('["', '')
