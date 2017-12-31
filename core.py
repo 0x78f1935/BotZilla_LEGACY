@@ -80,7 +80,7 @@ async def dbimport():
                 database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES{};".format(row))
                 database.cur.execute("ROLLBACK;")
     except Exception as e:
-        pass
+        print(f'{e.args}')
 
     # music urls
     try:
