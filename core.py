@@ -207,6 +207,14 @@ async def on_ready():
 
     # await auto_join_channels(music_playlist)
 
+    database.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
+        database_settings['db_name'],
+        database_settings['user'],
+        database_settings['ip'],
+        database_settings['port'],
+        database_settings['password']
+    ))
+
 
 @bot.event
 async def on_message_delete(message):
@@ -219,17 +227,15 @@ async def on_message_delete(message):
 @bot.event
 async def on_message(message):
     if message.author.bot: return
-    database.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
-        database_settings['db_name'],
-        database_settings['user'],
-        database_settings['ip'],
-        database_settings['port'],
-        database_settings['password']
-    ))
-    database.cur.execute("SELECT * FROM botzilla.blacklist;")
+
+    database.cur.execute("SELECT ID FROM botzilla.blacklist;")
     row = database.cur.fetchall()
+    row = str(row).replace('[(', '')
+    row = row.replace(',)]', '')
     database.cur.execute("ROLLBACK;")
+    print(row)
     if str(message.author.id) in row:
+        print('{} : {}'.format(str(message.author.id), row))
         return
 
 
