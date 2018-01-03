@@ -155,6 +155,19 @@ async def auto_join_channels(music_playlist):
                     pass
 
 
+async def total_online_user_tracker():
+    while True:
+        online_users = 0
+        for server in bot.servers:
+            for member in server.members:
+                if 'online' in str(member.status):
+                    online_users = online_users + 1
+        game = discord.Game(name='Online users: {}'.format(online_users), type=0)
+        await bot.change_presence(game=game)
+        online_users = 0
+        asyncio.sleep(10)
+
+
 @bot.event
 async def on_ready():
     print('Logged in as ' + bot.user.name + ' (ID:' + bot.user.id + ') | Connected to ' + str(
@@ -212,6 +225,8 @@ async def on_ready():
         database_settings['port'],
         database_settings['password']
     ))
+
+    await total_online_user_tracker()
 
 
 @bot.event
