@@ -165,7 +165,7 @@ async def total_online_user_tracker():
         game = discord.Game(name='Online users: {}'.format(online_users), type=0)
         await bot.change_presence(game=game)
         online_users = 0
-        asyncio.sleep(10)
+        await asyncio.sleep(10)
 
 
 @bot.event
