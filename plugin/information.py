@@ -409,5 +409,12 @@ class Information:
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\u2705')
 
+    @commands.command(pass_context=True)
+    async def help(self, ctx):
+        embed = discord.Embed(title= "Commands", description="<-----{}----->".format(ctx.message.author.name), color=0x4b0082)
+        embed.add_field(name="!info", value="This shows you the information about yourself or another user", inline=True)
+        await self.bot.say(embed = embed)
+
+
 def setup(bot):
     bot.add_cog(Information(bot))
