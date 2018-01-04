@@ -308,8 +308,8 @@ async def on_server_join(server):
 
 
 @bot.command(pass_context=True)
-async def help(ctx,*, user: discord.Member):
-    embed = discord.Embed(title= "Commands", description="<-----{}----->".format(user.name), color=0x4b0082)
+async def help(ctx):
+    embed = discord.Embed(title= "Commands", description="<-----{}----->".format(ctx.message.author.name), color=0x4b0082)
     embed.add_field(name="!info", value="This shows you the information about yourself or another user", inline=True)
     await bot.say(embed = embed)
 
