@@ -283,6 +283,7 @@ async def on_message(message):
     #     await bot.process_commands(message)
     # except:
     #     pass
+    await bot.process_commands(message)
 
 
 @bot.event
