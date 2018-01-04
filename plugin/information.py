@@ -416,10 +416,11 @@ class Information:
         embed.add_field(name="{}8ball".format(self.config['prefix']), value="8ball! Ask BotZilla Any question.", inline=True)
         embed.add_field(name="{}Joke".format(self.config['prefix']), value="Ever heard a Chuck Norris joke?", inline=True)
         embed.add_field(name="{}rule34".format(self.config['prefix']), value="Shows graphical content NSFW", inline=True)
+        embed.add_field(name="{}id".format(self.config['prefix']), value="Shows your ID or the id of the user", inline=True)
         embed.add_field(name="{}count".format(self.config['prefix']), value="Count servers, members, etc etc", inline=True)
         embed.add_field(name="{}fact".format(self.config['prefix']), value="Search for a fact!", inline=True)
 
-        embed.add_field(name="{}id".format(self.config['prefix']), value="Shows your ID or the id of the user", inline=True)
+
         embed.add_field(name="{}gif".format(self.config['prefix']), value="Retrieves a random gif from a giphy search", inline=False)
         embed.add_field(name="{}emoji".format(self.config['prefix']), value="Shows ASCII information about the emoji", inline=False)
 
