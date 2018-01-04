@@ -270,18 +270,19 @@ async def on_message(message):
             return
 
 
-    try:
-        if 'how' in message.content.lower():
-            search_term = re.search(r'\bhow\b.*[?]', message.content.lower()).group(0)
-            search_term = uriquote(search_term)
-            embed = discord.Embed(title='{}:'.format(message.author.name),
-                                  description='{}'.format('http://lmgtfy.com/?q={}'.format(search_term)),
-                                  colour=0xf20006)
-            last_message = await bot.send_message(message.channel, embed=embed)
-            await bot.add_reaction(last_message, emojiUnicode['succes'])
-        await bot.process_commands(message)
-    except:
-        pass
+    # comment out if you like to use let me google that for u
+    # try:
+    #     if 'how' in message.content.lower():
+    #         search_term = re.search(r'\bhow\b.*[?]', message.content.lower()).group(0)
+    #         search_term = uriquote(search_term)
+    #         embed = discord.Embed(title='{}:'.format(message.author.name),
+    #                               description='{}'.format('http://lmgtfy.com/?q={}'.format(search_term)),
+    #                               colour=0xf20006)
+    #         last_message = await bot.send_message(message.channel, embed=embed)
+    #         await bot.add_reaction(last_message, emojiUnicode['succes'])
+    #     await bot.process_commands(message)
+    # except:
+    #     pass
 
 
 @bot.event
