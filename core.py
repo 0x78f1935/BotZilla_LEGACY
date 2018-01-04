@@ -306,5 +306,13 @@ async def on_server_join(server):
 
     print(server.name)
 
+
+@bot.command(pass_context=True)
+async def help(ctx,*, user: discord.Member):
+    embed = discord.Embed(title= "Commands", description="<-----{}----->".format(user.name), color=0x4b0082)
+    embed.add_field(name="!info", value="This shows you the information about yourself or another user", inline=True)
+    await bot.say(embed = embed)
+
+
 if __name__ == '__main__':
     bot.run(config['bot-key'])

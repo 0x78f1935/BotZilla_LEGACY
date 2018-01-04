@@ -17,6 +17,7 @@ class MoneyMaker:
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
 
+
     @commands.command(pass_context=True)
     async def bitcoin(self, ctx):
         """Shows current bitcoin value
