@@ -30,7 +30,7 @@ class Leagues:
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
         else:
-            url = 'https://api.r6stats.com/api/v1/players/{}?platform=uplay'.format(uplay_name)
+            url = "https://api.r6stats.com/api/v1/players/{}?platform=uplay".format(uplay_name)
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     source = await response.json()
