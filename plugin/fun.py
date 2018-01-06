@@ -109,28 +109,28 @@ class Images:
                     source = await response.read()
 
             root = xml.etree.ElementTree.fromstring(source)
-            print("[NSFW] [RULE34] %s" % (link))
             image = root[random.randint(0, len(root) - 1)].attrib['file_url']
 
             try:
                 if image.endswith(".webm"):
-                    await self.bot.say("Naughty boy grrrr tiger :tiger:")
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Naughty boy grrrr tiger :tiger:',
+                                          colour=0xf20006)
+                    last_message = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+                    await self.bot.say(embed=embed)
                     return
 
                 if image.endswith(".png"):
-                    print("[NSFW] [RULE34] Sending {} 'PNG' image".format(ctx.message.author.name))
                     pass
 
                 if image.endswith(".jpg"):
-                    print("[NSFW] [RULE34] Sending {} 'JPG' image".format(ctx.message.author.name))
                     pass
 
                 if image.endswith(".jpeg"):
-                    print("[NSFW] [RULE34] Sending {} 'JPEG' image".format(ctx.message.author.name))
                     pass
 
                 if image.endswith(".gif"):
-                    print("[NSFW] [RULE34] Sending {} 'GIF' image".format(ctx.message.author.name))
                     pass
 
 
