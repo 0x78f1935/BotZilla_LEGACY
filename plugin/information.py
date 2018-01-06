@@ -280,7 +280,7 @@ class Information:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='The following swearwords are registered.\nBotZilla shows the total count of a swearword since this function exist\n',
                                   colour=0xf20006)
-            embed.add_field(name='Shit', value=str(shit).replace('(', '**').replace(',)', '**'))
+            embed.add_field(name='Shit', value=str(shit).replace('[(', '**').replace(',)]', '**'))
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
