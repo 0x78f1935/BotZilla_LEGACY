@@ -277,8 +277,13 @@ class Information:
             self.database.cur.execute("select total from botzilla.swearwords where swearword = 'gay';")
             gay = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select extract(epoch from current_timestamp - pg_postmaster_start_time()) as uptime;")
+            uptime = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            uptime = str(uptime).replace('[(', '').replace(',)]', '')
+            uptime_in_minutes = str(float(uptime)/60)[:2]
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='The following swearwords are registered.\nBotZilla shows the total count of a swearword since this function exist\n```7-Jan-2018```',
+                                  description='The following swearwords are registered.\nBotZilla shows the total uses of a swearword since database is up\n```{} Minutes```'.format(uptime_in_minutes),
                                   colour=0xf20006)
             embed.add_field(name='Shit', value=str(shit).replace('[(', '**').replace(',)]', '**'))
             embed.add_field(name='fuck', value=str(fuck).replace('[(', '**').replace(',)]', '**'))
