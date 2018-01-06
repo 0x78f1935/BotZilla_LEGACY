@@ -1,6 +1,5 @@
 from discord.ext import commands
-import urllib.request
-import urllib.parse
+import aiohttp
 import json
 import random
 import discord
@@ -203,9 +202,12 @@ class Games:
         Ever heard a Chuck Norris joke?
         """
         url = 'http://api.icndb.com/jokes/random%22'
-        with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})) as response:
-            source = response.read().decode('utf-8')
-        data = json.loads(source)
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                source = await response.json(encoding='utf8')
+
+        source = json.dumps(source)
+        data = json.loads(str(source))
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description="{}".format(data['value']['joke']),
                               colour=0xf20006)
