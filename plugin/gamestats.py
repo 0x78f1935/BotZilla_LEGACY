@@ -33,7 +33,7 @@ class Leagues:
             url = 'https://api.r6stats.com/api/v1/players/{}?platform=uplay'.format(uplay_name)
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
-                    source = response.read()
+                    source = await response.json()
             print(source)
             data = json.loads(str(source))
             template = """
