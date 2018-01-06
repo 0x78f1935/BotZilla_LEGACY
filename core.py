@@ -228,12 +228,12 @@ async def on_ready():
     await total_online_user_tracker()
 
 
-@bot.event
-async def on_message_delete(message):
-    fmt = '**{0.author.server}** | ***{0.author.name}*** has deleted the message:\n{0.content}'
-    for owners in config['owner-id']:
-        owner = await bot.get_user_info(owners)
-        await bot.send_message(owner, fmt.format(message))
+# @bot.event
+# async def on_message_delete(message):
+#     fmt = '**{0.author.server}** | ***{0.author.name}*** has deleted the message:\n{0.content}'
+#     for owners in config['owner-id']:
+#         owner = await bot.get_user_info(owners)
+#         await bot.send_message(owner, fmt.format(message))
 
 
 @bot.event
