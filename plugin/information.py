@@ -444,6 +444,13 @@ class Information:
             await self.bot.add_reaction(message, '\u2620')
             await asyncio.sleep(5)
             emoji = await self.bot.wait_for_reaction([self.emojiUnicode['succes'], '\u2620'], message=message)
+
+            if str(emoji.reaction.emoji) == ':white_check_mark:':
+                print('check')
+
+            if str(emoji.reaction.emoji) == ':skull_crossbones:':
+                print('Blacklist')
+
             await self.bot.send_message(owner, str(emoji.reaction.emoji))
 
 
