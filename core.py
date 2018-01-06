@@ -193,9 +193,6 @@ async def on_ready():
         "test"
     )
 
-    # Remove default help command
-    bot.remove_command("help")
-
     # load plugins
     for p in plugins:
         bot.load_extension("plugin.{}".format(p))
