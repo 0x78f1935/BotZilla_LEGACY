@@ -235,13 +235,9 @@ class Information:
             self.total_online_users = 0
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         else:
-            for server in self.bot.servers:
-                for member in server.members:
-                    if 'online' in str(member.status):
-                        self.total_online_users = self.total_online_users + 1
             embed = discord.Embed(title="{}".format("Server Count"),
                                   description="We are in **{}** servers\nWe have **{}** members\nThere are **{}** users online".format(
-                                      str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_online_users),
+                                      str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline)),
                                   color=0xf20006)
             a = await self.bot.say(embed=embed)
             self.total_online_users = 0
