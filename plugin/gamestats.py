@@ -37,7 +37,6 @@ class Leagues:
                         source = await response.json(encoding='utf8')
 
                 source = json.dumps(source)
-                print(source)
                 data = json.loads(str(source))
                 embed = discord.Embed(title='{} | {}:'.format(ctx.message.author.name, data['player']['username']),
                                       description='The following stats are last updated around\n```{}```'.format(data['player']['updated_at']),
