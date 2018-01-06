@@ -208,8 +208,13 @@ class Games:
 
         source = json.dumps(source)
         data = json.loads(str(source))
+        joke = str(data['value']['joke'])
+
+        if '&quot;' in joke:
+            joke = joke.replace("&quot;", "")
+
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description="{}".format(data['value']['joke']),
+                              description="{}".format(joke),
                               colour=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
