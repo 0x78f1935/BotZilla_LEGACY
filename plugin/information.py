@@ -288,7 +288,7 @@ class Information:
             uptime = str(uptime).replace('[(', '').replace(',)]', '')
             uptime_in_minutes = str(float(uptime)/60).split('.')[0]
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='The following swearwords are registered.\nBotZilla shows the total uses of a swearword since database is up for:\n```{} Minutes```'.format(uptime_in_minutes),
+                                  description='The following swearwords are registered.\nBotZilla shows the total uses of a swearword since database is up.\n Database is up for:\n```{} Minutes```'.format(uptime_in_minutes),
                                   colour=0xf20006)
             embed.add_field(name='Shit', value=str(shit).replace('[(', '**').replace(',)]', '**'))
             embed.add_field(name='Fuck', value=str(fuck).replace('[(', '**').replace(',)]', '**'))
