@@ -435,7 +435,7 @@ class Information:
             return
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='Report send..',
+                              description='Report send.. Misbehavior may be punished!',
                               colour=0xf20006)
         report_send = await self.bot.say(embed=embed)
         await self.bot.add_reaction(report_send, self.emojiUnicode['succes'])
