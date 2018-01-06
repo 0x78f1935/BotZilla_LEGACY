@@ -227,14 +227,9 @@ class Information:
             self.database.cur.execute("ROLLBACK;")
             a = str(rows).replace('[(', '')
             self.total_users = a.replace(',)]', '')
-            self.total_online_users = 0
-            for server in self.bot.servers:
-                for member in server.members:
-                    if 'online' in str(member.status):
-                        self.total_online_users = self.total_online_users + 1
             embed = discord.Embed(title="{}".format("Server Count"),
                                   description="We are in **{}** servers\nWe have **{}** members\nWe had a total of **{}** users\nThere are **{}** users online".format(
-                                      str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users, self.total_online_users),
+                                      str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users, sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline)),
                                   color=0xf20006)
             a = await self.bot.say(embed=embed)
             self.total_online_users = 0
