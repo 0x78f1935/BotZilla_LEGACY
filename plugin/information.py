@@ -233,7 +233,7 @@ class Information:
             uptime = str(uptime).replace('[(', '').replace(',)]', '')
             uptime_in_minutes = str(float(uptime)/60)[:2]
             embed = discord.Embed(title="{}".format("Server Count"),
-                                  description="We are in **{}** servers\nWe have **{}** members\nWe had a total of **{}** users\nThere are **{}** users online\nUptime:`{} Minutes`".format(
+                                  description="We are in **{}** servers\nWe have **{}** members\nWe had a total of **{}** users\nThere are **{}** users online\nUptime: `{} Minutes`".format(
                                       str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users, sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline), uptime_in_minutes),
                                   color=0xf20006)
             a = await self.bot.say(embed=embed)
