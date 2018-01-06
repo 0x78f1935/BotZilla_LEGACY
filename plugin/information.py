@@ -227,9 +227,14 @@ class Information:
             self.database.cur.execute("ROLLBACK;")
             a = str(rows).replace('[(', '')
             self.total_users = a.replace(',)]', '')
+            self.database.cur.execute("select extract(epoch from current_timestamp - pg_postmaster_start_time()) as uptime;")
+            uptime = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            uptime = str(uptime).replace('[(', '').replace(',)]', '')
+            uptime_in_minutes = str(float(uptime)/60)[:2]
             embed = discord.Embed(title="{}".format("Server Count"),
-                                  description="We are in **{}** servers\nWe have **{}** members\nWe had a total of **{}** users\nThere are **{}** users online".format(
-                                      str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users, sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline)),
+                                  description="We are in **{}** servers\nWe have **{}** members\nWe had a total of **{}** users\nThere are **{}** users online\nUptime:`{} Minutes`".format(
+                                      str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users, sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline), uptime_in_minutes),
                                   color=0xf20006)
             a = await self.bot.say(embed=embed)
             self.total_online_users = 0
