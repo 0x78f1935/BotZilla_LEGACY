@@ -106,7 +106,7 @@ class Images:
             url = link.replace(' ', '_').replace('+', ' ')
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
-                    source = await response.read(encoding='utf8')
+                    source = await response.read()
 
             root = xml.etree.ElementTree.fromstring(source)
             print("[NSFW] [RULE34] %s" % (link))
