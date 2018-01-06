@@ -432,12 +432,10 @@ class Information:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
 
-        server = ctx.message.server
-        channel = ctx.message.channel
 
         embed = discord.Embed(title='USER REPORT {} | {}:'.format(ctx.message.author.name, ctx.message.author.id),
-                              description='Server:\n**{}**\n*{}*\n\nChannel:\n**{}**\n*{}*\n\nMessage:\n```{}```'.format(
-                                  server, server.id, channel, channel.id, Message),
+                              description='Server:\n**{}**\n\nChannel:\n**{}**\n*{}*\n\nMessage:\n```{}```'.format(
+                                  ctx.message.server, ctx.message.channel, ctx.message.channel.id, Message),
                               colour=0xf20006)
         for owner in self.config['owner-id']:
             owner = await self.bot.get_user_info(owner)
