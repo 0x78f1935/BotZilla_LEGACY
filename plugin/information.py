@@ -438,7 +438,7 @@ class Information:
                               description='Report send..',
                               colour=0xf20006)
         report_send = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(report_send, '\u2620')
+        await self.bot.add_reaction(report_send, self.emojiUnicode['succes'])
 
         embed = discord.Embed(title='USER REPORT {} | {}:'.format(ctx.message.author.name, ctx.message.author.id),
                               description='Server:\n**{}**\n*{}*\n\nChannel:\n**{}**\n*{}*\n\nMessage:\n```{}```'.format(
@@ -454,8 +454,7 @@ class Information:
 
             if emoji.reaction.emoji == self.emojiUnicode['succes']:
                 await self.bot.delete_message(message)
-                a = await self.bot.send_message(owner, 'Report removed')
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                await self.bot.send_message(owner, 'Report removed')
                 return
 
 
@@ -464,9 +463,8 @@ class Information:
                     "INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, '{}', '{}', {});".format(
                         ctx.message.author.id, str(ctx.message.author.name), 'Misbehavior Report Command', 10000))
                 self.database.cur.execute("ROLLBACK;")
-                print('Blacklist')
-
-            await self.bot.send_message(owner, str(emoji.reaction.emoji))
+                await self.bot.delete_message(message)
+                await self.bot.send_message(owner, 'User {} | {} added to blacklist'.format(ctx.message.author.name, ctx.message.author.id))
 
 
 def setup(bot):
