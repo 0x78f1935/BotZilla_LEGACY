@@ -31,7 +31,7 @@ class MoneyMaker:
         data = json.loads(str(source))
 
         embed = discord.Embed(title="{}".format("Bitcoin :currency_exchange:"),
-                              description="Bitcoin price is currently at $**{}**".format(data['bpi']['USD']['rate']),
+                              description="Bitcoin price is currently at $**{}**".format(str(data['bpi']['USD']['rate'])),
                               color=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
