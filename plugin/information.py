@@ -416,7 +416,7 @@ class Information:
                 await self.bot.delete_message(message)
 
 
-    @commands.command(pass_context=True, hidden=True)
+    @commands.command(pass_context=True)
     async def report(self, ctx, *, Message: str = None):
         """
         Report any issue to the bot owner
