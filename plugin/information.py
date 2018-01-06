@@ -227,9 +227,14 @@ class Information:
             self.database.cur.execute("ROLLBACK;")
             a = str(rows).replace('[(', '')
             self.total_users = a.replace(',)]', '')
+            self.database.cur.execute("select extract(epoch from current_timestamp - pg_postmaster_start_time()) as uptime;")
+            uptime = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            uptime = str(uptime).replace('[(', '').replace(',)]', '')
+            uptime_in_minutes = str(float(uptime)/60)[:2]
             embed = discord.Embed(title="{}".format("Server Count"),
-                                  description="We are in **{}** servers\nWe have **{}** members\nWe had a total of **{}** users\nThere are **{}** users online".format(
-                                      str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users, sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline)),
+                                  description="We are in **{}** servers\nWe have **{}** members\nWe had a total of **{}** users\nThere are **{}** users online\nUptime: `{} Minutes`".format(
+                                      str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users, sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline), uptime_in_minutes),
                                   color=0xf20006)
             a = await self.bot.say(embed=embed)
             self.total_online_users = 0
@@ -244,7 +249,59 @@ class Information:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-## count swearwords
+    @commands.command(pass_context=True)
+    async def swcount(self, ctx):
+        """
+        Count total swearwords used in servers where BotZilla is in
+        """
+        if self.database_file_found:
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'shit';")
+            shit = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'fuck';")
+            fuck = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'damn';")
+            damn = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'bitch';")
+            bitch = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'crap';")
+            crap = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'pussy';")
+            pussy = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'asshole';")
+            asshole = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'fag';")
+            fag = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'gay';")
+            gay = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select extract(epoch from current_timestamp - pg_postmaster_start_time()) as uptime;")
+            uptime = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            uptime = str(uptime).replace('[(', '').replace(',)]', '')
+            uptime_in_minutes = str(float(uptime)/60)[:2]
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='The following swearwords are registered.\nBotZilla shows the total uses of a swearword since database is up\n```{} Minutes```'.format(uptime_in_minutes),
+                                  colour=0xf20006)
+            embed.add_field(name='Shit', value=str(shit).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='fuck', value=str(fuck).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='damn', value=str(damn).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='bitch', value=str(bitch).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='crap', value=str(crap).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='pussy', value=str(pussy).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='asshole', value=str(asshole).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='fag', value=str(fag).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='gay', value=str(gay).replace('[(', '**').replace(',)]', '**'))
+
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
     @commands.command(pass_context=True)
