@@ -278,9 +278,18 @@ class Information:
             gay = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='The following swearwords are registered.\nBotZilla shows the total count of a swearword since this function exist\n',
+                                  description='The following swearwords are registered.\nBotZilla shows the total count of a swearword since this function exist\n```7-Jan-2018```',
                                   colour=0xf20006)
             embed.add_field(name='Shit', value=str(shit).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='fuck', value=str(fuck).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='damn', value=str(damn).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='bitch', value=str(bitch).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='crap', value=str(crap).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='pussy', value=str(pussy).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='asshole', value=str(asshole).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='fag', value=str(fag).replace('[(', '**').replace(',)]', '**'))
+            embed.add_field(name='gay', value=str(gay).replace('[(', '**').replace(',)]', '**'))
+
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
