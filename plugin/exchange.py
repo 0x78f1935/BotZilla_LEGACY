@@ -25,7 +25,7 @@ class MoneyMaker:
         url = tmp_config['exchange']['api-url']
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
-                source = await response.json(content_type='text/plain')
+                source = await response.text(encoding='utf8')
 
         source = json.dumps(source)
         data = json.loads(str(source))
