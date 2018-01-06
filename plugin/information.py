@@ -406,12 +406,14 @@ class Information:
                                               colour=0xf20006)
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, '\U0001f44b')
+                        await self.bot.delete_message(message)
             else:
                 embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
                                       description='Blacklist vote has been declined for **`{}`**'.format(name),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\u2705')
+                await self.bot.delete_message(message)
 
 
 def setup(bot):
