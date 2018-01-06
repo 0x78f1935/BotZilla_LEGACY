@@ -434,15 +434,15 @@ class Information:
 
 
         embed = discord.Embed(title='USER REPORT {} | {}:'.format(ctx.message.author.name, ctx.message.author.id),
-                              description='Server:\n**{}**\n\nChannel:\n**{}**\n*{}*\n\nMessage:\n```{}```'.format(
-                                  ctx.message.server, ctx.message.channel, ctx.message.channel.id, Message),
+                              description='Server:\n**{}**\n*{}*\n\nChannel:\n**{}**\n*{}*\n\nMessage:\n```{}```'.format(
+                                  ctx.message.server, ctx.message.server.id, ctx.message.channel, ctx.message.channel.id, Message),
                               colour=0xf20006)
         for owner in self.config['owner-id']:
             owner = await self.bot.get_user_info(owner)
             message = await self.bot.send_message(owner, embed=embed)
             await self.bot.add_reaction(message, self.emojiUnicode['succes'])
             await self.bot.add_reaction(message, '\u2620')
-            emoji = await self.bot.wait_for_reaction([self.emojiUnicode['succes'], '\u2620'])
+            emoji = await self.bot.wait_for_reaction([self.emojiUnicode['succes'], '\u2620'], message)
             await self.bot.send_message(owner, emoji.reaction.emoji)
 
 
