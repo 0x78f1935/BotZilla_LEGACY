@@ -1,6 +1,6 @@
 from discord.ext import commands
 import json
-import urllib.request
+import aiohttp
 import discord
 
 tmp_config = json.loads(str(open('./options/config.js').read()))
@@ -23,9 +23,13 @@ class MoneyMaker:
         """Shows current bitcoin value
         Show bitcoin valua from exchange"""
         url = tmp_config['exchange']['api-url']
-        with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})) as response:
-            source = response.read().decode('utf-8')
-        data = json.loads(source)
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                source = await response.json(encoding='utf8')
+
+        source = json.dumps(source)
+        data = json.loads(str(source))
+
         embed = discord.Embed(title="{}".format("Bitcoin :currency_exchange:"),
                               description="Bitcoin price is currently at $**{}**".format(data['bpi']['USD']['rate']),
                               color=0xf20006)
