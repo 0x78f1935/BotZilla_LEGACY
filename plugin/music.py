@@ -125,7 +125,7 @@ class Music:
         if state.voice is None:
             state.voice = await self.bot.join_voice_channel(summoned_channel)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You can stop me at any time.\nUse `{}stop` to stop me. You can also pause and resume me\n use `{}help Music` for more information'.format(self.config['prefix'], self.config['prefix']),
+                                  description='You can stop me at any time.\nUse `{}stop` to stop me. You can also pause and resume me\nuse `{}help Music` for more information'.format(self.config['prefix'], self.config['prefix']),
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
