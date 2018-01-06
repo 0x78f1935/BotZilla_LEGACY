@@ -244,7 +244,45 @@ class Information:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-## count swearwords
+    @commands.command(pass_context=True)
+    async def swcount(self, ctx):
+        """
+        Count total swearwords used in servers where BotZilla is in
+        """
+        if self.database_file_found:
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'shit';")
+            shit = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'fuck';")
+            fuck = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'damn';")
+            damn = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'bitch';")
+            bitch = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'crap';")
+            crap = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'pussy';")
+            pussy = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'asshole';")
+            asshole = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'fag';")
+            fag = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute("select total from botzilla.swearwords where swearword = 'gay';")
+            gay = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='The following swearwords are registerd.\nBotZilla shows the total count of a swearword since this function exist\n',
+                                  colour=0xf20006)
+            embed.add_field(name='Shit', value=shit[0])
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
     @commands.command(pass_context=True)
