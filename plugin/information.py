@@ -446,7 +446,11 @@ class Information:
             emoji = await self.bot.wait_for_reaction([self.emojiUnicode['succes'], '\u2620'], message=message)
 
             if emoji.reaction.emoji == self.emojiUnicode['succes']:
-                print('check')
+                await self.bot.delete_message(message)
+                a = await self.bot.send_message(owner, 'Report removed')
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                return
+
 
             if emoji.reaction.emoji == '\u2620':
                 print('Blacklist')
