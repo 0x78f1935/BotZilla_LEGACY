@@ -445,10 +445,10 @@ class Information:
             await asyncio.sleep(5)
             emoji = await self.bot.wait_for_reaction([self.emojiUnicode['succes'], '\u2620'], message=message)
 
-            if str(emoji.reaction.emoji) == ':white_check_mark:':
+            if emoji.reaction.emoji == self.emojiUnicode['succes']:
                 print('check')
 
-            if str(emoji.reaction.emoji) == ':skull_crossbones:':
+            if emoji.reaction.emoji == '\u2620':
                 print('Blacklist')
 
             await self.bot.send_message(owner, str(emoji.reaction.emoji))
