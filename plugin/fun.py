@@ -148,7 +148,6 @@ class Images:
         return
 
 
-
 def setup(bot):
     if ImgurClient is False:
         raise RuntimeError("You need the imgurpython module to use this.\n"

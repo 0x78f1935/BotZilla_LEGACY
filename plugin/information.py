@@ -416,5 +416,35 @@ class Information:
                 await self.bot.delete_message(message)
 
 
+    @commands.command(pass_context=True, hidden=True)
+    async def report(self, ctx, *, Message: str = None):
+        """
+        Report any issue to the bot owner
+        Did you find any bugs. Something that annoys you.
+        Report it with this command please.
+        This way needed changes could be made.
+        """
+        if Message is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='please read **`{}help report`** first..'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+
+        embed = discord.Embed(title='USER REPORT {} | {}:'.format(ctx.message.author.name, ctx.message.author.id),
+                              description='Server:\n**{}**\n*{}*\n\nChannel:\n**{}**\n*{}*\n\nMessage:\n```{}```'.format(
+                                  ctx.message.server, ctx.message.server.id,
+                                  ctx.message.channel, ctx.message.channel.id, Message),
+                              colour=0xf20006)
+        for owner in self.config['owner-id']:
+            owner = await self.bot.get_user_info(owner)
+            message = await self.bot.send_message(owner, embed=embed)
+            await self.bot.add_reaction(message, self.emojiUnicode['succes'])
+            await self.bot.add_reaction(message, '\u2620')
+            emoji = await self.bot.wait_for_reaction([self.emojiUnicode['succes'], '\u2620'])
+            await self.bot.send_message(owner, emoji.reaction.emoji)
+
+
 def setup(bot):
     bot.add_cog(Information(bot))
