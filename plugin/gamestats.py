@@ -44,7 +44,7 @@ class Leagues:
                                       colour=0xf20006)
                 embed.add_field(name='Ranked', value='Participation: {}'.format(data['player']['stats']['ranked']['has_played']), inline=True)
                 embed.add_field(name='Casual', value='Participation: {}'.format(data['player']['stats']['casual']['has_played']), inline=True)
-                embed.add_field(name='Overall', value='-', inline=True)
+                embed.add_field(name='Overall', value='Headshots: {}'.format(data['player']['stats']['overall']['headshots']), inline=True)
 
                 embed.add_field(name='Wins', value=data['player']['stats']['ranked']['wins'], inline=True)
                 embed.add_field(name='Wins', value=data['player']['stats']['casual']['wins'], inline=True)
