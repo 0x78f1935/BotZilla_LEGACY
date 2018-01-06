@@ -464,6 +464,12 @@ class Information:
                         ctx.message.author.id, str(ctx.message.author.name), 'Misbehavior Report Command', 10000))
                 self.database.cur.execute("ROLLBACK;")
                 await self.bot.delete_message(message)
+                user_who_got_blacklisted = await self.bot.get_user_info(owner)
+                embed = discord.Embed(
+                    title='{}:'.format(ctx.message.author.name),
+                    description='You are on the global blacklist, Reason:\nMisbehavior Report Command',
+                    colour=0xf20006)
+                await self.bot.send_message(user_who_got_blacklisted, embed=embed)
                 await self.bot.send_message(owner, 'User {} | {} added to blacklist'.format(ctx.message.author.name, ctx.message.author.id))
 
 
