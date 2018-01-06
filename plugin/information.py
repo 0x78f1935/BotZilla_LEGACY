@@ -466,10 +466,11 @@ class Information:
                 await self.bot.delete_message(message)
                 user_who_got_blacklisted = await self.bot.get_user_info(ctx.message.author.id)
                 embed = discord.Embed(
-                    title='{}:'.format(ctx.message.author.name),
-                    description='You are on the global blacklist, Reason:\nMisbehavior Report Command',
+                    title='Warning {}:'.format(ctx.message.author.name),
+                    description='You are on the global blacklist, Reason:\n```Misbehavior Report Command```',
                     colour=0xf20006)
-                await self.bot.send_message(user_who_got_blacklisted, embed=embed)
+                a = await self.bot.send_message(user_who_got_blacklisted, embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 await self.bot.send_message(owner, 'User {} | {} added to blacklist'.format(ctx.message.author.name, ctx.message.author.id))
 
 
