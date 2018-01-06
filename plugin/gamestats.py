@@ -34,7 +34,7 @@ class Leagues:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     source = await response.json()
-            source = str(source).replace('\'', '"')
+            source = await source.text(encoding='utf8')
             print(source)
             data = json.loads(str(source))
             template = """
