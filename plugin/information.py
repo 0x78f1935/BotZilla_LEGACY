@@ -423,6 +423,8 @@ class Information:
         Did you find any bugs. Something that annoys you.
         Report it with this command please.
         This way needed changes could be made.
+        You risk a place on the global blacklist if you use this command
+        for spam or other exploits.
         """
         if Message is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -432,6 +434,11 @@ class Information:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
 
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='Report send..',
+                              colour=0xf20006)
+        report_send = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(report_send, '\u2620')
 
         embed = discord.Embed(title='USER REPORT {} | {}:'.format(ctx.message.author.name, ctx.message.author.id),
                               description='Server:\n**{}**\n*{}*\n\nChannel:\n**{}**\n*{}*\n\nMessage:\n```{}```'.format(
@@ -453,6 +460,10 @@ class Information:
 
 
             if emoji.reaction.emoji == '\u2620':
+                self.database.cur.execute(
+                    "INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, '{}', '{}', {});".format(
+                        ctx.message.author.id, str(ctx.message.author.name), 'Misbehavior Report Command', 10000))
+                self.database.cur.execute("ROLLBACK;")
                 print('Blacklist')
 
             await self.bot.send_message(owner, str(emoji.reaction.emoji))
