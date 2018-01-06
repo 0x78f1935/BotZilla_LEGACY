@@ -18,3 +18,18 @@ CREATE TABLE botzilla.blacklist(
     reason varchar(2000),
     total_votes integer
 );
+
+CREATE TABLE botzilla.swearwords(
+    swearword varchar(254) primary key,
+    total bigserial
+);
+
+INSERT INTO botzilla.swearwords(swearword, total) VALUES ('shit', 0);
+INSERT INTO botzilla.swearwords(swearword, total) VALUES ('fuck', 0);
+INSERT INTO botzilla.swearwords(swearword, total) VALUES ('damn', 0);
+INSERT INTO botzilla.swearwords(swearword, total) VALUES ('bitch', 0);
+INSERT INTO botzilla.swearwords(swearword, total) VALUES ('crap', 0);
+INSERT INTO botzilla.swearwords(swearword, total) VALUES ('pussy', 0);
+INSERT INTO botzilla.swearwords(swearword, total) VALUES ('asshole', 0);
+INSERT INTO botzilla.swearwords(swearword, total) VALUES ('fag', 0);
+INSERT INTO botzilla.swearwords(swearword, total) VALUES ('gay', 0);

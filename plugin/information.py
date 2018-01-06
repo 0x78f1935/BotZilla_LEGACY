@@ -244,6 +244,9 @@ class Information:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
+## count swearwords
+
+
     @commands.command(pass_context=True)
     async def id(self, ctx, *, username=None):
         """Shows your ID or the id of the user."""
