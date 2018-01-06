@@ -4,11 +4,9 @@ from discord.ext.commands import Bot
 import platform
 import json
 from options.opus_loader import load_opus_lib
-from urllib.parse import quote as uriquote
 import re
 import csv
 import asyncio
-from collections import defaultdict
 from plugin.music import Music
 import psycopg2
 

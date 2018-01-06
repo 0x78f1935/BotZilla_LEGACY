@@ -1,8 +1,7 @@
 from discord.ext import commands
 import json
 import discord
-import urllib.request
-import urllib.parse
+import aiohttp
 import random
 import xml.etree.ElementTree
 try:
@@ -42,9 +41,12 @@ class Images:
         url = ("http://api.giphy.com/v1/gifs/random?&api_key={}&tag={}"
                "".format(self.config['giphy-api-key'], keywords))
 
-        with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})) as response:
-            source = response.read()
-        result = json.loads(source)
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                source = await response.json(encoding='utf8')
+
+        source = json.dumps(source)
+        result = json.loads(str(source))
 
         if response.status == 200:
             if result["data"]:
@@ -101,9 +103,12 @@ class Images:
 
         else:
             link = 'http://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=' + content
-            rget = urllib.request.urlopen(link.replace(' ', '_').replace('+', ' '))
-            rget = rget.read()
-            root = xml.etree.ElementTree.fromstring(rget)
+            url = link.replace(' ', '_').replace('+', ' ')
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as response:
+                    source = await response.read(encoding='utf8')
+
+            root = xml.etree.ElementTree.fromstring(source)
             print("[NSFW] [RULE34] %s" % (link))
             image = root[random.randint(0, len(root) - 1)].attrib['file_url']
 
