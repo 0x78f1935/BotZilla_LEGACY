@@ -468,7 +468,7 @@ class Information:
             if emoji.reaction.emoji == '\u2620':
                 self.database.cur.execute(
                     "INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, '{}', '{}', {});".format(
-                        ctx.message.author.id, str(ctx.message.author.name), 'Misbehavior Report Command', 10000))
+                        ctx.message.author.id, str(ctx.message.author.name), 'Misbehaviour Report Command', 10000))
                 self.database.cur.execute("ROLLBACK;")
                 await self.bot.delete_message(message)
                 user_who_got_blacklisted = await self.bot.get_user_info(ctx.message.author.id)
