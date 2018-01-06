@@ -74,21 +74,6 @@ class Leagues:
                 embed.add_field(name='Playtime', value=data['player']['stats']['casual']['playtime'], inline=True)
                 embed.add_field(name='Bullets Hit', value=data['player']['stats']['overall']['bullets_hit'], inline=True)
 
-                embed.add_field(name='Ranked', value='test', inline=True)
-                embed.add_field(name='Casual', value='test', inline=True)
-                embed.add_field(name='Headshots', value=data['player']['stats']['overall']['headshots'], inline=True)
-
-                embed.add_field(name='Ranked', value='test', inline=True)
-                embed.add_field(name='Casual', value='test', inline=True)
-                embed.add_field(name='Melee Kills', value=data['player']['stats']['overall']['melee_kills'], inline=True)
-
-                embed.add_field(name='Ranked', value='test', inline=True)
-                embed.add_field(name='Casual', value='test', inline=True)
-                embed.add_field(name='Penetration Kills', value=data['player']['stats']['overall']['penetration_kills'], inline=True)
-
-                embed.add_field(name='Ranked', value='test', inline=True)
-                embed.add_field(name='Casual', value='test', inline=True)
-                embed.add_field(name='Assists', value=data['player']['stats']['overall']['assists'], inline=True)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             except Exception as e:
