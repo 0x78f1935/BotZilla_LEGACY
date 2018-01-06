@@ -453,6 +453,13 @@ class Information:
             emoji = await self.bot.wait_for_reaction([self.emojiUnicode['succes'], '\u2620'], message=message)
 
             if emoji.reaction.emoji == self.emojiUnicode['succes']:
+                user_who_send_report = await self.bot.get_user_info(ctx.message.author.id)
+                embed = discord.Embed(
+                    title='Your report, {}:'.format(ctx.message.author.name),
+                    description='You have been noticed, Your report has been seen\n\n**Report:**\n```{}```'.format(Message),
+                    colour=0xf20006)
+                a = await self.bot.send_message(user_who_send_report, embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 await self.bot.delete_message(message)
                 await self.bot.send_message(owner, 'Report removed')
                 return
