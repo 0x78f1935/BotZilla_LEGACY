@@ -3,6 +3,7 @@ import urllib.parse
 import json
 from discord.ext import commands
 import discord
+import aiohttp
 
 
 class Leagues:
@@ -30,8 +31,9 @@ class Leagues:
             return
         else:
             url = 'https://api.r6stats.com/api/v1/players/{}?platform=uplay'.format(uplay_name)
-            with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})) as response:
-                source = response.read()
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as response:
+                    source = response.read()
             data = json.loads(source)
             template = """
 ```Python
