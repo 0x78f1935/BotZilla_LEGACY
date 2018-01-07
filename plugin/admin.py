@@ -270,5 +270,28 @@ class AdminCommands:
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
 
+    @commands.command(pass_context=True, hidden=True)
+    async def purge(self, ctx):
+        """
+        Purge bot messages
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        def is_me(m):
+            return m.author == self.bot.user
+
+        deleted = await self.bot.purge_from(ctx.message.channel, limit=100, check=is_me)
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='Deleted {} message(s)'.format(len(deleted)),
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
