@@ -235,7 +235,9 @@ class Information:
             embed = discord.Embed(title="{}".format("Server Count"),
                                   description="We are in **{}** servers\nWe have **{}** members\nWe had a total of **{}** users\nThere are **{}** users online\nUptime: `{} Minutes`".format(
                                       str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users, sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline), uptime_in_minutes),
+                                  url='https://discordapp.com/oauth2/authorize?client_id=397149515192205324&permissions=1261448256&scope=bot',
                                   color=0xf20006)
+            embed.set_thumbnail(url='https://raw.githubusercontent.com/Annihilator708/DiscordBot-BotZilla/master/icon.png')
             a = await self.bot.say(embed=embed)
             self.total_online_users = 0
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -243,7 +245,9 @@ class Information:
             embed = discord.Embed(title="{}".format("Server Count"),
                                   description="We are in **{}** servers\nWe have **{}** members\nThere are **{}** users online".format(
                                       str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline)),
+                                  url='https://discordapp.com/oauth2/authorize?client_id=397149515192205324&permissions=1261448256&scope=bot',
                                   color=0xf20006)
+            embed.set_thumbnail(url='https://raw.githubusercontent.com/Annihilator708/DiscordBot-BotZilla/master/icon.png')
             a = await self.bot.say(embed=embed)
             self.total_online_users = 0
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -289,6 +293,7 @@ class Information:
             uptime_in_minutes = str(float(uptime)/60).split('.')[0]
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='The following swearwords are registered.\nBotZilla shows the total uses of a swearword since database is up.\nDatabase is up for:\n```{} Minutes```'.format(uptime_in_minutes),
+                                  url='https://discordapp.com/oauth2/authorize?client_id=397149515192205324&permissions=1261448256&scope=bot',
                                   colour=0xf20006)
             embed.add_field(name='Shit', value=str(shit).replace('[(', '**').replace(',)]', '**'))
             embed.add_field(name='Fuck', value=str(fuck).replace('[(', '**').replace(',)]', '**'))
@@ -299,6 +304,7 @@ class Information:
             embed.add_field(name='Asshole', value=str(asshole).replace('[(', '**').replace(',)]', '**'))
             embed.add_field(name='Fag', value=str(fag).replace('[(', '**').replace(',)]', '**'))
             embed.add_field(name='Gay', value=str(gay).replace('[(', '**').replace(',)]', '**'))
+            embed.set_thumbnail(url='https://raw.githubusercontent.com/Annihilator708/DiscordBot-BotZilla/master/icon.png')
 
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
