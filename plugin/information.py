@@ -234,10 +234,10 @@ class Information:
             uptime_in_minutes = str(float(uptime)/60).split('.')[0]
             uptime = '{} Minutes'.format(uptime_in_minutes)
             if int(uptime_in_minutes) >= 60:
-                uptime_in_hours = int(uptime_in_minutes)/60
+                uptime_in_hours = str(float(uptime_in_minutes)/60).split('.')[0]
                 uptime = '{} Hours'.format(uptime_in_hours)
             if int(uptime_in_hours) >= 24:
-                uptime_in_days = int(uptime_in_minutes)/24
+                uptime_in_days = str(float(uptime_in_minutes)/24).split('.')[0]
                 uptime = '{} Days'.format(uptime_in_days)
             embed = discord.Embed(title="{}".format("Server Count"),
                                   description="We are in **{}** servers\nWe have **{}** members\nWe had a total of **{}** users\nThere are **{}** users online\nUptime: `{}`".format(
@@ -300,10 +300,10 @@ class Information:
             uptime_in_minutes = str(float(uptime)/60).split('.')[0]
             uptime = '{} Minutes'.format(uptime_in_minutes)
             if int(uptime_in_minutes) >= 60:
-                uptime_in_hours = int(uptime_in_minutes)/60
+                uptime_in_hours = str(float(uptime_in_minutes)/60).split('.')[0]
                 uptime = '{} Hours'.format(uptime_in_hours)
             if int(uptime_in_hours) >= 24:
-                uptime_in_days = int(uptime_in_minutes)/24
+                uptime_in_days = str(float(uptime_in_minutes)/24).split('.')[0]
                 uptime = '{} Days'.format(uptime_in_days)
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
