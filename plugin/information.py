@@ -293,7 +293,6 @@ class Information:
             uptime_in_minutes = str(float(uptime)/60).split('.')[0]
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='The following swearwords are registered.\nBotZilla shows the total uses of a swearword since database is up.\nDatabase is up for:\n```{} Minutes```'.format(uptime_in_minutes),
-                                  url='https://discordapp.com/oauth2/authorize?client_id=397149515192205324&permissions=1261448256&scope=bot',
                                   colour=0xf20006)
             embed.add_field(name='Shit', value=str(shit).replace('[(', '**').replace(',)]', '**'))
             embed.add_field(name='Fuck', value=str(fuck).replace('[(', '**').replace(',)]', '**'))
@@ -304,7 +303,6 @@ class Information:
             embed.add_field(name='Asshole', value=str(asshole).replace('[(', '**').replace(',)]', '**'))
             embed.add_field(name='Fag', value=str(fag).replace('[(', '**').replace(',)]', '**'))
             embed.add_field(name='Gay', value=str(gay).replace('[(', '**').replace(',)]', '**'))
-            embed.set_thumbnail(url='https://raw.githubusercontent.com/Annihilator708/DiscordBot-BotZilla/master/icon.png')
 
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
