@@ -236,9 +236,9 @@ class Information:
             if int(uptime_in_minutes) >= 60:
                 uptime_in_hours = str(float(uptime_in_minutes)/60).split('.')[0]
                 uptime = '{} Hours'.format(uptime_in_hours)
-                if int(uptime_in_hours) >= 24:
-                    uptime_in_days = str(float(uptime_in_minutes)/24).split('.')[0]
-                    uptime = '{} Days'.format(uptime_in_days)
+            if int(uptime_in_minutes) >= 1440:
+                uptime_in_days = str(float(uptime_in_minutes)/1440).split('.')[0]
+                uptime = '{} Days'.format(uptime_in_days)
             embed = discord.Embed(title="{}".format("Server Count"),
                                   description="We are in **{}** servers\nWe have **{}** members\nWe had a total of **{}** users\nThere are **{}** users online\nUptime: `{}`".format(
                                       str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users, sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline), uptime),
@@ -302,9 +302,9 @@ class Information:
             if int(uptime_in_minutes) >= 60:
                 uptime_in_hours = str(float(uptime_in_minutes)/60).split('.')[0]
                 uptime = '{} Hours'.format(uptime_in_hours)
-                if int(uptime_in_hours) >= 24:
-                    uptime_in_days = str(float(uptime_in_minutes)/24).split('.')[0]
-                    uptime = '{} Days'.format(uptime_in_days)
+            if int(uptime_in_minutes) >= 1440:
+                uptime_in_days = str(float(uptime_in_minutes)/1440).split('.')[0]
+                uptime = '{} Days'.format(uptime_in_days)
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='The following swearwords are registered.\nBotZilla shows the total uses of a swearword since database is up.\nDatabase is up for:\n```{}```'.format(uptime),
