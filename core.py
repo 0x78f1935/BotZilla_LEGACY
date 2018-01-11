@@ -231,6 +231,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if message.author.bot: return
+    if not str(message.content).startswith('{}'.format(config['prefix'])): return
 
     database.cur.execute("SELECT ID FROM botzilla.blacklist;")
     row = database.cur.fetchall()
