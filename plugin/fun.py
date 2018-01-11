@@ -153,7 +153,7 @@ class Images:
         return
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def dict(self, ctx, *, search : str = None):
         """
         Look something up in the UrbanDictionary.
@@ -175,7 +175,7 @@ class Images:
             source = json.dumps(source)
             result = json.loads(str(source))
             print(result)
-
+            await self.bot.say('Check your console')
 
 
 def setup(bot):
