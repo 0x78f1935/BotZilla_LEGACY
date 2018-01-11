@@ -154,20 +154,21 @@ class Images:
 
 
     @commands.command(pass_context=True, hidden=True)
-    async def dict(self, ctx, *, search : str = None):
+    async def dict(self, ctx, *keywords):
         """
         Look something up in the UrbanDictionary.
         Use this command with a search keyword.
         """
 
-        if search == None:
+        if keywords == None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Did you tried `{}help dict` yet?'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
-        else:
-            url = 'http://api.urbandictionary.com/v0/define?term={}'.format(search)
+        if keywords:
+            keywords = "%20".join(keywords)
+            url = 'http://api.urbandictionary.com/v0/define?term={}'.format(keywords)
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     source = await response.json(encoding='utf8')
@@ -175,9 +176,12 @@ class Images:
             source = json.dumps(source)
             result = json.loads(str(source))
             print(result)
-            await self.bot.say('Check your console')
+            await self.bot.say('Check your console\nThe Url was\n```\n{}\n```'.format(url))
 
-
+    async def gif(self, ctx, *keywords):
+        """Retrieves a random gif from a giphy search"""
+        if keywords:
+            keywords = "+".join(keywords)
 def setup(bot):
     if ImgurClient is False:
         raise RuntimeError("You need the imgurpython module to use this.\n"
