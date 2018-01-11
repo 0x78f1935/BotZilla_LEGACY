@@ -102,5 +102,3 @@ class TestScripts:
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
-
-

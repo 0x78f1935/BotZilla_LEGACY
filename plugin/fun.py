@@ -153,6 +153,31 @@ class Images:
         return
 
 
+    @commands.command(pass_context=True)
+    async def dict(self, ctx, *, search : str = None):
+        """
+        Look something up in the UrbanDictionary.
+        Use this command with a search keyword.
+        """
+
+        if search == None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Did you tried `{}help dict` yet?'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+        else:
+            url = 'http://api.urbandictionary.com/v0/define?term={}'.format(search)
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as response:
+                    source = await response.json(encoding='utf8')
+
+            source = json.dumps(source)
+            result = json.loads(str(source))
+            print(result)
+
+
+
 def setup(bot):
     if ImgurClient is False:
         raise RuntimeError("You need the imgurpython module to use this.\n"
