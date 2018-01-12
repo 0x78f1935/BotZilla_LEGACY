@@ -178,8 +178,12 @@ class Images:
             print(result)
             await self.bot.say('Check your console\nThe Url was\n```\n{}\n```'.format(url))
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='\n',
                                   colour=0xf20006)
-            embed.add_field(name='Json', value='```{}```'.format(result['list'][0]['definition']), inline=False)
+            embed.add_field(name='Definition:', value='```{}```'.format(result['list'][0]['definition']), inline=False)
+            embed.add_field(name='Likes:', value='\U0001f44d`{}`'.format(result['list'][0]['thumbs_up']), inline=False)
+            embed.add_field(name='Dislikes:', value='\U0001f44e`{}`'.format(result['list'][0]['thumbs_down']), inline=True)
+
 
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
