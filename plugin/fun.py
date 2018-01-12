@@ -177,11 +177,12 @@ class Images:
             result = json.loads(str(source))
             print(result)
             await self.bot.say('Check your console\nThe Url was\n```\n{}\n```'.format(url))
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-    async def gif(self, ctx, *keywords):
-        """Retrieves a random gif from a giphy search"""
-        if keywords:
-            keywords = "+".join(keywords)
+
 def setup(bot):
     if ImgurClient is False:
         raise RuntimeError("You need the imgurpython module to use this.\n"
