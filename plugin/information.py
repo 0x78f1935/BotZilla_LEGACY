@@ -9,6 +9,9 @@ import asyncio
 import re
 import random
 import ddg3 as duckduckgo3
+import aiohttp
+
+
 try:
     from plugin.database import Database
 except:
@@ -549,6 +552,39 @@ class Information:
                 a = await self.bot.send_message(user_who_got_blacklisted, embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 await self.bot.send_message(owner, 'User {} | {} added to blacklist'.format(ctx.message.author.name, ctx.message.author.id))
+
+
+    @commands.command(pass_context=True)
+    async def location(self, ctx, *keywords):
+        """
+        Get more information about a location.
+        Supported: Zipcode, City, Country, street, latitude, longitude
+        """
+
+        if keywords == None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Maybe you should look in `{}help location`. Its a secret spot :wink:'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+        if keywords:
+            old_keyword = " ".join(keywords)
+            try:
+                keywords = "%20".join(keywords)
+                url = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q={}&format=json&limit=1'.format(keywords)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        source = await response.json(encoding='utf8')
+
+                source = json.dumps(source, indent=2)
+                result = json.loads(str(source))
+                await self.bot.say(result)
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Your search tag was: ***{}***\nNothing found :map:'.format(old_keyword, self.config['prefix']),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
 def setup(bot):
