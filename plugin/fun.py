@@ -176,7 +176,6 @@ class Images:
 
                 source = json.dumps(source, indent=2)
                 result = json.loads(str(source))
-                print(result)
                 await self.bot.say('Check your console\nThe Url was\n```\n{}\n```'.format(url))
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='***Tags***\n```\n{}\n```'.format(str(result['tags']).replace('[', '').replace(',', ', ').replace(']', '')),
