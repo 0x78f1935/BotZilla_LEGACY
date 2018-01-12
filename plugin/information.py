@@ -568,7 +568,7 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
         if keywords:
-            if str(keywords).lower() == 'area51':
+            if keywords == 'area51':
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=':alien:\n:shirt::shield:\n:jeans:',
                                       colour=0xf20006)
@@ -588,9 +588,9 @@ class Information:
                     result = json.loads(str(source))
 
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Your search tag was: ***{}***\n**Tags**\n```\n{}\n```'.format(old_keyword, result[0]['display_name']),
+                                          description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(old_keyword, result[0]['display_name']),
                                           colour=0xf20006)
-                    embed.add_field(name='Location:', value='City: **`{}`**\nState: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**\nNeighbourhood: **`{}`**\nRoad: **`{}`**\nPostcode: **`{}`**'.format(
+                    embed.add_field(name='Location:', value='City: **`{}`**\nState: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**\nNeighbourhood: **`{}`**\nRoad: **`{}`**\nPostcode: **`{}`**\n```\n```'.format(
                         result[0]['address']['city'], result[0]['address']['state'], result[0]['address']['country'], result[0]['address']['country_code'], result[0]['address']['neighbourhood'],
                         result[0]['address']['road'], result[0]['address']['postcode']))
                     embed.add_field(name='Latitude:', value=result[0]['lat'], inline=True)
@@ -599,10 +599,9 @@ class Information:
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-                    await self.bot.say(result)
                 except Exception as e:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Your search tag was: ***{}***\nNothing found :map:'.format(old_keyword, self.config['prefix']),
+                                          description='Your search tag was:\n***{}***\nNothing found :map:'.format(old_keyword, self.config['prefix']),
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
