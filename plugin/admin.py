@@ -1,4 +1,5 @@
 from discord.ext import commands
+import discord
 import json
 import discord
 import traceback
@@ -290,16 +291,28 @@ class AdminCommands:
             if str(m.content).startswith(self.config['prefix']):
                 return True
 
+        try:
+            deleted_bot_messages = await self.bot.purge_from(ctx.message.channel, limit=500, check=is_me)
+            deleted_user_messages = await self.bot.purge_from(ctx.message.channel, limit=500, check=is_command)
+            total = len(deleted_bot_messages) + len(deleted_user_messages)
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Deleted {} message(s)'.format(total),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        except discord.ext.commands.CommandInvokeError as e:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='```{}```'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+        except discord.HTTPException as e:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='```{}```'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
-        deleted_bot_messages = await self.bot.purge_from(ctx.message.channel, limit=1000, check=is_me)
-
-        deleted_user_messages = await self.bot.purge_from(ctx.message.channel, limit=1000, check=is_command)
-        total = len(deleted_bot_messages) + len(deleted_user_messages)
-        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='Deleted {} message(s)'.format(total),
-                              colour=0xf20006)
-        a = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
