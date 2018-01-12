@@ -153,7 +153,7 @@ class Images:
         return
 
 
-    @commands.command(pass_context=True, hidden=True)
+    @commands.command(pass_context=True)
     async def dict(self, ctx, *keywords):
         """
         Look something up in the UrbanDictionary.
