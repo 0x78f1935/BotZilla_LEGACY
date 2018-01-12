@@ -167,32 +167,39 @@ class Images:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
         if keywords:
-            keywords = "%20".join(keywords)
-            url = 'http://api.urbandictionary.com/v0/define?term={}'.format(keywords)
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url) as response:
-                    source = await response.json(encoding='utf8')
+            try:
+                keywords = "%20".join(keywords)
+                url = 'http://api.urbandictionary.com/v0/define?term={}'.format(keywords)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        source = await response.json(encoding='utf8')
 
-            source = json.dumps(source, indent=2)
-            result = json.loads(str(source))
-            print(result)
-            await self.bot.say('Check your console\nThe Url was\n```\n{}\n```'.format(url))
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='***Tags***\n```\n{}\n```'.format(str(result['tags']).replace('[', '').replace(',', ', ').replace(']', '')),
-                                  colour=0xf20006)
-            embed.add_field(name='Word:', value='`{}`'.format(result['list'][0]['word']), inline=False)
-            embed.add_field(name='Author:', value='`{}`'.format(result['list'][0]['author']), inline=False)
-            embed.add_field(name='Link:', value='`{}`'.format(result['list'][0]['permalink']), inline=False)
-            embed.add_field(name='Likes:', value='\U0001f44d `{}`'.format(result['list'][0]['thumbs_up']),
-                            inline=True)
-            embed.add_field(name='Dislikes:', value='\U0001f44e `{}`'.format(result['list'][0]['thumbs_down']),
-                            inline=True)
-            embed.add_field(name='Definition:', value='```{}```'.format(result['list'][0]['definition']),
-                            inline=False)
-            embed.add_field(name='example:', value='```{}```'.format(result['list'][0]['example']), inline=True)
+                source = json.dumps(source, indent=2)
+                result = json.loads(str(source))
+                print(result)
+                await self.bot.say('Check your console\nThe Url was\n```\n{}\n```'.format(url))
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='***Tags***\n```\n{}\n```'.format(str(result['tags']).replace('[', '').replace(',', ', ').replace(']', '')),
+                                      colour=0xf20006)
+                embed.add_field(name='Word:', value='`{}`'.format(result['list'][0]['word']), inline=False)
+                embed.add_field(name='Author:', value='`{}`'.format(result['list'][0]['author']), inline=False)
+                embed.add_field(name='Link:', value='`{}`'.format(result['list'][0]['permalink']), inline=False)
+                embed.add_field(name='Likes:', value='\U0001f44d `{}`'.format(result['list'][0]['thumbs_up']),
+                                inline=True)
+                embed.add_field(name='Dislikes:', value='\U0001f44e `{}`'.format(result['list'][0]['thumbs_down']),
+                                inline=True)
+                embed.add_field(name='Definition:', value='```{}```'.format(result['list'][0]['definition']),
+                                inline=False)
+                embed.add_field(name='example:', value='```{}```'.format(result['list'][0]['example']), inline=True)
 
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Nothing found :sailboat:'.format(self.config['prefix']),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['Warning'])
 
 
 def setup(bot):
