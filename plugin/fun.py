@@ -168,7 +168,7 @@ class Images:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
         if keywords:
             try:
-                old_keyword = "".join(keywords)
+                old_keyword = " ".join(keywords)
                 keywords = "%20".join(keywords)
                 url = 'http://api.urbandictionary.com/v0/define?term={}'.format(keywords)
                 async with aiohttp.ClientSession() as session:
@@ -178,7 +178,7 @@ class Images:
                 source = json.dumps(source, indent=2)
                 result = json.loads(str(source))
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your search tag was: ***{}***\n**Tags**\n```\n{}\n```'.format(keywords, str(result['tags']).replace('[', '').replace(',', ', ').replace(']', '')),
+                                      description='Your search tag was: ***{}***\n**Tags**\n```\n{}\n```'.format(old_keyword, str(result['tags']).replace('[', '').replace(',', ', ').replace(']', '')),
                                       colour=0xf20006)
                 embed.add_field(name='Word:', value='`{}`'.format(result['list'][0]['word']), inline=False)
                 embed.add_field(name='Author:', value='`{}`'.format(result['list'][0]['author']), inline=False)
