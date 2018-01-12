@@ -180,37 +180,28 @@ class Images:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='***Tags***\n```\n{}\n```'.format(str(result['tags']).replace('[', '').replace(',', ', ').replace(']', '')),
                                   colour=0xf20006)
-            embed.add_field(name='Definition:', value='```{}```'.format(result['list'][0]['definition']), inline=False)
+            embed.add_field(name='Word:', value='`{}`'.format(result['list'][0]['word']), inline=False)
+            embed.add_field(name='Author:', value='`{}`'.format(result['list'][0]['author']), inline=False)
+            embed.add_field(name='Link:', value='`{}`'.format(result['list'][0]['permalink']), inline=False)
+            embed.add_field(name='Likes:', value='\U0001f44d `{}`'.format(result['list'][0]['thumbs_up']),
+                            inline=True)
+            embed.add_field(name='Dislikes:', value='\U0001f44e `{}`'.format(result['list'][0]['thumbs_down']),
+                            inline=True)
+            embed.add_field(name='Definition:', value='```{}```'.format(result['list'][0]['definition']),
+                            inline=False)
             embed.add_field(name='example:', value='```{}```'.format(result['list'][0]['example']), inline=True)
-            embed.add_field(name='Author:', value='`{}`'.format(result['list'][0]['author']), inline=True)
-            embed.add_field(name='Link:', value='`{}`'.format(result['list'][0]['permalink']), inline=True)
-            embed.add_field(name='Word:', value='`{}`'.format(result['list'][0]['word']), inline=True)
-            embed.add_field(name='Likes:', value='\U0001f44d `{}`'.format(result['list'][0]['thumbs_up']), inline=True)
-            embed.add_field(name='Dislikes:', value='\U0001f44e `{}`'.format(result['list'][0]['thumbs_down']), inline=True)
             try:
-                embed.add_field(name='Definition:', value='```{}```'.format(result['list'][1]['definition']),
-                                inline=False)
-                embed.add_field(name='example:', value='```{}```'.format(result['list'][1]['example']), inline=True)
-                embed.add_field(name='Author:', value='`{}`'.format(result['list'][1]['author']), inline=True)
-                embed.add_field(name='Link:', value='`{}`'.format(result['list'][1]['permalink']), inline=True)
-                embed.add_field(name='Word:', value='`{}`'.format(result['list'][1]['word']), inline=True)
+                embed.add_field(name='Word:', value='`{}`'.format(result['list'][1]['word']), inline=False)
+                embed.add_field(name='Author:', value='`{}`'.format(result['list'][1]['author']), inline=False)
+                embed.add_field(name='Link:', value='`{}`'.format(result['list'][1]['permalink']), inline=False)
                 embed.add_field(name='Likes:', value='\U0001f44d `{}`'.format(result['list'][1]['thumbs_up']),
                                 inline=True)
                 embed.add_field(name='Dislikes:', value='\U0001f44e `{}`'.format(result['list'][1]['thumbs_down']),
                                 inline=True)
-                try:
-                    embed.add_field(name='Definition:', value='```{}```'.format(result['list'][2]['definition']),
-                                    inline=False)
-                    embed.add_field(name='example:', value='```{}```'.format(result['list'][2]['example']), inline=True)
-                    embed.add_field(name='Author:', value='`{}`'.format(result['list'][2]['author']), inline=True)
-                    embed.add_field(name='Link:', value='`{}`'.format(result['list'][2]['permalink']), inline=True)
-                    embed.add_field(name='Word:', value='`{}`'.format(result['list'][2]['word']), inline=True)
-                    embed.add_field(name='Likes:', value='\U0001f44d `{}`'.format(result['list'][2]['thumbs_up']),
-                                    inline=True)
-                    embed.add_field(name='Dislikes:', value='\U0001f44e `{}`'.format(result['list'][2]['thumbs_down']),
-                                    inline=True)
-                except Exception as e:
-                    pass
+                embed.add_field(name='Definition:', value='```{}```'.format(result['list'][1]['definition']),
+                                inline=False)
+                embed.add_field(name='example:', value='```{}```'.format(result['list'][1]['example']), inline=True)
+
             except Exception as e:
                 pass
 
