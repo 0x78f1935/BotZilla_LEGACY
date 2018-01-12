@@ -578,6 +578,16 @@ class Information:
 
                 source = json.dumps(source, indent=2)
                 result = json.loads(str(source))
+
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Your search tag was: ***{}***'.format(old_keyword),
+                                      colour=0xf20006)
+                embed.add_field(name='Location:', value='City: **`{}`**\nState: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**\nNeighbourhood: **`{}`**\nRoad: **`{}`**\nPostcode: **`{}`**'.format(
+                    result[0]['address']['city'], result[0]['address']['state'], result[0]['address']['country'], result[0]['address']['country_code'], result[0]['address']['neighbourhood'],
+                    result[0]['address']['road'], result[0]['address']['postcode']))
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
                 await self.bot.say(result)
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
