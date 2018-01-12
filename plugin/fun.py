@@ -194,7 +194,7 @@ class Images:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Nothing found :sailboat:'.format(self.config['prefix']),
+                                      description='Your search tag was: ***{}***\nNothing found :sailboat:'.format(keywords, self.config['prefix']),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
