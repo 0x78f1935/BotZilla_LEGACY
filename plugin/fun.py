@@ -168,7 +168,7 @@ class Images:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
         if keywords:
             try:
-                old_keyword = keywords
+                old_keyword = "".join(keywords)
                 keywords = "%20".join(keywords)
                 url = 'http://api.urbandictionary.com/v0/define?term={}'.format(keywords)
                 async with aiohttp.ClientSession() as session:
