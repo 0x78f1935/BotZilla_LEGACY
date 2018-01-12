@@ -294,14 +294,19 @@ class AdminCommands:
             deleted_bot_messages = await self.bot.purge_from(ctx.message.channel, limit=1000, check=is_me)
             deleted_user_messages = await self.bot.purge_from(ctx.message.channel, limit=1000, check=is_command)
             total = len(deleted_bot_messages) + len(deleted_user_messages)
-        except Exception as e:
+        except commands.CommandInvokeError as e:
             total = 0
-
-        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='Deleted {} message(s)'.format(total),
-                              colour=0xf20006)
-        a = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='```{}```'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+        finally:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Deleted {} message(s)'.format(total),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
