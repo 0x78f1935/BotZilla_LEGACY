@@ -291,9 +291,9 @@ class AdminCommands:
                 return True
 
 
-        deleted_bot_messages = await self.bot.purge_from(ctx.message.channel, limit=100, check=is_me)
+        deleted_bot_messages = await self.bot.purge_from(ctx.message.channel, limit=10000, check=is_me)
 
-        deleted_user_messages = await self.bot.purge_from(ctx.message.channel, limit=100, check=is_command)
+        deleted_user_messages = await self.bot.purge_from(ctx.message.channel, limit=10000, check=is_command)
         total = len(deleted_bot_messages) + len(deleted_user_messages)
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Deleted {} message(s)'.format(total),
