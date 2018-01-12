@@ -168,6 +168,7 @@ class Images:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
         if keywords:
             try:
+                old_keyword = keywords
                 keywords = "%20".join(keywords)
                 url = 'http://api.urbandictionary.com/v0/define?term={}'.format(keywords)
                 async with aiohttp.ClientSession() as session:
@@ -194,7 +195,7 @@ class Images:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your search tag was: ***{}***\nNothing found :sailboat:'.format(keywords, self.config['prefix']),
+                                      description='Your search tag was: ***{}***\nNothing found :sailboat:'.format(old_keyword, self.config['prefix']),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
