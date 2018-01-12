@@ -286,8 +286,10 @@ class AdminCommands:
         def is_me(m):
             return m.author == self.bot.user
 
+
         deleted_bot_messages = await self.bot.purge_from(ctx.message.channel, limit=100, check=is_me)
-        deleted_user_messages = await self.bot.purge_from(ctx.message.channel, limit=100, check=str(ctx.message).startswith(self.config['prefix']))
+
+        deleted_user_messages = await self.bot.purge_from(ctx.message.channel, limit=100, check=str(ctx.message.content).startswith(self.config['prefix']))
         total = len(deleted_bot_messages) + len(deleted_user_messages)
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Deleted {} message(s)'.format(total),
