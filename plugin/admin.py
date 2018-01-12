@@ -1,4 +1,5 @@
 from discord.ext import commands
+import discord
 import json
 import discord
 import traceback
@@ -295,7 +296,13 @@ class AdminCommands:
             deleted_bot_messages = await self.bot.purge_from(ctx.message.channel, limit=1000, check=is_me)
             deleted_user_messages = await self.bot.purge_from(ctx.message.channel, limit=1000, check=is_command)
             total = len(deleted_bot_messages) + len(deleted_user_messages)
-        except commands.CommandInvokeError as e:
+        except discord.ext.commands.CommandInvokeError as e:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='```{}```'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+        except discord.HTTPException as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='```{}```'.format(e.args),
                                   colour=0xf20006)
