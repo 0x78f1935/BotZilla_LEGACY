@@ -288,7 +288,7 @@ class AdminCommands:
 
         def is_command(m):
             if str(m.content).startswith(self.config['prefix']):
-                return
+                return True
 
 
         deleted_bot_messages = await self.bot.purge_from(ctx.message.channel, limit=100, check=is_me)
