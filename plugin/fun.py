@@ -199,7 +199,7 @@ class Images:
                                       description='Nothing found :sailboat:'.format(self.config['prefix']),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['Warning'])
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
 def setup(bot):
