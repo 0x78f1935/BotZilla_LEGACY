@@ -567,7 +567,7 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-        if keywords.lower() == 'area51':
+        if 'area51' in keywords:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=':alien:\n:shirt::shield:\n:jeans:',
                                   colour=0xf20006)
