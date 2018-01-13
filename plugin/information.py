@@ -624,13 +624,38 @@ class Information:
                     await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
                 except Exception as e:
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Your search tag was:\n***{}***\nNothing found :map:'.format(
-                                              old_keyword, self.config['prefix']),
-                                          colour=0xf20006)
-                    embed.add_field(name='Reason:', value=e.args, inline=False)
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                    try:
+                        keywords = str(keywords).replace(' ', '%20')
+                        url = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q={}&format=json&limit=1'.format(
+                            keywords)
+                        async with aiohttp.ClientSession() as session:
+                            async with session.get(url) as response:
+                                source = await response.json(encoding='utf8')
+
+                        source = json.dumps(source, indent=2)
+                        result = json.loads(source)
+                        print(source)
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                              description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(
+                                                  old_keyword, result[0]['display_name']),
+                                              colour=0xf20006)
+                        embed.add_field(name='Location:',
+                                        value='State: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**'.format(
+                                            result[0]['address']['state'], result[0]['address']['country'],
+                                            result[0]['address']['country_code']))
+                        embed.add_field(name='Latitude:', value=result[0]['lat'], inline=True)
+                        embed.add_field(name='Longitude:', value=result[0]['lon'], inline=True)
+                        embed.set_footer(text=result[0]['licence'])
+                        a = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                    except Exception as e:
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                              description='Your search tag was:\n***{}***\nNothing found :map:'.format(
+                                                  old_keyword, self.config['prefix']),
+                                              colour=0xf20006)
+                        embed.add_field(name='Reason:', value=e.args, inline=False)
+                        a = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
 def setup(bot):
