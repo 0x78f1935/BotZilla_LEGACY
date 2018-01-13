@@ -559,7 +559,7 @@ class Information:
         Get more information about a location.
         Supported: Zipcode, City, Country, street, latitude, longitude
         """
-
+        old_keyword = "".join(keywords)
         if keywords is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Maybe you should look in `{}help location`. Its a secret spot :wink:'.format(self.config['prefix']),
@@ -567,14 +567,13 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-        if 'area51' in keywords:
+        if 'area51' in old_keyword:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=':alien:\n:shirt::shield:\n:jeans:',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\U0001f47d')
         else:
-            old_keyword = "".join(keywords)
             try:
                 keywords = str(keywords).replace(' ', '%20')
                 url = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q={}&format=json&limit=1'.format(keywords)
