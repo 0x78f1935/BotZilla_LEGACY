@@ -567,44 +567,44 @@ class Information:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
-        if keywords:
-            if keywords.lower() == 'area51':
+
+        if keywords.lower() == 'area51':
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description=':alien:\n:shirt::shield:\n:jeans:',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, '\U0001f47d')
+            return
+        else:
+            old_keyword = " ".join(keywords)
+            try:
+                keywords = "%20".join(keywords)
+                url = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q={}&format=json&limit=1'.format(keywords)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        source = await response.json(encoding='utf8')
+
+                source = json.dumps(source, indent=2)
+                result = json.loads(str(source))
+
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=':alien:\n:shirt::shield:\n:jeans:',
+                                      description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(old_keyword, result[0]['display_name']),
+                                      colour=0xf20006)
+                embed.add_field(name='Location:', value='City: **`{}`**\nState: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**\nNeighbourhood: **`{}`**\nRoad: **`{}`**\nPostcode: **`{}`**\n```\n```'.format(
+                    result[0]['address']['city'], result[0]['address']['state'], result[0]['address']['country'], result[0]['address']['country_code'], result[0]['address']['neighbourhood'],
+                    result[0]['address']['road'], result[0]['address']['postcode']))
+                embed.add_field(name='Latitude:', value=result[0]['lat'], inline=True)
+                embed.add_field(name='Longitude:', value=result[0]['lon'], inline=True)
+                embed.set_footer(text=result[0]['licence'])
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Your search tag was:\n***{}***\nNothing found :map:'.format(old_keyword, self.config['prefix']),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, '\U0001f47d')
-                return
-            else:
-                old_keyword = " ".join(keywords)
-                try:
-                    keywords = "%20".join(keywords)
-                    url = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q={}&format=json&limit=1'.format(keywords)
-                    async with aiohttp.ClientSession() as session:
-                        async with session.get(url) as response:
-                            source = await response.json(encoding='utf8')
-
-                    source = json.dumps(source, indent=2)
-                    result = json.loads(str(source))
-
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(old_keyword, result[0]['display_name']),
-                                          colour=0xf20006)
-                    embed.add_field(name='Location:', value='City: **`{}`**\nState: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**\nNeighbourhood: **`{}`**\nRoad: **`{}`**\nPostcode: **`{}`**\n```\n```'.format(
-                        result[0]['address']['city'], result[0]['address']['state'], result[0]['address']['country'], result[0]['address']['country_code'], result[0]['address']['neighbourhood'],
-                        result[0]['address']['road'], result[0]['address']['postcode']))
-                    embed.add_field(name='Latitude:', value=result[0]['lat'], inline=True)
-                    embed.add_field(name='Longitude:', value=result[0]['lon'], inline=True)
-                    embed.set_footer(text=result[0]['licence'])
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-
-                except Exception as e:
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Your search tag was:\n***{}***\nNothing found :map:'.format(old_keyword, self.config['prefix']),
-                                          colour=0xf20006)
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
 def setup(bot):
