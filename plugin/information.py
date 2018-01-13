@@ -555,7 +555,7 @@ class Information:
 
 
     @commands.command(pass_context=True)
-    async def location(self, ctx, *, keywords : str = None):
+    async def location(self, ctx, *, keywords:str = None):
         """
         Get more information about a location.
         Supported: Zipcode, City, Country, street, latitude, longitude
