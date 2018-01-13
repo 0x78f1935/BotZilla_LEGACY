@@ -559,6 +559,8 @@ class Information:
         Get more information about a location.
         Supported: Zipcode, City, Country, street, latitude, longitude
         """
+        await self.bot.say(keywords)
+        print(keywords)
         if keywords is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Maybe you should look in `{}help location`. Its a secret spot :wink:'.format(self.config['prefix']),
