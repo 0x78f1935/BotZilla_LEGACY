@@ -260,42 +260,51 @@ async def on_message(message):
         else:
             return
 
-
+    low_key_message = str(message.content).lower()
     if 'shit' in str(message.content).lower():
-        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'shit', total = (total+1) where swearword = 'shit';")
-        database.cur.execute("ROLLBACK;")
+        for t in re.findall(r"shit", low_key_message):
+            database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'shit', total = (total+1) where swearword = 'shit';")
+            database.cur.execute("ROLLBACK;")
 
     if 'fuck' in str(message.content).lower():
-        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'fuck', total = (total+1) where swearword = 'fuck';")
-        database.cur.execute("ROLLBACK;")
+        for t in re.findall(r"fuck", low_key_message):
+            database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'fuck', total = (total+1) where swearword = 'fuck';")
+            database.cur.execute("ROLLBACK;")
 
     if 'damn' in str(message.content).lower():
-        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'damn', total = (total+1) where swearword = 'damn';")
-        database.cur.execute("ROLLBACK;")
+        for t in re.findall(r"damn", low_key_message):
+            database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'damn', total = (total+1) where swearword = 'damn';")
+            database.cur.execute("ROLLBACK;")
 
     if '?' in str(message.content).lower():
-        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'questionmark', total = (total+1) where swearword = 'questionmark';")
-        database.cur.execute("ROLLBACK;")
+        for t in re.findall(r"[?]", low_key_message):
+            database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'questionmark', total = (total+1) where swearword = 'questionmark';")
+            database.cur.execute("ROLLBACK;")
 
     if 'crap' in str(message.content).lower():
-        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'crap', total = (total+1) where swearword = 'crap';")
-        database.cur.execute("ROLLBACK;")
+        for t in re.findall(r"crap", low_key_message):
+            database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'crap', total = (total+1) where swearword = 'crap';")
+            database.cur.execute("ROLLBACK;")
 
     if 'pussy' in str(message.content).lower():
-        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'pussy', total = (total+1) where swearword = 'pussy';")
-        database.cur.execute("ROLLBACK;")
+        for t in re.findall(r"pussy", low_key_message):
+            database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'pussy', total = (total+1) where swearword = 'pussy';")
+            database.cur.execute("ROLLBACK;")
 
     if 'wtf' in str(message.content).lower():
-        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'wtf', total = (total+1) where swearword = 'wtf';")
-        database.cur.execute("ROLLBACK;")
+        for t in re.findall(r"wtf", low_key_message):
+            database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'wtf', total = (total+1) where swearword = 'wtf';")
+            database.cur.execute("ROLLBACK;")
 
     if 'fag' in str(message.content).lower():
-        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'fag', total = (total+1) where swearword = 'fag';")
-        database.cur.execute("ROLLBACK;")
+        for t in re.findall(r"fag", low_key_message):
+            database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'fag', total = (total+1) where swearword = 'fag';")
+            database.cur.execute("ROLLBACK;")
 
     if 'gay' in str(message.content).lower():
-        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'gay', total = (total+1) where swearword = 'gay';")
-        database.cur.execute("ROLLBACK;")
+        for t in re.findall(r"gay", low_key_message):
+            database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'gay', total = (total+1) where swearword = 'gay';")
+            database.cur.execute("ROLLBACK;")
 
     if not str(message.content).startswith(config['prefix']): return
 
