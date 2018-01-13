@@ -160,7 +160,7 @@ class Images:
         Use this command with a search keyword.
         """
 
-        if keywords == None:
+        if keywords is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Did you tried `{}help dict` yet?'.format(self.config['prefix']),
                                   colour=0xf20006)
@@ -178,7 +178,7 @@ class Images:
                 source = json.dumps(source, indent=2)
                 result = json.loads(str(source))
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(old_keyword, str(result['tags']).replace('[', '').replace(',', ', ').replace(']', '')),
+                                      description='Your search tag was:\n***`{}`***\n\n**Tags**\n```\n{}\n```'.format(old_keyword, str(result['tags']).replace('[', '').replace(',', ', ').replace(']', '')),
                                       colour=0xf20006)
                 embed.add_field(name='Word:', value='`{}`'.format(result['list'][0]['word']), inline=False)
                 embed.add_field(name='Author:', value='`{}`'.format(result['list'][0]['author']), inline=False)
@@ -195,7 +195,7 @@ class Images:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your search tag was:\n***{}***\n\nNothing found :sailboat:'.format(old_keyword, self.config['prefix']),
+                                      description='Your search tag was:\n***`{}`***\n\nNothing found :sailboat:'.format(old_keyword, self.config['prefix']),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])

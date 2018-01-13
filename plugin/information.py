@@ -561,14 +561,14 @@ class Information:
         Supported: Zipcode, City, Country, street, latitude, longitude
         """
 
-        if keywords == None:
+        if keywords is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Maybe you should look in `{}help location`. Its a secret spot :wink:'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
         if keywords:
-            if keywords == 'area51':
+            if str(ctx.message.content).lower() == 'area51':
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=':alien:\n:shirt::shield:\n:jeans:',
                                       colour=0xf20006)
