@@ -273,8 +273,8 @@ async def on_message(message):
         database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'damn', total = (total+1) where swearword = 'damn';")
         database.cur.execute("ROLLBACK;")
 
-    if 'bitch' in str(message.content).lower():
-        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'bitch', total = (total+1) where swearword = 'bitch';")
+    if '?' in str(message.content).lower():
+        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'questionmark', total = (total+1) where swearword = 'questionmark';")
         database.cur.execute("ROLLBACK;")
 
     if 'crap' in str(message.content).lower():
@@ -285,8 +285,8 @@ async def on_message(message):
         database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'pussy', total = (total+1) where swearword = 'pussy';")
         database.cur.execute("ROLLBACK;")
 
-    if 'asshole' in str(message.content).lower():
-        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'asshole', total = (total+1) where swearword = 'asshole';")
+    if 'wtf' in str(message.content).lower():
+        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'wtf', total = (total+1) where swearword = 'wtf';")
         database.cur.execute("ROLLBACK;")
 
     if 'fag' in str(message.content).lower():
