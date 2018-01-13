@@ -220,12 +220,16 @@ async def on_ready():
     await total_online_user_tracker()
 
 
-# @bot.event
-# async def on_message_delete(message):
-#     fmt = '**{0.author.server}** | ***{0.author.name}*** has deleted the message:\n{0.content}'
-#     for owners in config['owner-id']:
-#         owner = await bot.get_user_info(owners)
-#         await bot.send_message(owner, fmt.format(message))
+@bot.event
+async def on_member_join(member):
+    print('{} | {} Joined: {}'.format(member.name, member.id, member.server))
+    try:
+        database.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, \'{}\');'.format(
+            member.id, member.name))
+        database.cur.execute("ROLLBACK;")
+        print('{} | {} has been added to the database'.format(member.name, member.id))
+    except Exception as e:
+        print('Error gathering info user {} | {} :\n```Python\n{}```'.format(member.name, member.id, e.args))
 
 
 @bot.event
@@ -308,19 +312,6 @@ async def on_message(message):
 
     if not str(message.content).startswith(config['prefix']): return
 
-    # comment out if you like to use let me google that for u
-    # try:
-    #     if 'how' in message.content.lower():
-    #         search_term = re.search(r'\bhow\b.*[?]', message.content.lower()).group(0)
-    #         search_term = uriquote(search_term)
-    #         embed = discord.Embed(title='{}:'.format(message.author.name),
-    #                               description='{}'.format('http://lmgtfy.com/?q={}'.format(search_term)),
-    #                               colour=0xf20006)
-    #         last_message = await bot.send_message(message.channel, embed=embed)
-    #         await bot.add_reaction(last_message, emojiUnicode['succes'])
-    #     await bot.process_commands(message)
-    # except:
-    #     pass
     await bot.process_commands(message)
 
 
@@ -329,20 +320,7 @@ async def on_server_join(server):
     if database_file_found:
         if database.database_online:
             await get_users()
-
-    # for channel in server.channels:
-    #     if 'music' in channel.name.lower():
-    #         if str(channel.type) == 'voice':
-    #             print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
-    #             try:
-    #                 if database_file_found:
-    #                     if database.database_online:
-    #                         # auto stats music here
-    #                         pass
-    #             except Exception as e:
-    #                 pass
-
-    print(server.name)
+    print('Joined server: {}'.format(server.name))
 
 
 if __name__ == '__main__':

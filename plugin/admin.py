@@ -1,5 +1,6 @@
 from discord.ext import commands
 import discord
+import os
 import json
 import discord
 import traceback
@@ -312,6 +313,35 @@ class AdminCommands:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
+
+    @commands.command(pass_context=True, hidden=True, name='ct')
+    async def clean_terminal(self, ctx):
+        """
+        Cleans terminal server [LINUX]
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+        try:
+            os.system('clear')
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Terminal server clear!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Error:\n```{}```'.format(e.args),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
 
 
 def setup(bot):

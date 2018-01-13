@@ -201,6 +201,23 @@ class Images:
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
+    @commands.command(pass_context=True)
+    async def meow(self, ctx):
+        """
+        Spawn a kitty cat!
+        """
+        url = 'http://placekitten.com/'
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                source = await response.read()
+        art = str(source[559:1000], 'utf8')
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='```{}```'.format(art),
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
 def setup(bot):
     if ImgurClient is False:
         raise RuntimeError("You need the imgurpython module to use this.\n"
