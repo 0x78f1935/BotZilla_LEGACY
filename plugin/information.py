@@ -559,7 +559,6 @@ class Information:
         Get more information about a location.
         Supported: Zipcode, City, Country, street, latitude, longitude
         """
-        old_keyword = "".join(keywords)
         if keywords is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Maybe you should look in `{}help location`. Its a secret spot :wink:'.format(self.config['prefix']),
@@ -567,7 +566,7 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-        if 'area51' in old_keyword:
+        if 'area51' in keywords:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=':alien:\n:shirt::shield:\n:jeans:',
                                   colour=0xf20006)
@@ -585,7 +584,7 @@ class Information:
                 result = json.loads(source)
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(old_keyword, result[0]['display_name']),
+                                      description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(keywords, result[0]['display_name']),
                                       colour=0xf20006)
                 embed.add_field(name='Location:', value='City: **`{}`**\nState: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**\nNeighbourhood: **`{}`**\nRoad: **`{}`**\nPostcode: **`{}`**'.format(
                     result[0]['address']['city'], result[0]['address']['state'], result[0]['address']['country'], result[0]['address']['country_code'], result[0]['address']['neighbourhood'],
