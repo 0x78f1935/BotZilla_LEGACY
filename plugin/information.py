@@ -555,7 +555,7 @@ class Information:
 
 
     @commands.command(pass_context=True)
-    async def location(self, ctx, *keywords):
+    async def location(self, ctx, *, keywords : str = None):
         """
         Get more information about a location.
         Supported: Zipcode, City, Country, street, latitude, longitude
@@ -568,7 +568,7 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
         if keywords:
-            if str(ctx.message.content).lower() == 'area51':
+            if keywords.lower() == 'area51':
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=':alien:\n:shirt::shield:\n:jeans:',
                                       colour=0xf20006)
