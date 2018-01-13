@@ -231,7 +231,6 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if message.author.bot: return
-    if not str(message.content).startswith('{}'.format(config['prefix'])): return
 
     database.cur.execute("SELECT ID FROM botzilla.blacklist;")
     row = database.cur.fetchall()
@@ -298,7 +297,7 @@ async def on_message(message):
         database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'gay', total = (total+1) where swearword = 'gay';")
         database.cur.execute("ROLLBACK;")
 
-
+    if not str(message.content).startswith(config['prefix']): return
 
     # comment out if you like to use let me google that for u
     # try:
