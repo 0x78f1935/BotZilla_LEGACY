@@ -574,7 +574,6 @@ class Information:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\U0001f47d')
-            return
         else:
             old_keyword = "".join(keywords)
             try:
