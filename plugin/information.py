@@ -589,11 +589,11 @@ class Information:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(old_keyword, result[0]['display_name']),
                                       colour=0xf20006)
-                embed.add_field(name='Location:', value='City: **`{}`**\nState: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**\nNeighbourhood: **`{}`**\nRoad: **`{}`**\nPostcode: **`{}`**\n```\n```'.format(
+                embed.add_field(name='Location:', value='City: **`{}`**\nState: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**\nNeighbourhood: **`{}`**\nRoad: **`{}`**\nPostcode: **`{}`**'.format(
                     result[0]['address']['city'], result[0]['address']['state'], result[0]['address']['country'], result[0]['address']['country_code'], result[0]['address']['neighbourhood'],
                     result[0]['address']['road'], result[0]['address']['postcode']))
-                embed.add_field(name='Latitude:', value=result[0]['lat'], inline=True)
-                embed.add_field(name='Longitude:', value=result[0]['lon'], inline=True)
+                embed.add_field(name='Latitude:', value=result[0]['lat'], inline=False)
+                embed.add_field(name='Longitude:', value=result[0]['lon'], inline=False)
                 embed.set_footer(text=result[0]['licence'])
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -617,8 +617,8 @@ class Information:
                                     value='City: **`{}`**\nState: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**'.format(
                                         result[0]['address']['city'], result[0]['address']['state'],
                                         result[0]['address']['country'], result[0]['address']['country_code']))
-                    embed.add_field(name='Latitude:', value=result[0]['lat'], inline=True)
-                    embed.add_field(name='Longitude:', value=result[0]['lon'], inline=True)
+                    embed.add_field(name='Latitude:', value=result[0]['lat'], inline=False)
+                    embed.add_field(name='Longitude:', value=result[0]['lon'], inline=False)
                     embed.set_footer(text=result[0]['licence'])
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -643,8 +643,8 @@ class Information:
                                         value='State: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**'.format(
                                             result[0]['address']['state'], result[0]['address']['country'],
                                             result[0]['address']['country_code']))
-                        embed.add_field(name='Latitude:', value=result[0]['lat'], inline=True)
-                        embed.add_field(name='Longitude:', value=result[0]['lon'], inline=True)
+                        embed.add_field(name='Latitude:', value=result[0]['lat'], inline=False)
+                        embed.add_field(name='Longitude:', value=result[0]['lon'], inline=False)
                         embed.set_footer(text=result[0]['licence'])
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
