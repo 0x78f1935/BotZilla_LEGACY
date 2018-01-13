@@ -584,7 +584,7 @@ class Information:
                         source = await response.json(encoding='utf8')
 
                 source = json.dumps(source, indent=2)
-                result = json.loads(str(source))
+                result = json.loads(source)
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(old_keyword, result[0]['display_name']),
