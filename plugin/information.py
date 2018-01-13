@@ -602,6 +602,7 @@ class Information:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Your search tag was:\n***{}***\nNothing found :map:'.format(old_keyword, self.config['prefix']),
                                       colour=0xf20006)
+                embed.add_field(name='Reason:', value=e.args, inline=False)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
