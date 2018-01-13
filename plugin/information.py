@@ -559,7 +559,7 @@ class Information:
         Get more information about a location.
         Supported: Zipcode, City, Country, street, latitude, longitude
         """
-        await self.bot.say(keywords)
+        await self.bot.say(str(keywords))
         print(keywords)
         if keywords is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -568,7 +568,7 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-        if 'area51' in keywords:
+        if 'area51' in str(keywords):
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=':alien:\n:shirt::shield:\n:jeans:',
                                   colour=0xf20006)
