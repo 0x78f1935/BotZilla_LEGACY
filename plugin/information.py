@@ -165,7 +165,6 @@ class Information:
             'Python (programming language), a computer programming language'
 
             related_related = r.related[search_number].url
-            print("Type: %s \nText: %s \nSource: %s" % (related_type, related_text, related_related))
             message2user = "Type: %s \nText: %s \nSource: %s" % (related_type, related_text, related_related)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='{}'.format(message2user),
@@ -194,7 +193,7 @@ class Information:
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Use the following url to add BotZilla V2 to your guild!\n**{}**'.format(
-                                  discord.utils.oauth_url(self.bot.user.id)),
+                                  'https://discordbots.org/bot/397149515192205324'),
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])

@@ -160,7 +160,7 @@ class Images:
         Use this command with a search keyword.
         """
 
-        if keywords is None:
+        if not keywords:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Did you tried `{}help dict` yet?'.format(self.config['prefix']),
                                   colour=0xf20006)
