@@ -608,7 +608,7 @@ class Information:
 
                     source = json.dumps(source, indent=2)
                     result = json.loads(source)
-                    print(source)
+
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(
                                               old_keyword, result[0]['display_name']),
@@ -634,7 +634,7 @@ class Information:
 
                         source = json.dumps(source, indent=2)
                         result = json.loads(source)
-                        print(source)
+                        
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(
                                                   old_keyword, result[0]['display_name']),
