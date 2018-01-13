@@ -609,7 +609,7 @@ class Information:
 
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(
-                                              old_keyword, result[0]['display_name']),
+                                              keywords, result[0]['display_name']),
                                           colour=0xf20006)
                     embed.add_field(name='Location:',
                                     value='City: **`{}`**\nState: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**'.format(
@@ -635,7 +635,7 @@ class Information:
 
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(
-                                                  old_keyword, result[0]['display_name']),
+                                                  keywords, result[0]['display_name']),
                                               colour=0xf20006)
                         embed.add_field(name='Location:',
                                         value='State: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**'.format(
@@ -649,7 +649,7 @@ class Information:
                     except Exception as e:
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description='Your search tag was:\n***{}***\nNothing found :map:'.format(
-                                                  old_keyword, self.config['prefix']),
+                                                  keywords, self.config['prefix']),
                                               colour=0xf20006)
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, self.emojiUnicode['warning'])
