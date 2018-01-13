@@ -576,7 +576,7 @@ class Information:
             await self.bot.add_reaction(a, '\U0001f47d')
             return
         else:
-            old_keyword = " ".join(keywords)
+            old_keyword = "".join(keywords)
             try:
                 keywords = "%20".join(keywords)
                 url = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q={}&format=json&limit=1'.format(keywords)
