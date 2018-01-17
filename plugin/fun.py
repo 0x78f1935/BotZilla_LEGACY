@@ -4,6 +4,8 @@ import discord
 import aiohttp
 import random
 import xml.etree.ElementTree
+from bs4 import BeautifulSoup
+
 try:
     from imgurpython import ImgurClient
 except:
@@ -100,7 +102,7 @@ class Images:
                                   description='Maybe you should considering using `{}help rule34` instead'.format(self.config['prefix']),
                                   colour=0xf20006)
             await self.bot.say(embed=embed)
-
+            return
         else:
             link = 'http://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=' + content
             url = link.replace(' ', '_').replace('+', ' ')
@@ -150,7 +152,6 @@ class Images:
             except Exception as e:
                 a = await self.bot.say(image)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-        return
 
 
     @commands.command(pass_context=True)
@@ -166,6 +167,7 @@ class Images:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
         if keywords:
             old_keyword = " ".join(keywords)
             try:
@@ -201,9 +203,10 @@ class Images:
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def meow(self, ctx):
         """
+        Easter egg!
         Spawn a kitty cat!
         """
         url = 'http://placekitten.com/'
@@ -216,6 +219,53 @@ class Images:
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
+    @commands.command(pass_context=True)
+    async def dictmeme(self, ctx, *input: str):
+        """
+        Know your meme! Search right into the meme dictionary!
+        search for any meme, and read about the historical history.
+        """
+        if not input:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Do you know how to meme? `{}help dictmeme`'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+        if input:
+            try:
+                old_input = str(input)
+                input = str(input).format(" ", "+")
+                url = "http://knowyourmeme.com/search?q={}".format(input)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        source = await response.read()
+                soup = BeautifulSoup(source, 'html.parser')
+                list1 = soup.findAll("a", href=True)
+                url2 = "http://knowyourmeme.com{}".format(list1[129]['href'])
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url2) as response:
+                        source = await response.read()
+                soup2 = BeautifulSoup(source, 'html.parser')
+                about = soup2.find('meta', attrs={"name": "description"})  # finding description
+                about = str(about).replace('<meta content="', '').replace('" name="description"/>', '')
+                imageurl = soup2.find('meta', attrs={"property": "og:image"})['content']  # finding image url
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='**Description {}:**\n```{}```'.format(old_input, about),
+                                      colour=0xf20006)
+                embed.set_image(url=str(imageurl))
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Nothing found :sweat_smile:\n```py\n{}\n```'.format(e.args),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
 
 
 def setup(bot):
