@@ -227,6 +227,15 @@ class Images:
         Know your meme! Search right into the meme dictionary!
         search for any meme, and read about the historical history.
         """
+        input = 'overschrijf_input'
+        if 'overschrijf' in input:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='This function is under construction',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
         if not input:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Do you know how to meme? `{}help dictmeme`'.format(self.config['prefix']),
