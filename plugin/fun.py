@@ -237,7 +237,7 @@ class Images:
         if input:
             old_input = str(input)
             try:
-                input = str(input).format(" ", "%20")
+                input = str(input).format(" ", "+")
                 url = "http://knowyourmeme.com/search?q={}".format(input)
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
