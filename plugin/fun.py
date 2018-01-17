@@ -221,7 +221,7 @@ class Images:
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, name='meme')
     async def dictmeme(self, ctx, *input: str):
         """
         Know your meme! Search right into the meme dictionary!
@@ -260,7 +260,7 @@ class Images:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Nothing found :sweat_smile:\n```py\n{}\n```'.format(e.args),
+                                      description='Nothing found :sweat_smile:',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
