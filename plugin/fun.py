@@ -222,7 +222,7 @@ class Images:
 
 
     @commands.command(pass_context=True, name='meme', hidden=True)
-    async def dictmeme(self, ctx, *, input: str):
+    async def dictmeme(self, ctx, *, input: str = None):
         """
         Know your meme! Search right into the meme dictionary!
         search for any meme, and read about the historical history.
@@ -236,7 +236,7 @@ class Images:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-        if not input:
+        if input is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Do you know how to meme? `{}help dictmeme`'.format(self.config['prefix']),
                                   colour=0xf20006)
