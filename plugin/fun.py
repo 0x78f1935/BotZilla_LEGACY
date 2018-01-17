@@ -221,7 +221,7 @@ class Images:
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True, name='meme')
+    @commands.command(pass_context=True, name='meme', hidden=True)
     async def dictmeme(self, ctx, *, input: str):
         """
         Know your meme! Search right into the meme dictionary!
