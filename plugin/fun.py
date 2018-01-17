@@ -222,7 +222,7 @@ class Images:
 
 
     @commands.command(pass_context=True, name='meme')
-    async def dictmeme(self, ctx, *input: str):
+    async def dictmeme(self, ctx, *, input: str):
         """
         Know your meme! Search right into the meme dictionary!
         search for any meme, and read about the historical history.
@@ -235,9 +235,9 @@ class Images:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
         if input:
+            old_input = str(input)
             try:
-                old_input = str(input)
-                input = str(input).format(" ", "+")
+                input = str(input).format(" ", "%20")
                 url = "http://knowyourmeme.com/search?q={}".format(input)
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
@@ -260,7 +260,7 @@ class Images:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Nothing found :sweat_smile:',
+                                      description='Nothing found :sweat_smile:\nSearch word:\n`{}`'.format(old_input),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
