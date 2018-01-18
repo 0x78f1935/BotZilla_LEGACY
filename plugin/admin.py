@@ -381,12 +381,25 @@ class AdminCommands:
         #     key = (await resp.json())["key"]
 
         for owner in self.config['owner-id']:
-            embed = discord.Embed(title='{}:'.format('Announcement'),
+            embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
                                   description=f"https://hastebin.com/{key}.md",
                                   colour=0xf20006)
             owner = await self.bot.get_user_info(owner)
             last_message = await self.bot.send_message(owner, embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
+        embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
+                              description=f"https://hastebin.com/{key}.md",
+                              colour=0xf20006)
+        user = await self.bot.get_user_info(ctx.message.author.id)
+        last_message = await self.bot.send_message(user, embed=embed)
+        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
+        embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
+                              description='Check your private message',
+                              colour=0xf20006)
+        last_message = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
 
 def setup(bot):
