@@ -598,7 +598,6 @@ class Information:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
             except Exception as e:
-                old_keywords = str(keywords)
                 try:
                     keywords = str(keywords).replace(' ', '%20')
                     url = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q={}&format=json&limit=1'.format(keywords)
@@ -624,7 +623,6 @@ class Information:
                     await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
                 except Exception as e:
-                    old_keywords = str(keywords)
                     try:
                         keywords = str(keywords).replace(' ', '%20')
                         url = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q={}&format=json&limit=1'.format(
@@ -650,7 +648,6 @@ class Information:
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                     except Exception as e:
-                        old_keywords = str(keywords)
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description='Your search tag was:\n***{}***\nNothing found :map:'.format(
                                                   old_keywords, self.config['prefix']),
