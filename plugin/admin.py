@@ -376,7 +376,10 @@ class AdminCommands:
 
         async with aiohttp.ClientSession() as session:
             async with session.post("https://hastebin.com/documents", data="\n".join(data)) as response:
-                key = await response.json(encoding='utf8')["key"]
+                key = (await response.json())["key"]
+
+        # async with ctx.bot.aio_session.post("https://hastebin.com/documents", data="\n".join(data)) as resp:
+        #     key = (await resp.json())["key"]
 
         for owner in self.config['owner-id']:
             embed = discord.Embed(title='{}:'.format('Announcement'),
