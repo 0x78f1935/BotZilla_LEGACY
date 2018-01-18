@@ -186,8 +186,8 @@ class Images:
                 embed.add_field(name='Definition:', value='```{}```'.format(result['list'][0]['definition']), inline=False)
                 embed.add_field(name='example:', value='```{}```'.format(result['list'][0]['example']), inline=True)
                 embed.add_field(name='Author:', value='`{}`'.format(result['list'][0]['author']), inline=False)
-                embed.add_field(name='Link:', value='`{}`'.format(result['list'][0]['permalink']), inline=False)
-                embed.add_field(name='Likes:', value='\U0001f44d {}'.format(result['list'][0]['thumbs_up']),
+                embed.add_field(name='Link:', value='{}'.format(result['list'][0]['permalink']), inline=False)
+                embed.add_field(name='Likes:', value='\U0001f44d `{}`'.format(result['list'][0]['thumbs_up']),
                                 inline=True)
                 embed.add_field(name='Dislikes:', value='\U0001f44e `{}`'.format(result['list'][0]['thumbs_down']),
                                 inline=True)
