@@ -4,6 +4,7 @@ import textwrap
 import os
 import json
 import discord
+import aiohttp
 import traceback
 try:
     from plugin.database import Database
@@ -373,8 +374,9 @@ class AdminCommands:
             data.append(f"{pre}{indented}")
         data.reverse()
 
-        async with ctx.bot.aio_session.post("https://hastebin.com/documents", data="\n".join(data)) as resp:
-            key = (await resp.json())["key"]
+        async with aiohttp.ClientSession() as session:
+            async with session.post("https://hastebin.com/documents", data="\n".join(data)) as response:
+                key = await response.json(encoding='utf8')["key"]
 
         for owner in self.config['owner-id']:
             embed = discord.Embed(title='{}:'.format('Announcement'),
