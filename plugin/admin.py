@@ -357,7 +357,8 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-        logs = await self.bot.logs_from(ctx.message.channel, limit=n).flatten()
+        logs = self.bot.logs_from(ctx.message.channel, limit=n)
+        logs = logs.flatten()
         await self.bot.delete_message(ctx.message)
         data = []
         for msg in logs:
