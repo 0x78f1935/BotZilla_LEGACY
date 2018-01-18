@@ -356,13 +356,16 @@ class AdminCommands:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
+
         logs = []
-
         async for message in self.bot.logs_from(ctx.message.channel, limit=n):
-            logs.append(message.content)
+            logs.append(message)
+            n = n - 1
+            if n == 0:
+                break
 
-        await self.bot.say(logs)
         await self.bot.delete_message(ctx.message)
+
         data = []
         for msg in logs:
             pre = f"{msg.created_at:%c} - {msg.author!s}{' [BOT]'*msg.author.bot}: "
