@@ -356,11 +356,11 @@ class AdminCommands:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
-
-        logs = self.bot.logs_from(ctx.message.channel, limit=n)
-        logs = logs.flatten()
+        logs = []
         async for message in self.bot.logs_from(ctx.message.channel, limit=n):
             await self.bot.say(message)
+            logs.append(message)
+
         await self.bot.delete_message(ctx.message)
         data = []
         for msg in logs:
