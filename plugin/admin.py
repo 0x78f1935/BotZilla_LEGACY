@@ -368,7 +368,7 @@ class AdminCommands:
 
         data = []
         for msg in logs:
-            pre = f"{msg.timestamp:%c} - {msg.author!s}{' [BOT]'msg.author.bot}: "
+            pre = f"{msg.timestamp:%c} - {msg.author!s}{'[BOT]'*msg.author.bot}: "
             indented = textwrap.indent(msg.clean_content, ' '*len(pre)).strip()
             data.append(f"{pre}{indented}")
         data.reverse()
