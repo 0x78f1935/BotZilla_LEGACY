@@ -574,6 +574,7 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\U0001f47d')
         else:
+            old_keywords = str(keywords)
             try:
                 keywords = str(keywords).replace(' ', '%20')
                 url = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q={}&format=json&limit=1'.format(keywords)
@@ -585,7 +586,7 @@ class Information:
                 result = json.loads(source)
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(keywords, result[0]['display_name']),
+                                      description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(old_keywords, result[0]['display_name']),
                                       colour=0xf20006)
                 embed.add_field(name='Location:', value='City: **`{}`**\nState: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**\nNeighbourhood: **`{}`**\nRoad: **`{}`**\nPostcode: **`{}`**'.format(
                     result[0]['address']['city'], result[0]['address']['state'], result[0]['address']['country'], result[0]['address']['country_code'], result[0]['address']['neighbourhood'],
@@ -597,6 +598,7 @@ class Information:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
             except Exception as e:
+                old_keywords = str(keywords)
                 try:
                     keywords = str(keywords).replace(' ', '%20')
                     url = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q={}&format=json&limit=1'.format(keywords)
@@ -609,7 +611,7 @@ class Information:
 
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(
-                                              keywords, result[0]['display_name']),
+                                              old_keywords, result[0]['display_name']),
                                           colour=0xf20006)
                     embed.add_field(name='Location:',
                                     value='City: **`{}`**\nState: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**'.format(
@@ -622,6 +624,7 @@ class Information:
                     await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
                 except Exception as e:
+                    old_keywords = str(keywords)
                     try:
                         keywords = str(keywords).replace(' ', '%20')
                         url = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q={}&format=json&limit=1'.format(
@@ -635,7 +638,7 @@ class Information:
 
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description='Your search tag was:\n***{}***\n\n**Tags**\n```\n{}\n```'.format(
-                                                  keywords, result[0]['display_name']),
+                                                  old_keywords, result[0]['display_name']),
                                               colour=0xf20006)
                         embed.add_field(name='Location:',
                                         value='State: **`{}`**\nCountry: **`{}`**\nCountry Code: **`{}`**'.format(
@@ -647,9 +650,10 @@ class Information:
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                     except Exception as e:
+                        old_keywords = str(keywords)
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description='Your search tag was:\n***{}***\nNothing found :map:'.format(
-                                                  keywords, self.config['prefix']),
+                                                  old_keywords, self.config['prefix']),
                                               colour=0xf20006)
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, self.emojiUnicode['warning'])
