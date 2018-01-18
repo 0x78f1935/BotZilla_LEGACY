@@ -221,21 +221,13 @@ class Images:
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True, name='meme', hidden=True)
+    @commands.command(pass_context=True, name='meme')
     async def dictmeme(self, ctx, *, input: str = None):
         """
+        Under construction!!!
         Know your meme! Search right into the meme dictionary!
         search for any meme, and read about the historical history.
         """
-        input = 'overschrijf_input'
-        if 'overschrijf' in input:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='This function is under construction',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-
         if input is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Do you know how to meme? `{}help dictmeme`'.format(self.config['prefix']),

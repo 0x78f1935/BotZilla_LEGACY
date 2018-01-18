@@ -347,8 +347,7 @@ class AdminCommands:
     @commands.command(pass_context=True, hidden=True)
     async def log(self, ctx, n : int):
         """
-        hastebin server log, give the number of messages
-        you like to see.
+        hastebin channel log, give the number of messages you like to see.
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
