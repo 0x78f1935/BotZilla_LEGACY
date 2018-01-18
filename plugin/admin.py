@@ -359,6 +359,8 @@ class AdminCommands:
 
         logs = self.bot.logs_from(ctx.message.channel, limit=n)
         logs = logs.flatten()
+        async for message in self.bot.logs_from(ctx.message.channel, limit=n):
+            await self.bot.say(message)
         await self.bot.delete_message(ctx.message)
         data = []
         for msg in logs:
