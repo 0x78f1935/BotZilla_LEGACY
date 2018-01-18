@@ -251,7 +251,7 @@ class Images:
                         source = await response.read()
                 soup2 = BeautifulSoup(source, 'html.parser')
                 about = soup2.find('meta', attrs={"name": "description"})  # finding description
-                about = str(about).replace('<meta content="', '').replace('" name="description"/>', '')
+                #about = str(about).replace('<meta content="', '').replace('" name="description"/>', '')
                 imageurl = soup2.find('meta', attrs={"property": "og:image"})['content']  # finding image url
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='**Description {}:**\n```{}```'.format(old_input, about),
