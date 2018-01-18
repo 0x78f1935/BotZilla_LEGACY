@@ -221,54 +221,6 @@ class Images:
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True, name='meme')
-    async def dictmeme(self, ctx, *, input: str = None):
-        """
-        Under construction!!!
-        Know your meme! Search right into the meme dictionary!
-        search for any meme, and read about the historical history.
-        """
-        if input is None:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Do you know how to meme? `{}help dictmeme`'.format(self.config['prefix']),
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
-            return
-        if input:
-            old_input = str(input)
-            try:
-                input = str(input).format(" ", "+")
-                url = "http://knowyourmeme.com/search?q={}".format(input)
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as response:
-                        source = await response.read()
-                soup = BeautifulSoup(source, 'html.parser')
-                list1 = soup.findAll("a", href=True)
-                url2 = "http://knowyourmeme.com{}".format(list1[129]['href'])
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url2) as response:
-                        source = await response.read()
-                soup2 = BeautifulSoup(source, 'html.parser')
-                about = soup2.find('meta', attrs={"name": "description"})  # finding description
-                #about = str(about).replace('<meta content="', '').replace('" name="description"/>', '')
-                imageurl = soup2.find('meta', attrs={"property": "og:image"})['content']  # finding image url
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='**Description {}:**\n```{}```'.format(old_input, about),
-                                      colour=0xf20006)
-                embed.set_image(url=str(imageurl))
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-            except Exception as e:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Nothing found :sweat_smile:\nSearch word:\n`{}`'.format(old_input),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['error'])
-
-
-
-
 def setup(bot):
     if ImgurClient is False:
         raise RuntimeError("You need the imgurpython module to use this.\n"
