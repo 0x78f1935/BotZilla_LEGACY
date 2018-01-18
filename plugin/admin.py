@@ -1,5 +1,6 @@
 from discord.ext import commands
 import discord
+import textwrap
 import os
 import json
 import discord
@@ -342,6 +343,39 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
+    @commands.command(pass_context=True, hidden=True)
+    async def log(self, ctx, n):
+        """
+        hastebin server log, give the number of messages
+        you like to see.
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: only admins!',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        logs = await ctx.history(limit=n).flatten()
+        await self.bot.delete_message(ctx.message)
+        data = []
+        for msg in logs:
+            pre = f"{msg.created_at:%c} - {msg.author!s}{' [BOT]'*msg.author.bot}: "
+            indented = textwrap.indent(msg.clean_content, ' '*len(pre)).strip()
+            data.append(f"{pre}{indented}")
+        data.reverse()
+
+        async with ctx.bot.aio_session.post("https://hastebin.com/documents", data="\n".join(data)) as resp:
+            key = (await resp.json())["key"]
+
+        for owner in self.config['owner-id']:
+            embed = discord.Embed(title='{}:'.format('Announcement'),
+                                  description=f"https://hastebin.com/{key}.md",
+                                  colour=0xf20006)
+            owner = await self.bot.get_user_info(owner)
+            last_message = await self.bot.send_message(owner, embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
 
 def setup(bot):
