@@ -671,57 +671,49 @@ class Information:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
 
-        if type(number) is not type(int(5)):
+        try:
+            logs = []
+            async for message in self.bot.logs_from(ctx.message.channel, limit=number):
+                logs.append(message)
+
+            data = []
+            for msg in logs:
+                pre = f"{msg.timestamp:%c} - {msg.author!s}{'[BOT]'*msg.author.bot}: "
+                indented = textwrap.indent(msg.clean_content, ' '*len(pre)).strip()
+                data.append(f"{pre}{indented}")
+            data.reverse()
+
+            async with aiohttp.ClientSession() as session:
+                async with session.post("https://hastebin.com/documents", data="\n".join(data)) as response:
+                    key = (await response.json())["key"]
+
+
+            for owner in self.config['owner-id']:
+                embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
+                                      description=f"https://hastebin.com/{key}.md",
+                                      colour=0xf20006)
+                owner = await self.bot.get_user_info(owner)
+                last_message = await self.bot.send_message(owner, embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
+            embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
+                                  description=f"https://hastebin.com/{key}.md",
+                                  colour=0xf20006)
+            user = await self.bot.get_user_info(ctx.message.author.id)
+            last_message = await self.bot.send_message(user, embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
+            embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
+                                  description='Check your private message',
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+        except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Try `{}help copy`'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
-            return
-        else:
-            try:
-                logs = []
-                async for message in self.bot.logs_from(ctx.message.channel, limit=number):
-                    logs.append(message)
-
-                data = []
-                for msg in logs:
-                    pre = f"{msg.timestamp:%c} - {msg.author!s}{'[BOT]'*msg.author.bot}: "
-                    indented = textwrap.indent(msg.clean_content, ' '*len(pre)).strip()
-                    data.append(f"{pre}{indented}")
-                data.reverse()
-
-                async with aiohttp.ClientSession() as session:
-                    async with session.post("https://hastebin.com/documents", data="\n".join(data)) as response:
-                        key = (await response.json())["key"]
-
-
-                for owner in self.config['owner-id']:
-                    embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
-                                          description=f"https://hastebin.com/{key}.md",
-                                          colour=0xf20006)
-                    owner = await self.bot.get_user_info(owner)
-                    last_message = await self.bot.send_message(owner, embed=embed)
-                    await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-
-                embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
-                                      description=f"https://hastebin.com/{key}.md",
-                                      colour=0xf20006)
-                user = await self.bot.get_user_info(ctx.message.author.id)
-                last_message = await self.bot.send_message(user, embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-
-                embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
-                                      description='Check your private message',
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-            except Exception as e:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Try `{}help copy`'.format(self.config['prefix']),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
 def setup(bot):
