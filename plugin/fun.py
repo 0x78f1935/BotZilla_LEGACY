@@ -226,7 +226,7 @@ class Images:
 
 
 
-    @commands.command(pass_context=True, name='dr')
+    @commands.command(pass_context=True, name='dr', hidden=True)
     async def meow(self, ctx):
         """
         Deathrow! Checkout someones last words spoken on a death row!
