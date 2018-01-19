@@ -235,6 +235,14 @@ async def on_member_join(member):
 @bot.event
 async def on_message(message):
     if message.author.bot: return
+    if message.channel.id == bot.user.id:
+        for owner in config['owner-id']:
+            embed = discord.Embed(title='{} said to BotZilla:'.format(message.author.name),
+                                  description=f"{message.content}",
+                                  colour=0xf20006)
+            owner = await bot.get_user_info(owner)
+            last_message = await bot.send_message(owner, embed=embed)
+            await bot.add_reaction(last_message, emojiUnicode['succes'])
 
     database.cur.execute("SELECT ID FROM botzilla.blacklist;")
     row = database.cur.fetchall()
