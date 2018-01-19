@@ -665,7 +665,15 @@ class Information:
         """
         if number is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Try `{}help log`'.format(self.config['prefix']),
+                                  description='Try `{}help copy`'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+
+        if type(number) == type('string'):
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Try `{}help copy`'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -710,7 +718,7 @@ class Information:
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Try `{}help log`'.format(self.config['prefix']),
+                                  description='Try `{}help copy`'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
