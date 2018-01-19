@@ -672,6 +672,7 @@ class Information:
             return
 
         try:
+            number = int(number)
             logs = []
             async for message in self.bot.logs_from(ctx.message.channel, limit=number):
                 logs.append(message)
