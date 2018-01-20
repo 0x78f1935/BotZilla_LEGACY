@@ -265,7 +265,7 @@ class Images:
                 await asyncio.sleep(10)
                 emoji_continue = message.reactions[0]
                 total_continue = emoji_continue.count - 1
-                await self.bot.say(emoji_continue.emoji, total_continue)
+                await self.bot.say('{} : {}'.format(emoji_continue.emoji, total_continue))
                 if total_continue == 0:
                     break
 
