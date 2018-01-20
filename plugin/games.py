@@ -251,7 +251,7 @@ class Games:
             await self.bot.delete_message(a)
 
             if total_votes == 0:
-                embed = discord.Embed(title='HighLow:',
+                embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
                                       description='GameOver! Nobody voted...'.format(new_number),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
@@ -259,7 +259,7 @@ class Games:
                 break
 
             elif total_less == total_more:
-                embed = discord.Embed(title='HighLow:',
+                embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
                                       description='Vote Draw!\nContinue? **`10`** Seconds remaining'.format(new_number),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
@@ -269,10 +269,11 @@ class Games:
                 message = await self.bot.get_message(ctx.message.channel, a.id)
                 emoji_continue = message.reactions[0]
                 total_continue = emoji_continue.count - 1
+                await self.bot.delete_message(a)
                 if total_continue == 0:
                     await self.bot.delete_message(a)
-                    embed = discord.Embed(title='HighLow:',
-                                          description='Gameover! Nobody to play with...'.format(new_number),
+                    embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
+                                          description='Gameover! Nobody to play with...\nStart a new game with **`{}higherlower`**'.format(new_number, self.config['prefix']),
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, '\U0001f60f')
@@ -280,7 +281,7 @@ class Games:
 
 
             elif winner == total_more and new_number >= number:
-                embed = discord.Embed(title='HighLow:',
+                embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
                                       description='Victorious! You hit number **`{}`**\nYour previous number was **`{}`**\n\nTotals\n-------\n:arrow_up_small: : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**\n\nNext round in **`10`** Seconds'.format(new_number, number, total_more, total_less, total_votes),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
@@ -289,7 +290,7 @@ class Games:
                 await self.bot.delete_message(a)
 
             elif winner == total_less and new_number <= number:
-                embed = discord.Embed(title='HighLow:',
+                embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
                                       description='Victorious! You hit number **`{}`**\nYour previous number was **`{}`**\n\nTotals\n-------\n:arrow_up_small:  : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**\n\nNext round in **`10`** Seconds'.format(new_number, number, total_more, total_less, total_votes),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
@@ -298,8 +299,8 @@ class Games:
                 await self.bot.delete_message(a)
 
             else:
-                embed = discord.Embed(title='HighLow:',
-                                      description='GameOver! You hit number **`{}`**\nYour previous number was **`{}`**\n\nTotals\n-------\n:arrow_up_small:  : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**'.format(new_number, number, total_more, total_less, total_votes),
+                embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
+                                      description='GameOver! You hit number **`{}`**\nYour previous number was **`{}`**\n\nTotals\n-------\n:arrow_up_small:  : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**\n\nUse **`{}highlow`** for a new game!'.format(new_number, number, total_more, total_less, total_votes, self.config['prefix']),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\U0001f480')
