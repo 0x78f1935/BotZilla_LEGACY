@@ -229,7 +229,7 @@ class Images:
         while True:
             number = random.randrange(0,1000)
             embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
-                                  description='Higher or Lower then: **`{}`**\n**`10`** Seconds to vote..'.format(number),
+                                  description='Higher or Lower than: **`{}`**\n**`10`** Seconds to vote..'.format(number),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\U0001f53c')
@@ -263,7 +263,8 @@ class Images:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 await self.bot.add_reaction(a, '\U0001f3f3')
                 await asyncio.sleep(10)
-                emoji_continue = a.reactions[0]
+                message = await self.bot.get_message(ctx.message.channel, a.id)
+                emoji_continue = message.reactions[0]
                 total_continue = emoji_continue.count - 1
                 await self.bot.say('{} : {}'.format(emoji_continue.emoji, total_continue))
                 if total_continue == 0:
