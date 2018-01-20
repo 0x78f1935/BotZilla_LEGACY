@@ -249,7 +249,7 @@ class Images:
 
             if total_votes == 0:
                 embed = discord.Embed(title='HighLow:',
-                                      description='GameOver! Nobody voted'.format(new_number),
+                                      description='GameOver! Nobody voted...'.format(new_number),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\U0001f480')
@@ -266,7 +266,6 @@ class Images:
                 message = await self.bot.get_message(ctx.message.channel, a.id)
                 emoji_continue = message.reactions[0]
                 total_continue = emoji_continue.count - 1
-                await self.bot.say('{} : {}'.format(emoji_continue.emoji, total_continue))
                 if total_continue == 0:
                     await self.bot.delete_message(a)
                     embed = discord.Embed(title='HighLow:',
