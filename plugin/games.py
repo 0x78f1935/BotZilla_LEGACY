@@ -225,12 +225,12 @@ class Games:
     @commands.command(pass_context=True, name='highlow')
     async def HighLow(self, ctx):
         """
-        Higher or Lower? Gamble your way out! 0 ~ 10.000.000
+        Higher or Lower? Gamble your way out! 0 ~ 10.000
         Is the next number higher or lower then your current number?
         Vote with the whole server!
         """
         while True:
-            number = random.randrange(0,10000000)
+            number = random.randrange(0,10000)
             embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
                                   description='Higher or Lower than: **`{}`**\n**`10`** Seconds to vote..'.format(number),
                                   colour=0xf20006)
