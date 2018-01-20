@@ -226,8 +226,7 @@ class Images:
 
     @commands.command(pass_context=True, hidden=True, name='hl')
     async def HighLow(self, ctx):
-        game = True
-        while game:
+        while True:
             number = random.randrange(0,1000)
             embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
                                   description='Higher or Lower then: **`{}`**\n**`10`** Seconds to vote..'.format(number),
@@ -254,7 +253,7 @@ class Images:
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\U0001f480')
-                game = False
+                break
 
             elif total_less == total_more:
                 embed = discord.Embed(title='HighLow:',
@@ -265,13 +264,9 @@ class Images:
                 await self.bot.add_reaction(a, '\U0001f3f3')
                 await asyncio.sleep(10)
                 total_continue = message.reactions[0].count - 1
+                await self.bot.say(total_continue)
                 if total_continue == 0:
-                    game = False
-                    return
-                if total_continue > 0:
-                    game = True
-                    await self.bot.delete_message(a)
-
+                    break
 
 
             elif winner == total_more and new_number >= number:
@@ -280,7 +275,6 @@ class Images:
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                game = True
                 await asyncio.sleep(10)
                 await self.bot.delete_message(a)
 
@@ -290,7 +284,6 @@ class Images:
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                game = True
                 await asyncio.sleep(10)
                 await self.bot.delete_message(a)
 
@@ -300,7 +293,7 @@ class Images:
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\U0001f480')
-                game = False
+                break
 
 
 
