@@ -257,7 +257,7 @@ class Images:
 
             elif total_less == total_more:
                 embed = discord.Embed(title='HighLow:',
-                                      description='Draw!\nContinue? **`10`** Seconds remaining'.format(new_number),
+                                      description='Vote Draw!\nContinue? **`10`** Seconds remaining'.format(new_number),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -267,6 +267,12 @@ class Images:
                 total_continue = emoji_continue.count - 1
                 await self.bot.say('{} : {}'.format(emoji_continue.emoji, total_continue))
                 if total_continue == 0:
+                    await self.bot.delete_message(a)
+                    embed = discord.Embed(title='HighLow:',
+                                          description='Gameover! Nobody to play with...'.format(new_number),
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, '\U0001f60f')
                     break
 
 
