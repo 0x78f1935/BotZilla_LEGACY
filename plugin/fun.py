@@ -263,7 +263,7 @@ class Images:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 await self.bot.add_reaction(a, '\U0001f3f3')
                 await asyncio.sleep(10)
-                emoji_continue = message.reactions[0]
+                emoji_continue = a.reactions[0]
                 total_continue = emoji_continue.count - 1
                 await self.bot.say('{} : {}'.format(emoji_continue.emoji, total_continue))
                 if total_continue == 0:
