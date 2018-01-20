@@ -250,7 +250,7 @@ class Images:
                 continue
             else:
                 embed = discord.Embed(title='HighLow:',
-                                      description='GameOver!',
+                                      description='GameOver! You hit number **`{}`**'.format(new_number),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\U0001f480')
@@ -260,7 +260,7 @@ class Images:
                 continue
             else:
                 embed = discord.Embed(title='HighLow:',
-                                      description='GameOver!',
+                                      description='GameOver! You hit number **`{}`**'.format(new_number),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\U0001f480')
