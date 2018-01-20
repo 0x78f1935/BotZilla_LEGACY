@@ -227,7 +227,7 @@ class Images:
 
 
     @commands.command(pass_context=True, name='dr', hidden=True)
-    async def meow(self, ctx):
+    async def DeathRow(self, ctx):
         """
         Deathrow! Checkout someones last words spoken on a death row!
         The person is real en registered at Texas Department of Criminal Justice.
