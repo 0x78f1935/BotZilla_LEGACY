@@ -268,8 +268,7 @@ class Images:
                 if total_continue > 0:
                     game = True
                     await self.bot.delete_message(a)
-                else:
-                    game = False
+                if total_continue == 0:
                     break
 
 
