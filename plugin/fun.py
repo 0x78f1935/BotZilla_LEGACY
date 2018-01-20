@@ -264,7 +264,7 @@ class Images:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 await self.bot.add_reaction(a, '\U0001f3f3')
                 total_continue = message.reactions[0].count - 1
-                if total_continue > 0:
+                if total_continue >= 1:
                     game = True
                 else:
                     game = False
