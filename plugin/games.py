@@ -271,7 +271,6 @@ class Games:
                 total_continue = emoji_continue.count - 1
                 await self.bot.delete_message(a)
                 if total_continue == 0:
-                    await self.bot.delete_message(a)
                     embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
                                           description='Gameover! Nobody to play with...\nStart a new game with **`{}higherlower`**'.format(new_number, self.config['prefix']),
                                           colour=0xf20006)
