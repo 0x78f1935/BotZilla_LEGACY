@@ -265,7 +265,7 @@ class Images:
                 await self.bot.add_reaction(a, '\U0001f3f3')
                 await asyncio.sleep(10)
                 total_continue = message.reactions[0].count - 1
-                if total_continue >= 1:
+                if total_continue > 0:
                     game = True
                     await self.bot.delete_message(a)
                 else:
@@ -275,7 +275,7 @@ class Images:
 
             elif winner == total_more and new_number >= number:
                 embed = discord.Embed(title='HighLow:',
-                                      description='Victorious! You hit number **`{}`**\nTotals\n-------\n:arrow_up_small: : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**\n\nNext round in **`10`** Seconds'.format(new_number, total_more, total_less, total_votes),
+                                      description='Victorious! You hit number **`{}`**\nYour previous number was **`{}`**\n\nTotals\n-------\n:arrow_up_small: : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**\n\nNext round in **`10`** Seconds'.format(new_number, number, total_more, total_less, total_votes),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -285,7 +285,7 @@ class Images:
 
             elif winner == total_less and new_number <= number:
                 embed = discord.Embed(title='HighLow:',
-                                      description='Victorious! You hit number **`{}`**\nTotals\n-------\n:arrow_up_small:  : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**\n\nNext round in **`10`** Seconds'.format(new_number, total_more, total_less, total_votes),
+                                      description='Victorious! You hit number **`{}`**\nYour previous number was **`{}`**\n\nTotals\n-------\n:arrow_up_small:  : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**\n\nNext round in **`10`** Seconds'.format(new_number, number, total_more, total_less, total_votes),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -295,7 +295,7 @@ class Images:
 
             else:
                 embed = discord.Embed(title='HighLow:',
-                                      description='GameOver! You hit number **`{}`**\nTotals\n-------\n:arrow_up_small:  : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**'.format(new_number, total_more, total_less, total_votes),
+                                      description='GameOver! You hit number **`{}`**\nYour previous number was **`{}`**\n\nTotals\n-------\n:arrow_up_small:  : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**'.format(new_number, number, total_more, total_less, total_votes),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\U0001f480')
