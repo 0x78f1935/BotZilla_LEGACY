@@ -7,7 +7,6 @@ import async_timeout
 import re
 import xml.etree.ElementTree
 from bs4 import BeautifulSoup
-import asyncio
 
 try:
     from imgurpython import ImgurClient
@@ -222,89 +221,6 @@ class Images:
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-
-
-    @commands.command(pass_context=True, hidden=True, name='hl')
-    async def HighLow(self, ctx):
-        while True:
-            number = random.randrange(0,1000)
-            embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
-                                  description='Higher or Lower than: **`{}`**\n**`10`** Seconds to vote..'.format(number),
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, '\U0001f53c')
-            await self.bot.add_reaction(a, '\U0001f53d')
-            await asyncio.sleep(10)
-            new_number = random.randrange(0,1000)
-
-            message = await self.bot.get_message(ctx.message.channel, a.id)
-            more = message.reactions[0]
-            less = message.reactions[1]
-            total_more = more.count - 1
-            total_less = less.count - 1
-            total_votes = total_more + total_less
-            vote_list = [total_more, total_less]
-            winner = max(vote_list)
-            await self.bot.delete_message(a)
-
-            if total_votes == 0:
-                embed = discord.Embed(title='HighLow:',
-                                      description='GameOver! Nobody voted...'.format(new_number),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, '\U0001f480')
-                break
-
-            elif total_less == total_more:
-                embed = discord.Embed(title='HighLow:',
-                                      description='Vote Draw!\nContinue? **`10`** Seconds remaining'.format(new_number),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                await self.bot.add_reaction(a, '\U0001f3f3')
-                await asyncio.sleep(10)
-                message = await self.bot.get_message(ctx.message.channel, a.id)
-                emoji_continue = message.reactions[0]
-                total_continue = emoji_continue.count - 1
-                if total_continue == 0:
-                    await self.bot.delete_message(a)
-                    embed = discord.Embed(title='HighLow:',
-                                          description='Gameover! Nobody to play with...'.format(new_number),
-                                          colour=0xf20006)
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, '\U0001f60f')
-                    break
-
-
-            elif winner == total_more and new_number >= number:
-                embed = discord.Embed(title='HighLow:',
-                                      description='Victorious! You hit number **`{}`**\nYour previous number was **`{}`**\n\nTotals\n-------\n:arrow_up_small: : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**\n\nNext round in **`10`** Seconds'.format(new_number, number, total_more, total_less, total_votes),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                await asyncio.sleep(10)
-                await self.bot.delete_message(a)
-
-            elif winner == total_less and new_number <= number:
-                embed = discord.Embed(title='HighLow:',
-                                      description='Victorious! You hit number **`{}`**\nYour previous number was **`{}`**\n\nTotals\n-------\n:arrow_up_small:  : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**\n\nNext round in **`10`** Seconds'.format(new_number, number, total_more, total_less, total_votes),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                await asyncio.sleep(10)
-                await self.bot.delete_message(a)
-
-            else:
-                embed = discord.Embed(title='HighLow:',
-                                      description='GameOver! You hit number **`{}`**\nYour previous number was **`{}`**\n\nTotals\n-------\n:arrow_up_small:  : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**'.format(new_number, number, total_more, total_less, total_votes),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, '\U0001f480')
-                break
-
-
-
-
 
 
     @commands.command(pass_context=True, name='dr', hidden=True)
