@@ -252,7 +252,7 @@ class Games:
 
             if total_votes == 0:
                 embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
-                                      description='GameOver! Nobody voted...\nUse **`{}highlow`** to start a new game'.format(new_number, self.config['prefix']),
+                                      description='GameOver! Nobody voted...\nUse **`{}highlow`** to start a new game'.format(self.config['prefix']),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\U0001f480')
