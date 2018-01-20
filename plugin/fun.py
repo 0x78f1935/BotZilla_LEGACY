@@ -230,7 +230,7 @@ class Images:
         while game:
             number = random.randrange(0,1000)
             embed = discord.Embed(title='HighLow started by {}:'.format(number),
-                                  description='Higher or Lower then: **`{}`**\n**`10`** Seconds to vote..'.format(),
+                                  description='Higher or Lower then: **`{}`**\n**`10`** Seconds to vote..'.format(number),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\U0001f53c')
