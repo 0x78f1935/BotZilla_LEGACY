@@ -272,7 +272,7 @@ class Games:
                 await self.bot.delete_message(a)
                 if total_continue == 0:
                     embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
-                                          description='Gameover! Nobody to play with...\nStart a new game with **`{}higherlower`**'.format(new_number, self.config['prefix']),
+                                          description='Gameover! Nobody to play with...\nStart a new game with **`{}higherlower`**'.format(self.config['prefix']),
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, '\U0001f60f')
