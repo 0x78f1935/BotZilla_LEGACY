@@ -246,6 +246,14 @@ class Images:
             vote_list = [total_more, total_less]
             winner = max(vote_list)
 
+            if total_less and total_more == 0:
+                embed = discord.Embed(title='HighLow:',
+                                      description='GameOver! Nobody voted'.format(new_number),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, '\U0001f480')
+                game = False
+
             if winner == total_more and new_number >= number:
                 continue
             else:
