@@ -266,7 +266,8 @@ class Images:
                 await asyncio.sleep(10)
                 total_continue = message.reactions[0].count - 1
                 if total_continue == 0:
-                    break
+                    game = False
+                    return
                 if total_continue > 0:
                     game = True
                     await self.bot.delete_message(a)
