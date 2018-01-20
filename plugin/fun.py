@@ -246,6 +246,7 @@ class Images:
             total_votes = total_more + total_less
             vote_list = [total_more, total_less]
             winner = max(vote_list)
+            await self.bot.delete_message(a)
 
             if total_votes == 0:
                 embed = discord.Embed(title='HighLow:',
@@ -256,12 +257,28 @@ class Images:
                 game = False
 
             elif winner == total_more and new_number >= number:
-                continue
+                embed = discord.Embed(title='HighLow:',
+                                      description='Victorious! You hit number **`{}`**\nTotals\n-------\n:arrow_up: : **`{}`**\n:arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**\n\nNext round in **`10`** Seconds'.format(new_number, total_more, total_less, total_votes),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                game = True
+                await asyncio.sleep(10)
+                await self.bot.delete_message(a)
+
             elif winner == total_less and new_number <= number:
-                continue
+                embed = discord.Embed(title='HighLow:',
+                                      description='Victorious! You hit number **`{}`**\nTotals\n-------\n:arrow_up: : **`{}`**\n:arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**\n\nNext round in **`10`** Seconds'.format(new_number, total_more, total_less, total_votes),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                game = True
+                await asyncio.sleep(10)
+                await self.bot.delete_message(a)
+
             else:
                 embed = discord.Embed(title='HighLow:',
-                                      description='GameOver! You hit number **`{}`**'.format(new_number),
+                                      description='GameOver! You hit number **`{}`**\nTotals\n-------\n:arrow_up: : **`{}`**\n:arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**'.format(new_number, total_more, total_less, total_votes),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\U0001f480')
