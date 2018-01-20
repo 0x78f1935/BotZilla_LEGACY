@@ -261,13 +261,14 @@ class Images:
                                       description='Draw!\nContinue? **`10`** Seconds remaining'.format(new_number),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, '\U0001f3f3')
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 await self.bot.add_reaction(a, '\U0001f3f3')
                 total_continue = message.reactions[0].count - 1
                 if total_continue > 0:
                     game = True
                 else:
                     game = False
+                    break
                 await asyncio.sleep(10)
                 await self.bot.delete_message(a)
 
