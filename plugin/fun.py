@@ -243,10 +243,11 @@ class Images:
             less = message.reactions[1]
             total_more = more.count - 1
             total_less = less.count - 1
+            total_votes = total_more + total_less
             vote_list = [total_more, total_less]
             winner = max(vote_list)
 
-            if total_less and total_more == 0:
+            if total_votes == 0:
                 embed = discord.Embed(title='HighLow:',
                                       description='GameOver! Nobody voted'.format(new_number),
                                       colour=0xf20006)
