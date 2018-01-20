@@ -263,14 +263,15 @@ class Images:
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 await self.bot.add_reaction(a, '\U0001f3f3')
+                await asyncio.sleep(10)
                 total_continue = message.reactions[0].count - 1
                 if total_continue >= 1:
                     game = True
+                    await self.bot.delete_message(a)
                 else:
                     game = False
                     break
-                await asyncio.sleep(10)
-                await self.bot.delete_message(a)
+
 
             elif winner == total_more and new_number >= number:
                 embed = discord.Embed(title='HighLow:',
