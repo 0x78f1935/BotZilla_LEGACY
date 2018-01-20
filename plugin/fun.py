@@ -7,6 +7,7 @@ import async_timeout
 import re
 import xml.etree.ElementTree
 from bs4 import BeautifulSoup
+import asyncio
 
 try:
     from imgurpython import ImgurClient
@@ -221,6 +222,50 @@ class Images:
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
+    @commands.command(pass_context=True, hidden=True, name='hl')
+    async def HighLow(self, ctx):
+        game = True
+        while game:
+            number = random.randrange(0,1000)
+            embed = discord.Embed(title='HighLow started by {}:'.format(number),
+                                  description='Higher or Lower then: **`{}`**\n**`10`** Seconds to vote..'.format(),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, '\U0001f53c')
+            await self.bot.add_reaction(a, '\U0001f53d')
+            await asyncio.sleep(10)
+            new_number = random.randrange(0,1000)
+
+            message = await self.bot.get_message(ctx.message.channel, a.id)
+            more = message.reactions[0]
+            less = message.reactions[1]
+            total_more = more.count - 1
+            total_less = less.count - 1
+            vote_list = [total_more, total_less]
+            winner = max(vote_list)
+
+            if winner == total_more and new_number >= number:
+                continue
+            else:
+                embed = discord.Embed(title='HighLow:',
+                                      description='GameOver!',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, '\U0001f480')
+                game = False
+
+            if winner == total_less and new_number <= number:
+                continue
+            else:
+                embed = discord.Embed(title='HighLow:',
+                                      description='GameOver!',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, '\U0001f480')
+                game = False
+
 
 
 
