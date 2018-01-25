@@ -1,15 +1,10 @@
 import discord
 from discord.ext import commands
 import json
-import re
-import asyncio
-
 
 tmp_config = json.loads(str(open('./options/config.js').read()))
 config = tmp_config['config']
 owner_list = config['owner-id']
-
-
 
 
 class TestScripts:

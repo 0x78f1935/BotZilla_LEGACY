@@ -155,7 +155,7 @@ async def auto_join_channels(music_playlist):
 
 async def total_online_user_tracker():
     while True:
-        game = discord.Game(name='Online users: {}'.format(sum(1 for m in set(bot.get_all_members()) if m.status != discord.Status.offline)), type=0)
+        game = discord.Game(name='Online users: {}'.format(sum(1 for m in set(bot.get_all_members()) if m.status != discord.Status.offline)), type=3)
         await bot.change_presence(game=game)
         await asyncio.sleep(3)
 
