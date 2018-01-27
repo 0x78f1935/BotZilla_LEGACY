@@ -278,7 +278,7 @@ class Fun:
         self.owner_list = self.config['owner-id']
 
 
-    @commands.command(pass_context=True, hidden=True)
+    @commands.command(pass_context=True)
     async def hack(self, ctx, *, account : str = None):
         """
         Check if your username or email is hacked.
