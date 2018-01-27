@@ -658,14 +658,7 @@ class Utils:
                 async with session.post("https://hastebin.com/documents", data="\n".join(data)) as response:
                     key = (await response.json())["key"]
 
-
-            for owner in self.config['owner-id']:
-                embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
-                                      description=f"https://hastebin.com/{key}.md",
-                                      colour=0xf20006)
-                owner = await self.bot.get_user_info(owner)
-                last_message = await self.bot.send_message(owner, embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+            await self.bot.send_typing(ctx.message.channel)
 
             embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
                                   description=f"https://hastebin.com/{key}.md",
@@ -679,6 +672,15 @@ class Utils:
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
+            for owner in self.config['owner-id']:
+                embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
+                                      description=f"https://hastebin.com/{key}.md",
+                                      colour=0xf20006)
+                owner = await self.bot.get_user_info(owner)
+                last_message = await self.bot.send_message(owner, embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Try `{}help copy`'.format(self.config['prefix']),
