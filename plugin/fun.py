@@ -292,7 +292,8 @@ class Fun:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You should use `{}help hacked` first.'.format(self.config['prefix']),
                                   colour=0xf20006)
-            await self.bot.say(embed=embed)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
 
         url = 'https://haveibeenpwned.com/api/v2/breachedaccount/{}?truncateResponse=true'.format(account)
@@ -305,6 +306,14 @@ class Fun:
 
             source = json.dumps(source, indent=2)
             result = json.loads(str(source))
+            if result == None:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Your email: `{}` seems safe'.format(self.config['prefix']),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                return
+
             print("MAIL")
             print(result)
             print("--------------------------------------------------------")
@@ -317,6 +326,15 @@ class Fun:
 
             source = json.dumps(source, indent=2)
             result = json.loads(str(source))
+
+            if result == None:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Your username: `{}` seems safe'.format(self.config['prefix']),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                return
+
             print("USERNAME")
             print(result)
             print("--------------------------------------------------------")
