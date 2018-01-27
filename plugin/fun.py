@@ -337,10 +337,10 @@ class Fun:
 
             siteslist = []
             for site in result:
-                sites = siteslist.append(site['Name'])
+                siteslist.append(site['Name'])
 
 
-            sites = "\n".join(sites)
+            sites = "\n".join(siteslist)
             print(sites)
 
 
