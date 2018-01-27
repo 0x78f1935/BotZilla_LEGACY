@@ -314,10 +314,20 @@ class Fun:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 return
 
-            print("MAIL")
-            print(result)
-            print("--------------------------------------------------------")
-            pass
+            siteslist = []
+            for site in result:
+                siteslist.append(site['Name'])
+
+            sites = "\n".join(siteslist)
+            print(sites)
+
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='The following online services leaked the information of email account\n\n`{}`\n\n**```{}```**'.format(account, sites),
+                                  colour=0xf20006)
+            embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
         else:
             # make username
             async with aiohttp.ClientSession() as session:
