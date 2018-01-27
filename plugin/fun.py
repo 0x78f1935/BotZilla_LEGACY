@@ -335,7 +335,7 @@ class Fun:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 return
 
-            for site in result[0]:
+            for site in result:
                 print(site)
             print("USERNAME")
             print(result)
