@@ -296,7 +296,8 @@ class Fun:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
 
-        url = 'https://haveibeenpwned.com/api/v2/breachedaccount/{}?truncateResponse=true'.format(account)
+        search = account.replace(' ', '%20')
+        url = 'https://haveibeenpwned.com/api/v2/breachedaccount/{}?truncateResponse=true'.format(search)
 
 
         try:
