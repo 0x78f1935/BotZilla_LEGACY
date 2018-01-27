@@ -8,6 +8,7 @@ import re
 import csv
 import asyncio
 from plugin.music import Music
+import aiohttp
 import psycopg2
 
 try:
@@ -27,6 +28,13 @@ botzillaChannels = tmp_config['channels']
 # The help command is currently set to be Direct Messaged.
 # If you would like to change that, change "pm_help = True" to "pm_help = False" on line 9.
 bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip\nUserdata may be stored for better experience.", command_prefix=config['prefix'], pm_help=False)
+dbl = False
+try:
+    dbltoken = config['discordbotlist_api']
+    headers = {"Authorization": dbltoken}
+    dbl = True
+except:
+    pass
 music_channels = botzillaChannels['music']
 database_file_found = False
 database_settings = tmp_config['database']
@@ -220,6 +228,12 @@ async def on_ready():
         database_settings['password']
     ))
 
+    if dbl is True:
+        url = "https://discordbots.org/api/bots/{}/stats".format(bot.user.id)
+        payload = {"server_count": len(bot.servers)}
+        async with aiohttp.ClientSession() as aioclient:
+            await aioclient.post(url=url, data=payload, headers=headers)
+
     await total_online_user_tracker()
 
 
@@ -324,6 +338,21 @@ async def on_server_join(server):
         if database.database_online:
             await get_users()
     print('Joined server: {}'.format(server.name))
+
+    if dbl is True:
+        url = "https://discordbots.org/api/bots/{}/stats".format(bot.user.id)
+        payload = {"server_count": len(bot.servers)}
+        async with aiohttp.ClientSession() as aioclient:
+            await aioclient.post(url=url, data=payload, headers=headers)
+
+
+@bot.event
+async def on_server_remove(server):
+    if dbl is True:
+        url = "https://discordbots.org/api/bots/{}/stats".format(bot.user.id)
+        payload = {"server_count": len(bot.servers)}
+        async with aiohttp.ClientSession() as aioclient:
+            await aioclient.post(url=url, data=payload, headers=headers)
 
 
 if __name__ == '__main__':
