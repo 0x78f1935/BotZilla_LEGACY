@@ -339,15 +339,14 @@ class Fun:
             for site in result:
                 siteslist.append(site['Name'])
 
-
             sites = "\n".join(siteslist)
             print(sites)
 
-
-            print("USERNAME")
-            print(result)
-            print("--------------------------------------------------------")
-            pass
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='The following online services leaked the information of account\n`{}`\n\n**```{}```**'.format(account, sites),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
 
