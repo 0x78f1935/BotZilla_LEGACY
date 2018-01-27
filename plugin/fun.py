@@ -336,6 +336,7 @@ class Fun:
                 return
 
             for site in result[0]:
+                print(site)
             print("USERNAME")
             print(result)
             print("--------------------------------------------------------")
