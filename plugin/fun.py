@@ -156,113 +156,6 @@ class Images:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True)
-    async def dict(self, ctx, *keywords):
-        """
-        Look something up in the UrbanDictionary.
-        Use this command with a search keyword.
-        """
-
-        if not keywords:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Did you tried `{}help dict` yet?'.format(self.config['prefix']),
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
-            return
-        if keywords:
-            old_keyword = " ".join(keywords)
-            try:
-                keywords = "%20".join(keywords)
-                url = 'http://api.urbandictionary.com/v0/define?term={}'.format(keywords)
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as response:
-                        source = await response.json(encoding='utf8')
-
-                source = json.dumps(source, indent=2)
-                result = json.loads(str(source))
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your search tag was:\n***`{}`***'.format(old_keyword),
-                                      colour=0xf20006)
-                embed.add_field(name='Word:', value='`{}`'.format(result['list'][0]['word']), inline=False)
-                embed.add_field(name='Definition:', value='```{}```'.format(result['list'][0]['definition']), inline=False)
-                embed.add_field(name='example:', value='```{}```'.format(result['list'][0]['example']), inline=True)
-                embed.add_field(name='Author:', value='`{}`'.format(result['list'][0]['author']), inline=False)
-                embed.add_field(name='Link:', value='{}'.format(result['list'][0]['permalink']), inline=False)
-                embed.add_field(name='Likes:', value='\U0001f44d `{}`'.format(result['list'][0]['thumbs_up']),
-                                inline=True)
-                embed.add_field(name='Dislikes:', value='\U0001f44e `{}`'.format(result['list'][0]['thumbs_down']),
-                                inline=True)
-
-
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-            except Exception as e:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your search tag was:\n***`{}`***\n\nNothing found :sailboat:'.format(old_keyword, self.config['prefix']),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-
-
-    @commands.command(pass_context=True, hidden=True)
-    async def meow(self, ctx):
-        """
-        Easter egg!
-        Spawn a kitty cat!
-        """
-        url = 'http://placekitten.com/'
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                source = await response.read()
-        art = str(source[559:1000], 'utf8')
-        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='```{}```'.format(art),
-                              colour=0xf20006)
-        a = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-
-
-    @commands.command(pass_context=True, name='dr', hidden=True)
-    async def DeathRow(self, ctx):
-        """
-        Deathrow! Checkout someones last words spoken on a death row!
-        The person is real en registered at Texas Department of Criminal Justice.
-        All data is open for public.
-        """
-        url = 'http://www.tdcj.state.tx.us/death_row/dr_executed_offenders.html'
-
-        async def fetch(session, url):
-            with async_timeout.timeout(10):
-                async with session.get(url) as response:
-                    return await response.text()
-
-        offenders = []
-        async with aiohttp.ClientSession() as session:
-            html = await fetch(session, url)
-            soup = BeautifulSoup(html, 'lxml')
-
-            for link in soup.find_all('a'):
-                link2 = link.get('href')
-                if re.match(r'dr_info\/(.*)', str(link2), flags=0):
-                    link = re.match(r'dr_info\/(.*)', str(link2)).group()
-                    good_final = link.replace('dr_info/', 'http://www.tdcj.state.tx.us/death_row/dr_info/')
-                    offenders.append(str(good_final))
-
-        while True:
-            url = random.choice(offenders)
-            if str(url).endswith('.html'):
-                break
-            else:
-                pass
-
-        url = random.choice(offenders)
-        async with aiohttp.ClientSession() as session:
-            html = await fetch(session, str(url))
-        print(html)
-        await self.bot.say(url)
-
-
 class Fun:
     """Image related commands."""
 
@@ -353,6 +246,112 @@ class Fun:
             embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
+    @commands.command(pass_context=True)
+    async def dict(self, ctx, *keywords):
+        """
+        Look something up in the UrbanDictionary.
+        Use this command with a search keyword.
+        """
+
+        if not keywords:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Did you tried `{}help dict` yet?'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+        if keywords:
+            old_keyword = " ".join(keywords)
+            try:
+                keywords = "%20".join(keywords)
+                url = 'http://api.urbandictionary.com/v0/define?term={}'.format(keywords)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        source = await response.json(encoding='utf8')
+
+                source = json.dumps(source, indent=2)
+                result = json.loads(str(source))
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Your search tag was:\n***`{}`***'.format(old_keyword),
+                                      colour=0xf20006)
+                embed.add_field(name='Word:', value='`{}`'.format(result['list'][0]['word']), inline=False)
+                embed.add_field(name='Definition:', value='```{}```'.format(result['list'][0]['definition']), inline=False)
+                embed.add_field(name='example:', value='```{}```'.format(result['list'][0]['example']), inline=True)
+                embed.add_field(name='Author:', value='`{}`'.format(result['list'][0]['author']), inline=False)
+                embed.add_field(name='Link:', value='{}'.format(result['list'][0]['permalink']), inline=False)
+                embed.add_field(name='Likes:', value='\U0001f44d `{}`'.format(result['list'][0]['thumbs_up']),
+                                inline=True)
+                embed.add_field(name='Dislikes:', value='\U0001f44e `{}`'.format(result['list'][0]['thumbs_down']),
+                                inline=True)
+
+
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Your search tag was:\n***`{}`***\n\nNothing found :sailboat:'.format(old_keyword, self.config['prefix']),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
+
+    @commands.command(pass_context=True)
+    async def meow(self, ctx):
+        """
+        Spawn a kitty cat!
+        """
+        url = 'http://placekitten.com/'
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                source = await response.read()
+        art = str(source[559:1000], 'utf8')
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='```{}```'.format(art),
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
+    @commands.command(pass_context=True, name='dr', hidden=True)
+    async def DeathRow(self, ctx):
+        """
+        Deathrow! Checkout someones last words spoken on a death row!
+        The person is real en registered at Texas Department of Criminal Justice.
+        All data is open for public.
+        """
+        url = 'http://www.tdcj.state.tx.us/death_row/dr_executed_offenders.html'
+
+        async def fetch(session, url):
+            with async_timeout.timeout(10):
+                async with session.get(url) as response:
+                    return await response.text()
+
+        offenders = []
+        async with aiohttp.ClientSession() as session:
+            html = await fetch(session, url)
+            soup = BeautifulSoup(html, 'lxml')
+
+            for link in soup.find_all('a'):
+                link2 = link.get('href')
+                if re.match(r'dr_info\/(.*)', str(link2), flags=0):
+                    link = re.match(r'dr_info\/(.*)', str(link2)).group()
+                    good_final = link.replace('dr_info/', 'http://www.tdcj.state.tx.us/death_row/dr_info/')
+                    offenders.append(str(good_final))
+
+        while True:
+            url = random.choice(offenders)
+            if str(url).endswith('.html'):
+                break
+            else:
+                pass
+
+        url = random.choice(offenders)
+        async with aiohttp.ClientSession() as session:
+            html = await fetch(session, str(url))
+        print(html)
+        await self.bot.say(url)
 
 
 def setup(bot):
