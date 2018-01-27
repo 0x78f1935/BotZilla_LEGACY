@@ -34,6 +34,7 @@ try:
     headers = {"Authorization": dbltoken}
     dbl = True
 except:
+    print('Core: DiscordBotList api key not found')
     pass
 music_channels = botzillaChannels['music']
 database_file_found = False
