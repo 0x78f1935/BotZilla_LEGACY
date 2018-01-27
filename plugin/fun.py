@@ -335,15 +335,15 @@ class Fun:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 return
 
-            sites = []
+            siteslist = []
             for site in result:
-                sites = sites.append(site['Name'])
+                sites = siteslist.append(site['Name'])
 
 
             sites = "\n".join(sites)
             print(sites)
 
-        
+
             print("USERNAME")
             print(result)
             print("--------------------------------------------------------")
