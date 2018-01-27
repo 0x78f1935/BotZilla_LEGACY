@@ -336,7 +336,8 @@ class Fun:
                 return
 
             for site in result:
-                print(site['Name'])
+                sites = " ".join(site)
+                print(sites)
             print("USERNAME")
             print(result)
             print("--------------------------------------------------------")
