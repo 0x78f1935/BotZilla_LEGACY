@@ -302,7 +302,7 @@ class Fun:
             # make email request
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
-                    source = await response.json(encoding='utf8')
+                    source = await response.json()
 
             source = json.dumps(source, indent=2)
             result = json.loads(str(source))
@@ -322,7 +322,7 @@ class Fun:
             # make username
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
-                    source = await response.json(encoding='utf8')
+                    source = await response.json()
 
             source = json.dumps(source, indent=2)
             result = json.loads(str(source))
