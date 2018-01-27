@@ -75,16 +75,6 @@ class Images:
 
 
     @commands.command(pass_context=True)
-    async def credits(self, ctx):
-        """Give credit to a user"""
-        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='\n:ok_hand:  :laughing:\n  :telephone_receiver::shirt::call_me:\n         :jeans:        :fire:',
-                              colour=0xf20006)
-        last_message = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-
-
-    @commands.command(pass_context=True)
     async def rule34(self, ctx, *, content=None):
         """
         Shows graphical content NSFW.
@@ -295,6 +285,31 @@ class Fun:
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
+
+    @commands.command(pass_context=True)
+    async def joke(self, ctx):
+        """
+        Ever heard a Chuck Norris joke?
+        """
+        url = 'http://api.icndb.com/jokes/random%22'
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                source = await response.json(encoding='utf8')
+
+        source = json.dumps(source)
+        data = json.loads(str(source))
+        joke = str(data['value']['joke'])
+
+        if '&quot;' in joke:
+            joke = joke.replace("&quot;", "")
+
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description="{}".format(joke),
+                              colour=0xf20006)
+        last_message = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+        return
 
 
     @commands.command(pass_context=True)
