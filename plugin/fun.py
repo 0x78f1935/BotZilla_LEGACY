@@ -323,8 +323,7 @@ class Fun:
                 if len(sites) >= 1000:
                     target = await self.bot.get_user_info(ctx.message.author.id)
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='The following online services leaked the information of email account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(
-                                              account, sites),
+                                          description='The internet is full of hackers\nThe following services have been hacked...\nTheir information is leaked online. That means that also your information is leaked!\nThe following online services leaked the information of email account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(account, sites),
                                           colour=0xf20006)
                     embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
                     last_message = await self.bot.send_message(target, embed=embed)
@@ -337,7 +336,7 @@ class Fun:
                     await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 else:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='The following online services leaked the information of email account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(account, sites),
+                                          description='The internet is full of hackers\nThe following services have been hacked...\nTheir information is leaked online. That means that also your information is leaked!\nThe following online services leaked the information of email account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(account, sites),
                                           colour=0xf20006)
                     embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
                     a = await self.bot.say(embed=embed)
@@ -369,8 +368,7 @@ class Fun:
                 if len(sites) >= 1000:
                     target = await self.bot.get_user_info(ctx.message.author.id)
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='The following online services leaked the information of account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(
-                                              account, sites),
+                                          description='The internet is full of hackers\nThe following services have been hacked...\nTheir information is leaked online. That means that also your information is leaked!\nThe following online services leaked the information of account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(account, sites),
                                           colour=0xf20006)
                     embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
                     last_message = await self.bot.send_message(target, embed=embed)
@@ -383,7 +381,7 @@ class Fun:
                     await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 else:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='The following online services leaked the information of account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(account, sites),
+                                          description='The internet is full of hackers\nThe following services have been hacked...\nTheir information is leaked online. That means that also your information is leaked!\nThe following online services leaked the information of account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(account, sites),
                                           colour=0xf20006)
                     embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
                     a = await self.bot.say(embed=embed)
@@ -395,9 +393,6 @@ class Fun:
             embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-
-
-
 
 
 def setup(bot):
