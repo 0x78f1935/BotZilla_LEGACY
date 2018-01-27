@@ -263,9 +263,73 @@ class Images:
         await self.bot.say(url)
 
 
+class Fun:
+    """Image related commands."""
+
+    def __init__(self, bot):
+        self.bot = bot
+        self.tmp_config = json.loads(str(open('./options/config.js').read()))
+        self.config = self.tmp_config['config']
+        self.imgur = ImgurClient(self.config['giphy-id'], self.config['giphy-secret'])
+        self.emojiUnicode = self.tmp_config['unicode']
+        self.exchange = self.tmp_config['exchange']
+        self.channels = self.tmp_config['channels']
+        self.emojiUnicode = self.tmp_config['unicode']
+        self.owner_list = self.config['owner-id']
+
+
+    @commands.command(pass_context=True, hidden=True)
+    async def hacked(self, ctx, *, account : str = None):
+        """
+        Check if your username or email is hacked.
+        Sometimes companys get hacked. Sometime the hackers decide
+        to put the information they stole online.
+        Use this command to check of your account has been leaked.
+        Works on e-mail and username.
+        """
+
+        if account == None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You should use `{}help hacked` first.'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            await self.bot.say(embed=embed)
+            return
+
+        url = 'https://haveibeenpwned.com/api/v2/breachedaccount/{}?truncateResponse=true'.format(account)
+
+        if '@' in url:
+            # make email request
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as response:
+                    source = await response.json(encoding='utf8')
+
+            source = json.dumps(source, indent=2)
+            result = json.loads(str(source))
+            print("MAIL")
+            print(result)
+            print("--------------------------------------------------------")
+            pass
+        else:
+            # make username
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as response:
+                    source = await response.json(encoding='utf8')
+
+            source = json.dumps(source, indent=2)
+            result = json.loads(str(source))
+            print("USERNAME")
+            print(result)
+            print("--------------------------------------------------------")
+            pass
+
+
+
+
+
 def setup(bot):
     if ImgurClient is False:
         raise RuntimeError("You need the imgurpython module to use this.\n"
                            "pip3 install imgurpython")
 
     bot.add_cog(Images(bot))
+    bot.add_cog(Fun(bot))
