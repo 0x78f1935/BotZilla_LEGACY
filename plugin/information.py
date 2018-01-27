@@ -122,7 +122,7 @@ class Information:
         """
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='Use the following url to add BotZilla V2 to your guild!\n**{}**'.format(
+                              description='Use the following url to add BotZilla V2 to your guild!\n**{}**\nDon\'t forget to upvote! :)'.format(
                                   'https://discordbots.org/bot/397149515192205324'),
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
