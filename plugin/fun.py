@@ -343,8 +343,9 @@ class Fun:
             print(sites)
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='The following online services leaked the information of account\n`{}`\n\n**```{}```**'.format(account, sites),
+                                  description='The following online services leaked the information of account\n\n`{}`\n\n**```{}```**'.format(account, sites),
                                   colour=0xf20006)
+            embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
