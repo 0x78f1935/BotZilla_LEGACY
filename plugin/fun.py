@@ -310,9 +310,10 @@ class Fun:
 
             if result == None:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your username: `{}` seems safe'.format(account),
+                                      description='Your account **`{}`** seems safe'.format(account),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
+                embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 return
 
@@ -335,6 +336,7 @@ class Fun:
                                       description='Advice: **`Change your password`**\nDetails send through DM\nCheck your inbox!',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
+                embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             else:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -346,9 +348,10 @@ class Fun:
 
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Something whent wrong:\n```{}```'.format(e.args),
+                                  description='Something went wrong:\n```{}```'.format(e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
+            embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
