@@ -298,101 +298,57 @@ class Fun:
 
         url = 'https://haveibeenpwned.com/api/v2/breachedaccount/{}?truncateResponse=true'.format(account)
 
+
         try:
-            if '@' in url:
-                # make email request
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as response:
-                        source = await response.json(encoding='utf8')
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as response:
+                    source = await response.json(encoding='utf8')
 
-                source = json.dumps(source, indent=2)
-                result = json.loads(str(source))
-                if result == None:
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Your email: `{}` seems safe'.format(account),
-                                          colour=0xf20006)
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                    return
+            source = json.dumps(source, indent=2)
+            result = json.loads(str(source))
 
-                siteslist = []
-                for site in result:
-                    siteslist.append(site['Name'])
+            if result == None:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Your username: `{}` seems safe'.format(account),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                return
 
-                sites = "\n".join(siteslist)
-                if len(sites) >= 1000:
-                    target = await self.bot.get_user_info(ctx.message.author.id)
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='The internet is full of hackers\nThe following services have been hacked...\nTheir information is leaked online. That means that also your information is leaked!\nThe following online services leaked the information of email account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(account, sites),
-                                          colour=0xf20006)
-                    embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
-                    last_message = await self.bot.send_message(target, embed=embed)
-                    await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+            siteslist = []
+            for site in result:
+                siteslist.append(site['Name'])
 
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Advice: **`Change your password`**\nDetails send through DM\nCheck your inbox!',
-                                          colour=0xf20006)
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                else:
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='The internet is full of hackers\nThe following services have been hacked...\nTheir information is leaked online. That means that also your information is leaked!\nThe following online services leaked the information of email account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(account, sites),
-                                          colour=0xf20006)
-                    embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            sites = "\n".join(siteslist)
 
+            if len(sites) >= 1000:
+                target = await self.bot.get_user_info(ctx.message.author.id)
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='The internet is full of hackers\nThe following services have been hacked by them...\nTheir information is leaked online. That means that also your information is leaked!\nThe following online services leaked the information of account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(account, sites),
+                                      colour=0xf20006)
+                embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
+                last_message = await self.bot.send_message(target, embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Advice: **`Change your password`**\nDetails send through DM\nCheck your inbox!',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             else:
-                # make username
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as response:
-                        source = await response.json(encoding='utf8')
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='The internet is full of hackers. The following services have been hacked by them...\nTheir information is leaked online. That means that also your information is leaked!\nThe following online services leaked the information of account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(account, sites),
+                                      colour=0xf20006)
+                embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-                source = json.dumps(source, indent=2)
-                result = json.loads(str(source))
-
-                if result == None:
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Your username: `{}` seems safe'.format(account),
-                                          colour=0xf20006)
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                    return
-
-                siteslist = []
-                for site in result:
-                    siteslist.append(site['Name'])
-
-                sites = "\n".join(siteslist)
-
-                if len(sites) >= 1000:
-                    target = await self.bot.get_user_info(ctx.message.author.id)
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='The internet is full of hackers\nThe following services have been hacked...\nTheir information is leaked online. That means that also your information is leaked!\nThe following online services leaked the information of account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(account, sites),
-                                          colour=0xf20006)
-                    embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
-                    last_message = await self.bot.send_message(target, embed=embed)
-                    await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Advice: **`Change your password`**\nDetails send through DM\nCheck your inbox!',
-                                          colour=0xf20006)
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                else:
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='The internet is full of hackers\nThe following services have been hacked...\nTheir information is leaked online. That means that also your information is leaked!\nThe following online services leaked the information of account\n\n`{}`\n\nAdvice: **`Change your password`**\n**```{}```**'.format(account, sites),
-                                          colour=0xf20006)
-                    embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Something went wrong :(\nSearched for: ``'.format(account),
+                                  description='Something whent wrong:\n```{}```'.format(e.args),
                                   colour=0xf20006)
-            embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
             a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
 def setup(bot):
