@@ -308,7 +308,7 @@ class Fun:
             result = json.loads(str(source))
             if result == None:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your email: `{}` seems safe'.format(self.config['prefix']),
+                                      description='Your email: `{}` seems safe'.format(account),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -329,7 +329,7 @@ class Fun:
 
             if result == None:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your username: `{}` seems safe'.format(self.config['prefix']),
+                                      description='Your username: `{}` seems safe'.format(account),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
