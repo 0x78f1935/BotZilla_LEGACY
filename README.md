@@ -1,6 +1,7 @@
-Welcome to BotZilla Version 2 \
+Welcome to BotZilla Version 2 | **24/7 Online**\
 [![Discord Bots](https://discordbots.org/api/widget/status/397149515192205324.svg)](https://discordbots.org/bot/397149515192205324)
-[![Discord Bots](https://discordbots.org/api/widget/lib/397149515192205324.svg)](https://discordbots.org/bot/397149515192205324)\
+[![Discord Bots](https://discordbots.org/api/widget/lib/397149515192205324.svg)](https://discordbots.org/bot/397149515192205324)
+
 The following resources maybe helpfull in order to navigate around.
 
 *Discord Bot List, Upvote would be appreciated* 
@@ -12,7 +13,7 @@ The following resources maybe helpfull in order to navigate around.
 *Github Page*
 - ```https://github.com/Annihilator708/DiscordBot-BotZilla```
 
-*Server invite link*
+*Offering support*
 - ```https://discord.gg/ybgfVQA```
 
 *Like to make your own bot?*
