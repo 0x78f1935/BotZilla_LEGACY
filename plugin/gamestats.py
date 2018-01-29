@@ -80,5 +80,46 @@ class Leagues:
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
+
+    @commands.command(pass_context=True)
+    async def rs3(self, ctx, *, account=None):
+        """Shows your Runescape 3 stats.
+        Use your Runescape 3 username for this command"""
+
+        if account is None:
+            embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                  description="I wonder if i could sell you on the market, use `{}help rs3` instead".format(self.config['prefix']),
+                                  color=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+            return
+        else:
+            try:
+                url = "https://apps.runescape.com/runemetrics/profile?user={}".format(account)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        source = await response.json(encoding='utf8')
+
+                source = json.dumps(source)
+                data = json.loads(str(source))
+                if data['rank'] == 'null':
+                    rank = 'Not played'
+                else:
+                    rank = data['rank']
+
+                embed = discord.Embed(title='{} | {}:'.format(ctx.message.author.name, data['name']),
+                                      description='User: **{}**\nRanked: **{}**\nCombat LVL: **{}**\nMelee XP: **{}**\n Ranged XP: {}\nMagic XP: **{}**\nTotal XP: **{}**\nOnline: **{}**'.format(
+                                          data['name'], rank, data['combatlevel'], data['melee'], data['ranged'], data['magic'], data['totalxp'], data['loggedIn']
+                                      ),
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Player **{}** not found'.format(account),
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+
 def setup(bot):
     bot.add_cog(Leagues(bot))
