@@ -108,7 +108,7 @@ class Leagues:
                     rank = data['rank']
 
                 embed = discord.Embed(title='{} | {}:'.format(ctx.message.author.name, data['name']),
-                                      description='User: **{}**\nRanked: **{}**\nCombat LVL: **{}**\nMelee XP: **{}**\n Ranged XP: {}\nMagic XP: **{}**\nTotal XP: **{}**\nOnline: **{}**'.format(
+                                      description='User: **{}**\nRanked: **{}**\nCombat LVL: **{}**\nMelee XP: **{}**\nRanged XP: **{}**\nMagic XP: **{}**\nTotal XP: **{}**\nOnline: **{}**'.format(
                                           data['name'], rank, data['combatlevel'], data['melee'], data['ranged'], data['magic'], data['totalxp'], data['loggedIn']
                                       ),
                                       colour=0xf20006)
