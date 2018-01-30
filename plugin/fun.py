@@ -103,9 +103,10 @@ class Images:
                     source = await response.read()
 
             root = xml.etree.ElementTree.fromstring(source)
+
             try:
                 image = root[random.randint(0, len(root) - 1)].attrib['file_url']
-            except Exception as e:
+            except ValueError:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='No results found.',
                                       colour=0xf20006)
@@ -113,6 +114,7 @@ class Images:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                 await self.bot.say(embed=embed)
                 return
+
 
             try:
                 if image.endswith(".webm"):
@@ -136,19 +138,11 @@ class Images:
                 if image.endswith(".gif"):
                     pass
 
-
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       colour=0xf20006)
                 embed.set_image(url=image)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                return
-            except ValueError:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='{}'.format('No results found.'),
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                 return
             except Exception as e:
                 a = await self.bot.say(image)
