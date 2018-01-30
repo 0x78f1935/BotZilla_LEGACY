@@ -103,7 +103,10 @@ class Images:
                     source = await response.read()
 
             root = xml.etree.ElementTree.fromstring(source)
-            image = root[random.randint(0, len(root) - 1)].attrib['file_url']
+            try:
+                image = root[random.randint(0, len(root) - 1)].attrib['file_url']
+            except Exception as e:
+                image = root.attrib['file_url']
 
             try:
                 if image.endswith(".webm"):
