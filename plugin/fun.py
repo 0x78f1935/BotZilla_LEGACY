@@ -96,7 +96,7 @@ class Images:
             await self.bot.say(embed=embed)
             return
         else:
-            link = 'http://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=' + content
+            link = 'http://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags={}'.format(content)
             url = link.replace(' ', '_').replace('+', ' ')
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
@@ -106,7 +106,13 @@ class Images:
             try:
                 image = root[random.randint(0, len(root) - 1)].attrib['file_url']
             except Exception as e:
-                image = root.attrib['file_url']
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='No results found.',
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+                await self.bot.say(embed=embed)
+                return
 
             try:
                 if image.endswith(".webm"):
