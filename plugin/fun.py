@@ -106,7 +106,7 @@ class Images:
 
             try:
                 image = root[random.randint(0, len(root) - 1)].attrib['file_url']
-            except ValueError:
+            except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='No results found.',
                                       colour=0xf20006)
@@ -126,24 +126,13 @@ class Images:
                     await self.bot.say(embed=embed)
                     return
 
-                if image.endswith(".png"):
-                    pass
-
-                if image.endswith(".jpg"):
-                    pass
-
-                if image.endswith(".jpeg"):
-                    pass
-
-                if image.endswith(".gif"):
-                    pass
-
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       colour=0xf20006)
                 embed.set_image(url=image)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                 return
+
             except Exception as e:
                 a = await self.bot.say(image)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
