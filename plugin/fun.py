@@ -96,7 +96,7 @@ class Images:
             await self.bot.say(embed=embed)
             return
         else:
-            link = 'http://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags={}'.format(content)
+            link = 'http://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=' + content
             url = link.replace(' ', '_').replace('+', ' ')
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
@@ -106,36 +106,40 @@ class Images:
 
             try:
                 image = root[random.randint(0, len(root) - 1)].attrib['file_url']
-            except Exception as e:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='No results found.',
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
-                await self.bot.say(embed=embed)
-                return
 
+                try:
+                    if image.endswith(".webm"):
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                              description='Naughty boy grrrr tiger :tiger:',
+                                              colour=0xf20006)
+                        last_message = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+                        await self.bot.say(embed=embed)
+                        return
 
-            try:
-                if image.endswith(".webm"):
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Naughty boy grrrr tiger :tiger:',
+                                          colour=0xf20006)
+                    embed.set_image(url=image)
+                    last_message = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
+                except ValueError:
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='{}'.format('No results found.'),
                                           colour=0xf20006)
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
-                    await self.bot.say(embed=embed)
-                    return
 
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      colour=0xf20006)
-                embed.set_image(url=image)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                return
+                except Exception as e:
+                    a = await self.bot.say(image)
+                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
             except Exception as e:
-                a = await self.bot.say(image)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='{}'.format('No results found for **{}**'.format(content)),
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
 
 class Fun:
