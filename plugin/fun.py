@@ -125,7 +125,7 @@ class Images:
 
                 except ValueError:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='{}'.format('No results found.'),
+                                          description='No results found for **`{}`**'.format(content),
                                           colour=0xf20006)
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
@@ -136,7 +136,7 @@ class Images:
 
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='{}'.format('No results found for **{}**'.format(content)),
+                                      description='No results found for **`{}`**'.format(content),
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
