@@ -250,6 +250,21 @@ async def on_member_join(member):
         print('Error gathering info user {} | {} :\n```Python\n{}```'.format(member.name, member.id, e.args))
 
 
+@bot.evet()
+async def on_message_edit(message):
+    if '265828729970753537' in message.server.id:
+        if re.search(r'(https?://)?(www.)?discord(app.com/(invite|oauth2)|.gg|.io)/[\w\d_\-?=&/]+', message.content):
+            await bot.delete_message(message)
+            ads = bot.get_channel('353534791624425472')
+            await bot.send_message(ads, str(message.content).replace('@', ''))
+
+    if '406908371246252052' in message.server.id:
+        if re.search(r'(https?://)?(www.)?discord(app.com/(invite|oauth2)|.gg|.io)/[\w\d_\-?=&/]+', message.content):
+            await bot.delete_message(message)
+            ads = bot.get_channel('406922367093309443')
+            await bot.send_message(ads, str(message.content).replace('@', ''))
+
+
 @bot.event
 async def on_message(message):
     if message.author.bot: return
