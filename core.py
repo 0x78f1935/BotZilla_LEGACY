@@ -329,14 +329,10 @@ async def on_message(message):
         database.cur.execute("ROLLBACK;")
 
     if '265828729970753537' in message.server.id:
-        if 'discordapp.com/oauth2/authorize?client_id' in message.content:
+        if re.search(r'(https?://)?(www.)?discord(app.com/invite|.gg|.io)/[\w\d_\-]+', message.content):
             await bot.delete_message(message)
             ads = bot.get_channel('353534791624425472')
-            await bot.send_message(ads, str(message.content).replace('@', ''))
-        if 'discord.gg/' in message.content:
-            await bot.delete_message(message)
-            ads = bot.get_channel('353534791624425472')
-            await bot.send_message(ads, str(message.content).replace('@', ''))
+            await bot.send_message(ads, message.content)
 
     if not str(message.content).startswith(config['prefix']): return
 
