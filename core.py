@@ -332,11 +332,11 @@ async def on_message(message):
         if 'discordapp.com/oauth2/authorize?client_id' in message.content:
             await bot.delete_message(message)
             ads = bot.get_channel('353534791624425472')
-            bot.send_message(ads, message.content)
+            await bot.send_message(ads, message.content)
         if 'discord.gg/' in message.content:
             await bot.delete_message(message)
             ads = bot.get_channel('353534791624425472')
-            bot.send_message(ads, message.content)
+            await bot.send_message(ads, message.content)
 
     if not str(message.content).startswith(config['prefix']): return
 
