@@ -329,7 +329,7 @@ async def on_message(message):
         database.cur.execute("ROLLBACK;")
 
     if '265828729970753537' in message.server.id:
-        if re.search(r'(https?://)?(www.)?discord(app.com/invite|.com/oauth2|.gg|.io)/[\w\d_\-]+', message.content):
+        if re.search(r'(https?://)?(www.)?discord(app.com/invite|app.com/oauth2|.gg|.io)/[\w\d_\-]+', message.content):
             await bot.delete_message(message)
             ads = bot.get_channel('353534791624425472')
             await bot.send_message(ads, message.content)
