@@ -1,6 +1,7 @@
 Welcome to BotZilla Version 2 | **24/7 Online**\
+
+[![Discord Bots](https://discordbots.org/api/widget/397149515192205324.svg)](https://discordbots.org/bot/397149515192205324) \
 [![Discord Bots](https://discordbots.org/api/widget/status/397149515192205324.svg)](https://discordbots.org/bot/397149515192205324)
-[![Discord Bots](https://discordbots.org/api/widget/lib/397149515192205324.svg)](https://discordbots.org/bot/397149515192205324)
 
 ***`Note:`*** *`I do not offer support in self hosting, The following files should be used as a reference.
 I take no responsibility for cloned BotZilla versions in any shape, way or form.`* \
