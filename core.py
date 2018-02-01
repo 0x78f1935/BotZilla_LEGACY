@@ -252,6 +252,82 @@ async def on_member_join(member):
 
 @bot.event
 async def on_message_edit(before, message):
+    if message.author.bot: return
+
+    database.cur.execute("SELECT ID FROM botzilla.blacklist;")
+    row = database.cur.fetchall()
+    row = str(row).replace('[(', '')
+    row = row.replace(',)]', '')
+    database.cur.execute("ROLLBACK;")
+    if str(message.author.id) in row:
+        if str(message.content).startswith('{}'.format(config['prefix'])):
+            database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(message.author.id))
+            reason = database.cur.fetchall()
+            database.cur.execute("ROLLBACK;")
+            reason = str(reason).replace("[('", '')
+            reason = reason.replace("',)]", '')
+
+            database.cur.execute("SELECT total_votes FROM botzilla.blacklist where ID = {};".format(message.author.id))
+            votes = database.cur.fetchall()
+            database.cur.execute("ROLLBACK;")
+            votes = str(votes).replace('[(', '')
+            votes = votes.replace(',)]', '')
+
+            embed = discord.Embed(title='{}:'.format(message.author.name),
+                                  description='You have been blacklisted with **`{}`** votes,\n\nReason:\n```{}```'.format(votes, reason),
+                                  colour=0xf20006)
+            last_message = await bot.send_message(message.channel, embed=embed)
+            await bot.add_reaction(last_message, emojiUnicode['warning'])
+            return
+        else:
+            return
+
+    low_key_message = str(message.content).lower()
+    if 'shit' in low_key_message:
+        total = str(message.content).lower().count('shit')
+        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'shit', total = (total+{}) where swearword = 'shit';".format(total))
+        database.cur.execute("ROLLBACK;")
+
+    if 'fuck' in low_key_message:
+        total = str(message.content).lower().count('fuck')
+        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'fuck', total = (total+{}) where swearword = 'fuck';".format(total))
+        database.cur.execute("ROLLBACK;")
+
+    if 'damn' in low_key_message:
+        total = str(message.content).lower().count('damn')
+        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'damn', total = (total+{}) where swearword = 'damn';".format(total))
+        database.cur.execute("ROLLBACK;")
+
+    if '?' in low_key_message:
+        total = str(message.content).lower().count('?')
+        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'questionmark', total = (total+{}) where swearword = 'questionmark';".format(total))
+        database.cur.execute("ROLLBACK;")
+
+    if 'crap' in low_key_message:
+        total = str(message.content).lower().count('crap')
+        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'crap', total = (total+{}) where swearword = 'crap';".format(total))
+        database.cur.execute("ROLLBACK;")
+
+    if 'pussy' in low_key_message:
+        total = str(message.content).lower().count('pussy')
+        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'pussy', total = (total+{}) where swearword = 'pussy';".format(total))
+        database.cur.execute("ROLLBACK;")
+
+    if 'wtf' in low_key_message:
+        total = str(message.content).lower().count('wtf')
+        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'wtf', total = (total+{}) where swearword = 'wtf';".format(total))
+        database.cur.execute("ROLLBACK;")
+
+    if 'fag' in low_key_message:
+        total = str(message.content).lower().count('fag')
+        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'fag', total = (total+{}) where swearword = 'fag';".format(total))
+        database.cur.execute("ROLLBACK;")
+
+    if 'gay' in low_key_message:
+        total = str(message.content).lower().count('gay')
+        database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'gay', total = (total+{}) where swearword = 'gay';".format(total))
+        database.cur.execute("ROLLBACK;")
+
     if '265828729970753537' in message.server.id:
         if re.search(r'(https?://)?(www.)?discord(app.com/(invite|oauth2)|.gg|.io)/[\w\d_\-?=&/]+', message.content):
             await bot.delete_message(message)
@@ -263,6 +339,10 @@ async def on_message_edit(before, message):
             await bot.delete_message(message)
             ads = bot.get_channel('406922367093309443')
             await bot.send_message(ads, str(message.content).replace('@', ''))
+
+    if not str(message.content).startswith(config['prefix']): return
+
+    await bot.process_commands(message)
 
 
 @bot.event
