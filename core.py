@@ -330,6 +330,9 @@ async def on_message(message):
 
     if not str(message.content).startswith(config['prefix']): return
 
+    if message.server.id == '265828729970753537':
+        await bot.say('works')
+
     await bot.process_commands(message)
 
 
