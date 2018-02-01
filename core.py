@@ -250,7 +250,7 @@ async def on_member_join(member):
         print('Error gathering info user {} | {} :\n```Python\n{}```'.format(member.name, member.id, e.args))
 
 
-@bot.evet()
+@bot.event
 async def on_message_edit(message):
     if '265828729970753537' in message.server.id:
         if re.search(r'(https?://)?(www.)?discord(app.com/(invite|oauth2)|.gg|.io)/[\w\d_\-?=&/]+', message.content):
