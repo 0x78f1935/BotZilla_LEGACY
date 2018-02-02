@@ -71,7 +71,7 @@ class GameStats:
                 embed.add_field(name='Playtime', value=data['player']['stats']['casual']['playtime'], inline=True)
                 embed.add_field(name='Bullets Hit', value=data['player']['stats']['overall']['bullets_hit'], inline=True)
                 embed.set_footer(text='Data © Rainbow Six Siege contributors, https://r6stats.com/')
-                
+
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             except Exception as e:

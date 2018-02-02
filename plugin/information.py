@@ -403,6 +403,72 @@ class Utils:
     #   Bot related commands
 
 
+    @commands.command(pass_context=True, hidden=True)
+    async def pemr(self, ctx):
+        """
+        Check permissions of any user in the server
+        """
+        member = discord.utils.find(lambda m: m.name == ctx.message.author.name, ctx.message.server.members)
+        per = member.server_permissions
+        permissions = []
+        for i in per:
+            permissions.append(str(i))
+        perml = "\n".join(permissions)
+        perm_pretty = perml.replace('(', '').replace(')', '')
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='The following permissions are valid for `{}`\n```py\n{}\n```'.format(
+                                  perm_pretty),
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+    @commands.command(pass_context=True)
+    async def perm(self, ctx, *, username=None):
+        """
+        Check permissions of any user in the server
+        Leave blank to check your own permissions
+        """
+        if username is None:
+            member = discord.utils.find(lambda m: m.name == ctx.message.author.name, ctx.message.server.members)
+            per = member.server_permissions
+            permissions = []
+            for i in per:
+                permissions.append(str(i))
+            perml = "\n".join(permissions)
+            perm_pretty = perml.replace('(', '').replace(')', '')
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='The following permissions are valid for `{}`\n```py\n{}\n```'.format(
+                                      ctx.message.author.name, perm_pretty),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        else:
+            try:
+                username = username.replace('<@', '')
+                username = username.replace('>', '')
+                username = username.replace('!', '')
+                user = await self.bot.get_user_info(username)
+                member = discord.utils.find(lambda m: m.name == user.name, ctx.message.server.members)
+                per = member.server_permissions
+                permissions = []
+                for i in per:
+                    permissions.append(str(i))
+                perml = "\n".join(permissions)
+                perm_pretty = perml.replace('(', '').replace(')', '')
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='The following permissions are valid for `{}`\n```py\n{}\n```'.format(
+                                          user.name, perm_pretty),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            except:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Invalid username',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
     @commands.command(pass_context=True)
     async def poll(self, ctx, *questions_and_choices: str):
         """
@@ -710,7 +776,7 @@ class Utils:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             except:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Invalid username'.format(str(username)),
+                                      description='Invalid username',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
