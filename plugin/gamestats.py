@@ -82,7 +82,7 @@ class Leagues:
 
 
     @commands.command(pass_context=True, hidden=True)
-    async def rs3(self, ctx, *, account=None):
+    async def rs3(self, ctx, *, account: str = None):
         """Shows your Runescape 3 stats.
         Use your Runescape 3 username for this command"""
 
@@ -95,6 +95,9 @@ class Leagues:
             return
         else:
             try:
+                if ' ' in account:
+                    account = account.replace(' ', '%20')
+
                 url = "https://apps.runescape.com/runemetrics/profile?user={}".format(account)
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
