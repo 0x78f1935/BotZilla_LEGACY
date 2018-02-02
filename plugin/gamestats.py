@@ -201,7 +201,7 @@ class Leagues:
                 # embed.add_field(name='**Divination**', value=divination, inline=True)
                 # embed.add_field(name='Invention', value=invention, inline=True)
 
-                embed.set_footer(text='Data © Runescape contributors, https://apps.runescape.com/')
+                embed.set_footer(text='Data © Runescape contributors, https://apps.runescape.com/runemetrics/app/welcome')
 
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
