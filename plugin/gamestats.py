@@ -88,7 +88,7 @@ class Leagues:
 
         if account is None:
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                  description="I wonder if i could sell you on the market, use `{}help rs3` instead".format(self.config['prefix']),
+                                  description="I wonder if i could sell you on the market :moneybag:, use `{}help rs3` instead".format(self.config['prefix']),
                                   color=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
