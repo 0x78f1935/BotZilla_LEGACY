@@ -194,10 +194,10 @@ class Leagues:
                 embed.add_field(name='**Runecrafting**', value=runecrafting, inline=True)
                 embed.add_field(name='**Slayer**', value=slayer, inline=True)
                 embed.add_field(name='**Farming**', value=farming, inline=True)
-                embed.add_field(name='**Construction**', value=construction, inline=True)
+                embed.add_field(name='**Construction**', value='{}\n**Dungeoneering**\n{}'.format(construction, dungeoneering), inline=True)
                 embed.add_field(name='**Hunter**', value='{}\n**Divination**\n{}'.format(hunter, divination), inline=True)
                 embed.add_field(name='**Summoning**', value='{}\n**Invention**\n{}'.format(summoning, invention), inline=True)
-                embed.add_field(name='**Dungeoneering**', value=dungeoneering, inline=True)
+                # embed.add_field(name='**Dungeoneering**', value=dungeoneering, inline=True)
                 # embed.add_field(name='**Divination**', value=divination, inline=True)
                 # embed.add_field(name='Invention', value=invention, inline=True)
 
