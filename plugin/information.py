@@ -112,10 +112,10 @@ class Information:
             return
 
 
-    @commands.command(pass_context=True, aliases=["oauth", "invite"])
-    async def join(self, ctx):
+    @commands.command(pass_context=True, aliases=["oauth", "invite", "join"])
+    async def inv(self, ctx):
         """
-        Add BotZilla to your server!
+        Invite BotZilla to your server!
         Gives BotZilla OAuth url. Use this to add him to your server!
         When the database restarts botzilla will automatically join voice channels
         with 'music' or 'Music' in the name.
