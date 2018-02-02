@@ -314,6 +314,22 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
+    @commands.command(pass_context=True, hidden=True)
+    async def git(self, ctx):
+        """
+        Pull latest branch
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You may not use this command :angry: owner only..',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+        else:
+            os.system('git pull')
+
+
     @commands.command(pass_context=True, hidden=True, name='ct')
     async def clean_terminal(self, ctx):
         """
