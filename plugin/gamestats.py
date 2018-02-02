@@ -118,86 +118,88 @@ class Leagues:
                                       colour=0xf20006)
 
                 for item in data['skillvalues']:
-                    if item['id'] is 0:
-                        embed.add_field(name='**Attack**', value=item['level'], inline=True)
+                    if item['id'] == 0:
+                        attack = item['level']
+                    if item['id'] == 3:
+                        constitution = item['level']
+                    if item['id'] == 14:
+                        mining = item['level']
+                    if item['id'] == 2:
+                        strength = item['level']
+                    if item['id'] == 16:
+                        agility = item['level']
+                    if item['id'] == 13:
+                        smithing = item['level']
+                    if item['id'] == 1:
+                        defence = item['level']
+                    if item['id'] == 15:
+                        herblore = item['level']
+                    if item['id'] == 10:
+                        fishing = item['level']
+                    if item['id'] == 4:
+                        ranged = item['level']
+                    if item['id'] == 17:
+                        thieving = item['level']
+                    if item['id'] == 7:
+                        cooking = item['level']
+                    if item['id'] == 5:
+                        prayer = item['level']
+                    if item['id'] == 12:
+                        crafting = item['level']
+                    if item['id'] == 11:
+                        firemaking = item['level']
+                    if item['id'] == 6:
+                        magic = item['level']
+                    if item['id'] == 9:
+                        fletching = item['level']
+                    if item['id'] == 8:
+                        woodcutting = item['level']
+                    if item['id'] == 20:
+                        runecrafting = item['level']
+                    if item['id'] == 18:
+                        slayer = item['level']
+                    if item['id'] == 19:
+                        farming = item['level']
+                    if item['id'] == 22:
+                        construction = item['level']
+                    if item['id'] == 21:
+                        hunter = item['level']
+                    if item['id'] == 23:
+                        summoning = item['level']
+                    if item['id'] == 24:
+                        dungeoneering = item['level']
+                    if item['id'] == 25:
+                        divination = item['level']
+                    if item['id'] == 26:
+                        invention = item['level']
 
-                    if item['id'] is 3:
-                        embed.add_field(name='**Constitution**', value=item['level'], inline=True)
-
-                    if item['id'] is 14:
-                        embed.add_field(name='**Mining**', value=item['level'], inline=True)
-
-                    if item['id'] is 2:
-                        embed.add_field(name='**Strength**', value=item['level'], inline=True)
-
-                    if item['id'] is 16:
-                        embed.add_field(name='**Agility**', value=item['level'], inline=True)
-
-                    if item['id'] is 13:
-                        embed.add_field(name='**Smithing**', value=item['level'], inline=True)
-
-                    if item['id'] is 1:
-                        embed.add_field(name='**Defence**', value=item['level'], inline=True)
-
-                    if item['id'] is 15:
-                        embed.add_field(name='**Herblore**', value=item['level'], inline=True)
-
-                    if item['id'] is 10:
-                        embed.add_field(name='**Fishing**', value=item['level'], inline=True)
-
-                    if item['id'] is 4:
-                        embed.add_field(name='**Ranged**', value=item['level'], inline=True)
-
-                    if item['id'] is 17:
-                        embed.add_field(name='**Thieving**', value=item['level'], inline=True)
-
-                    if item['id'] is 7:
-                        embed.add_field(name='**Cooking**', value=item['level'], inline=True)
-
-                    if item['id'] is 5:
-                        embed.add_field(name='**Prayer**', value=item['level'], inline=True)
-
-                    if item['id'] is 12:
-                        embed.add_field(name='**Crafting**', value=item['level'], inline=True)
-
-                    if item['id'] is 11:
-                        embed.add_field(name='**Firemaking**', value=item['level'], inline=True)
-
-                    if item['id'] is 6:
-                        embed.add_field(name='**Magic**', value=item['level'], inline=True)
-
-                    if item['id'] is 9:
-                        embed.add_field(name='**Fletching**', value=item['level'], inline=True)
-
-                    if item['id'] is 8:
-                        embed.add_field(name='**Woodcutting**', value=item['level'], inline=True)
-
-                    if item['id'] is 20:
-                        embed.add_field(name='**Runecrafting**', value=item['level'], inline=True)
-
-                    if item['id'] is 18:
-                        embed.add_field(name='**Slayer**', value=item['level'], inline=True)
-
-                    if item['id'] is 19:
-                        embed.add_field(name='**Farming**', value=item['level'], inline=True)
-
-                    if item['id'] is 22:
-                        embed.add_field(name='**Construction**', value=item['level'], inline=True)
-
-                    if item['id'] is 21:
-                        embed.add_field(name='**Hunter**', value=item['level'], inline=True)
-
-                    if item['id'] is 23:
-                        embed.add_field(name='**Summoning**', value=item['level'], inline=True)
-
-                    if item['id'] is 24:
-                        embed.add_field(name='**Dungeoneering**', value=item['level'], inline=True)
-
-                    if item['id'] is 25:
-                        embed.add_field(name='**Divination**', value=item['level'], inline=True)
-
-                    if item['id'] is 26:
-                        embed.add_field(name='Invention', value=item['level'], inline=True)
+                embed.add_field(name='**Attack**', value=attack, inline=True)
+                embed.add_field(name='**Constitution**', value=constitution, inline=True)
+                embed.add_field(name='**Mining**', value=mining, inline=True)
+                embed.add_field(name='**Strength**', value=strength, inline=True)
+                embed.add_field(name='**Agility**', value=agility, inline=True)
+                embed.add_field(name='**Smithing**', value=smithing, inline=True)
+                embed.add_field(name='**Defence**', value=defence, inline=True)
+                embed.add_field(name='**Herblore**', value=herblore, inline=True)
+                embed.add_field(name='**Fishing**', value=fishing, inline=True)
+                embed.add_field(name='**Ranged**', value=ranged, inline=True)
+                embed.add_field(name='**Thieving**', value=thieving, inline=True)
+                embed.add_field(name='**Cooking**', value=cooking, inline=True)
+                embed.add_field(name='**Prayer**', value=prayer, inline=True)
+                embed.add_field(name='**Crafting**', value=crafting, inline=True)
+                embed.add_field(name='**Firemaking**', value=firemaking, inline=True)
+                embed.add_field(name='**Magic**', value=magic, inline=True)
+                embed.add_field(name='**Fletching**', value=fletching, inline=True)
+                embed.add_field(name='**Woodcutting**', value=woodcutting, inline=True)
+                embed.add_field(name='**Runecrafting**', value=runecrafting, inline=True)
+                embed.add_field(name='**Slayer**', value=slayer, inline=True)
+                embed.add_field(name='**Farming**', value=farming, inline=True)
+                embed.add_field(name='**Construction**', value=construction, inline=True)
+                embed.add_field(name='**Hunter**', value=hunter, inline=True)
+                embed.add_field(name='**Summoning**', value=summoning, inline=True)
+                embed.add_field(name='**Dungeoneering**', value=dungeoneering, inline=True)
+                embed.add_field(name='**Divination**', value=divination, inline=True)
+                embed.add_field(name='Invention', value=invention, inline=True)
 
                 embed.set_footer(text='Data © Runescape contributors, https://apps.runescape.com/')
 
