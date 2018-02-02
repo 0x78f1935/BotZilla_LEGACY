@@ -94,6 +94,7 @@ class Leagues:
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
         else:
+            old_account_name = account
             try:
                 if ' ' in account:
                     account = account.replace(' ', '%20')
@@ -115,11 +116,95 @@ class Leagues:
                                           data['name'], rank, data['combatlevel'], data['melee'], data['ranged'], data['magic'], data['totalxp'], data['loggedIn']
                                       ),
                                       colour=0xf20006)
+
+                for item in data['skillvalues']:
+                    if item['id'] is 0:
+                        embed.add_field(name='**Attack**', value=item['level'], inline=True)
+
+                    if item['id'] is 3:
+                        embed.add_field(name='**Constitution**', value=item['level'], inline=True)
+
+                    if item['id'] is 14:
+                        embed.add_field(name='**Mining**', value=item['level'], inline=True)
+
+                    if item['id'] is 2:
+                        embed.add_field(name='**Strength**', value=item['level'], inline=True)
+
+                    if item['id'] is 16:
+                        embed.add_field(name='**Agility**', value=item['level'], inline=True)
+
+                    if item['id'] is 13:
+                        embed.add_field(name='**Smithing**', value=item['level'], inline=True)
+
+                    if item['id'] is 1:
+                        embed.add_field(name='**Defence**', value=item['level'], inline=True)
+
+                    if item['id'] is 15:
+                        embed.add_field(name='**Herblore**', value=item['level'], inline=True)
+
+                    if item['id'] is 10:
+                        embed.add_field(name='**Fishing**', value=item['level'], inline=True)
+
+                    if item['id'] is 4:
+                        embed.add_field(name='**Ranged**', value=item['level'], inline=True)
+
+                    if item['id'] is 17:
+                        embed.add_field(name='**Thieving**', value=item['level'], inline=True)
+
+                    if item['id'] is 7:
+                        embed.add_field(name='**Cooking**', value=item['level'], inline=True)
+
+                    if item['id'] is 5:
+                        embed.add_field(name='**Prayer**', value=item['level'], inline=True)
+
+                    if item['id'] is 12:
+                        embed.add_field(name='**Crafting**', value=item['level'], inline=True)
+
+                    if item['id'] is 11:
+                        embed.add_field(name='**Firemaking**', value=item['level'], inline=True)
+
+                    if item['id'] is 6:
+                        embed.add_field(name='**Magic**', value=item['level'], inline=True)
+
+                    if item['id'] is 9:
+                        embed.add_field(name='**Fletching**', value=item['level'], inline=True)
+
+                    if item['id'] is 8:
+                        embed.add_field(name='**Woodcutting**', value=item['level'], inline=True)
+
+                    if item['id'] is 20:
+                        embed.add_field(name='**Runecrafting**', value=item['level'], inline=True)
+
+                    if item['id'] is 18:
+                        embed.add_field(name='**Slayer**', value=item['level'], inline=True)
+
+                    if item['id'] is 19:
+                        embed.add_field(name='**Farming**', value=item['level'], inline=True)
+
+                    if item['id'] is 22:
+                        embed.add_field(name='**Construction**', value=item['level'], inline=True)
+
+                    if item['id'] is 21:
+                        embed.add_field(name='**Hunter**', value=item['level'], inline=True)
+
+                    if item['id'] is 23:
+                        embed.add_field(name='**Summoning**', value=item['level'], inline=True)
+
+                    if item['id'] is 24:
+                        embed.add_field(name='**Dungeoneering**', value=item['level'], inline=True)
+
+                    if item['id'] is 25:
+                        embed.add_field(name='**Divination**', value=item['level'], inline=True)
+
+                    if item['id'] is 26:
+                        embed.add_field(name='Invention', value=item['level'], inline=True)
+                embed.set_footer(text='Data © Runescape contributors, https://apps.runescape.com/')
+
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Player **{}** not found'.format(account),
+                                      description='Player **{}** not found'.format(old_account_name),
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
