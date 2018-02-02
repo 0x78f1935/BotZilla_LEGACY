@@ -106,14 +106,14 @@ class Leagues:
 
                 source = json.dumps(source)
                 data = json.loads(str(source))
-                if data['rank'] == 'null':
+                if data['rank'] is None:
                     rank = 'Not played'
                 else:
                     rank = data['rank']
 
                 embed = discord.Embed(title='{} | {}:'.format(ctx.message.author.name, data['name']),
-                                      description='User: **{}**\nRanked: **{}**\nCombat LVL: **{}**\nTotal XP: **{}**\nOnline: **{}**'.format(
-                                          data['name'], rank, data['combatlevel'], data['totalxp'], data['loggedIn']
+                                      description='Ranked: **{}**\nCombat LVL: **{}**\nTotal XP: **{}**\nOnline: **{}**'.format(
+                                          rank, data['combatlevel'], data['totalxp'], data['loggedIn']
                                       ),
                                       colour=0xf20006)
 
