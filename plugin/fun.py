@@ -308,7 +308,7 @@ class Fun:
         return
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def meow(self, ctx):
         """
         Spawn a kitty cat!
