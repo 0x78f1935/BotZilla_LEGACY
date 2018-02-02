@@ -81,7 +81,7 @@ class Leagues:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def rs3(self, ctx, *, account: str = None):
         """Shows your Runescape 3 stats.
         Use your Runescape 3 username for this command"""
@@ -112,8 +112,8 @@ class Leagues:
                     rank = data['rank']
 
                 embed = discord.Embed(title='{} | {}:'.format(ctx.message.author.name, data['name']),
-                                      description='User: **{}**\nRanked: **{}**\nCombat LVL: **{}**\nMelee XP: **{}**\nRanged XP: **{}**\nMagic XP: **{}**\nTotal XP: **{}**\nOnline: **{}**'.format(
-                                          data['name'], rank, data['combatlevel'], data['melee'], data['ranged'], data['magic'], data['totalxp'], data['loggedIn']
+                                      description='User: **{}**\nRanked: **{}**\nCombat LVL: **{}**\nTotal XP: **{}**\nOnline: **{}**'.format(
+                                          data['name'], rank, data['combatlevel'], data['totalxp'], data['loggedIn']
                                       ),
                                       colour=0xf20006)
 
@@ -198,6 +198,7 @@ class Leagues:
 
                     if item['id'] is 26:
                         embed.add_field(name='Invention', value=item['level'], inline=True)
+
                 embed.set_footer(text='Data © Runescape contributors, https://apps.runescape.com/')
 
                 last_message = await self.bot.say(embed=embed)
