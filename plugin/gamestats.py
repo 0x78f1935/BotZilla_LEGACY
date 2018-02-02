@@ -81,7 +81,7 @@ class Leagues:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
 
-    @commands.command(pass_context=True, hidden=True)
+    @commands.command(pass_context=True)
     async def rs3(self, ctx, *, account: str = None):
         """Shows your Runescape 3 stats.
         Use your Runescape 3 username for this command"""
