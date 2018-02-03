@@ -153,7 +153,7 @@ async def get_users():
                 id_members, str(name_members)))
             database.cur.execute("ROLLBACK;")
         except Exception as e:
-            print('Error gathering info user:\n{}'.format(e.args))
+            print('Error gathering info user:\n{}'.format(e))
 
 
 async def auto_join_channels(music_playlist):
@@ -258,7 +258,7 @@ async def on_member_join(member):
         database.cur.execute("ROLLBACK;")
         print('{} | {} has been added to the database'.format(member.name, member.id))
     except Exception as e:
-        print('Error gathering info user {} | {} :\n```Python\n{}```'.format(member.name, member.id, e.args))
+        print('Error gathering info user {} | {} :\n```Python\n{}```'.format(member.name, member.id, e))
 
 
 @bot.event

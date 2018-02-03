@@ -302,13 +302,13 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         except discord.ext.commands.CommandInvokeError as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='```{}```'.format(e.args),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
         except discord.HTTPException as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='```{}```'.format(e.args),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -356,7 +356,7 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Error:\n```{}```'.format(e.args),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])

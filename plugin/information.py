@@ -773,7 +773,7 @@ class Utils:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='```Python\n{}\n```'.format(e.args),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])

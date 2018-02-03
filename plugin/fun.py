@@ -227,7 +227,7 @@ class Fun:
 
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Something went wrong:\n```{}```'.format(e.args),
+                                  description='Something went wrong:\n**{}:**\n```py\n{}```'.format(type(e).__name__, e),
                                   colour=0xf20006)
             embed.set_footer(text="Data © haveibeenpwned contributors, https://haveibeenpwned.com/About")
             a = await self.bot.say(embed=embed)

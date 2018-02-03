@@ -132,7 +132,7 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
         except HTTPException as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='Try to use `limit 10`. Output may be to big\n```Python\n{}```'.format(e.args),
+                                  description='Try to use `limit 10`. Output may be to big\n```Python\n{}```'.format(e),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -261,7 +261,7 @@ class Database:
                     writer.writerow([val])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='```Python\n{}\n```'.format(e.args),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -277,7 +277,7 @@ class Database:
                     writer.writerow([val])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='```Python\n{}\n```'.format(e.args),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -293,7 +293,7 @@ class Database:
                     writer.writerow([val])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='```Python\n{}\n```'.format(e.args),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -309,7 +309,7 @@ class Database:
                     writer.writerow([val])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='```Python\n{}\n```'.format(e.args),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -357,7 +357,7 @@ class Database:
                         pass
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='```Python\n{}\n```'.format(e.args),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -377,7 +377,7 @@ class Database:
 
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='```Python\n{}\n```'.format(e.args),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -396,7 +396,7 @@ class Database:
                         pass
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='```Python\n{}\n```'.format(e.args),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -456,7 +456,7 @@ class Database:
 
         except Exception as e:
             embed = discord.Embed(title='{}:'.format('Error'),
-                                  description='```Python\n{}```'.format(e.args),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
