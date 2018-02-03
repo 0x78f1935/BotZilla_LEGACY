@@ -33,7 +33,7 @@ class Help:
         """
         Show this message
         """
-        self.database.cur.execute("select name from botzilla.help where cog = 'Music';")
+        self.database.cur.execute("select name from botzilla.help where cog = 'Utils';")
         self.database.cur.execute("ROLLBACK;")
         Music_cog = self.database.cur.fetchall()
         music_commands = []
