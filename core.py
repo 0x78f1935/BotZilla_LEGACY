@@ -150,19 +150,19 @@ async def dbimport():
         else:
             print(f'{type(e).__name__} : {e}')
 
-    try:
-        for command in bot.walk_commands():
+    for command in bot.walk_commands():
+        try:
             hel = command.__dict__
             safe_name = str(hel['name']).replace("'", "\'").replace(';', '')
             safe_info = str(hel['help']).replace("'", "\'").replace(';', '')
             database.cur.execute("INSERT INTO botzilla.help (name, info) VALUES('{}', '{}');".format(safe_name, safe_info))
             database.cur.execute("ROLLBACK;")
 
-    except Exception as e:
-        if 'duplicate key' in str(e.args):
-            pass
-        else:
-            print(f'{type(e).__name__} : {e}')
+        except Exception as e:
+            if 'duplicate key' in str(e.args):
+                pass
+            else:
+                print(f'{type(e).__name__} : {e}')
 
 
 async def get_users():
