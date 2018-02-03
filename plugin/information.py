@@ -146,12 +146,12 @@ class Information:
             self.database.cur.execute("select count(*) from botzilla.users;")
             rows = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
-            a = str(rows).replace('[(', '')
-            self.total_users = a.replace(',)]', '')
+            a = str(rows).replace('(', '').replace('[', '')
+            self.total_users = a.replace(']', '').replace(',', '').replace(')', '')
             self.database.cur.execute("select extract(epoch from current_timestamp - pg_postmaster_start_time()) as uptime;")
             uptime = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
-            uptime = str(uptime).replace('[(', '').replace(',)]', '')
+            uptime = str(uptime).replace('(', '').replace(',', '').replace('[', '').replace(')', '').replace(']', '')
             uptime_in_minutes = str(float(uptime)/60).split('.')[0]
             uptime = '{} Minute(s)'.format(uptime_in_minutes)
             if int(uptime_in_minutes) >= 60:
@@ -217,7 +217,7 @@ class Information:
             self.database.cur.execute("select extract(epoch from current_timestamp - pg_postmaster_start_time()) as uptime;")
             uptime = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
-            uptime = str(uptime).replace('[(', '').replace(',)]', '')
+            uptime = str(uptime).replace('[', '').replace('(', '').replace(',', '').replace(')', '').replace(']', '')
             uptime_in_minutes = str(float(uptime)/60).split('.')[0]
             uptime = '{} Minute(s)'.format(uptime_in_minutes)
             if int(uptime_in_minutes) >= 60:

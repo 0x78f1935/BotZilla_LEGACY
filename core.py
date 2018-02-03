@@ -64,9 +64,15 @@ async def dbimport():
                     database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{};".format(row))
                     database.cur.execute("ROLLBACK;")
                 except Exception as e:
-                    print(f'{type(e).__name__} : {e}')
+                    if 'duplicate key' in e:
+                        pass
+                    else:
+                        print(f'{type(e).__name__} : {e}')
     except Exception as e:
-        print(f'{type(e).__name__} : {e}')
+        if 'duplicate key' in e:
+            pass
+        else:
+            print(f'{type(e).__name__} : {e}')
 
 
     #music channels
@@ -80,9 +86,15 @@ async def dbimport():
                     database.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES{};".format(row))
                     database.cur.execute("ROLLBACK;")
                 except Exception as e:
-                    print(f'{type(e).__name__} : {e}')
+                    if 'duplicate key' in e:
+                        pass
+                    else:
+                        print(f'{type(e).__name__} : {e}')
     except Exception as e:
-        print(f'{type(e).__name__} : {e}')
+        if 'duplicate key' in e:
+            pass
+        else:
+            print(f'{type(e).__name__} : {e}')
 
     try:
         with open(database.database_import_location_blacklist, 'r') as file:
@@ -95,9 +107,15 @@ async def dbimport():
                     database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES{};".format(row))
                     database.cur.execute("ROLLBACK;")
                 except Exception as e:
-                    print(f'{type(e).__name__} : {e}')
+                    if 'duplicate key' in e:
+                        pass
+                    else:
+                        print(f'{type(e).__name__} : {e}')
     except Exception as e:
-        print(f'{type(e).__name__} : {e}')
+        if 'duplicate key' in e:
+            pass
+        else:
+            print(f'{type(e).__name__} : {e}')
 
     # music urls
     try:
@@ -112,7 +130,10 @@ async def dbimport():
                 database.cur.execute("INSERT INTO botzilla.musicque(url) VALUES({});".format(row))
                 database.cur.execute("ROLLBACK;")
     except Exception as e:
-        print(f'{type(e).__name__} : {e}')
+        if 'duplicate key' in e:
+            pass
+        else:
+            print(f'{type(e).__name__} : {e}')
 
     # Blacklist
     try:
@@ -124,7 +145,10 @@ async def dbimport():
             item = item.replace(',)', '')
             database.blacklist.append(item)
     except Exception as e:
-        print(f'{type(e).__name__} : {e}')
+        if 'duplicate key' in e:
+            pass
+        else:
+            print(f'{type(e).__name__} : {e}')
 
     try:
         for command in bot.walk_commands():
@@ -135,7 +159,10 @@ async def dbimport():
             database.cur.execute("ROLLBACK;")
 
     except Exception as e:
-        print(f'{type(e).__name__} : {e}')
+        if 'duplicate key' in e:
+            pass
+        else:
+            print(f'{type(e).__name__} : {e}')
 
 
 async def get_users():
@@ -153,7 +180,10 @@ async def get_users():
                 id_members, str(name_members)))
             database.cur.execute("ROLLBACK;")
         except Exception as e:
-            print('Error gathering info user:\n{}'.format(e))
+            if 'duplicate key' in e:
+                pass
+            else:
+                print(f'{type(e).__name__} : {e}')
 
 
 async def auto_join_channels(music_playlist):
@@ -362,22 +392,19 @@ async def on_message(message):
 
     database.cur.execute("SELECT ID FROM botzilla.blacklist;")
     row = database.cur.fetchall()
-    row = str(row).replace('[(', '')
-    row = row.replace(',)]', '')
+    row = str(row).replace('[', '').replace('(', '').replace(']', '').replace(',', '').replace(')', '')
     database.cur.execute("ROLLBACK;")
     if str(message.author.id) in row:
         if str(message.content).startswith('{}'.format(config['prefix'])):
             database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(message.author.id))
             reason = database.cur.fetchall()
             database.cur.execute("ROLLBACK;")
-            reason = str(reason).replace("[('", '')
-            reason = reason.replace("',)]", '')
+            reason = str(reason).replace("'", '').replace('[', '').replace('(', '').replace(',', '').replace(')', '').replace(']', '')
 
             database.cur.execute("SELECT total_votes FROM botzilla.blacklist where ID = {};".format(message.author.id))
             votes = database.cur.fetchall()
             database.cur.execute("ROLLBACK;")
-            votes = str(votes).replace('[(', '')
-            votes = votes.replace(',)]', '')
+            votes = str(votes).replace('(', '').replace('[', '').replace(',', '').replace(')', '').replace(']', '')
 
             embed = discord.Embed(title='{}:'.format(message.author.name),
                                   description='You have been blacklisted with **`{}`** votes,\n\nReason:\n```{}```'.format(votes, reason),
