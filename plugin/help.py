@@ -33,7 +33,7 @@ class Help:
         """
         Show this message
         """
-        all_cogs = ['Exchange', 'Fun', 'GameStats', 'Games', 'Images', 'Information', 'Music', 'Utils']
+        all_cogs = ['Exchange', 'Fun', 'GameStats']
         command_list = []
         embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
                               color=0xf20006)
