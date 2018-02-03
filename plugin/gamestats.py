@@ -89,7 +89,7 @@ class GameStats:
 
         if account is None:
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                  description="I wonder if i could sell you on the market :moneybag:, use `{}help rs3` instead".format(self.config['prefix']),
+                                  description="I wonder if i could sell you on the market instead :moneybag:, use `{}help rs3` instead".format(self.config['prefix']),
                                   color=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
@@ -174,33 +174,62 @@ class GameStats:
                     if item['id'] == 26:
                         invention = item['level']
 
-                embed.add_field(name='**Attack**', value=attack, inline=True)
-                embed.add_field(name='**Constitution**', value=constitution, inline=True)
-                embed.add_field(name='**Mining**', value=mining, inline=True)
-                embed.add_field(name='**Strength**', value=strength, inline=True)
-                embed.add_field(name='**Agility**', value=agility, inline=True)
-                embed.add_field(name='**Smithing**', value=smithing, inline=True)
-                embed.add_field(name='**Defence**', value=defence, inline=True)
-                embed.add_field(name='**Herblore**', value=herblore, inline=True)
-                embed.add_field(name='**Fishing**', value=fishing, inline=True)
-                embed.add_field(name='**Ranged**', value=ranged, inline=True)
-                embed.add_field(name='**Thieving**', value=thieving, inline=True)
-                embed.add_field(name='**Cooking**', value=cooking, inline=True)
-                embed.add_field(name='**Prayer**', value=prayer, inline=True)
-                embed.add_field(name='**Crafting**', value=crafting, inline=True)
-                embed.add_field(name='**Firemaking**', value=firemaking, inline=True)
-                embed.add_field(name='**Magic**', value=magic, inline=True)
-                embed.add_field(name='**Fletching**', value=fletching, inline=True)
-                embed.add_field(name='**Woodcutting**', value=woodcutting, inline=True)
-                embed.add_field(name='**Runecrafting**', value=runecrafting, inline=True)
-                embed.add_field(name='**Slayer**', value=slayer, inline=True)
-                embed.add_field(name='**Farming**', value=farming, inline=True)
-                embed.add_field(name='**Construction**', value='{}\n**Dungeoneering**\n{}'.format(construction, dungeoneering), inline=True)
-                embed.add_field(name='**Hunter**', value='{}\n**Divination**\n{}'.format(hunter, divination), inline=True)
-                embed.add_field(name='**Summoning**', value='{}\n**Invention**\n{}'.format(summoning, invention), inline=True)
-                # embed.add_field(name='**Dungeoneering**', value=dungeoneering, inline=True)
-                # embed.add_field(name='**Divination**', value=divination, inline=True)
-                # embed.add_field(name='Invention', value=invention, inline=True)
+                icon = {"Crafting": "<:Crafting:406361343168610305>",
+                        "Agility": "<:Agility:406361343210553344>",
+                        "Constitution": "<:Constitution:406361343222874112>",
+                        "Attack": "<:Attack:406361343223136256>",
+                        "Ranged": "<:Ranged:406361343298502658>",
+                        "Construction":"<:Construction:406361343302565888>",
+                        "Thieving": "<:Thieving:406361343302696962>",
+                        "Defence": "<:Defence:406361343348834304>",
+                        "Fletching": "<:Fletching:406361343353159691>",
+                        "Strength": "<:Strength:406361343357222914>",
+                        "Cooking": "<:Cooking:406361343361548298>",
+                        "Divination": "<:Divination:406361343374131211>",
+                        "Dungeoneering": "<:Dungeoneering:406361343386451979>",
+                        "Slayer": "<:Slayer:406361343407685633>",
+                        "Hunter": "<:Hunter:406361343474532353>",
+                        "Smithing": "<:Smithing:406361343487115265>",
+                        "Mining": "<:Mining:406361343583584256>",
+                        "Fishing": "<:Fishing:406361343583846410>",
+                        "Invention": "<:Invention:406361343591972864>",
+                        "Runecrafting": "<:Runecrafting:406361343596298250>",
+                        "Woodcutting": "<:Woodcutting:406361343718064128>",
+                        "Firemaking": "<:Firemaking:406361343718064129>",
+                        "Summoning": "<:Summoning:406361343843631107>",
+                        "blank": "<:blank:406378361418547201>",
+                        "Farming": "<:Farming:406361343407423498>",
+                        "Prayer": "<:Prayer:406361343445434390>",
+                        "Magic": "<:Magic:406361343608881152>",
+                        "Herblore": "<:Herblore:406361343554355210>"}
+
+                embed.add_field(name='**Attack**', value='{}{}'.format(icon['Attack'], attack), inline=True)
+                embed.add_field(name='**Constitution**', value='{}{}'.format(icon['Constitution'], constitution), inline=True)
+                embed.add_field(name='**Mining**', value='{}{}'.format(icon['Mining'], mining), inline=True)
+                embed.add_field(name='**Strength**', value='{}{}'.format(icon['Strength'], strength), inline=True)
+                embed.add_field(name='**Agility**', value='{}{}'.format(icon['Agility'], agility), inline=True)
+                embed.add_field(name='**Smithing**', value='{}{}'.format(icon['Smithing'], smithing), inline=True)
+                embed.add_field(name='**Defence**', value='{}{}'.format(icon['Defence'], defence), inline=True)
+                embed.add_field(name='**Herblore**', value='{}{}'.format(icon['Herblore'], herblore), inline=True)
+                embed.add_field(name='**Fishing**', value='{}{}'.format(icon['Fishing'], fishing), inline=True)
+                embed.add_field(name='**Ranged**', value='{}{}'.format(icon['Ranged'], ranged), inline=True)
+                embed.add_field(name='**Thieving**', value='{}{}'.format(icon['Thieving'], thieving), inline=True)
+                embed.add_field(name='**Cooking**', value='{}{}'.format(icon['Cooking'], cooking), inline=True)
+                embed.add_field(name='**Prayer**', value='{}{}'.format(icon['Prayer'], prayer), inline=True)
+                embed.add_field(name='**Crafting**', value='{}{}'.format(icon['Crafting'], crafting), inline=True)
+                embed.add_field(name='**Firemaking**', value='{}{}'.format(icon['Firemaking'], firemaking), inline=True)
+                embed.add_field(name='**Magic**', value='{}{}'.format(icon['Magic'], magic), inline=True)
+                embed.add_field(name='**Fletching**', value='{}{}'.format(icon['Fletching'], fletching), inline=True)
+                embed.add_field(name='**Woodcutting**', value='{}{}'.format(icon['Woodcutting'], woodcutting), inline=True)
+                embed.add_field(name='**Runecrafting**', value='{}{}'.format(icon['Runecrafting'], runecrafting), inline=True)
+                embed.add_field(name='**Slayer**', value='{}{}'.format(icon['Slayer'], slayer), inline=True)
+                embed.add_field(name='**Farming**', value='{}{}'.format(icon['Farming'], farming), inline=True)
+                embed.add_field(name='**Construction**', value='{}{}\n**Dungeoneering**\n{}{}'.format(icon['Construction'], construction, icon['Dungeoneering'], dungeoneering), inline=True)
+                embed.add_field(name='**Hunter**', value='{}{}\n**Divination**\n{}{}'.format(icon['Hunter'], hunter, icon['Divination'], divination), inline=True)
+                embed.add_field(name='**Summoning**', value='{}{}\n**Invention**\n{}{}'.format(icon['Summoning'], summoning, icon['Invention'], invention), inline=True)
+                # embed.add_field(name='**Dungeoneering**', value='{}{}'.format(icon['Dungeoneering'], dungeoneering), inline=True)
+                # embed.add_field(name='**Divination**', value='{}{}'.format(icon['Divination'], divination), inline=True)
+                # embed.add_field(name='Invention', value='{}{}'.format(icon['Invention'], Invention), inline=True)
 
                 embed.set_footer(text='Data © Runescape contributors, https://apps.runescape.com/runemetrics/app/welcome')
 
