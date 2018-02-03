@@ -119,7 +119,7 @@ class Help:
             Admin_cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             Admin_commands = []
-            for i in Utils_cog:
+            for i in Admin_cog:
                 i = '`{}{}`'.format(self.config['prefix'], i[0])
                 Admin_commands.append(i)
             Admin_name = "\n".join(Admin_commands)
