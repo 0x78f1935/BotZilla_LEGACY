@@ -33,9 +33,9 @@ class Help:
         """
         Show this message
         """
-        self.database.cur.execute("select name from botzilla.help where cog = 'Utils';")
-        self.database.cur.execute("ROLLBACK;")
+        self.database.cur.execute("select name from botzilla.help where cog = 'Music';")
         Music_cog = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
         music_commands = []
         for i in Music_cog:
             i = '`{}`'.format(i[0])
