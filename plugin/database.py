@@ -159,19 +159,20 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
 
-        data_members = {"id" : "name"}
-        for server in self.bot.servers:
-            for member in server.members:
-                data_members.update({member.id:member.name})
+        try:
+            for server in self.bot.servers:
+                for member in server.members:
+                    username = str(member.name).replace("'", '').replace(';', '')
+                    self.cur.execute(
+                        "INSERT INTO botzilla.users (ID, name) VALUES ('{}, '{}');".format(member.id, username))
+                    self.cur.execute("ROLLBACK;")
 
-        for id_members, name_members in data_members.items():
-            try:
-                self.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, \'{}\');'.format(
-                    id_members, str(name_members)))
-                self.cur.execute("ROLLBACK;")
-            except Exception as e:
-                print('Error gathering info user:\n```Python\n{}```'.format(e.args))
-                continue
+        except Exception as e:
+            if 'duplicate key' in str(e.args):
+                pass
+            else:
+                print(f'{type(e).__name__} : {e}')
+
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Done with gathering user info!',
                               colour=0xf20006)

@@ -169,21 +169,19 @@ async def get_users():
     """
     Update datebase with current active users
     """
-    data_members = {"id" : "name"}
-    for server in bot.servers:
-        for member in server.members:
-            data_members.update({member.id:member.name})
+    try:
+        for server in bot.servers:
+            for member in server.members:
+                username = str(member.name).replace("'", '').replace(';', '')
+                database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ('{}, '{}');".format(member.id, username))
+                database.cur.execute("ROLLBACK;")
 
-    for id_members, name_members in data_members.items():
-        try:
-            database.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, \'{}\');'.format(
-                id_members, str(name_members)))
-            database.cur.execute("ROLLBACK;")
-        except Exception as e:
-            if 'duplicate key' in str(e.args):
-                pass
-            else:
-                print(f'{type(e).__name__} : {e}')
+    except Exception as e:
+        if 'duplicate key' in str(e.args):
+            pass
+        else:
+            print(f'{type(e).__name__} : {e}')
+
 
 
 async def auto_join_channels(music_playlist):
