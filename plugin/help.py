@@ -38,7 +38,7 @@ class Help:
         self.database.cur.execute("ROLLBACK;")
         music_commands = []
         for i in Music_cog:
-            i = '-`{}`'.format(i[0])
+            i = '-`{}{}`'.format(self.config['prefix'], i[0])
             music_commands.append(i)
         music_name = "\n".join(music_commands)
 
