@@ -115,7 +115,7 @@ class Help:
         Exchange_name = Exchange_name + '\n'
 
         if ctx.message.author.id in self.owner_list:
-            self.database.cur.execute("select name from botzilla.help where cog = 'Admin';")
+            self.database.cur.execute("select name from botzilla.help where cog = 'AdminCommands';")
             Admin_cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             Admin_commands = []
