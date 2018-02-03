@@ -33,21 +33,39 @@ class Help:
         """
         Show this message
         """
+        self.database.cur.execute("select name from botzilla.help where cog = 'Information';")
+        Information_cog = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
+        Information_commands = []
+        for i in Information_cog:
+            i = '`{}{}`'.format(self.config['prefix'], i[0])
+            Information_commands.append(i)
+        Information_name = "\n".join(Information_commands)
+
         self.database.cur.execute("select name from botzilla.help where cog = 'Music';")
         Music_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
-        music_commands = []
+        Music_commands = []
         for i in Music_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
-            music_commands.append(i)
-        music_name = "\n".join(music_commands)
+            Music_commands.append(i)
+        Music_name = "\n".join(Music_commands)
+
+        self.database.cur.execute("select name from botzilla.help where cog = 'Utils';")
+        Utils_cog = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
+        Utils_commands = []
+        for i in Utils_cog:
+            i = '`{}{}`'.format(self.config['prefix'], i[0])
+            Utils_commands.append(i)
+        Utils_name = "\n".join(Utils_commands)
 
         embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
                               color=0xf20006)
 
-        embed.add_field(name='Information', value=music_name, inline=True)
-        embed.add_field(name='Music', value=music_name, inline=True)
-        embed.add_field(name='Utils', value=music_name, inline=True)
+        embed.add_field(name='Information', value=Information_name, inline=True)
+        embed.add_field(name='Music', value=Music_name, inline=True)
+        embed.add_field(name='Utils', value=Utils_name, inline=True)
 
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
