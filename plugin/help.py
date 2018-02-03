@@ -150,6 +150,7 @@ class Help:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             return
 
+        command = str(command).replace(';', '').replace("'", '')
         try:
             self.database.cur.execute("select * from botzilla.help where name = '{}';".format(command))
             cog = self.database.cur.fetchall()
