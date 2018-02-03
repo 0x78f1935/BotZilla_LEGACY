@@ -177,7 +177,8 @@ async def on_ready():
         "gamestats",
         "information",
         "python_code_in_dc",
-        "test"
+        "test",
+        "help"
     )
 
     # load plugins
