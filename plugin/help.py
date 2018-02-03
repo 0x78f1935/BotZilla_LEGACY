@@ -125,29 +125,39 @@ class Help:
             Admin_name = "\n".join(Admin_commands)
             Admin_name = Admin_name + '\n'
 
-        embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
-                              color=0xf20006)
+        if command is None:
+            embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
+                                  description="""
+                                  `Discord Bot List, Upvote would be appreciated` :heart:
+                                  ```https://discordbots.org/bot/397149515192205324```
+                                  `Direct invite link for Bot2illa` :GWblobbFistbumpL: :GWblobbFistbumpR: 
+                                  ```https://discordapp.com/oauth2/authorize?client_id=397149515192205324&permissions=1261448256&scope=bot```
+                                  `Github Page` :GWicymanRly:
+                                  ```https://github.com/Annihilator708/DiscordBot-BotZilla```
+                                  `Server invite link` :GWdarateroKnuckles: 
+                                  ```https://discord.gg/ybgfVQA```
+                                  """,
+                                  color=0xf20006)
 
+            embed.add_field(name='Games', value=Games_name, inline=True)
+            embed.add_field(name='GameStats', value=GameStats_name, inline=True)
+            embed.add_field(name='Fun', value=Fun_name, inline=True)
 
-        embed.add_field(name='Games', value=Games_name, inline=True)
-        embed.add_field(name='GameStats', value=GameStats_name, inline=True)
-        embed.add_field(name='Fun', value=Fun_name, inline=True)
+            embed.add_field(name= '̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞ ', value='̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞ ', inline=False)
 
-        embed.add_field(name= '̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞ ', value='̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞ ', inline=False)
+            embed.add_field(name='Information', value=Information_name, inline=True)
+            embed.add_field(name='Music', value=Music_name, inline=True)
+            embed.add_field(name='Utils', value=Utils_name, inline=True)
 
-        embed.add_field(name='Information', value=Information_name, inline=True)
-        embed.add_field(name='Music', value=Music_name, inline=True)
-        embed.add_field(name='Utils', value=Utils_name, inline=True)
+            embed.add_field(name='̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞ ', value='̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞ ', inline=False)
 
-        embed.add_field(name='̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞ ', value='̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞ ', inline=False)
+            embed.add_field(name='Images', value=Images_name, inline=True)
+            embed.add_field(name='Exchange', value=Exchange_name, inline=True)
+            if ctx.message.author.id in self.owner_list:
+                embed.add_field(name='Admin', value=Admin_name, inline=True)
 
-        embed.add_field(name='Images', value=Images_name, inline=True)
-        embed.add_field(name='Exchange', value=Exchange_name, inline=True)
-        if ctx.message.author.id in self.owner_list:
-            embed.add_field(name='Admin', value=Admin_name, inline=True)
-
-        a = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
 def setup(bot):
