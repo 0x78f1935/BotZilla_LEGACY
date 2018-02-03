@@ -115,7 +115,7 @@ async def dbimport():
             hel = command.__dict__
             safe_name = str(command.name).replace("'", "\'").replace(';', '')
             safe_cog = str(command.cog_name).replace("'", "\'").replace(';', '')
-            safe_info = str(hel['help']).replace("'", "\'").replace(';', '')
+            safe_info = str(hel['help']).replace("'", "\'").replace(';', '<insert semicolon here>')
             database.cur.execute("INSERT INTO botzilla.help (name, cog, info) VALUES('{}', '{}', '{}');".format(safe_name, safe_cog, safe_info))
             database.cur.execute("ROLLBACK;")
 
