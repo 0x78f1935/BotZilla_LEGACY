@@ -33,3 +33,5 @@ INSERT INTO botzilla.swearwords(swearword, total) VALUES ('pussy', 0);
 INSERT INTO botzilla.swearwords(swearword, total) VALUES ('wtf', 0);
 INSERT INTO botzilla.swearwords(swearword, total) VALUES ('fag', 0);
 INSERT INTO botzilla.swearwords(swearword, total) VALUES ('gay', 0);
+
+CREATE TABLE botzilla.help(name varchar primary key, info text);

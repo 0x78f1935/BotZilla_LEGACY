@@ -24,17 +24,6 @@ def to_emoji(c):
     return chr(base + c)
 
 
-class NoPrivateMessages(commands.CheckFailure):
-    pass
-
-def guild_only():
-    async def predicate(ctx):
-        if ctx.guild is None:
-            raise NoPrivateMessages('Hey no DMs!')
-        return True
-    return commands.check(predicate)
-
-
 class Information:
     """
     Informative commands for the bot.
@@ -401,26 +390,6 @@ class Utils:
 
     # ========================
     #   Bot related commands
-
-
-    @commands.command(pass_context=True, hidden=True)
-    async def pemr(self, ctx):
-        """
-        Check permissions of any user in the server
-        """
-        member = discord.utils.find(lambda m: m.name == ctx.message.author.name, ctx.message.server.members)
-        per = member.server_permissions
-        permissions = []
-        for i in per:
-            permissions.append(str(i))
-        perml = "\n".join(permissions)
-        perm_pretty = perml.replace('(', '').replace(')', '')
-        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='The following permissions are valid for `{}`\n```py\n{}\n```'.format(
-                                  perm_pretty),
-                              colour=0xf20006)
-        a = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
     @commands.command(pass_context=True)
     async def perm(self, ctx, *, username=None):
