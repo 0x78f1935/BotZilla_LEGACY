@@ -6,7 +6,8 @@ CREATE TABLE botzilla.users(
 -- INSERT INTO botzilla.users (ID, name) VALUES (456164513, 'test15');
 
 CREATE TABLE botzilla.help(
-    name varchar primary key,
+    name varchar(200) primary key,
+    cog varchar(200),
     info varchar(1500)
 );
 

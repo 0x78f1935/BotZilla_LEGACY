@@ -113,9 +113,10 @@ async def dbimport():
     for command in bot.walk_commands():
         try:
             hel = command.__dict__
-            safe_name = str(hel['name']).replace("'", "\'").replace(';', '')
+            safe_name = str(command.name).replace("'", "\'").replace(';', '')
+            safe_cog = str(command.cog_name).replace("'", "\'").replace(';', '')
             safe_info = str(hel['help']).replace("'", "\'").replace(';', '')
-            database.cur.execute("INSERT INTO botzilla.help (name, info) VALUES('{}', '{}');".format(safe_name, safe_info))
+            database.cur.execute("INSERT INTO botzilla.help (name, info) VALUES('{}', '{}', '{}');".format(safe_name, safe_cog, safe_info))
             database.cur.execute("ROLLBACK;")
 
         except Exception as e:
