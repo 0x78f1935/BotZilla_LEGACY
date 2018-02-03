@@ -46,7 +46,7 @@ class Help:
             for i in cog:
                 i = '`{}{}`'.format(self.config['prefix'], i[0])
                 commands.append(i)
-                command_list = command_list.append("\n".join(commands))
+                command_list.append("\n".join(commands))
 
             for command in command_list:
                 embed.add_field(name=cog, value=command, inline=True)
