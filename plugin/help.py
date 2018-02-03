@@ -142,6 +142,7 @@ class Help:
             if ctx.message.author.id in self.owner_list:
                 embed.add_field(name='Admin', value=Admin_name, inline=True)
 
+            embed.set_thumbnail(url='https://raw.githubusercontent.com/Annihilator708/DiscordBot-BotZilla/master/icon.png')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
