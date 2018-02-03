@@ -148,6 +148,28 @@ class Help:
             embed.set_thumbnail(url='https://raw.githubusercontent.com/Annihilator708/DiscordBot-BotZilla/master/icon.png')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            return
+
+        try:
+            self.database.cur.execute("select * from botzilla.help where cog = '{}';".format(command))
+            cog = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+
+            embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
+                                  color=0xf20006)
+            embed.add_field(name='Command name', value=cog[0], inline=False)
+            embed.add_field(name='Description', value=cog[2], inline=False)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Command **`{}`** not found. You can use **`{}help`** to see all the commands available.\nTo get more info about a command listed in **`{}help`**, use **`{}help [command]`** instead.\nFor Example: **`{}help inv`**'.format(
+                                      command, self.config['prefix'], self.config['prefix'], self.config['prefix'], self.config['prefix']
+                                  ),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
 def setup(bot):
