@@ -64,12 +64,12 @@ async def dbimport():
                     database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{};".format(row))
                     database.cur.execute("ROLLBACK;")
                 except Exception as e:
-                    if 'duplicate key' in e:
+                    if 'duplicate key' in e.args:
                         pass
                     else:
                         print(f'{type(e).__name__} : {e}')
     except Exception as e:
-        if 'duplicate key' in e:
+        if 'duplicate key' in e.args:
             pass
         else:
             print(f'{type(e).__name__} : {e}')
@@ -86,12 +86,12 @@ async def dbimport():
                     database.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES{};".format(row))
                     database.cur.execute("ROLLBACK;")
                 except Exception as e:
-                    if 'duplicate key' in e:
+                    if 'duplicate key' in e.args:
                         pass
                     else:
                         print(f'{type(e).__name__} : {e}')
     except Exception as e:
-        if 'duplicate key' in e:
+        if 'duplicate key' in e.args:
             pass
         else:
             print(f'{type(e).__name__} : {e}')
@@ -107,12 +107,12 @@ async def dbimport():
                     database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES{};".format(row))
                     database.cur.execute("ROLLBACK;")
                 except Exception as e:
-                    if 'duplicate key' in e:
+                    if 'duplicate key' in e.args:
                         pass
                     else:
                         print(f'{type(e).__name__} : {e}')
     except Exception as e:
-        if 'duplicate key' in e:
+        if 'duplicate key' in e.args:
             pass
         else:
             print(f'{type(e).__name__} : {e}')
@@ -130,7 +130,7 @@ async def dbimport():
                 database.cur.execute("INSERT INTO botzilla.musicque(url) VALUES({});".format(row))
                 database.cur.execute("ROLLBACK;")
     except Exception as e:
-        if 'duplicate key' in e:
+        if 'duplicate key' in e.args:
             pass
         else:
             print(f'{type(e).__name__} : {e}')
@@ -145,7 +145,7 @@ async def dbimport():
             item = item.replace(',)', '')
             database.blacklist.append(item)
     except Exception as e:
-        if 'duplicate key' in e:
+        if 'duplicate key' in e.args:
             pass
         else:
             print(f'{type(e).__name__} : {e}')
@@ -159,7 +159,7 @@ async def dbimport():
             database.cur.execute("ROLLBACK;")
 
     except Exception as e:
-        if 'duplicate key' in e:
+        if 'duplicate key' in e.args:
             pass
         else:
             print(f'{type(e).__name__} : {e}')
@@ -180,7 +180,7 @@ async def get_users():
                 id_members, str(name_members)))
             database.cur.execute("ROLLBACK;")
         except Exception as e:
-            if 'duplicate key' in e:
+            if 'duplicate key' in e.args:
                 pass
             else:
                 print(f'{type(e).__name__} : {e}')
