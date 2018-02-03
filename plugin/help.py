@@ -33,19 +33,25 @@ class Help:
         """
         Show this message
         """
-        self.database.cur.execute("select name from botzilla.help where cog = 'Music';")
-        Music_cog = self.database.cur.fetchall()
-        self.database.cur.execute("ROLLBACK;")
-        music_commands = []
-        for i in Music_cog:
-            i = '`{}{}`'.format(self.config['prefix'], i[0])
-            music_commands.append(i)
-        music_name = "\n".join(music_commands)
-
-        embed = discord.Embed(title="{}".format(ctx.message.author.name),
+        all_cogs = ['Exchange', 'Fun', 'GameStats', 'Games', 'Images', 'Information', 'Music', 'Utils']
+        command_list = []
+        embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
                               color=0xf20006)
+        for cog in all_cogs:
 
-        embed.add_field(name='Music', value=music_name)
+            self.database.cur.execute("select name from botzilla.help where cog = '{}';".format(cog))
+            cog = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            commands = []
+            for i in cog:
+                i = '`{}{}`'.format(self.config['prefix'], i[0])
+                commands.append(i)
+            command_list = command_list.append("\n".join(commands))
+
+            for command in command_list:
+                embed.add_field(name=cog, value=command, inline=True)
+
+
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
