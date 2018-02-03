@@ -164,7 +164,7 @@ class Database:
                 for member in server.members:
                     username = str(member.name).replace("'", '').replace(';', '')
                     self.cur.execute(
-                        "INSERT INTO botzilla.users (ID, name) VALUES ('{}, '{}');".format(member.id, username))
+                        "INSERT INTO botzilla.users (ID, name) VALUES ('{}', '{}');".format(member.id, username))
                     self.cur.execute("ROLLBACK;")
 
         except Exception as e:

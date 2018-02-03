@@ -59,8 +59,7 @@ async def dbimport():
             reader = csv.reader(file, delimiter=',')
             for row in reader:
                 try:
-                    row = str(row).replace('["', '')
-                    row = str(row).replace('"]', '')
+                    row = str(row).replace('"', '').replace('[', '').replace(']', '').replace("'", '').replace('(', '').replace(')', '')
                     database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{};".format(row))
                     database.cur.execute("ROLLBACK;")
                 except Exception as e:
@@ -173,7 +172,7 @@ async def get_users():
         for server in bot.servers:
             for member in server.members:
                 username = str(member.name).replace("'", '').replace(';', '')
-                database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ('{}, '{}');".format(member.id, username))
+                database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ('{}', '{}');".format(member.id, username))
                 database.cur.execute("ROLLBACK;")
 
     except Exception as e:
