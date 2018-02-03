@@ -38,13 +38,14 @@ class Help:
         self.database.cur.execute("ROLLBACK;")
         music_commands = []
         for i in Music_cog:
-            i = '-`{}{}`'.format(self.config['prefix'], i[0])
+            i = '`{}{}`'.format(self.config['prefix'], i[0])
             music_commands.append(i)
         music_name = "\n".join(music_commands)
 
         embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                              description="{}".format(music_name),
                               color=0xf20006)
+
+        embed.add_field(name='Music', value=music_name)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
