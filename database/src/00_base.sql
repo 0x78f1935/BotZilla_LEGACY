@@ -1,7 +1,7 @@
 CREATE SCHEMA botzilla;
 CREATE TABLE botzilla.users(
     ID bigserial primary key,
-    name varchar(254)
+    name varchar(508)
 );
 -- INSERT INTO botzilla.users (ID, name) VALUES (456164513, 'test15');
 
@@ -12,20 +12,20 @@ CREATE TABLE botzilla.help(
 
 CREATE TABLE botzilla.music(
     ID bigserial primary key,
-    channel_name varchar(254),
-    server_name varchar(254),
+    channel_name varchar(508),
+    server_name varchar(508),
     type_channel varchar(24)
 );
 
 CREATE TABLE botzilla.blacklist(
     ID bigserial primary key,
-    server_name varchar(254),
+    server_name varchar(508),
     reason varchar(2000),
     total_votes integer
 );
 
 CREATE TABLE botzilla.swearwords(
-    swearword varchar(254) primary key,
+    swearword varchar(508) primary key,
     total bigserial
 );
 
