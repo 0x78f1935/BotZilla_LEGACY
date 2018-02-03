@@ -328,6 +328,11 @@ class AdminCommands:
             return
         else:
             os.system('git pull')
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Pull succes :ok_hand:',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
     @commands.command(pass_context=True, hidden=True, name='ct')

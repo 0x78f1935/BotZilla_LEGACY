@@ -129,7 +129,7 @@ async def dbimport():
     help_list = []
     for command in bot.walk_commands():
         hel = command.__dict__
-        help_list.append(f'"{hel["name"]}", "{hel["help"]}"')
+        help_list.append("'{}', '{}'".format(hel["name"], {hel["help"]}))
 
     try:
         for i in help_list:

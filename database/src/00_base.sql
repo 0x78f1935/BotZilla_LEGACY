@@ -5,6 +5,11 @@ CREATE TABLE botzilla.users(
 );
 -- INSERT INTO botzilla.users (ID, name) VALUES (456164513, 'test15');
 
+CREATE TABLE botzilla.help(
+    name varchar primary key,
+    info text
+);
+
 CREATE TABLE botzilla.music(
     ID bigserial primary key,
     channel_name varchar(254),
@@ -33,5 +38,3 @@ INSERT INTO botzilla.swearwords(swearword, total) VALUES ('pussy', 0);
 INSERT INTO botzilla.swearwords(swearword, total) VALUES ('wtf', 0);
 INSERT INTO botzilla.swearwords(swearword, total) VALUES ('fag', 0);
 INSERT INTO botzilla.swearwords(swearword, total) VALUES ('gay', 0);
-
-CREATE TABLE botzilla.help(name varchar primary key, info text);
