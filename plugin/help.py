@@ -151,7 +151,7 @@ class Help:
             return
 
         try:
-            self.database.cur.execute("select * from botzilla.help where cog = '{}';".format(command))
+            self.database.cur.execute("select * from botzilla.help where name = '{}';".format(command))
             cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
 
