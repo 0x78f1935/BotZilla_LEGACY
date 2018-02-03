@@ -164,6 +164,7 @@ class Help:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
         except Exception as e:
+            print(e.args)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Command **`{}`** not found. You can use **`{}help`** to see all the commands available.\nTo get more info about a command listed in **`{}help`**, use **`{}help [command]`** instead.\nFor Example: **`{}help inv`**'.format(
                                       command, self.config['prefix'], self.config['prefix'], self.config['prefix'], self.config['prefix']
