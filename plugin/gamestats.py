@@ -114,7 +114,7 @@ class GameStats:
 
                 embed = discord.Embed(title='{} | {}:'.format(ctx.message.author.name, data['name']),
                                       description='Ranked: **{}**\nCombat LVL: **{}**\nTotal XP: **{}**\nOnline: **{}**'.format(
-                                          rank, data['combatlevel'], data['totalxp'], data['loggedIn']
+                                          rank, data['combatlevel'], str(data['totalxp'])[:-1], data['loggedIn']
                                       ),
                                       colour=0xf20006)
 
