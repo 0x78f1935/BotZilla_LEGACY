@@ -28,7 +28,7 @@ class Help:
             print('Help: Database files not found')
             pass
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def t(self, ctx, command: str = None):
         """
         Show this message
