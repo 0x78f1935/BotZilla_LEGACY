@@ -60,7 +60,8 @@ async def dbimport():
             for row in reader:
                 try:
                     row = str(row).replace('"', '').replace('[', '').replace(']', '').replace("'", '').replace('(', '').replace(')', '')
-                    database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ({});".format(row))
+                    row = row.split(',')
+                    database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ({}, '{}');".format(row[0], row[1]))
                     database.cur.execute("ROLLBACK;")
                 except Exception as e:
                     if 'duplicate key' in str(e.args):
