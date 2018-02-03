@@ -7,7 +7,6 @@ from options.opus_loader import load_opus_lib
 import re
 import csv
 import asyncio
-from plugin.music import Music
 import aiohttp
 import psycopg2
 
@@ -36,7 +35,6 @@ try:
 except:
     print('Core: DiscordBotList api key not found')
     pass
-music_channels = botzillaChannels['music']
 database_file_found = False
 database_settings = tmp_config['database']
 
@@ -75,27 +73,6 @@ async def dbimport():
             print(f'{type(e).__name__} : {e}')
 
 
-    #music channels
-    try:
-        with open(database.database_import_location_music_channels, 'r') as file:
-            reader = csv.reader(file, delimiter=',')
-            for row in reader:
-                try:
-                    row = str(row).replace('["', '')
-                    row = str(row).replace('"]', '')
-                    database.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES{};".format(row))
-                    database.cur.execute("ROLLBACK;")
-                except Exception as e:
-                    if 'duplicate key' in str(e.args):
-                        pass
-                    else:
-                        print(f'{type(e).__name__} : {e}')
-    except Exception as e:
-        if 'duplicate key' in str(e.args):
-            pass
-        else:
-            print(f'{type(e).__name__} : {e}')
-
     try:
         with open(database.database_import_location_blacklist, 'r') as file:
             reader = csv.reader(file, delimiter=',')
@@ -117,23 +94,6 @@ async def dbimport():
         else:
             print(f'{type(e).__name__} : {e}')
 
-    # music urls
-    try:
-        with open(database.database_import_musicque, 'r') as file:
-            reader = csv.reader(file, delimiter=',')
-            for row in reader:
-                b = re.search(r'^(.*)', str(row)).group()
-                b = b.replace('[', '')
-                b = b.replace('"(', '')
-                b = b.replace(',)"', '')
-                row = b.replace(']', '')
-                database.cur.execute("INSERT INTO botzilla.musicque(url) VALUES({});".format(row))
-                database.cur.execute("ROLLBACK;")
-    except Exception as e:
-        if 'duplicate key' in str(e.args):
-            pass
-        else:
-            print(f'{type(e).__name__} : {e}')
 
     # Blacklist
     try:
@@ -183,24 +143,6 @@ async def get_users():
             print(f'{type(e).__name__} : {e}')
 
 
-
-async def auto_join_channels(music_playlist):
-    music = Music(bot)
-    for server in bot.servers:
-        for channel in server.channels:
-            if 'music' in channel.name.lower():
-                if str(channel.type) == 'voice':
-                    print(f'item {channel.id} found, joining {channel.server.name} : {channel.name}')
-                    if database_file_found:
-                        if database.database_online:
-                            await dbimport()
-                            # channel = bot.get_channel(f'{channel.id}')
-                            music.voice_states.update({channel : server.id})
-                            await music.summon(channel)
-                else:
-                    pass
-
-
 async def total_online_user_tracker():
     while True:
         game = discord.Game(name='{} online users'.format(sum(1 for m in set(bot.get_all_members()) if m.status != discord.Status.offline)), type=3)
@@ -240,25 +182,6 @@ async def on_ready():
     for p in plugins:
         bot.load_extension("plugin.{}".format(p))
 
-    # get playlist
-    global music_playlist
-    music_playlist = []
-    if database_file_found:
-        if database.database_online:
-            await dbimport()
-            database.cur.execute('select * from botzilla.musicque;')
-            rows = database.cur.fetchall()
-            database.cur.execute("ROLLBACK;")
-            rows = str(rows).replace('[(\'', '')
-            rows = rows.replace(',)', '')
-            rows = rows.replace('(', '')
-            rows = rows.replace('\'', '')
-            links = rows.replace(' ', '')
-            clean_links = links.split(',')
-            for item in clean_links:
-                music_playlist.append(item)
-
-    # await auto_join_channels(music_playlist)
 
     database.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
         database_settings['db_name'],
