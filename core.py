@@ -198,6 +198,7 @@ async def on_ready():
         async with aiohttp.ClientSession() as aioclient:
             await aioclient.post(url=url, data=payload, headers=headers)
 
+    await dbimport()
     await total_online_user_tracker()
 
 
