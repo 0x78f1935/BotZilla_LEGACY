@@ -738,7 +738,7 @@ class Utils:
                 username = username.replace('<@', '')
                 username = username.replace('>', '')
                 username = username.replace('!', '')
-                await bot.get_user_info(username)
+                await self.bot.get_user_info(username)
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='The ID you looking for is:\n**{}**'.format(str(username)),
                                       colour=0xf20006)
