@@ -33,6 +33,35 @@ class Help:
         """
         Show this message
         """
+
+        self.database.cur.execute("select name from botzilla.help where cog = 'Games';")
+        Games_cog = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
+        Games_commands = []
+        for i in Games_cog:
+            i = '`{}{}`'.format(self.config['prefix'], i[0])
+            Games_commands.append(i)
+        Games_name = "\n".join(Games_commands)
+
+        self.database.cur.execute("select name from botzilla.help where cog = 'GameStats';")
+        GameStats_cog = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
+        GameStats_commands = []
+        for i in GameStats_cog:
+            i = '`{}{}`'.format(self.config['prefix'], i[0])
+            GameStats_commands.append(i)
+        GameStats_name = "\n".join(GameStats_commands)
+
+        self.database.cur.execute("select name from botzilla.help where cog = 'Fun';")
+        Fun_cog = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
+        Fun_commands = []
+        for i in Fun_cog:
+            i = '`{}{}`'.format(self.config['prefix'], i[0])
+            Fun_commands.append(i)
+        Fun_name = "\n".join(Fun_commands)
+
+
         self.database.cur.execute("select name from botzilla.help where cog = 'Information';")
         Information_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
@@ -60,12 +89,50 @@ class Help:
             Utils_commands.append(i)
         Utils_name = "\n".join(Utils_commands)
 
+
+        self.database.cur.execute("select name from botzilla.help where cog = 'Images';")
+        Images_cog = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
+        Images_commands = []
+        for i in Images_cog:
+            i = '`{}{}`'.format(self.config['prefix'], i[0])
+            Images_commands.append(i)
+        Images_name = "\n".join(Images_commands)
+
+        self.database.cur.execute("select name from botzilla.help where cog = 'Exchange';")
+        Exchange_cog = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
+        Exchange_commands = []
+        for i in Exchange_cog:
+            i = '`{}{}`'.format(self.config['prefix'], i[0])
+            Exchange_commands.append(i)
+        Exchange_name = "\n".join(Exchange_commands)
+
+        if ctx.message.author.id in self.owner_list:
+            self.database.cur.execute("select name from botzilla.help where cog = 'Admin';")
+            Admin_cog = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            Admin_commands = []
+            for i in Utils_cog:
+                i = '`{}{}`'.format(self.config['prefix'], i[0])
+                Admin_commands.append(i)
+            Admin_name = "\n".join(Admin_commands)
+
         embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
                               color=0xf20006)
+
+        embed.add_field(name='Games', value=Games_name, inline=True)
+        embed.add_field(name='GameStats', value=GameStats_name, inline=True)
+        embed.add_field(name='Fun', value=Fun_name, inline=True)
 
         embed.add_field(name='Information', value=Information_name, inline=True)
         embed.add_field(name='Music', value=Music_name, inline=True)
         embed.add_field(name='Utils', value=Utils_name, inline=True)
+
+        embed.add_field(name='Images', value=Images_name, inline=True)
+        embed.add_field(name='Exchange', value=Exchange_name, inline=True)
+        if ctx.message.author.id in self.owner_list:
+            embed.add_field(name='Admin', value=Admin_name, inline=True)
 
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
