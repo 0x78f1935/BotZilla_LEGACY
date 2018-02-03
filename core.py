@@ -63,10 +63,10 @@ async def dbimport():
                     row = str(row).replace('"]', '')
                     database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{};".format(row))
                     database.cur.execute("ROLLBACK;")
-                except:
-                    pass
+                except Exception as e:
+                    print(f'{type(e).__name__} : {e}')
     except Exception as e:
-        pass
+        print(f'{type(e).__name__} : {e}')
 
 
     #music channels
@@ -79,10 +79,10 @@ async def dbimport():
                     row = str(row).replace('"]', '')
                     database.cur.execute("INSERT INTO botzilla.music (ID, channel_name, server_name, type_channel) VALUES{};".format(row))
                     database.cur.execute("ROLLBACK;")
-                except:
-                    pass
+                except Exception as e:
+                    print(f'{type(e).__name__} : {e}')
     except Exception as e:
-        pass
+        print(f'{type(e).__name__} : {e}')
 
     try:
         with open(database.database_import_location_blacklist, 'r') as file:
@@ -94,10 +94,10 @@ async def dbimport():
                     print(row)
                     database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES{};".format(row))
                     database.cur.execute("ROLLBACK;")
-                except:
-                    pass
+                except Exception as e:
+                    print(f'{type(e).__name__} : {e}')
     except Exception as e:
-        pass
+        print(f'{type(e).__name__} : {e}')
 
     # music urls
     try:
@@ -112,7 +112,7 @@ async def dbimport():
                 database.cur.execute("INSERT INTO botzilla.musicque(url) VALUES({});".format(row))
                 database.cur.execute("ROLLBACK;")
     except Exception as e:
-        pass
+        print(f'{type(e).__name__} : {e}')
 
     # Blacklist
     try:
@@ -124,7 +124,7 @@ async def dbimport():
             item = item.replace(',)', '')
             database.blacklist.append(item)
     except Exception as e:
-        pass
+        print(f'{type(e).__name__} : {e}')
 
     try:
         for command in bot.walk_commands():
@@ -135,7 +135,7 @@ async def dbimport():
             database.cur.execute("ROLLBACK;")
 
     except Exception as e:
-        pass
+        print(f'{type(e).__name__} : {e}')
 
 
 async def get_users():
