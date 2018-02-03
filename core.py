@@ -129,7 +129,7 @@ async def dbimport():
     try:
         for command in bot.walk_commands():
             hel = command.__dict__
-            database.cur.execute("INTO botzilla.help (name, info) VALUES({}, {});".format(hel['name'], hel['help']))
+            database.cur.execute("INSERT INTO botzilla.help (name, info) VALUES({}, {});".format(hel['name'], hel['help']))
             database.cur.execute("ROLLBACK;")
 
     except Exception as e:
