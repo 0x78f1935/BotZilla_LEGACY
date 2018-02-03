@@ -181,7 +181,7 @@ class Music:
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
         else:
-            player.volume = 0.6
+            player.volume = 1
             entry = VoiceEntry(ctx.message, player)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Enqueued:\n```{}```'.format(str(entry)),
