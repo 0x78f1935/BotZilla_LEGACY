@@ -124,7 +124,7 @@ async def dbimport():
             item = item.replace(',)', '')
             database.blacklist.append(item)
     except Exception as e:
-        print(f'Can\'t find database{e.args}')
+        pass
 
     try:
         for command in bot.walk_commands():
@@ -135,7 +135,7 @@ async def dbimport():
             database.cur.execute("ROLLBACK;")
 
     except Exception as e:
-        print(f'Can\'t find database{e.args}')
+        pass
 
 
 async def get_users():
