@@ -127,16 +127,7 @@ class Help:
 
         if command is None:
             embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
-                                  description="""
-                                  `Discord Bot List, Upvote would be appreciated` :heart:
-                                  ```https://discordbots.org/bot/397149515192205324```
-                                  `Direct invite link for Bot2illa` :GWblobbFistbumpL: :GWblobbFistbumpR: 
-                                  ```https://discordapp.com/oauth2/authorize?client_id=397149515192205324&permissions=1261448256&scope=bot```
-                                  `Github Page` :GWicymanRly:
-                                  ```https://github.com/Annihilator708/DiscordBot-BotZilla```
-                                  `Server invite link` :GWdarateroKnuckles: 
-                                  ```https://discord.gg/ybgfVQA```
-                                  """,
+                                  description="`Discord Bot List, Upvote would be appreciated` :heart:\n```https://discordbots.org/bot/397149515192205324```\n`Direct invite link for Bot2illa` :GWblobbFistbumpL: :GWblobbFistbumpR:\n```https://discordapp.com/oauth2/authorize?client_id=397149515192205324&permissions=1261448256&scope=bot```\n`Github Page` :GWicymanRly:\n```https://github.com/Annihilator708/DiscordBot-BotZilla```\n`Server invite link` :GWdarateroKnuckles:\n```https://discord.gg/ybgfVQA```",
                                   color=0xf20006)
 
             embed.add_field(name='Games', value=Games_name, inline=True)
