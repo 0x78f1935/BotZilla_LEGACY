@@ -140,7 +140,7 @@ class Information:
     async def count(self, ctx):
         """
         Give information about Botzilla.
-        Count's the community, servers and more!
+        Count the community, servers and more!
         """
         if self.database_file_found:
             self.database.cur.execute("select count(*) from botzilla.users;")
