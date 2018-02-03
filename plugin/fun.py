@@ -325,46 +325,6 @@ class Fun:
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
-    @commands.command(pass_context=True, name='dr', hidden=True)
-    async def DeathRow(self, ctx):
-        """
-        Deathrow! Checkout someones last words spoken on a death row!
-        The person is real en registered at Texas Department of Criminal Justice.
-        All data is open for public.
-        """
-        url = 'http://www.tdcj.state.tx.us/death_row/dr_executed_offenders.html'
-
-        async def fetch(session, url):
-            with async_timeout.timeout(10):
-                async with session.get(url) as response:
-                    return await response.text()
-
-        offenders = []
-        async with aiohttp.ClientSession() as session:
-            html = await fetch(session, url)
-            soup = BeautifulSoup(html, 'lxml')
-
-            for link in soup.find_all('a'):
-                link2 = link.get('href')
-                if re.match(r'dr_info\/(.*)', str(link2), flags=0):
-                    link = re.match(r'dr_info\/(.*)', str(link2)).group()
-                    good_final = link.replace('dr_info/', 'http://www.tdcj.state.tx.us/death_row/dr_info/')
-                    offenders.append(str(good_final))
-
-        while True:
-            url = random.choice(offenders)
-            if str(url).endswith('.html'):
-                break
-            else:
-                pass
-
-        url = random.choice(offenders)
-        async with aiohttp.ClientSession() as session:
-            html = await fetch(session, str(url))
-        print(html)
-        await self.bot.say(url)
-
-
 def setup(bot):
     if ImgurClient is False:
         raise RuntimeError("You need the imgurpython module to use this.\n"
