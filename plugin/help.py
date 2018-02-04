@@ -155,8 +155,8 @@ class Help:
             self.database.cur.execute("select * from botzilla.help where name = '{}';".format(command))
             cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
-            if '<insert semicolon here>' in cog[0][2]:
-                cog = cog[0][2].replace('<insert semicolon here>', ';')
+            if '<insert semicolon here>' in str(cog[0][2]):
+                cog = str(cog[0][2]).replace('<insert semicolon here>', ';')
 
             embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
                                   color=0xf20006)
