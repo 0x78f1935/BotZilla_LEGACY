@@ -107,7 +107,8 @@ class Information:
         Invite BotZilla to your server!
         Gives BotZilla OAuth url. Use this to add him to your server!
         When the database restarts botzilla will automatically join voice channels
-        with `music` in the name.
+        with `music` in the name. Alternative names:
+        | oauth | invite | join |
         """
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
