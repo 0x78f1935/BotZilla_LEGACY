@@ -156,10 +156,11 @@ class Help:
             cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             if '<insert semicolon here>' in str(cog[0][2]):
+                name = cog[0][0]
                 cog = str(cog[0][2]).replace('<insert semicolon here>', ';')
                 embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
                                       color=0xf20006)
-                embed.add_field(name='Command name', value='**`{}`**'.format(cog), inline=False)
+                embed.add_field(name='Command name', value='**`{}`**'.format(name), inline=False)
                 embed.add_field(name='Description', value='**`{}`**'.format(cog), inline=False)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
