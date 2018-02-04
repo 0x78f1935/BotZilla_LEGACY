@@ -130,18 +130,19 @@ async def get_users():
     """
     Update datebase with current active users
     """
-    try:
-        for server in bot.servers:
-            for member in server.members:
+
+    for server in bot.servers:
+        for member in server.members:
+            try:
                 username = str(member.name).replace("'", '').replace(';', '')
                 database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ('{}', '{}');".format(member.id, username))
                 database.cur.execute("ROLLBACK;")
 
-    except Exception as e:
-        if 'duplicate key' in str(e.args):
-            pass
-        else:
-            print(f'{type(e).__name__} : {e}')
+            except Exception as e:
+                if 'duplicate key' in str(e.args):
+                    pass
+                else:
+                    print(f'{type(e).__name__} : {e}')
 
 
 async def total_online_user_tracker():
