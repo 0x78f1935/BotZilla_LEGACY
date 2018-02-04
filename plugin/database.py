@@ -159,19 +159,19 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
 
-        try:
-            for server in self.bot.servers:
-                for member in server.members:
+        for server in self.bot.servers:
+            for member in server.members:
+                try:
                     username = str(member.name).replace("'", '').replace(';', '')
                     self.cur.execute(
                         "INSERT INTO botzilla.users (ID, name) VALUES ('{}', '{}');".format(member.id, username))
                     self.cur.execute("ROLLBACK;")
 
-        except Exception as e:
-            if 'duplicate key' in str(e.args):
-                pass
-            else:
-                print(f'{type(e).__name__} : {e}')
+                except Exception as e:
+                    if 'duplicate key' in str(e.args):
+                        pass
+                    else:
+                        print(f'{type(e).__name__} : {e}')
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Done with gathering user info!',
