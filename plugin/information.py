@@ -101,8 +101,8 @@ class Information:
             return
 
 
-    @commands.command(pass_context=True, aliases=["oauth", "invite", "join"])
-    async def inv(self, ctx):
+    @commands.command(pass_context=True)
+    async def invite(self, ctx):
         """
         Invite BotZilla to your server!
         Gives BotZilla OAuth url. Use this to add him to your server!
