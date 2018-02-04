@@ -127,8 +127,9 @@ class Help:
             Admin_cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             Admin_commands = []
+            Admin_commands.append('**------**')
             for i in Admin_cog:
-                i = '`{}{}`'.format(self.config['prefix'], i[0])
+                i = '-`{}{}`'.format(self.config['prefix'], i[0])
                 Admin_commands.append(i)
             Admin_commands.append('**------**')
             Admin_name = "\n".join(Admin_commands)
