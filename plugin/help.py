@@ -91,7 +91,7 @@ class Help:
         for i in Utils_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Utils_commands.append(i)
-        Utils_commands.append('\n')
+        Utils_commands.append('**------**')
         Utils_name = "\n".join(Utils_commands)
 
         self.database.cur.execute("select name from botzilla.help where cog = 'Images';")
