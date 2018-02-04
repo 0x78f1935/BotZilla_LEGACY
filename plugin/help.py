@@ -155,13 +155,11 @@ class Help:
             self.database.cur.execute("select * from botzilla.help where name = '{}';".format(command))
             cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
-            print(cog)
-            cog = (cog)
-            print(cog)
+
             embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
                                   color=0xf20006)
-            embed.add_field(name='Command name', value=cog[0], inline=False)
-            embed.add_field(name='Description', value=cog[2], inline=False)
+            embed.add_field(name='Command name', value=cog[0][0], inline=False)
+            embed.add_field(name='Description', value=cog[0][2], inline=False)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
