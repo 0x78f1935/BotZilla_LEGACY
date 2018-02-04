@@ -29,7 +29,7 @@ class Help:
             pass
 
     @commands.command(pass_context=True, hidden=True)
-    async def t(self, ctx, command: str = None):
+    async def help(self, ctx, command: str = None):
         """
         Show this message
         """

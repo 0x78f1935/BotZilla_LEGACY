@@ -164,7 +164,7 @@ async def on_ready():
     print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(bot.user.id))
     print('--------')
 
-    #bot.remove_command('help')
+    bot.remove_command('help')
     #plugins
 
     plugins = (
