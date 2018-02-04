@@ -38,6 +38,7 @@ class Help:
         Games_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
         Games_commands = []
+        Games_commands.append('**------**')
         for i in Games_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Games_commands.append(i)
@@ -48,6 +49,7 @@ class Help:
         GameStats_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
         GameStats_commands = []
+        GameStats_commands.append('**------**')
         for i in GameStats_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             GameStats_commands.append(i)
@@ -58,6 +60,7 @@ class Help:
         Fun_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
         Fun_commands = []
+        Fun_commands.append('**------**')
         for i in Fun_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Fun_commands.append(i)
@@ -68,6 +71,7 @@ class Help:
         Information_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
         Information_commands = []
+        Information_commands.append('**------**')
         for i in Information_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Information_commands.append(i)
@@ -78,6 +82,7 @@ class Help:
         Music_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
         Music_commands = []
+        Music_commands.append('**------**')
         for i in Music_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Music_commands.append(i)
@@ -88,6 +93,7 @@ class Help:
         Utils_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
         Utils_commands = []
+        Utils_commands.append('**------**')
         for i in Utils_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Utils_commands.append(i)
@@ -98,6 +104,7 @@ class Help:
         Images_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
         Images_commands = []
+        Images_commands.append('**------**')
         for i in Images_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Images_commands.append(i)
@@ -108,6 +115,7 @@ class Help:
         Exchange_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
         Exchange_commands = []
+        Exchange_commands.append('**------**')
         for i in Exchange_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Exchange_commands.append(i)
