@@ -125,7 +125,7 @@ async def dbimport():
             else:
                 print(f'{type(e).__name__} : {e}')
 
-    print('DATABASE IMPORT DONE')
+    print('DATABASE IMPORT BACKUP DONE')
 
 
 async def get_users():
@@ -211,12 +211,12 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    print('JOINED {} | {} Joined: {}'.format(member.name, member.id, member.server))
+    print('MEMBER JOINED {} | {} Joined: {}'.format(member.name, member.id, member.server))
     try:
         database.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, \'{}\');'.format(
             member.id, member.name))
         database.cur.execute("ROLLBACK;")
-        print('{} | {} has been added to the database'.format(member.name, member.id))
+        print('DATABASE ADD {} | {} has been added to the database'.format(member.name, member.id))
     except Exception as e:
         if 'duplicate key' in str(e.args):
             pass
@@ -413,11 +413,10 @@ async def on_message(message):
 
 @bot.event
 async def on_server_join(server):
-    print('ADDED {} | {} BotZilla has been added'.format(server.name, server.id))
+    print('SERVER ADDED {} | {} BotZilla has been added'.format(server.name, server.id))
     if database_file_found:
         if database.database_online:
             await get_users()
-    print('Joined server: {}'.format(server.name))
 
     if dbl is True:
         url = "https://discordbots.org/api/bots/{}/stats".format(bot.user.id)
@@ -428,7 +427,7 @@ async def on_server_join(server):
 
 @bot.event
 async def on_server_remove(server):
-    print('REMOVED {} | {} BotZilla has been removed'.format(server.name, server.id))
+    print('SERVER REMOVED {} | {} BotZilla has been removed'.format(server.name, server.id))
     if dbl is True:
         url = "https://discordbots.org/api/bots/{}/stats".format(bot.user.id)
         payload = {"server_count": len(bot.servers)}
