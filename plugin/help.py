@@ -136,7 +136,7 @@ class Help:
 
         if command is None:
             embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
-                                  description='BotZilla is built / maintained / self hosted by PuffDip\nUserdata may be stored for better experience.',
+                                  description='**`BotZilla is built / maintained / self hosted by PuffDip\nUserdata may be stored for better experience.`**',
                                   color=0xf20006)
 
             embed.add_field(name='Games', value=Games_name, inline=True)
@@ -171,7 +171,7 @@ class Help:
                 name = cog[0][0]
                 cog = str(cog[0][2]).replace('<insert semicolon here>', ';')
                 embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
-                                      description='BotZilla is built / maintained / self hosted by PuffDip\nUserdata may be stored for better experience.',
+                                      description='**`BotZilla is built / maintained / self hosted by PuffDip\nUserdata may be stored for better experience.`**',
                                       color=0xf20006)
                 embed.add_field(name='Command name', value='**`{}`**'.format(name), inline=False)
                 embed.add_field(name='Description', value='**`{}`**'.format(cog), inline=False)
