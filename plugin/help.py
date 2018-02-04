@@ -132,11 +132,11 @@ class Help:
             embed.add_field(name='Games', value=Games_name, inline=True)
             embed.add_field(name='GameStats', value=GameStats_name, inline=True)
             embed.add_field(name='Fun', value=Fun_name, inline=True)
-            embed.add_field(name='', value='<:emptyness:407965143717380106>', inline=False)
+
             embed.add_field(name='Information', value=Information_name, inline=True)
             embed.add_field(name='Music', value=Music_name, inline=True)
             embed.add_field(name='Utils', value=Utils_name, inline=True)
-            embed.add_field(name='', value='<:emptyness:407965143717380106>', inline=False)
+
             embed.add_field(name='Images', value=Images_name, inline=True)
             embed.add_field(name='Exchange', value=Exchange_name, inline=True)
             if ctx.message.author.id in self.owner_list:
