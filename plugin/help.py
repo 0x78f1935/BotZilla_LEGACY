@@ -150,7 +150,7 @@ class Help:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             return
 
-        command = str(command).replace(';', '').replace("'", '')
+        command = str(command).replace(';', '').replace("'", '').lower()
         try:
             self.database.cur.execute("select * from botzilla.help where name = '{}';".format(command))
             cog = self.database.cur.fetchall()
@@ -158,8 +158,8 @@ class Help:
 
             embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
                                   color=0xf20006)
-            embed.add_field(name='Command name', value=cog[0][0], inline=False)
-            embed.add_field(name='Description', value=cog[0][2], inline=False)
+            embed.add_field(name='Command name', value='**`{}`**'.format(cog[0][0]), inline=False)
+            embed.add_field(name='Description', value='**`{}`**'.format(cog[0][2]), inline=False)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
