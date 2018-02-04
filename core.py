@@ -218,7 +218,10 @@ async def on_member_join(member):
         database.cur.execute("ROLLBACK;")
         print('{} | {} has been added to the database'.format(member.name, member.id))
     except Exception as e:
-        print('Error gathering info user {} | {} :\n```Python\n{}```'.format(member.name, member.id, e))
+        if 'duplicate key' in str(e.args):
+            pass
+        else:
+            print(f'{type(e).__name__} : {e}')
 
 
 @bot.event
