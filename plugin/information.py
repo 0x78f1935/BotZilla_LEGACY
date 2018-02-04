@@ -101,13 +101,13 @@ class Information:
             return
 
 
-    @commands.command(pass_context=True)
-    async def invite(self, ctx):
+    @commands.command(pass_context=True, aliases=["oauth", "invite", "join"])
+    async def inv(self, ctx):
         """
         Invite BotZilla to your server!
         Gives BotZilla OAuth url. Use this to add him to your server!
         When the database restarts botzilla will automatically join voice channels
-        with 'music' or 'Music' in the name.
+        with `music` in the name.
         """
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
