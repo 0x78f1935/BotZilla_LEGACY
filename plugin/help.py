@@ -41,8 +41,8 @@ class Help:
         for i in Games_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Games_commands.append(i)
+        Games_commands.append('\n')
         Games_name = "\n".join(Games_commands)
-        Games_name = Games_name + '\n'
 
         self.database.cur.execute("select name from botzilla.help where cog = 'GameStats';")
         GameStats_cog = self.database.cur.fetchall()
@@ -51,8 +51,8 @@ class Help:
         for i in GameStats_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             GameStats_commands.append(i)
+        GameStats_commands.append('\n')
         GameStats_name = "\n".join(GameStats_commands)
-        GameStats_name = GameStats_name + '\n'
 
         self.database.cur.execute("select name from botzilla.help where cog = 'Fun';")
         Fun_cog = self.database.cur.fetchall()
@@ -61,8 +61,8 @@ class Help:
         for i in Fun_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Fun_commands.append(i)
+        Fun_commands.append('\n')
         Fun_name = "\n".join(Fun_commands)
-        Fun_name = Fun_name + '\n'
 
         self.database.cur.execute("select name from botzilla.help where cog = 'Information';")
         Information_cog = self.database.cur.fetchall()
@@ -71,8 +71,8 @@ class Help:
         for i in Information_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Information_commands.append(i)
+        Information_commands.append('\n')
         Information_name = "\n".join(Information_commands)
-        Information_name = Information_name + '\n'
 
         self.database.cur.execute("select name from botzilla.help where cog = 'Music';")
         Music_cog = self.database.cur.fetchall()
@@ -81,8 +81,8 @@ class Help:
         for i in Music_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Music_commands.append(i)
+        Music_commands.append('\n')
         Music_name = "\n".join(Music_commands)
-        Music_name = Music_name + '\n'
 
         self.database.cur.execute("select name from botzilla.help where cog = 'Utils';")
         Utils_cog = self.database.cur.fetchall()
@@ -91,8 +91,8 @@ class Help:
         for i in Utils_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Utils_commands.append(i)
+        Utils_commands.append('\n')
         Utils_name = "\n".join(Utils_commands)
-        Utils_name = Utils_name + '\n'
 
         self.database.cur.execute("select name from botzilla.help where cog = 'Images';")
         Images_cog = self.database.cur.fetchall()
@@ -101,8 +101,8 @@ class Help:
         for i in Images_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Images_commands.append(i)
+        Images_commands.append('\n')
         Images_name = "\n".join(Images_commands)
-        Images_name = Images_name + '\n'
 
         self.database.cur.execute("select name from botzilla.help where cog = 'Exchange';")
         Exchange_cog = self.database.cur.fetchall()
@@ -111,8 +111,8 @@ class Help:
         for i in Exchange_cog:
             i = '`{}{}`'.format(self.config['prefix'], i[0])
             Exchange_commands.append(i)
+        Exchange_commands.append('\n')
         Exchange_name = "\n".join(Exchange_commands)
-        Exchange_name = Exchange_name + '\n'
 
         if ctx.message.author.id in self.owner_list:
             self.database.cur.execute("select name from botzilla.help where cog = 'AdminCommands';")
@@ -122,8 +122,8 @@ class Help:
             for i in Admin_cog:
                 i = '`{}{}`'.format(self.config['prefix'], i[0])
                 Admin_commands.append(i)
+            Admin_commands.append('\n')
             Admin_name = "\n".join(Admin_commands)
-            Admin_name = Admin_name + '\n'
 
         if command is None:
             embed = discord.Embed(title="Help for {}:".format(ctx.message.author.name),
