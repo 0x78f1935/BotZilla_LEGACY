@@ -299,8 +299,9 @@ class Fun:
 
 
         try:
+            p = ''.join(c.lower() if i % 2 else c.upper() for i, c in enumerate(ctx.message.content))
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=''.join(c.lower() if i % 2 else c.upper() for i, c in enumerate(ctx.message.content)),
+                                  description=p.replace('!!sb', '').replace('!!sb ', ''),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
