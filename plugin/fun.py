@@ -300,7 +300,7 @@ class Fun:
 
         try:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=''.join(c.lower() if i % 2 else c.upper() for i, c in enumerate(text)),
+                                  description=''.join(random.choice([k.upper(), k]) for k in text.lower()),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
