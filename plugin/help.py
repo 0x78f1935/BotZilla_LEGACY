@@ -42,6 +42,7 @@ class Help:
         for i in Games_cog:
             i = '-`{}{}`'.format(self.config['prefix'], i[0])
             Games_commands.append(i)
+        Games_commands.sort()
         Games_commands.append('**------**')
         Games_name = "\n".join(Games_commands)
 
@@ -53,6 +54,7 @@ class Help:
         for i in GameStats_cog:
             i = '-`{}{}`'.format(self.config['prefix'], i[0])
             GameStats_commands.append(i)
+        GameStats_commands.sort()
         GameStats_commands.append('**------**')
         GameStats_name = "\n".join(GameStats_commands)
 
@@ -64,6 +66,7 @@ class Help:
         for i in Fun_cog:
             i = '-`{}{}`'.format(self.config['prefix'], i[0])
             Fun_commands.append(i)
+        Fun_commands.sort()
         Fun_commands.append('**------**')
         Fun_name = "\n".join(Fun_commands)
 
@@ -75,6 +78,7 @@ class Help:
         for i in Information_cog:
             i = '-`{}{}`'.format(self.config['prefix'], i[0])
             Information_commands.append(i)
+        Information_commands.sort()
         Information_commands.append('**------**')
         Information_name = "\n".join(Information_commands)
 
@@ -86,6 +90,7 @@ class Help:
         for i in Music_cog:
             i = '-`{}{}`'.format(self.config['prefix'], i[0])
             Music_commands.append(i)
+        Music_commands.sort()
         Music_commands.append('**------**')
         Music_name = "\n".join(Music_commands)
 
@@ -97,6 +102,7 @@ class Help:
         for i in Utils_cog:
             i = '-`{}{}`'.format(self.config['prefix'], i[0])
             Utils_commands.append(i)
+        Utils_commands.sort()
         Utils_commands.append('**------**')
         Utils_name = "\n".join(Utils_commands)
 
@@ -108,6 +114,7 @@ class Help:
         for i in Images_cog:
             i = '-`{}{}`'.format(self.config['prefix'], i[0])
             Images_commands.append(i)
+        Images_commands.sort()
         Images_commands.append('**------**')
         Images_name = "\n".join(Images_commands)
 
@@ -119,6 +126,7 @@ class Help:
         for i in Exchange_cog:
             i = '-`{}{}`'.format(self.config['prefix'], i[0])
             Exchange_commands.append(i)
+        Exchange_commands.sort()
         Exchange_commands.append('**------**')
         Exchange_name = "\n".join(Exchange_commands)
 
@@ -131,6 +139,7 @@ class Help:
             for i in Admin_cog:
                 i = '-`{}{}`'.format(self.config['prefix'], i[0])
                 Admin_commands.append(i)
+            Admin_commands.sort()
             Admin_commands.append('**------**')
             Admin_name = "\n".join(Admin_commands)
 
