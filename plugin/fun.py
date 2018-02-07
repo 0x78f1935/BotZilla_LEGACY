@@ -284,6 +284,36 @@ class Fun:
 
 
     @commands.command(pass_context=True)
+    async def sb(self, ctx, *, text : str = None):
+        """
+        SpOnGeBoByFy, Transform your text!
+        Use this command with any sentence you like to transform.
+        """
+        if text == None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Maybe you should try `{}help sb` instead.'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+
+
+        try:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description=''.join(c.lower() if i % 2 else c.upper() for i, c in enumerate(ctx.message.content)),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='FoR SoMe ReAsOn I CoUlD NoT TrAnSfOrM YoUr TeXt, ChAnGe YoUr SeNtEnCe A bIt AnD tRy AgAiN',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
+
+    @commands.command(pass_context=True)
     async def joke(self, ctx):
         """
         Ever heard a Chuck Norris joke?
