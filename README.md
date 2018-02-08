@@ -1,4 +1,4 @@
-Welcome to BotZilla Version 2 | **24/7 Online**\
+Welcome to BotZilla Version 2 | **24/7 Online**
 
 [![Discord Bots](https://discordbots.org/api/widget/397149515192205324.svg)](https://discordbots.org/bot/397149515192205324) \
 [![Discord Bots](https://discordbots.org/api/widget/status/397149515192205324.svg)](https://discordbots.org/bot/397149515192205324)
@@ -30,6 +30,7 @@ Fun:
   hack      Check if your username or email is hacked.
   joke      Ever heard a Chuck Norris joke?
   meow      Spawn a kitty cat!
+  sb        SpOnGeBoPyFy your text
 Games:
   highlow   Higher or Lower? Gamble your way out! 0 ~ 1.000
   8ball     8ball! Ask BotZilla Any question.
@@ -69,3 +70,9 @@ Utils:
 Type !!help command for more info on a command.
 You can also type !!help category for more info on a category.
 ```
+
+When BotZilla is added to your discord server this list may be outdated.
+New features will still be added and optimalizations are always nice to do.
+Make sure to check out `!!help` for the updated list of commands and `!!help command` for more info about that command.
+This readme is last updated on version `V0.4`. Version `v0.4.1` supports a new help menu which works exactly the same.
+The current version can be found in the `!!help` menu.
