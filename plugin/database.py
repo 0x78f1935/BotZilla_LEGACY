@@ -78,7 +78,7 @@ class Database:
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may not use this command :angry: only admins!',
+                                  description='Only the owner of this bot can use this command',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -145,7 +145,7 @@ class Database:
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may not use this command :angry: only admins!',
+                                  description='Only the owner of this bot can use this command',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -187,7 +187,7 @@ class Database:
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may not use this command :angry: only admins!',
+                                  description='Only the owner of this bot can use this command',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -237,7 +237,7 @@ class Database:
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may not use this command :angry: only admins!',
+                                  description='Only the owner of this bot can use this command',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -330,7 +330,7 @@ class Database:
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may not use this command :angry: only admins!',
+                                  description='Only the owner of this bot can use this command',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -418,7 +418,7 @@ class Database:
         """
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may not use this command :angry: only admins!',
+                                  description='Only the owner of this bot can use this command',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
