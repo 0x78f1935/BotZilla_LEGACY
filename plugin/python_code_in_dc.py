@@ -76,11 +76,20 @@ class REPL:
         try:
             exec(to_compile, env)
         except SyntaxError as e:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='```Python\n{}\n```'.format(self.get_syntax_error(e)),
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            try:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='```Python\n{}\n```'.format(self.get_syntax_error(e)),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            except Exception as e:
+                error = [self.get_syntax_error(e)[i:i+2000] for i in range(0, len(self.get_syntax_error(e)), 2000)]
+                for i in error:
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='```Python\n{}\n```'.format(i),
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
         func = env['func']
@@ -181,12 +190,20 @@ class REPL:
                 try:
                     code = compile(cleaned, '<repl session>', 'exec')
                 except SyntaxError as e:
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='{}'.format(self.get_syntax_error(e)),
-                                          colour=0xf20006)
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['error'])
-                    continue
+                    try:
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                              description='```Python\n{}\n```'.format(self.get_syntax_error(e)),
+                                              colour=0xf20006)
+                        a = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                    except Exception as e:
+                        error = [self.get_syntax_error(e)[i:i + 2000] for i in range(0, len(self.get_syntax_error(e)), 2000)]
+                        for i in error:
+                            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                                  description='```Python\n{}\n```'.format(i),
+                                                  colour=0xf20006)
+                            a = await self.bot.say(embed=embed)
+                            await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
             variables['message'] = response
 

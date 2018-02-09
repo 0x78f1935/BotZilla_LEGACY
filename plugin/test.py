@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import json
+import aiohttp
 
 tmp_config = json.loads(str(open('./options/config.js').read()))
 config = tmp_config['config']
@@ -29,7 +30,6 @@ class TestScripts:
                           icon_url="https://cdn.discordapp.com/icons/265828729970753537/0c4fc42c61804747b54300282d0d7629.jpg")
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
