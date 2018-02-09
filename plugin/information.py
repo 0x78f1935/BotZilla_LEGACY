@@ -11,6 +11,7 @@ import random
 import ddg3 as duckduckgo3
 import aiohttp
 import textwrap
+from lxml import etree
 
 
 try:
@@ -48,6 +49,78 @@ class Information:
     # ========================
     #   Bot related commands
 
+    @commands.command(pass_context=True)
+    async def g(self, ctx, *, search_term: str = None):
+        """
+        Make a google search
+        """
+        if search_term is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='try to "search" for **`{}help g`**'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        search = search_term
+        if ' ' in search:
+            search = str(search).replace(' ', '%20')
+
+        url = f'https://www.google.nl/search?q={search}'
+        params = {'safe': 'on', 'lr': 'lang_en', 'hl': 'en'}
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) Gecko/20100101 Firefox/53.0'}
+
+        # list of URLs and title tuples
+        entries = []
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, params=params, headers=headers) as response:
+                if response.status != 200:
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Google has failed to respond. :cry:',
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                    return
+                else:
+                    source = await response.read()
+                    source = source.decode('utf-8')
+
+                    root = etree.fromstring(source, etree.HTMLParser())
+
+                    search_results = root.findall(".//div[@class='rc']")
+                    for node in search_results:
+                        link = node.find("./h3[@class='r']/a")
+                        if link is not None:
+                            entries.append((link.get('href'), link.text))
+
+                    try:
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                              description=f'Total hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}\n\nSearch result **`2`**\n{entries[1][0]}\n{entries[1][1]}\n\nSearch result **`3`**\n{entries[2][0]}\n{entries[2][1]}',
+                                              colour=0xf20006)
+                        a = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                    except Exception as e:
+                        try:
+                            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                                  description=f'Total hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}\n\nSearch result **`2`**\n{entries[1][0]}\n{entries[1][1]}',
+                                                  colour=0xf20006)
+                            a = await self.bot.say(embed=embed)
+                            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                        except Exception as e:
+                            try:
+                                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                                      description=f'Total hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}',
+                                                      colour=0xf20006)
+                                a = await self.bot.say(embed=embed)
+                                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                            except Exception as e:
+                                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                                      description=f'No results found for **`{search_term}`**',
+                                                      colour=0xf20006)
+                                a = await self.bot.say(embed=embed)
+                                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 
     @commands.command(pass_context=True)
     async def fact(self, ctx, *, search_term: str = None):
@@ -59,7 +132,7 @@ class Information:
 
         if search_term is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You really should reconsider reading the **`{}help fact`**'.format(self.config['prefix']),
+                                  description='You really should reconsider reading **`{}help fact`**'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
