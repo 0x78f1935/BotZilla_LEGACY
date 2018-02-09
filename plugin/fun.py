@@ -44,9 +44,9 @@ class Images:
             return
         else:
             emote = str(emoji).split(':')
-            emote = ''.join(re.findall(r"[a-zA-Z_0-9]", emote[1]))
-            emoteO = discord.utils.get(ctx.message.server.emojis, name=emote)
             try:
+                emote = ''.join(re.findall(r"[a-zA-Z_0-9]", emote[1]))
+                emoteO = discord.utils.get(ctx.message.server.emojis, name=emote)
                 async with aiohttp.ClientSession() as session:
                     async with session.get(emoteO.url, allow_redirects=True) as r:
                         await self.bot.send_typing(ctx.message.channel)
