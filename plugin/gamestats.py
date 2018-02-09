@@ -17,8 +17,10 @@ class GameStats:
 
     @commands.command(pass_context=True)
     async def r6s(self, ctx, *, uplay_name=None):
-        """Shows your Rainbow Six Siege stats.
-        Use your Uplay username for this command"""
+        """
+        Shows your Rainbow Six Siege stats.
+        Use your Uplay username for this command
+        """
 
         if uplay_name is None:
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
@@ -84,8 +86,10 @@ class GameStats:
 
     @commands.command(pass_context=True)
     async def rs3(self, ctx, *, account: str = None):
-        """Shows your Runescape 3 stats.
-        Use your Runescape 3 username for this command"""
+        """
+        Shows your Runescape 3 stats.
+        Use your Runescape 3 username for this command
+        """
 
         if account is None:
             embed = discord.Embed(title="{}".format(ctx.message.author.name),

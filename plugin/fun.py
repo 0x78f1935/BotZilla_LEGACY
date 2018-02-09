@@ -31,7 +31,9 @@ class Images:
 
     @commands.command(pass_context=True, no_pm=True)
     async def gif(self, ctx, *keywords):
-        """Retrieves a random gif from a giphy search"""
+        """
+        Retrieves a random gif from a giphy search
+        """
         if keywords:
             keywords = "+".join(keywords)
         else:
@@ -143,7 +145,9 @@ class Images:
 
 
 class Fun:
-    """Image related commands."""
+    """
+    Image related commands.
+    """
 
     def __init__(self, bot):
         self.bot = bot

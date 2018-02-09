@@ -20,7 +20,9 @@ class TestScripts:
 
     @commands.group(pass_context=True, hidden=True)
     async def hello(self, ctx):
-        """This is a group with commands"""
+        """
+        This is a group with commands
+        """
         if ctx.invoked_subcommand is None:
             message = 'Hello {}'.format(ctx.message.author.name)
             embed = discord.Embed(title="{}".format(ctx.message.author.name),

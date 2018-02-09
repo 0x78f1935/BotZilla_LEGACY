@@ -20,8 +20,10 @@ class Exchange:
 
     @commands.command(pass_context=True)
     async def bitcoin(self, ctx):
-        """Shows current bitcoin value
-        Show bitcoin valua from exchange"""
+        """
+        Shows current bitcoin value
+        Show bitcoin valua from exchange
+        """
         url = tmp_config['exchange']['api-url']
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:

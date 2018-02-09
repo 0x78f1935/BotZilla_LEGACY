@@ -96,21 +96,21 @@ class Information:
 
                     try:
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                              description=f'Total hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}\n\nSearch result **`2`**\n{entries[1][0]}\n{entries[1][1]}\n\nSearch result **`3`**\n{entries[2][0]}\n{entries[2][1]}',
+                                              description=f'Top hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}\n\nSearch result **`2`**\n{entries[1][0]}\n{entries[1][1]}\n\nSearch result **`3`**\n{entries[2][0]}\n{entries[2][1]}',
                                               colour=0xf20006)
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                     except Exception as e:
                         try:
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                                  description=f'Total hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}\n\nSearch result **`2`**\n{entries[1][0]}\n{entries[1][1]}',
+                                                  description=f'Top hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}\n\nSearch result **`2`**\n{entries[1][0]}\n{entries[1][1]}',
                                                   colour=0xf20006)
                             a = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                         except Exception as e:
                             try:
                                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                                      description=f'Total hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}',
+                                                      description=f'Top hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}',
                                                       colour=0xf20006)
                                 a = await self.bot.say(embed=embed)
                                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -320,7 +320,8 @@ class Information:
 
     @commands.command(pass_context=True, hidden=True)
     async def say(self, ctx, *, message=None):
-        """Say something as BotZilla.
+        """
+        Say something as BotZilla.
         This only works in the direct channel the command is used in.
         Secret egg ;)
         """
@@ -802,7 +803,9 @@ class Utils:
 
     @commands.command(pass_context=True)
     async def id(self, ctx, *, username=None):
-        """Shows your ID or the id of the user."""
+        """
+        Shows your ID or the id of the user.
+        """
         if username is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Your ID is:\n**{}**'.format(str(ctx.message.author.id)),

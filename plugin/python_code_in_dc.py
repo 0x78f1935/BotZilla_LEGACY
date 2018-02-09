@@ -25,7 +25,9 @@ class REPL:
         self.owner_list = self.config['owner-id']
 
     def cleanup_code(self, content):
-        """Automatically removes code blocks from the code."""
+        """
+        Automatically removes code blocks from the code.
+        """
         # remove ```py\n```
         if content.startswith('```') and content.endswith('```'):
             return '\n'.join(content.split('\n')[1:-1])
