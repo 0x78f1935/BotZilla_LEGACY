@@ -328,7 +328,7 @@ class Information:
 
         if message is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Maybe you should considering using `{}help say` instead'.format(self.config['prefix']),
+                                  description='Maybe you should considering using **`{}help say`** instead'.format(self.config['prefix']),
                                   colour=0xf20006)
             await self.bot.say(embed=embed)
         else:
@@ -347,7 +347,7 @@ class Information:
         """
         if keywords is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Maybe you should look in `{}help location`. Its a secret spot :wink:'.format(self.config['prefix']),
+                                  description='Maybe you should look in **`{}help location`**. Its a secret spot :wink:'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -527,7 +527,7 @@ class Utils:
 
         if str(questions_and_choices) == '()':
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='It\'s not a bad idea to read `{}help poll` first'.format(self.config['prefix']),
+                                  description='It\'s not a bad idea to read **`{}help poll`** first'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -579,7 +579,7 @@ class Utils:
 
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Don\'t forget the question..\nQuestion: did you read the `{}help poll`?'.format(self.config['prefix']),
+                                  description='Don\'t forget the question..\nQuestion: did you read the **`{}help poll`**?'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -747,7 +747,7 @@ class Utils:
         """
         if number is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Try `{}help copy`'.format(self.config['prefix']),
+                                  description='Try **`{}help copy`**'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -795,7 +795,7 @@ class Utils:
 
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Try `{}help copy`'.format(self.config['prefix']),
+                                  description='Try **`{}help copy`**'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -839,7 +839,7 @@ class Utils:
         """
         if emoji is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Try `{}help emoji`, That would help..'.format(self.config['prefix']),
+                                  description='Try **`{}help emoji`**, That would help..'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])

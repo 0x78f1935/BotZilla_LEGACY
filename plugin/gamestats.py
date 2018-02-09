@@ -24,7 +24,7 @@ class GameStats:
 
         if uplay_name is None:
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                  description="I hope you play the tutorial if you play a new game..\nTry `{}help r6s` instead".format(self.config['prefix']),
+                                  description="I hope you play the tutorial if you play a new game..\nTry **`{}help r6s`** instead".format(self.config['prefix']),
                                   color=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
@@ -93,7 +93,7 @@ class GameStats:
 
         if account is None:
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                  description="I wonder if i could sell you on the market instead :moneybag:, use `{}help rs3` instead".format(self.config['prefix']),
+                                  description="I wonder if i could sell you on the market instead :moneybag:, use **`{}help rs3`** instead".format(self.config['prefix']),
                                   color=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])

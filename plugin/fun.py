@@ -29,6 +29,39 @@ class Images:
         self.owner_list = self.config['owner-id']
 
 
+    @commands.command(pass_context=True)
+    async def big(self, ctx, *, emoji : str = None):
+        """
+        Make custom emojis 10x time bigger!
+        """
+
+        if emoji is None:
+            embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                  description="You should big time check out **`{}help emoji`** instead".format(self.config['prefix']),
+                                  color=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+            return
+        else:
+            emote = str(emoji).split(':')
+            emote = ''.join(re.findall(r"[a-zA-Z_0-9]", emote[1]))
+            emoteO = discord.utils.get(ctx.message.server.emojis, name=emote)
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(emoteO.url, allow_redirects=True) as r:
+                        await self.bot.send_typing(ctx.message.channel)
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name), description='\t', colour=0xf20006)
+                        embed.set_image(url=emoteO.url)
+                        a = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            except Exception as e:
+                embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                      description="The emoji **`{}`** was not found".format(emote[1]),
+                                      color=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+
+
     @commands.command(pass_context=True, no_pm=True)
     async def gif(self, ctx, *keywords):
         """
@@ -93,7 +126,7 @@ class Images:
 
         if content == None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Maybe you should considering using `{}help rule34` instead'.format(self.config['prefix']),
+                                  description='Maybe you should considering using **`{}help rule34`** instead'.format(self.config['prefix']),
                                   colour=0xf20006)
             await self.bot.say(embed=embed)
             return
@@ -173,7 +206,7 @@ class Fun:
 
         if account == None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You should use `{}help hacked` first.'.format(self.config['prefix']),
+                                  description='You should use **`{}help hacked`** first.'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -247,7 +280,7 @@ class Fun:
 
         if not keywords:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Did you tried `{}help dict` yet?'.format(self.config['prefix']),
+                                  description='Did you tried **`{}help dict`** yet?'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -295,7 +328,7 @@ class Fun:
         """
         if text == None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Maybe you should try `{}help sb` instead.'.format(self.config['prefix']),
+                                  description='Maybe you should try **`{}help sb`** instead.'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])

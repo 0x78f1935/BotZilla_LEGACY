@@ -82,7 +82,7 @@ class AdminCommands:
             return
         if game is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You stupid! use `{}help game` instead'.format(self.config['prefix']),
+                                  description='You stupid! use **`{}help game`** instead'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
