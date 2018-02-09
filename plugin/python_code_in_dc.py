@@ -142,11 +142,26 @@ class REPL:
                         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             else:
                 self._last_result = ret
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='```Python\n{}{}\n```'.format(value, ret),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                try:
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='```Python\n{}{}\n```'.format(value, ret),
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                except Exception as e:
+                    code = [value[i:i + 2000] for i in range(0, len(value), 2000)]
+                    for i in code:
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                              description='```Python\n{}\n```'.format(i),
+                                              colour=0xf20006)
+                        a = await self.bot.say(embed=embed)
+                    modifyd_ret = [ret[i:i + 2000] for i in range(0, len(ret), 2000)]
+                    for i in modifyd_ret:
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                              description='```Python\n{}\n```'.format(i),
+                                              colour=0xf20006)
+                        a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
     @commands.command(pass_context=True, hidden=True)
