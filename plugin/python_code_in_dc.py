@@ -111,6 +111,12 @@ class REPL:
                                           description='```Python\n{}\n```'.format(i),
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
+                tracebackerror = [traceback.format_exc()[i:i + 2000] for i in range(0, len(traceback.format_exc()), 2000)]
+                for i in tracebackerror:
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='```Python\n{}\n```'.format(i),
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
