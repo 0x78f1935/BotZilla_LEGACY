@@ -255,31 +255,6 @@ class GameStats:
         Use your Oldschool Runscape username for this command
         """
 
-        icon = {"Crafting": "<:Crafting:411683889099046924:>",
-                "Fletching": "<:Fletching:411683889099309068:>",
-                "Agility": "<:Agility:411683889116086273:>",
-                "Construction": "<:Construction:411683889132601367:>",
-                "Farming": "<:Farming:411683889229070348:>",
-                "Ranged": "<:Ranged:411683889258692649:>",
-                "Cooking": "<:Cooking:411683889291984897:>",
-                "Slayer": "<:Slayer:411683889304698892:>",
-                "Defence": "<:Defence:411683889308893195:>",
-                "Runecrafting": "<:Runecrafting:411683889396842517:>",
-                "Hunter": "<:Hunter:411683889476534272:>",
-                "Firemaking": "<:Firemaking:411683889476534332:>",
-                "Hitpoints": "<:Hitpoints:411683889510088704:>",
-                "Mining": "<:Mining:411683889522671626:>",
-                "Herblore": "<:Herblore:411683889526865920:>",
-                "Attack": "<:Attack:411683889527128064:>",
-                "Magic": "<:Magic:411683889552031764:>",
-                "Thieving": "<:Thieving:411683889556226069:>",
-                "Prayer": "<:Prayer:411683889581654016:>",
-                "Strength": "<:Strength:411683889585586176:>",
-                "Smithing": "<:Smithing:411683889594236928:>",
-                "Fishing": "<:Fishing:411683889636048898:>",
-                "Woodcutting": "<:Woodcutting:411683889694638090:>",
-                "Overall": "<:Overall:411686480071622656:>"}
-
         if account is None:
             embed = discord.Embed(title="{}:".format(ctx.message.author.name),
                                   description="This is not that kind of a fantasy game, use **`{}help osrs`** instead".format(self.config['prefix']),
@@ -317,53 +292,77 @@ class GameStats:
 
                 melee_combat_lvl = ranged_lvl * 0.325
                 combat_lvl = int(base_lvl + melee_combat_lvl)
+                icon = {"Crafting": "<:Crafting:411683889099046924:>",
+                        "Fletching": "<:Fletching:411683889099309068:>",
+                        "Agility": "<:Agility:411683889116086273:>",
+                        "Construction": "<:Construction:411683889132601367:>",
+                        "Farming": "<:Farming:411683889229070348:>",
+                        "Ranged": "<:Ranged:411683889258692649:>",
+                        "Cooking": "<:Cooking:411683889291984897:>",
+                        "Slayer": "<:Slayer:411683889304698892:>",
+                        "Defence": "<:Defence:411683889308893195:>",
+                        "Runecrafting": "<:Runecrafting:411683889396842517:>",
+                        "Hunter": "<:Hunter:411683889476534272:>",
+                        "Firemaking": "<:Firemaking:411683889476534332:>",
+                        "Hitpoints": "<:Hitpoints:411683889510088704:>",
+                        "Mining": "<:Mining:411683889522671626:>",
+                        "Herblore": "<:Herblore:411683889526865920:>",
+                        "Attack": "<:Attack:411683889527128064:>",
+                        "Magic": "<:Magic:411683889552031764:>",
+                        "Thieving": "<:Thieving:411683889556226069:>",
+                        "Prayer": "<:Prayer:411683889581654016:>",
+                        "Strength": "<:Strength:411683889585586176:>",
+                        "Smithing": "<:Smithing:411683889594236928:>",
+                        "Fishing": "<:Fishing:411683889636048898:>",
+                        "Woodcutting": "<:Woodcutting:411683889694638090:>",
+                        "Overall": "<:Overall:411686480071622656:>"}
 
                 for item in icon:
-                    if item['Attack']:
+                    if 'Attack' in item:
                         attack = f'{icon["Attack"]}{lvl[1][1]}'
-                    if item['Defence']:
+                    if 'Defence' in item:
                         defence = f'{icon["Defence"]}{lvl[2][1]}'
-                    if item['Strength']:
+                    if 'Strength' in item:
                         strength = f'{icon["Strength"]}{lvl[3][1]}'
-                    if item['Hitpoints']:
+                    if 'Hitpoints' in item:
                         hitpoints = f'{icon["Hitpoints"]}{lvl[4][1]}'
-                    if item['Ranged']:
+                    if 'Ranged' in item:
                         ranged = f'{icon["Ranged"]}{lvl[5][1]}'
-                    if item['Prayer']:
+                    if 'Prayer' in item:
                         prayer = f'{icon["Prayer"]}{lvl[6][1]}'
-                    if item['Magic']:
+                    if 'Magic' in item:
                         magic = f'{icon["Magic"]}{lvl[7][1]}'
-                    if item['Cooking']:
+                    if 'Cooking' in item:
                         cooking = f'{icon["Cooking"]}{lvl[8][1]}'
-                    if item['Woodcutting']:
+                    if 'Woodcutting' in item:
                         woodcutting = f'{icon["Woodcutting"]}{lvl[9][1]}'
-                    if item['Fletching']:
+                    if 'Fletching' in item:
                         fletching = f'{icon["Fletching"]}{lvl[10][1]}'
-                    if item['Fishing']:
+                    if 'Fishing' in item:
                         fishing = f'{icon["Fishing"]}{lvl[11][1]}'
-                    if item['Firemaking']:
+                    if 'Firemaking' in item:
                         firemaking = f'{icon["Firemaking"]}{lvl[12][1]}'
-                    if item['Crafting']:
+                    if 'Crafting' in item:
                         crafting = f'{icon["Crafting"]}{lvl[13][1]}'
-                    if item['Smithing']:
+                    if 'Smithing' in item:
                         smithing = f'{icon["Smithing"]}{lvl[14][1]}'
-                    if item['Mining']:
+                    if 'Mining' in item:
                         mining = f'{icon["Mining"]}{lvl[15][1]}'
-                    if item['Herblore']:
+                    if 'Herblore' in item:
                         herblore = f'{icon["Herblore"]}{lvl[16][1]}'
-                    if item['Agility']:
+                    if 'Agility' in item:
                         agility = f'{icon["Agility"]}{lvl[17][1]}'
-                    if item['Thieving']:
+                    if 'Thieving' in item:
                         thieving = f'{icon["Thieving"]}{lvl[18][1]}'
-                    if item['Slayer']:
+                    if 'Slayer' in item:
                         slayer = f'{icon["Slayer"]}{lvl[19][1]}'
-                    if item['Farming']:
+                    if 'Farming' in item:
                         farming = f'{icon["Farming"]}{lvl[20][1]}'
-                    if item['Runecrafting']:
+                    if 'Runecrafting' in item:
                         runecrafting = f'{icon["Runecrafting"]}{lvl[21][1]}'
-                    if item['Hunter']:
+                    if 'Hunter' in item:
                         hunter = f'{icon["Hunter"]}{lvl[22][1]}'
-                    if item['Construction']:
+                    if 'Construction' in item:
                         construction = f'{icon["Construction"]}{lvl[23][1]}'
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
