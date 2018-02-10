@@ -23,7 +23,7 @@ class GameStats:
         """
 
         if uplay_name is None:
-            embed = discord.Embed(title="{}".format(ctx.message.author.name),
+            embed = discord.Embed(title="{}:".format(ctx.message.author.name),
                                   description="I hope you play the tutorial if you play a new game..\nTry **`{}help r6s`** instead".format(self.config['prefix']),
                                   color=0xf20006)
             last_message = await self.bot.say(embed=embed)
@@ -92,7 +92,7 @@ class GameStats:
         """
 
         if account is None:
-            embed = discord.Embed(title="{}".format(ctx.message.author.name),
+            embed = discord.Embed(title="{}:".format(ctx.message.author.name),
                                   description="I wonder if i could sell you on the market instead :moneybag:, use **`{}help rs3`** instead".format(self.config['prefix']),
                                   color=0xf20006)
             last_message = await self.bot.say(embed=embed)
@@ -178,6 +178,7 @@ class GameStats:
                     if item['id'] == 26:
                         invention = item['level']
 
+
                 icon = {"Crafting": "<:Crafting:406361343168610305>",
                         "Agility": "<:Agility:406361343210553344>",
                         "Constitution": "<:Constitution:406361343222874112>",
@@ -245,6 +246,162 @@ class GameStats:
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+
+
+    @commands.command(pass_context=True)
+    async def osrs(self, ctx, *, account: str = None):
+        """
+        Shows your Oldschool Runscape stats.
+        Use your Oldschool Runscape username for this command
+        """
+
+        icon = {"Crafting": "<:Crafting:411683889099046924:>",
+                "Fletching": "<:Fletching:411683889099309068:>",
+                "Agility": "<:Agility:411683889116086273:>",
+                "Construction": "<:Construction:411683889132601367:>",
+                "Farming": "<:Farming:411683889229070348:>",
+                "Ranged": "<:Ranged:411683889258692649:>",
+                "Cooking": "<:Cooking:411683889291984897:>",
+                "Slayer": "<:Slayer:411683889304698892:>",
+                "Defence": "<:Defence:411683889308893195:>",
+                "Runecrafting": "<:Runecrafting:411683889396842517:>",
+                "Hunter": "<:Hunter:411683889476534272:>",
+                "Firemaking": "<:Firemaking:411683889476534332:>",
+                "Hitpoints": "<:Hitpoints:411683889510088704:>",
+                "Mining": "<:Mining:411683889522671626:>",
+                "Herblore": "<:Herblore:411683889526865920:>",
+                "Attack": "<:Attack:411683889527128064:>",
+                "Magic": "<:Magic:411683889552031764:>",
+                "Thieving": "<:Thieving:411683889556226069:>",
+                "Prayer": "<:Prayer:411683889581654016:>",
+                "Strength": "<:Strength:411683889585586176:>",
+                "Smithing": "<:Smithing:411683889594236928:>",
+                "Fishing": "<:Fishing:411683889636048898:>",
+                "Woodcutting": "<:Woodcutting:411683889694638090:>",
+                "Overall": "<:Overall:411686480071622656:>"}
+
+        if account is None:
+            embed = discord.Embed(title="{}:".format(ctx.message.author.name),
+                                  description="This is not that kind of a fantasy game, use **`{}help osrs`** instead".format(self.config['prefix']),
+                                  color=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+            return
+        else:
+            old_account = account
+            try:
+                if ' ' in account:
+                    account = account.replace(' ', '%20')
+
+                url = 'http://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player={}'.format(account)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        source = await response.read()
+                source = source.decode('utf-8')
+                source = str(source).replace('\n', ',')
+                source = source.split(',')
+                lvl = []
+                a = 0
+                b  = 3
+                for i in range(24):
+                    result = tuple(source[a:b])
+                    lvl.append(result)
+                    a = a + 3
+                    b = b + 3
+
+                prayer_lvl = round(float(lvl[6][1])) // 2
+                hp_defence = float(lvl[2][1]) + float(lvl[4][1])
+                tmp_combat = prayer_lvl + hp_defence
+                base_lvl = tmp_combat / 4
+                ranged_lvl = float(lvl[3][1]) + float(lvl[1][1])
+
+                melee_combat_lvl = ranged_lvl * 0.325
+                combat_lvl = int(base_lvl + melee_combat_lvl)
+
+                for item in icon:
+                    if item['Attack']:
+                        attack = f'{icon["Attack"]}{lvl[1][1]}'
+                    if item['Defence']:
+                        defence = f'{icon["Defence"]}{lvl[2][1]}'
+                    if item['Strength']:
+                        strength = f'{icon["Strength"]}{lvl[3][1]}'
+                    if item['Hitpoints']:
+                        hitpoints = f'{icon["Hitpoints"]}{lvl[4][1]}'
+                    if item['Ranged']:
+                        ranged = f'{icon["Ranged"]}{lvl[5][1]}'
+                    if item['Prayer']:
+                        prayer = f'{icon["Prayer"]}{lvl[6][1]}'
+                    if item['Magic']:
+                        magic = f'{icon["Magic"]}{lvl[7][1]}'
+                    if item['Cooking']:
+                        cooking = f'{icon["Cooking"]}{lvl[8][1]}'
+                    if item['Woodcutting']:
+                        woodcutting = f'{icon["Woodcutting"]}{lvl[9][1]}'
+                    if item['Fletching']:
+                        fletching = f'{icon["Fletching"]}{lvl[10][1]}'
+                    if item['Fishing']:
+                        fishing = f'{icon["Fishing"]}{lvl[11][1]}'
+                    if item['Firemaking']:
+                        firemaking = f'{icon["Firemaking"]}{lvl[12][1]}'
+                    if item['Crafting']:
+                        crafting = f'{icon["Crafting"]}{lvl[13][1]}'
+                    if item['Smithing']:
+                        smithing = f'{icon["Smithing"]}{lvl[14][1]}'
+                    if item['Mining']:
+                        mining = f'{icon["Mining"]}{lvl[15][1]}'
+                    if item['Herblore']:
+                        herblore = f'{icon["Herblore"]}{lvl[16][1]}'
+                    if item['Agility']:
+                        agility = f'{icon["Agility"]}{lvl[17][1]}'
+                    if item['Thieving']:
+                        thieving = f'{icon["Thieving"]}{lvl[18][1]}'
+                    if item['Slayer']:
+                        slayer = f'{icon["Slayer"]}{lvl[19][1]}'
+                    if item['Farming']:
+                        farming = f'{icon["Farming"]}{lvl[20][1]}'
+                    if item['Runecrafting']:
+                        runecrafting = f'{icon["Runecrafting"]}{lvl[21][1]}'
+                    if item['Hunter']:
+                        hunter = f'{icon["Hunter"]}{lvl[22][1]}'
+                    if item['Construction']:
+                        construction = f'{icon["Construction"]}{lvl[23][1]}'
+
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Combat LVL: **{}**\tOverall LVL: **`{}`**'.format(combat_lvl, lvl[0][1]),
+                                      colour=0xf20006)
+                embed.add_field(name='**Attack**', value=attack, inline=True)
+                embed.add_field(name='**Hitpoints**', value=hitpoints, inline=True)
+                embed.add_field(name='**Mining**', value=mining, inline=True)
+                embed.add_field(name='**Strength**', value=strength, inline=True)
+                embed.add_field(name='**Agility**', value=agility, inline=True)
+                embed.add_field(name='**Smithing**', value=smithing, inline=True)
+                embed.add_field(name='**Defence**', value=defence, inline=True)
+                embed.add_field(name='**Herblore**', value=herblore, inline=True)
+                embed.add_field(name='**Fishing**', value=fishing, inline=True)
+                embed.add_field(name='**Ranged**', value=ranged, inline=True)
+                embed.add_field(name='**Thieving**', value=thieving, inline=True)
+                embed.add_field(name='**Cooking**', value=cooking, inline=True)
+                embed.add_field(name='**Prayer**', value=prayer, inline=True)
+                embed.add_field(name='**Crafting**', value=crafting, inline=True)
+                embed.add_field(name='**Firemaking**', value=firemaking, inline=True)
+                embed.add_field(name='**Magic**', value=magic, inline=True)
+                embed.add_field(name='**Fletching**', value=fletching, inline=True)
+                embed.add_field(name='**Woodcutting**', value=woodcutting, inline=True)
+                embed.add_field(name='**Runecrafting**', value=runecrafting, inline=True)
+                embed.add_field(name='**Slayer**', value=slayer, inline=True)
+                embed.add_field(name='**Farming**', value=farming, inline=True)
+                embed.add_field(name='**Construction**', value=construction, inline=True)
+                embed.add_field(name='**Hunter**',value=hunter, inline=True)
+
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            except Exception as e:
+                print(e.args)
+                embed = discord.Embed(title="{}:".format(ctx.message.author.name),
+                                      description='User **`{}`** not found :cry:'.format(old_account),
+                                      color=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
 
 def setup(bot):
     bot.add_cog(GameStats(bot))
