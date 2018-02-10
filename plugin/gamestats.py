@@ -392,7 +392,7 @@ class GameStats:
                 embed.add_field(name='**Farming**', value=farming, inline=True)
                 embed.add_field(name='**Construction**', value=construction, inline=True)
                 embed.add_field(name='**Hunter**',value=hunter, inline=True)
-                embed.add_field(name='\t', value='\t', inline=True)
+                embed.add_field(name='-', value='-', inline=True)
 
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
