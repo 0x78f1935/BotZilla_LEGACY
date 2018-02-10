@@ -319,54 +319,54 @@ class GameStats:
 
                 for item in icon:
                     if 'Attack' in item:
-                        attack = f'{icon["Attack"]}{lvl[1][1]}'
+                        attack = f'{icon["Attack"]} **`{lvl[1][1]}`**'
                     if 'Defence' in item:
-                        defence = f'{icon["Defence"]}{lvl[2][1]}'
+                        defence = f'{icon["Defence"]} **`{lvl[2][1]}`**'
                     if 'Strength' in item:
-                        strength = f'{icon["Strength"]}{lvl[3][1]}'
+                        strength = f'{icon["Strength"]} **`{lvl[3][1]}`**'
                     if 'Hitpoints' in item:
-                        hitpoints = f'{icon["Hitpoints"]}{lvl[4][1]}'
+                        hitpoints = f'{icon["Hitpoints"]} **`{lvl[4][1]}`**'
                     if 'Ranged' in item:
-                        ranged = f'{icon["Ranged"]}{lvl[5][1]}'
+                        ranged = f'{icon["Ranged"]} **`{lvl[5][1]}`**'
                     if 'Prayer' in item:
-                        prayer = f'{icon["Prayer"]}{lvl[6][1]}'
+                        prayer = f'{icon["Prayer"]} **`{lvl[6][1]}`**'
                     if 'Magic' in item:
-                        magic = f'{icon["Magic"]}{lvl[7][1]}'
+                        magic = f'{icon["Magic"]} **`{lvl[7][1]}`**'
                     if 'Cooking' in item:
-                        cooking = f'{icon["Cooking"]}{lvl[8][1]}'
+                        cooking = f'{icon["Cooking"]} **`{lvl[8][1]}`**'
                     if 'Woodcutting' in item:
-                        woodcutting = f'{icon["Woodcutting"]}{lvl[9][1]}'
+                        woodcutting = f'{icon["Woodcutting"]} **`{lvl[9][1]}`**'
                     if 'Fletching' in item:
-                        fletching = f'{icon["Fletching"]}{lvl[10][1]}'
+                        fletching = f'{icon["Fletching"]} **`{lvl[10][1]}`**'
                     if 'Fishing' in item:
-                        fishing = f'{icon["Fishing"]}{lvl[11][1]}'
+                        fishing = f'{icon["Fishing"]} **`{lvl[11][1]}`**'
                     if 'Firemaking' in item:
-                        firemaking = f'{icon["Firemaking"]}{lvl[12][1]}'
+                        firemaking = f'{icon["Firemaking"]} **`{lvl[12][1]}`**'
                     if 'Crafting' in item:
-                        crafting = f'{icon["Crafting"]}{lvl[13][1]}'
+                        crafting = f'{icon["Crafting"]} **`{lvl[13][1]}`**'
                     if 'Smithing' in item:
-                        smithing = f'{icon["Smithing"]}{lvl[14][1]}'
+                        smithing = f'{icon["Smithing"]} **`{lvl[14][1]}`**'
                     if 'Mining' in item:
-                        mining = f'{icon["Mining"]}{lvl[15][1]}'
+                        mining = f'{icon["Mining"]} **`{lvl[15][1]}`**'
                     if 'Herblore' in item:
-                        herblore = f'{icon["Herblore"]}{lvl[16][1]}'
+                        herblore = f'{icon["Herblore"]} **`{lvl[16][1]}`**'
                     if 'Agility' in item:
-                        agility = f'{icon["Agility"]}{lvl[17][1]}'
+                        agility = f'{icon["Agility"]} **`{lvl[17][1]}`**'
                     if 'Thieving' in item:
-                        thieving = f'{icon["Thieving"]}{lvl[18][1]}'
+                        thieving = f'{icon["Thieving"]} **`{lvl[18][1]}`**'
                     if 'Slayer' in item:
-                        slayer = f'{icon["Slayer"]}{lvl[19][1]}'
+                        slayer = f'{icon["Slayer"]} **`{lvl[19][1]}`**'
                     if 'Farming' in item:
-                        farming = f'{icon["Farming"]}{lvl[20][1]}'
+                        farming = f'{icon["Farming"]} **`{lvl[20][1]}`**'
                     if 'Runecrafting' in item:
-                        runecrafting = f'{icon["Runecrafting"]}{lvl[21][1]}'
+                        runecrafting = f'{icon["Runecrafting"]} **`{lvl[21][1]}`**'
                     if 'Hunter' in item:
-                        hunter = f'{icon["Hunter"]}{lvl[22][1]}'
+                        hunter = f'{icon["Hunter"]} **`{lvl[22][1]}`**'
                     if 'Construction' in item:
-                        construction = f'{icon["Construction"]}{lvl[23][1]}'
+                        construction = f'{icon["Construction"]} **`{lvl[23][1]}`**'
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Combat LVL: **{}**\tOverall LVL: **`{}`**'.format(combat_lvl, lvl[0][1]),
+                                      description='Combat LVL: **`{}`**\tOverall LVL: **`{}`**'.format(combat_lvl, lvl[0][1]),
                                       colour=0xf20006)
                 embed.add_field(name='**Attack**', value=attack, inline=True)
                 embed.add_field(name='**Hitpoints**', value=hitpoints, inline=True)
