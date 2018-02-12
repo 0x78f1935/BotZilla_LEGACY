@@ -476,7 +476,7 @@ class Information:
 
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your search number was : **`{}`**\nNothing found...'.format(number),
+                                      description='Your search number was : **`{}`**\nFound: **`False`**'.format(number),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
