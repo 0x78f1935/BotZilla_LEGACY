@@ -883,7 +883,7 @@ class Utils:
                     data = json.loads(str(source))
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your number was: **`{}`**\nFound: **`{}`**\nType: **`{}`**\n```py\n{}\n```'.format(
+                                      description='Your number was: **`{}`**\nFound: **`{}`**\nType: **`{}`**\n```\n{}\n```'.format(
                                           data['number'], data['found'], data['type'], data['text']
                                       ),
                                       colour=0xf20006)
