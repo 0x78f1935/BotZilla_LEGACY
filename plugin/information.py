@@ -478,6 +478,7 @@ class Information:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Your search number was : **`{}`**\nFound: **`False`**'.format(number),
                                       colour=0xf20006)
+                embed.set_footer(text='Data © Numbers contributors, numbersapi.com')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
