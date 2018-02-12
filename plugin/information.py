@@ -863,7 +863,7 @@ class Utils:
     async def number(self, ctx, *, number : str = None):
         """
         Shows information about a specific number. Example:
-        '42 is the number of spots (or pips, cicrular patches or pits) on a pair of standard six-side dice'
+        -42 is the number of spots (or pips, cicrular patches or pits) on a pair of standard six-side dice-
         Use only numbers
         """
         url = f'http://numbersapi.com/{number}?json'
