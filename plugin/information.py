@@ -442,6 +442,45 @@ class Information:
                         await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
+    @commands.command(pass_context=True)
+    async def number(self, ctx, *, number : str = None):
+        """
+        Shows information about a specific number. Example:
+        -42 is the number of spots (or pips, cicrular patches or pits) on a pair of standard six-side dice-
+        Use only numbers
+        """
+        url = f'http://numbersapi.com/{number}?json'
+        if number is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Please specify a number. Use **`{}help number`** for more info'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        else:
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        source = await response.json(encoding='utf8')
+
+                    source = json.dumps(source)
+                    data = json.loads(str(source))
+
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Your number was: **`{}`**\nFound: **`{}`**\nType: **`{}`**\n```\n{}\n```'.format(
+                                          data['number'], data['found'], data['type'], data['text']
+                                      ),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Your search number was : **`{}`**\nNothing found...'.format(number),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
 class Utils:
     """
     Util commands for BotZilla.
@@ -857,45 +896,6 @@ class Utils:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
-
-
-    @commands.command(pass_context=True)
-    async def number(self, ctx, *, number : str = None):
-        """
-        Shows information about a specific number. Example:
-        -42 is the number of spots (or pips, cicrular patches or pits) on a pair of standard six-side dice-
-        Use only numbers
-        """
-        url = f'http://numbersapi.com/{number}?json'
-        if number is None:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Please specify a number. Use **`{}help number`** for more info'.format(self.config['prefix']),
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-        else:
-            try:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as response:
-                        source = await response.json(encoding='utf8')
-
-                    source = json.dumps(source)
-                    data = json.loads(str(source))
-
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your number was: **`{}`**\nFound: **`{}`**\nType: **`{}`**\n```\n{}\n```'.format(
-                                          data['number'], data['found'], data['type'], data['text']
-                                      ),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-
-            except Exception as e:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your search number was : **`{}`**\nNothing found...'.format(number),
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
 def setup(bot):
