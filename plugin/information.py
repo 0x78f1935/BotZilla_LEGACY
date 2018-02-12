@@ -470,6 +470,7 @@ class Information:
                                           data['number'], data['found'], data['type'], data['text']
                                       ),
                                       colour=0xf20006)
+                embed.set_footer(text='Data © Numbers contributors, numbersapi.com')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
