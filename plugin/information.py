@@ -525,7 +525,7 @@ class Utils:
         Check permissions of any user in the server
         Leave blank to check your own permissions
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!perm in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!perm <{username}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if username is None:
             member = discord.utils.find(lambda m: m.name == ctx.message.author.name, ctx.message.server.members)
             per = member.server_permissions
@@ -576,7 +576,7 @@ class Utils:
         Use `;` as a delimiter.
         Example: question? answerA; answer B; answerC
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!poll in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!poll <{questions_and_choices}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if str(questions_and_choices) == '()':
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='It\'s not a bad idea to read **`{}help poll`** first'.format(self.config['prefix']),
@@ -644,7 +644,7 @@ class Utils:
         Starts a blacklist vote. Ban people from making use of BotZilla.
         5 % of your server has to agree.
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!blacklist in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!blacklist <{username}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if username is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Read **`{}help blacklist`** that would help..'.format(
@@ -737,7 +737,7 @@ class Utils:
         You risk a place on the global blacklist if you use this command
         for spam or other exploits.
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!report in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!report <{Message}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if Message is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='please read **`{}help report`** first..'.format(self.config['prefix']),
@@ -799,7 +799,7 @@ class Utils:
         Copy messages in channel.
         Use a number to specify the amount of messages you want to copy.
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!copy in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!copy <{number}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if number is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Try **`{}help copy`**'.format(self.config['prefix']),
@@ -861,7 +861,7 @@ class Utils:
         """
         Shows your ID or the id of the user.
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!id in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!id <{username}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if username is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Your ID is:\n**`{}`**'.format(str(ctx.message.author.id)),
@@ -893,7 +893,7 @@ class Utils:
         Shows ASCII information about the emoji.
         Usefull for developers.
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!emoji in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!emoji <{emoji}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if emoji is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Try **`{}help emoji`**, That would help..'.format(self.config['prefix']),
