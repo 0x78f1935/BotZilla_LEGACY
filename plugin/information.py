@@ -12,6 +12,7 @@ import ddg3 as duckduckgo3
 import aiohttp
 import textwrap
 from lxml import etree
+from functools import partial
 
 
 try:
@@ -449,7 +450,7 @@ class Information:
         -42 is the number of spots (or pips, cicrular patches or pits) on a pair of standard six-side dice-
         Use only numbers
         """
-        url = f'http://numbersapi.com/{number}?json'
+
         if number is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Please specify a number. Use **`{}help number`** for more info'.format(self.config['prefix']),
@@ -457,6 +458,8 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         else:
+            base_number = partial(int, base=0)
+            url = f'http://numbersapi.com/{base_number(number)}?json'
             try:
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
