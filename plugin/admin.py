@@ -44,7 +44,7 @@ class AdminCommands:
         This function kicks the `Member` based on the server it belongs to,
         So you must have the proper permissions in that server.
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!kick in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!kick <{member}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Only the owner of this bot can use this command',
@@ -69,33 +69,6 @@ class AdminCommands:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
-
-    @commands.command(pass_context=True, hidden=True)
-    async def game(self, ctx, game: str = None, *, url: str = None):
-        """
-        Change the bots game.
-        """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!game in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        if ctx.message.author.id not in self.owner_list:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Only the owner of this bot can use this command',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-        if game is None:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You stupid! use **`{}help game`** instead'.format(self.config['prefix']),
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
-            return
-
-        if not url:
-            game = discord.Game(name=game, type=0)
-        else:
-            game = discord.Game(name=game, url=url, type=1)
-        await self.bot.change_presence(game=game)
 
     # ===========================
     #   Module related commands

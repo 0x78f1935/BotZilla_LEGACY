@@ -57,7 +57,7 @@ class Information:
         """
         Make a google search
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!g in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!g <{search_term}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if search_term is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='try to "search" for **`{}help g`**'.format(self.config['prefix']),
@@ -133,7 +133,7 @@ class Information:
         Use this command in combination with a subject you like
         to get a fact for that subject
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!fact in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!fact <{search_term}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if search_term is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You really should reconsider reading **`{}help fact`**'.format(self.config['prefix']),
@@ -332,7 +332,7 @@ class Information:
         This only works in the direct channel the command is used in.
         Secret egg ;)
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!say in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!say <{message}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if message is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Maybe you should considering using **`{}help say`** instead'.format(self.config['prefix']),
@@ -352,7 +352,7 @@ class Information:
         Get more information about a location.
         Supported: Zipcode, City, Country, street, latitude, longitude
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!location in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!location <{keywords}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if keywords is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Maybe you should look in **`{}help location`**. Its a secret spot :wink:'.format(self.config['prefix']),
@@ -457,7 +457,7 @@ class Information:
         -42 is the number of spots (or pips, cicrular patches or pits) on a pair of standard six-side dice-
         Use only numbers
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!number in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!number <{number}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if number is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Please specify a number. Use **`{}help number`** for more info'.format(self.config['prefix']),

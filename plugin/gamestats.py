@@ -23,7 +23,7 @@ class GameStats:
         Shows your Rainbow Six Siege stats.
         Use your Uplay username for this command
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!r6s in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!r6s <{uplay_name}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if uplay_name is None:
             embed = discord.Embed(title="{}:".format(ctx.message.author.name),
                                   description="I hope you play the tutorial if you play a new game..\nTry **`{}help r6s`** instead".format(self.config['prefix']),
@@ -92,7 +92,7 @@ class GameStats:
         Shows your Runescape 3 stats.
         Use your Runescape 3 username for this command
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rs3 in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rs3 <{account}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if account is None:
             embed = discord.Embed(title="{}:".format(ctx.message.author.name),
                                   description="I wonder if i could sell you on the market instead :moneybag:, use **`{}help rs3`** instead".format(self.config['prefix']),
@@ -256,7 +256,7 @@ class GameStats:
         Shows your Oldschool Runscape stats.
         Use your Oldschool Runscape username for this command
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!osrs in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!osrs <{account}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if account is None:
             embed = discord.Embed(title="{}:".format(ctx.message.author.name),
                                   description="This is not that kind of a fantasy game, use **`{}help osrs`** instead".format(self.config['prefix']),

@@ -151,7 +151,7 @@ class Music:
         The list of supported sites can be found here:
         https://rg3.github.io/youtube-dl/supportedsites.html
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!play in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!play <{song}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if song is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Perhaps you want to read the **`{}help play`** function'.format(self.config['prefix']),
@@ -197,7 +197,7 @@ class Music:
         """
         Sets the volume of the currently playing song.
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!volume in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!volume <{value}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if value is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='If you don\'t know how loud you want your volume\nI can\'t help you. Maybe **`{}help volume`** can'.format(self.config['prefix']),

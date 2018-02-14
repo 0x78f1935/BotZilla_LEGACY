@@ -22,7 +22,7 @@ class Games:
         """
         8ball! Ask BotZilla Any question.
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!8ball in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!8ball <{question}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         question = question.lower()
         ball = random.randint(1, 20)
 
