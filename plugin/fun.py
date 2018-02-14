@@ -3,10 +3,10 @@ import json
 import discord
 import aiohttp
 import random
-import async_timeout
 import re
 import xml.etree.ElementTree
-from bs4 import BeautifulSoup
+import datetime
+
 
 try:
     from imgurpython import ImgurClient

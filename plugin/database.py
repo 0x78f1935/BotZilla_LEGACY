@@ -4,6 +4,7 @@ import discord
 import psycopg2
 import csv
 import re
+import datetime
 from discord.errors import HTTPException
 
 

@@ -2,7 +2,7 @@ import asyncio
 import discord
 from discord.ext import commands
 import json
-from datetime import timedelta
+import datetime
 
 
 if not discord.opus.is_loaded():

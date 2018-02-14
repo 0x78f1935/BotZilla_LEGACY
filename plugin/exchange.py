@@ -2,6 +2,8 @@ from discord.ext import commands
 import json
 import aiohttp
 import discord
+import datetime
+
 
 tmp_config = json.loads(str(open('./options/config.js').read()))
 config = tmp_config['config']
