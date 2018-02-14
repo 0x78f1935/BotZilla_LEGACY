@@ -465,26 +465,44 @@ class Information:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         else:
-            base_number = partial(int, base=0)
-            if number.startswith("0"):
-                number = number[1:]
-            url = f'http://numbersapi.com/{base_number(number)}?json'
             try:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as response:
-                        source = await response.json(encoding='utf8')
+                try:
+                    base_number = partial(int, base=0)
+                    url = f'http://numbersapi.com/{base_number(number)}?json'
+                    async with aiohttp.ClientSession() as session:
+                        async with session.get(url) as response:
+                            source = await response.json(encoding='utf8')
 
-                    source = json.dumps(source)
-                    data = json.loads(str(source))
+                        source = json.dumps(source)
+                        data = json.loads(str(source))
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Your number was: **`{}`**\nFound: **`{}`**\nType: **`{}`**\n```\n{}\n```'.format(
+                                              data['number'], data['found'], data['type'], data['text']
+                                          ),
+                                          colour=0xf20006)
+                    embed.set_footer(text='Data © Numbers contributors, numbersapi.com')
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Your number was: **`{}`**\nFound: **`{}`**\nType: **`{}`**\n```\n{}\n```'.format(
-                                          data['number'], data['found'], data['type'], data['text']
-                                      ),
-                                      colour=0xf20006)
-                embed.set_footer(text='Data © Numbers contributors, numbersapi.com')
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                except Exception as e:
+                    base_number = partial(int, base=0)
+                    if number.startswith("0"):
+                        number = number[1:]
+                    url = f'http://numbersapi.com/{base_number(number)}?json'
+                    async with aiohttp.ClientSession() as session:
+                        async with session.get(url) as response:
+                            source = await response.json(encoding='utf8')
+
+                        source = json.dumps(source)
+                        data = json.loads(str(source))
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Your number was: **`{}`**\nFound: **`{}`**\nType: **`{}`**\n```\n{}\n```'.format(
+                                              data['number'], data['found'], data['type'], data['text']
+                                          ),
+                                          colour=0xf20006)
+                    embed.set_footer(text='Data © Numbers contributors, numbersapi.com')
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
