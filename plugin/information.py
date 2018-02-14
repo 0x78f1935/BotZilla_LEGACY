@@ -466,6 +466,8 @@ class Information:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         else:
             base_number = partial(int, base=0)
+            if number.startswith("0"):
+                number = number[1:]
             url = f'http://numbersapi.com/{base_number(number)}?json'
             try:
                 async with aiohttp.ClientSession() as session:
