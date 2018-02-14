@@ -35,7 +35,7 @@ class Help:
         """
         Show this message
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!help in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         self.database.cur.execute("select name from botzilla.help where cog = 'Games';")
         Games_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")

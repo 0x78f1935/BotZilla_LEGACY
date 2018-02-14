@@ -23,6 +23,7 @@ class TestScripts:
         """
         This is a group with commands
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!hello in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.invoked_subcommand is None:
             message = 'Hello {}'.format(ctx.message.author.name)
             embed = discord.Embed(title="{}".format(ctx.message.author.name),

@@ -34,7 +34,7 @@ class Images:
         """
         Make custom emojis 10x time bigger!
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!big in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if emoji is None:
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
                                   description="You should big time check out **`{}help big`** instead".format(self.config['prefix']),
@@ -67,6 +67,7 @@ class Images:
         """
         Retrieves a random gif from a giphy search
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!gif in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if keywords:
             keywords = "+".join(keywords)
         else:
@@ -116,7 +117,7 @@ class Images:
         Rule#34 : If it exists there is porn of it. If not, start uploading.
         Works only in channels with nsfw in the name.
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rule34 in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if 'nsfw' not in str(ctx.message.channel.name).lower():
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You do not have the permission to use this command outside a NSFW channel.',
@@ -203,7 +204,7 @@ class Fun:
         Use this command to check of your account has been leaked.
         Works on e-mail and username.
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!hack in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if account == None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You should use **`{}help hacked`** first.'.format(self.config['prefix']),
@@ -277,7 +278,7 @@ class Fun:
         Look something up in the UrbanDictionary.
         Use this command with a search keyword.
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!dict in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if not keywords:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Did you tried **`{}help dict`** yet?'.format(self.config['prefix']),
@@ -326,6 +327,7 @@ class Fun:
         SpOnGeBoByFy, Transform your text!
         Use this command with any sentence you like to transform.
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!sb in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if text == None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Maybe you should try **`{}help sb`** instead.'.format(self.config['prefix']),
@@ -355,6 +357,7 @@ class Fun:
         """
         Ever heard a Chuck Norris joke?
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!joke in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'http://api.icndb.com/jokes/random%22'
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
@@ -380,6 +383,7 @@ class Fun:
         """
         Spawn a kitty cat!
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!meow in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'http://placekitten.com/'
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:

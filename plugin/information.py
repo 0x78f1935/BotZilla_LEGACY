@@ -55,6 +55,7 @@ class Information:
         """
         Make a google search
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!g in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if search_term is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='try to "search" for **`{}help g`**'.format(self.config['prefix']),
@@ -130,7 +131,7 @@ class Information:
         Use this command in combination with a subject you like
         to get a fact for that subject
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!fact in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if search_term is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You really should reconsider reading **`{}help fact`**'.format(self.config['prefix']),
@@ -184,7 +185,7 @@ class Information:
         with `music` in the name. Alternative names:
         | oauth | invite | join |
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!invite in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Use the following url to add BotZilla V2 to your guild!\n**{}**\nDon\'t forget to upvote! :)'.format(
                                   'https://discordbots.org/bot/397149515192205324'),
@@ -200,6 +201,7 @@ class Information:
         Sends a package to the discord server.
         Calculates response time
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!ping in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         before = time.monotonic()
         await (await self.bot.ws.ping())
         after = time.monotonic()
@@ -217,6 +219,7 @@ class Information:
         Give information about Botzilla.
         Count the community, servers and more!
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!count in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if self.database_file_found:
             self.database.cur.execute("select count(*) from botzilla.users;")
             rows = self.database.cur.fetchall()
@@ -261,6 +264,7 @@ class Information:
         """
         Count total swearwords used in servers where BotZilla is in
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!swcount in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if self.database_file_found:
             self.database.cur.execute("select total from botzilla.swearwords where swearword = 'shit';")
             shit = self.database.cur.fetchall()
@@ -326,7 +330,7 @@ class Information:
         This only works in the direct channel the command is used in.
         Secret egg ;)
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!say in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if message is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Maybe you should considering using **`{}help say`** instead'.format(self.config['prefix']),
@@ -346,6 +350,7 @@ class Information:
         Get more information about a location.
         Supported: Zipcode, City, Country, street, latitude, longitude
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!location in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if keywords is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Maybe you should look in **`{}help location`**. Its a secret spot :wink:'.format(self.config['prefix']),
@@ -450,7 +455,7 @@ class Information:
         -42 is the number of spots (or pips, cicrular patches or pits) on a pair of standard six-side dice-
         Use only numbers
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!number in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if number is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Please specify a number. Use **`{}help number`** for more info'.format(self.config['prefix']),
@@ -518,6 +523,7 @@ class Utils:
         Check permissions of any user in the server
         Leave blank to check your own permissions
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!perm in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if username is None:
             member = discord.utils.find(lambda m: m.name == ctx.message.author.name, ctx.message.server.members)
             per = member.server_permissions
@@ -568,7 +574,7 @@ class Utils:
         Use `;` as a delimiter.
         Example: question? answerA; answer B; answerC
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!poll in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if str(questions_and_choices) == '()':
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='It\'s not a bad idea to read **`{}help poll`** first'.format(self.config['prefix']),
@@ -636,6 +642,7 @@ class Utils:
         Starts a blacklist vote. Ban people from making use of BotZilla.
         5 % of your server has to agree.
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!blacklist in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if username is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Read **`{}help blacklist`** that would help..'.format(
@@ -728,6 +735,7 @@ class Utils:
         You risk a place on the global blacklist if you use this command
         for spam or other exploits.
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!report in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if Message is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='please read **`{}help report`** first..'.format(self.config['prefix']),
@@ -789,6 +797,7 @@ class Utils:
         Copy messages in channel.
         Use a number to specify the amount of messages you want to copy.
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!copy in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if number is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Try **`{}help copy`**'.format(self.config['prefix']),
@@ -850,6 +859,7 @@ class Utils:
         """
         Shows your ID or the id of the user.
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!id in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if username is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Your ID is:\n**`{}`**'.format(str(ctx.message.author.id)),
@@ -881,6 +891,7 @@ class Utils:
         Shows ASCII information about the emoji.
         Usefull for developers.
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!emoji in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if emoji is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Try **`{}help emoji`**, That would help..'.format(self.config['prefix']),

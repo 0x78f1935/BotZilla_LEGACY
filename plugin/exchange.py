@@ -24,6 +24,7 @@ class Exchange:
         Shows current bitcoin value
         Show bitcoin valua from exchange
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!bitcoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = tmp_config['exchange']['api-url']
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:

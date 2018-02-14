@@ -112,6 +112,7 @@ class Music:
         Summons the bot to join your voice channel.
         You have to be in a voice channel to be able to use this command
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!summon in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         summoned_channel = ctx.message.author.voice_channel
         if summoned_channel is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -150,6 +151,7 @@ class Music:
         The list of supported sites can be found here:
         https://rg3.github.io/youtube-dl/supportedsites.html
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!play in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if song is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Perhaps you want to read the **`{}help play`** function'.format(self.config['prefix']),
@@ -195,6 +197,7 @@ class Music:
         """
         Sets the volume of the currently playing song.
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!volume in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if value is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='If you don\'t know how loud you want your volume\nI can\'t help you. Maybe **`{}help volume`** can'.format(self.config['prefix']),
@@ -218,6 +221,7 @@ class Music:
         """
         Pauses the currently played song.
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!pause in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         state = self.get_voice_state(ctx.message.server)
         if state.is_playing():
             player = state.player
@@ -234,6 +238,7 @@ class Music:
         """
         Resumes the currently played song.
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!resume in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         state = self.get_voice_state(ctx.message.server)
         if state.is_playing():
             player = state.player
@@ -251,7 +256,7 @@ class Music:
         Stops playing audio and leaves the voice channel.
         This also clears the queue.
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!stop in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         server = ctx.message.server
         state = self.get_voice_state(server)
 
@@ -279,7 +284,7 @@ class Music:
         Vote to skip a song. The song requester can automatically skip.
         3 skip votes are needed for the song to be skipped.
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!skip in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         state = self.get_voice_state(ctx.message.server)
         if not state.is_playing():
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -325,7 +330,7 @@ class Music:
         """
         Shows info about the currently played song.
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!playing in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         state = self.get_voice_state(ctx.message.server)
         if state.current is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),

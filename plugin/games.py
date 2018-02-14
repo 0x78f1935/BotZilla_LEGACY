@@ -22,6 +22,7 @@ class Games:
         """
         8ball! Ask BotZilla Any question.
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!8ball in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         question = question.lower()
         ball = random.randint(1, 20)
 
@@ -204,6 +205,7 @@ class Games:
         Is the next number higher or lower then your current number?
         Vote with the whole server!
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!highlow in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         while True:
             number = random.randrange(0,1000)
             embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
