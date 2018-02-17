@@ -35,24 +35,7 @@ class Images:
         '''
         Transform any text to ascii art.
         All available fonts can you find here:
-        3-d, 3x5, 5lineoblique, acrobatic, alligator2, alligator, alphabet,
-        avatar, banner3-D, banner3, banner4, banner, barbwire, basic, bell,
-        bigchief, big, binary, block, broadway, bubble, bulbhead, calgphy2,
-        caligraphy, catwalk, chunky, coinstak, colossal, computer, contessa,
-        contrast, cosmic, cosmike, crawford, cricket, cyberlarge, cybermedium,
-        cybersmall, decimal, diamond, digital, doh, doom, dotmatrix, double,
-        drpepper, eftichess, eftifont, eftipiti, eftirobot, eftitalic, eftiwall,
-        eftiwater, epic, fender, fourtops, fuzzy, goofy, gothic, graffiti, hex,
-        hollywood, invita, isometric1, isometric2, isometric3, isometric4, italic,
-        ivrit, jazmine, katakana, kban, larry3d, lcd, lean, letters, linux, lockergnome,
-        madrid, marquee, maxfour, mike, mini, mirror, mnemonic, nancyj-fancy, nancyj,
-        ancyj-underlined, nipples, o8, octal, ogre, os2, pawp, peaks, pebbles, pepper,
-        poison, puffy, pyramid, rectangles, relief2, relief, rev, roman, rot13, rounded,
-        rowancap, rozzo, sblood, script, serifcap, shadow, short, slant, slide, slscript,
-        small, smisome1, smkeyboard, smscript, smshadow, smslant, speed, stacey,
-        stampatello, standard, starwars, stellar, stop, straight, tanja, term, thick,
-        thin, threepoint, ticks, ticksslant, tinker-toy, tombstone, trek, twopoint,
-        univers, usaflag, weird, whimsy
+        
         '''
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!text <{text}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if text or font is None:
