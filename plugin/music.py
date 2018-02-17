@@ -173,6 +173,13 @@ class Music:
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
 
+        if True:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Currently the Music category is down, you may experience issues with it... I\'m working on it',
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+            return
 
         await self.bot.send_typing(ctx.message.channel)
         state = self.get_voice_state(ctx.message.server)
