@@ -184,8 +184,8 @@ class Music:
                 player = await state.voice.create_ytdl_player(song, ytdl_options=opts)
                 player.volume = 1
                 player.start()
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='**Now playing:**\n`{}`\n**Duration:**\n``\n\nYou can stop me anytime with **`{}stop`**'.format(
+                embed = discord.Embed(title='MusicPlayer:',
+                                      description='**Now playing:**\n`{}`\n**Duration:**\n`{}`\n\nYou can stop me anytime with **`{}stop`**'.format(
                                           player.title, player.duration, self.config['prefix']),
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
