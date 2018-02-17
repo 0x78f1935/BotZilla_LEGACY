@@ -33,6 +33,7 @@ class Images:
     @commands.command(pass_context=True)
     async def ascii(self, ctx, font : str = None, *, text : str = None):
         '''
+        {}ascii <font> <text>
         Transform any text to ascii art.
         All available fonts can you find here:
         3-d, 3x5, 5lineoblique, acrobatic, alligator2, alligator, alphabet,
@@ -40,7 +41,7 @@ class Images:
         bigchief, big, binary, block, broadway, bubble, bulbhead, calgphy2,
         caligraphy, catwalk, chunky, coinstak, colossal, computer, contessa,
         Full list: https://www.flamingtext.com/tools/figlet/fontlist.html
-        '''
+        '''.format(self.config['prefix'])
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!text <{text}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if text or font is None:
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
