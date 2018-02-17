@@ -195,11 +195,6 @@ class Music:
         else:
             player.volume = 1
             entry = VoiceEntry(ctx.message, player)
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Enqueued:\n```{}```'.format(str(entry)),
-                                  colour=0xf20006)
-            last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await state.songs.put(entry)
 
 
@@ -237,11 +232,6 @@ class Music:
         else:
             player.volume = 1
             entry = VoiceEntry(ctx.message, player)
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Enqueued:\n```{}```'.format(str(entry)),
-                                  colour=0xf20006)
-            last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await state.songs.put(entry)
 
 
