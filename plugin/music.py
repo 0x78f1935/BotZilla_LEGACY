@@ -167,6 +167,7 @@ class Music:
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             return
         else:
+            self.music_playing.append(ctx.message.server.id)
             state = self.get_voice_state(ctx.message.server)
             opts = {
                 'default_search': 'auto',
