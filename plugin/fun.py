@@ -62,13 +62,9 @@ class Images:
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
 
-                    data = "```py\n{}\n```".format(art)
-
                     async with aiohttp.ClientSession() as session:
-                        async with session.post("https://hastebin.com/documents", data="\n".join(data)) as response:
+                        async with session.post("https://hastebin.com/documents", data="\n".join(art)) as response:
                             key = (await response.json())["key"]
-
-                    await self.bot.send_typing(ctx.message.channel)
 
                     embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
                                           description=f"https://hastebin.com/{key}.md",
