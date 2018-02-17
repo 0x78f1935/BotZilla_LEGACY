@@ -234,6 +234,7 @@ class Music:
 
             for song in songs:
                 song = song[0]
+                print(song)
                 player = await state.voice.create_ytdl_player(song, ytdl_options=opts)
                 video_id = re.search(r'(=)[^.\s]*' ,song).group()
                 url = 'https://www.googleapis.com/youtube/v3/videos?id={}&key={}&part=contentDetails'.format(video_id[1:], self.config['youtube-v3-key'])
