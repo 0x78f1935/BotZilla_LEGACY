@@ -167,7 +167,6 @@ class Music:
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             return
         else:
-            self.music_playing.append(ctx.message.server.id)
             state = self.get_voice_state(ctx.message.server)
             opts = {
                 'default_search': 'auto',
@@ -179,6 +178,7 @@ class Music:
                 if not success:
                     return
 
+            self.music_playing.append(ctx.message.server.id)
             try:
                 self.database.cur.execute("select * from botzilla.musicque order by random() limit 30;")
                 songs = self.database.cur.fetchall()
@@ -191,7 +191,7 @@ class Music:
                     player.volume = 1
                     player.start()
                     embed = discord.Embed(title='MusicPlayer:',
-                                          description='**Now playing:**\n`{}`\n**Duration:**\n`{}`\n\nYou can stop me anytime with **`{}stop`**'.format(
+                                          description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n\nYou can stop me anytime with **`{}stop`**'.format(
                                               player.title, player.duration, self.config['prefix']),
                                           colour=0xf20006)
                     last_message = await self.bot.say(embed=embed)
@@ -276,6 +276,16 @@ class Music:
         This also clears the queue.
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!stop in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+
+        if ctx.message.server.id not in self.music_playing:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='There is no music playing :( use **`{}help play`** for more information'.format(
+                                      self.config['prefix']),
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+            return
+
         server = ctx.message.server
         state = self.get_voice_state(server)
 
