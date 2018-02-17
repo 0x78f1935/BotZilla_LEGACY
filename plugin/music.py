@@ -89,7 +89,7 @@ class Music:
         self.channels = self.tmp_config['channels']
         self.emojiUnicode = self.tmp_config['unicode']
         self.owner_list = self.config['owner-id']
-        self.music_playing = []
+        self.music_playing = {}
         try:
             self.database = Database(self.bot)
             self.database_file_found = True
@@ -159,7 +159,7 @@ class Music:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!play in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
-        if ctx.message.server.id in self.music_playing:
+        if ctx.message.server.id in self.music_playing and url==None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Music is already playing in another voice channel.\nJoin that one instead :smile:',
                                   colour=0xf20006)
@@ -167,6 +167,41 @@ class Music:
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             return
         else:
+
+            if url:
+                if re.search(r'(https?://)?(www.)?youtube(.com)/[\w\d_\-?=&/]+', url):
+                    if 'index' in url.lower():
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                              description='Please.. don\'t use a youtube playlists, use **`{}help play`** instead'.format(self.config['prefix']),
+                                              colour=0xf20006)
+                        last_message = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+                        return
+                    elif 'list' in url.lower():
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                              description='Please.. don\'t use a youtube playlists, use **`{}help play`** instead'.format(self.config['prefix']),
+                                              colour=0xf20006)
+                        last_message = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+                        return
+                    else:
+                        server_que = self.music_playing[ctx.message.server.id]
+                        server_que.append(url)
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                              description='**`{}`** has been added to the playlist'.format(url),
+                                              colour=0xf20006)
+                        last_message = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
+                else:
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Please.. use a youtube link or use **`{}help play`** instead'.format(
+                                              self.config['prefix']),
+                                          colour=0xf20006)
+                    last_message = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
+                    return
+
             state = self.get_voice_state(ctx.message.server)
             opts = {
                 'default_search': 'auto',
@@ -178,14 +213,25 @@ class Music:
                 if not success:
                     return
 
-            self.music_playing.append(ctx.message.server.id)
+            self.music_playing[ctx.message.server.id] = []
             try:
                 for songs in range(30):
                     self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
                     song = self.database.cur.fetchall()
                     self.database.cur.execute("ROLLBACK;")
-                    song = song[0][0]
-                    player = await state.voice.create_ytdl_player(song, ytdl_options=opts)
+                    server_que = self.music_playing[ctx.message.server.id]
+                    server_que.append(song[0][0])
+                    if not server_que:
+                        embed = discord.Embed(title='MusicPlayer:',
+                                              description='Playlist is **empty**, use **`{}play`** for a new playlist!'.format(
+                                                  self.config['prefix']),
+                                              colour=0xf20006)
+                        last_message = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+                        return
+
+                    player = await state.voice.create_ytdl_player(server_que.pop([0]), ytdl_options=opts)
+
                     if ctx.message.server.id not in self.music_playing:
                         player.stop()
                         break
