@@ -240,12 +240,13 @@ class Music:
                 total_time = 2 + round_time
 
             except Exception as e:
-                fmt = 'An error occurred while processing this request: ```Python\n{}: {}\nPlease send a {}report <error message>```'.format(type(e).__name__, e, self.config['prefix'])
+                fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```\nPlease send a {}report <error message>'.format(type(e).__name__, e.args, self.config['prefix'])
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=fmt,
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
+                await ctx.invoke(self.stop)
             else:
                 player.volume = 1
                 entry = VoiceEntry(ctx.message, player)
