@@ -237,10 +237,10 @@ class Music:
                 print(song)
                 player = await state.voice.create_ytdl_player(song, ytdl_options=opts)
                 player.volume = 1
-                entry = VoiceEntry(ctx.message, player)
-                await state.songs.put(entry)
+                player.start()
                 print(player.duration)
                 await asyncio.sleep(player.duration)
+                player.stop()
 
         except Exception as e:
             fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```\nPlease send a {}report <error message>'.format(type(e).__name__, e.args, self.config['prefix'])
