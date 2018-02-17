@@ -232,7 +232,7 @@ class Music:
                         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                         return
 
-                    player = await state.voice.create_ytdl_player(server_que.pop([0]), ytdl_options=opts)
+                    player = await state.voice.create_ytdl_player(server_que.pop(0), ytdl_options=opts)
 
                     if ctx.message.server.id not in self.music_playing:
                         player.stop()
