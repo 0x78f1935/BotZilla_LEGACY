@@ -57,7 +57,7 @@ class Images:
 
                 if len(art) >= 2000:
                     embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                          description="Unfortunate discords handles a character limitation of 2000 characters.\nDuo this fact you have a new DM message.\nIf not check your privacy settings.",
+                                          description="Unfortunate discords handles a character limitation of 2000 characters.\nDue to this fact you have a new DM message.\nIf not check your privacy settings.",
                                           color=0xf20006)
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
@@ -86,7 +86,7 @@ class Images:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             else:
                 embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                      description="The font you gave doesnt exist, check **`{}help ascii`** for more information",
+                                      description="The font you gave doesnt exist, check **`{}help ascii`** for more information".format(self.config['prefix']),
                                       color=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
