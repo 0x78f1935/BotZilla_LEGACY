@@ -157,7 +157,7 @@ class Music:
         """
         Play a music playlist.
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!playplaylist in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!play in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
         if ctx.message.server.id in self.music_playing:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),

@@ -6,6 +6,7 @@ import random
 import re
 import xml.etree.ElementTree
 import datetime
+import pyfiglet
 
 
 try:
@@ -27,6 +28,31 @@ class Images:
         self.channels = self.tmp_config['channels']
         self.emojiUnicode = self.tmp_config['unicode']
         self.owner_list = self.config['owner-id']
+
+
+    @commands.command(pass_context=True)
+    async def ascii(self, ctx, *, text : str = None):
+        """
+        Transform any text to ascii art.
+        If the art has > 2000 characters this command
+        will only send the first 2000
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!text <{text}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        if text is None:
+            embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                  description="You should check out **`{}help ascii`**".format(self.config['prefix']),
+                                  color=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+            return
+        else:
+            figlet = pyfiglet.Figlet(font='slant')
+            art = figlet.renderText(text)
+            embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                  description="```py\n{}\n```".format(art[:1999]),
+                                  color=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
 
     @commands.command(pass_context=True)
