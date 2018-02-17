@@ -3,6 +3,9 @@ import discord
 from discord.ext import commands
 import json
 import datetime
+import re
+import aiohttp
+import isodate
 try:
     from plugin.database import Database
 except:
@@ -217,22 +220,37 @@ class Music:
             if not success:
                 return
 
-        try:
-            self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
-            song = self.database.cur.fetchall()
-            self.database.cur.execute("ROLLBACK;")
-            player = await state.voice.create_ytdl_player(song[0][0], ytdl_options=opts, after=state.toggle_next)
-        except Exception as e:
-            fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```'
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=fmt.format(type(e).__name__, e),
-                                  colour=0xf20006)
-            last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
-        else:
-            player.volume = 1
-            entry = VoiceEntry(ctx.message, player)
-            await state.songs.put(entry)
+        while True:
+            try:
+                self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
+                song = self.database.cur.fetchall()
+                self.database.cur.execute("ROLLBACK;")
+                player = await state.voice.create_ytdl_player(song[0][0], ytdl_options=opts)
+                video_id = re.search(r'(=)[^.\s]*' ,song[0][0]).group()
+                url = 'https://www.googleapis.com/youtube/v3/videos?id={}&key={}&part=contentDetails'.format(video_id, self.config['youtube-v3-key'])
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        source = await response.json(encoding='utf8')
+
+                source = json.dumps(source, indent=2)
+                source = json.loads(source)
+
+                time_in_float = isodate.parse_duration(source['items'][0]['contentDetails']['duration'])
+                round_time = int(round(time_in_float.total_seconds()))
+                total_time = 2 + round_time
+
+            except Exception as e:
+                fmt = 'An error occurred while processing this request: ```Python\n{}: {}\nPlease send a {}report <error message>```'.format(type(e).__name__, e, self.config['prefix'])
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=fmt,
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
+            else:
+                player.volume = 1
+                entry = VoiceEntry(ctx.message, player)
+                await state.songs.put(entry)
+                await asyncio.sleep(total_time)
 
 
     @commands.command(pass_context=True, no_pm=True)
