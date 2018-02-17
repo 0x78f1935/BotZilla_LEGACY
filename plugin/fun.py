@@ -132,6 +132,8 @@ class Images:
             await self.bot.say(embed=embed)
             return
         else:
+            if ' ' in str(content):
+                content = str(content).replace(' ', '%20')
             link = 'http://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=' + content
             url = link.replace(' ', '_').replace('+', ' ')
             async with aiohttp.ClientSession() as session:
