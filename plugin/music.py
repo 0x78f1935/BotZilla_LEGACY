@@ -3,6 +3,10 @@ import discord
 from discord.ext import commands
 import json
 import datetime
+try:
+    from plugin.database import Database
+except:
+    pass
 
 
 if not discord.opus.is_loaded():
@@ -82,6 +86,12 @@ class Music:
         self.channels = self.tmp_config['channels']
         self.emojiUnicode = self.tmp_config['unicode']
         self.owner_list = self.config['owner-id']
+        try:
+            self.database = Database(self.bot)
+            self.database_file_found = True
+        except:
+            print('Music: Database files not found')
+            pass
 
     def get_voice_state(self, server):
         state = self.voice_states.get(server.id)
@@ -191,6 +201,49 @@ class Music:
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             await state.songs.put(entry)
+
+
+    @commands.command(pass_context=True)
+    async def playplaylist(self, ctx):
+        """
+        Plays a playlist.
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!playplaylist in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+
+        await self.bot.send_typing(ctx.message.channel)
+        state = self.get_voice_state(ctx.message.server)
+        opts = {
+            'default_search': 'auto',
+            'quiet': True,
+        }
+
+        if state.voice is None:
+            success = await ctx.invoke(self.summon)
+            if not success:
+                return
+
+        try:
+            self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
+            song = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            player = await state.voice.create_ytdl_player(song[0][0], ytdl_options=opts, after=state.toggle_next)
+        except Exception as e:
+            fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```'
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description=fmt.format(type(e).__name__, e),
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
+        else:
+            player.volume = 1
+            entry = VoiceEntry(ctx.message, player)
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Enqueued:\n```{}```'.format(str(entry)),
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+            await state.songs.put(entry)
+
 
     @commands.command(pass_context=True, no_pm=True)
     async def volume(self, ctx, value : int = None):
