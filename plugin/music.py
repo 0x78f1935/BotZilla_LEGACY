@@ -227,7 +227,7 @@ class Music:
                 self.database.cur.execute("ROLLBACK;")
                 player = await state.voice.create_ytdl_player(song[0][0], ytdl_options=opts)
                 video_id = re.search(r'(=)[^.\s]*' ,song[0][0]).group()
-                url = 'https://www.googleapis.com/youtube/v3/videos?id={}&key={}&part=contentDetails'.format(video_id, self.config['youtube-v3-key'])
+                url = 'https://www.googleapis.com/youtube/v3/videos?id={}&key={}&part=contentDetails'.format(video_id[1:], self.config['youtube-v3-key'])
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
                         source = await response.json(encoding='utf8')
@@ -247,6 +247,7 @@ class Music:
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
                 await ctx.invoke(self.stop)
+                break
             else:
                 player.volume = 1
                 entry = VoiceEntry(ctx.message, player)
