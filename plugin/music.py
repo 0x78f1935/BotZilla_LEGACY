@@ -153,7 +153,7 @@ class Music:
 
 
     @commands.command(pass_context=True)
-    async def play(self, ctx):
+    async def play(self, ctx, *, url=None):
         """
         Play a music playlist.
         """
@@ -180,12 +180,11 @@ class Music:
 
             self.music_playing.append(ctx.message.server.id)
             try:
-                self.database.cur.execute("select * from botzilla.musicque order by random() limit 30;")
-                songs = self.database.cur.fetchall()
-                self.database.cur.execute("ROLLBACK;")
-
-                for song in songs:
-                    song = song[0]
+                for songs in range(30):
+                    self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
+                    song = self.database.cur.fetchall()
+                    self.database.cur.execute("ROLLBACK;")
+                    song = song[0][0]
                     player = await state.voice.create_ytdl_player(song, ytdl_options=opts)
                     if ctx.message.server.id not in self.music_playing:
                         player.stop()
@@ -200,8 +199,17 @@ class Music:
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, '\U0001f3b5')
                     await asyncio.sleep(player.duration)
+                    if ctx.message.server.id not in self.music_playing:
+                        player.stop()
+                        break
                     player.stop()
 
+                embed = discord.Embed(title='MusicPlayer:',
+                                      description='Playlist is **empty**, use **`{}play`** for a new playlist!'.format(
+                                          self.config['prefix']),
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
             except Exception as e:
                 fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```\nPlease send a {}report <error message>'.format(type(e).__name__, e.args, self.config['prefix'])
