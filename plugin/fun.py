@@ -34,8 +34,6 @@ class Images:
     async def ascii(self, ctx, font : str = None, *, text : str = None):
         '''
         Transform any text to ascii art.
-        If the art has > 2000 characters this command
-        will only send the first 2000
         All available fonts can you find here:
         3-d, 3x5, 5lineoblique, acrobatic, alligator2, alligator, alphabet,
         avatar, banner3-D, banner3, banner4, banner, barbwire, basic, bell,

@@ -417,6 +417,30 @@ class Database:
 
 
     @commands.command(pass_context=True, hidden=True)
+    async def updatehelp(self, ctx):
+        """
+        Update help
+        """
+        self.cur.execute('drop table botzilla.help;')
+        self.cur.execute("ROLLBACK;")
+        self.cur.execute('CREATE TABLE botzilla.help(name varchar(200) primary key, cog varchar(200), info varchar(1500));')
+        for command in self.bot.walk_commands():
+            try:
+                hel = command.__dict__
+                safe_name = str(command.name).replace("'", "\'").replace(';', '')
+                safe_cog = str(command.cog_name).replace("'", "\'").replace(';', '')
+                safe_info = str(hel['help']).replace("'", "\'").replace(';', '<insert semicolon here>')
+                self.cur.execute("INSERT INTO botzilla.help (name, cog, info) VALUES('{}', '{}', '{}');".format(safe_name, safe_cog, safe_info))
+                self.cur.execute("ROLLBACK;")
+
+            except Exception as e:
+                if 'duplicate key' in str(e.args):
+                    pass
+                else:
+                    print(f'{type(e).__name__} : {e}')
+
+
+    @commands.command(pass_context=True, hidden=True)
     async def importmusic(self, ctx):
         """
         Import CSV data from import folder
