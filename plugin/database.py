@@ -439,6 +439,12 @@ class Database:
                 else:
                     print(f'{type(e).__name__} : {e}')
 
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description='Update succesfull :ok_hand:',
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 
     @commands.command(pass_context=True, hidden=True)
     async def importmusic(self, ctx):
