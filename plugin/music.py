@@ -185,6 +185,8 @@ class Music:
                         await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                         return
                     else:
+                        if ctx.message.server.id not in self.music_playing:
+                            self.music_playing[ctx.message.server.id] = []
                         server_que = self.music_playing[ctx.message.server.id]
                         server_que.append(url)
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
