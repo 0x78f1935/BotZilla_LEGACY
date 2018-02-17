@@ -339,7 +339,10 @@ class Information:
                                   colour=0xf20006)
             await self.bot.say(embed=embed)
         else:
-            await self.bot.delete_message(ctx.message)
+            try:
+                await self.bot.delete_message(ctx.message)
+            except Exception as e:
+                pass
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='{}'.format(str(message)),
                                   colour=0xf20006)
