@@ -43,7 +43,14 @@ class Images:
         Full list: https://www.flamingtext.com/tools/figlet/fontlist.html
         '''
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!text <{text}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        if text or font is None:
+        if text is None:
+            embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                  description="You should check out **`{}help ascii`**".format(self.config['prefix']),
+                                  color=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+            return
+        elif font is None:
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
                                   description="You should check out **`{}help ascii`**".format(self.config['prefix']),
                                   color=0xf20006)
