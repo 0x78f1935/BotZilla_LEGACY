@@ -118,6 +118,42 @@ class Music:
             except:
                 pass
 
+    @commands.command(pass_context=True)
+    async def summon(self, ctx):
+        """
+        Summons the bot to join your voice channel.
+        You have to be in a voice channel to be able to use this command
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!summon in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        summoned_channel = ctx.message.author.voice_channel
+        if summoned_channel is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You are not in a voice channel.\nConsider the **`{}help summon`** option..'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+            return False
+
+        state = self.get_voice_state(ctx.message.server)
+        if state.voice is None:
+            state.voice = await self.bot.join_voice_channel(summoned_channel)
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You can stop me at any time.\nUse `{}stop` to stop me. You can also pause and resume me\nuse `{}help Music` for more information'.format(self.config['prefix'], self.config['prefix']),
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+        else:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Music is already playing in another voice channel.\nJoin that one instead :smile:',
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+            try:
+                await ctx.invoke(self.play)
+            except Exception as e:
+                pass
+        return True
+
 
     @commands.command(pass_context=True)
     async def play(self, ctx):
@@ -126,40 +162,6 @@ class Music:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!playplaylist in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
-        async def summon(message):
-            """
-            Summons the bot to join your voice channel.
-            You have to be in a voice channel to be able to use this command
-            """
-            print(f'{datetime.date.today()} {datetime.datetime.now()} - {message.author} ran command !!summon in -- Channel: {message.channel.name} Guild: {message.server.name}')
-            summoned_channel = message.author.voice_channel
-            if summoned_channel is None:
-                embed = discord.Embed(title='{}:'.format(message.author.name),
-                                      description='You are not in a voice channel.\nConsider the **`{}help summon`** option..'.format(
-                                          self.config['prefix']),
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
-                return False
-
-            state = self.get_voice_state(message.server)
-            if state.voice is None:
-                state.voice = await self.bot.join_voice_channel(summoned_channel)
-                embed = discord.Embed(title='{}:'.format(message.author.name),
-                                      description='You can stop me at any time.\nUse `{}stop` to stop me. You can also pause and resume me\nuse `{}help Music` for more information'.format(
-                                          self.config['prefix'], self.config['prefix']),
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-            else:
-                embed = discord.Embed(title='{}:'.format(message.author.name),
-                                      description='Music is already playing in another voice channel.\nJoin that one instead :smile:',
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-            return True
-
-
         state = self.get_voice_state(ctx.message.server)
         opts = {
             'default_search': 'auto',
@@ -167,7 +169,7 @@ class Music:
         }
 
         if state.voice is None:
-            success = await ctx.invoke(await summon(ctx.message))
+            success = await ctx.invoke(self.summon)
             if not success:
                 return
 
