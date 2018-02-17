@@ -186,8 +186,11 @@ class Music:
 
                 for song in songs:
                     song = song[0]
-                    print(song)
                     player = await state.voice.create_ytdl_player(song, ytdl_options=opts)
+                    if ctx.message.server.id not in self.music_playing:
+                        player.stop()
+                        break
+                    print(song)
                     player.volume = 1
                     player.start()
                     embed = discord.Embed(title='MusicPlayer:',
@@ -198,9 +201,7 @@ class Music:
                     await self.bot.add_reaction(last_message, '\U0001f3b5')
                     await asyncio.sleep(player.duration)
                     player.stop()
-                    if ctx.message.server.id not in self.music_playing:
-                        player.stop()
-                        break
+
 
             except Exception as e:
                 fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```\nPlease send a {}report <error message>'.format(type(e).__name__, e.args, self.config['prefix'])
