@@ -227,14 +227,14 @@ class Music:
             if not success:
                 return
 
-        first_start = True
-        while True:
-            try:
-                self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
-                song = self.database.cur.fetchall()
-                self.database.cur.execute("ROLLBACK;")
-                player = await state.voice.create_ytdl_player(song[0][0], ytdl_options=opts)
-                video_id = re.search(r'(=)[^.\s]*' ,song[0][0]).group()
+        try:
+            self.database.cur.execute("select * from botzilla.musicque order by random() limit 30;")
+            songs = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+
+            for song in songs:
+                player = await state.voice.create_ytdl_player(song, ytdl_options=opts)
+                video_id = re.search(r'(=)[^.\s]*' ,song).group()
                 url = 'https://www.googleapis.com/youtube/v3/videos?id={}&key={}&part=contentDetails'.format(video_id[1:], self.config['youtube-v3-key'])
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
@@ -245,26 +245,16 @@ class Music:
 
                 time_in_float = isodate.parse_duration(source['items'][0]['contentDetails']['duration'])
                 round_time = int(round(time_in_float.total_seconds()))
-                total_time = 1 + round_time
+                await asyncio.sleep(round_time)
 
-            except Exception as e:
-                fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```\nPlease send a {}report <error message>'.format(type(e).__name__, e.args, self.config['prefix'])
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=fmt,
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
-                await ctx.invoke(self.stop)
-                break
-            else:
-                if first_start:
-                    first_start = False
-                    player.volume = 1
-                    entry = VoiceEntry(ctx.message, player)
-                    await state.songs.put(entry)
-
-                await asyncio.sleep(total_time)
-
+        except Exception as e:
+            fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```\nPlease send a {}report <error message>'.format(type(e).__name__, e.args, self.config['prefix'])
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description=fmt,
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
+            await ctx.invoke(self.stop)
 
 
     @commands.command(pass_context=True, no_pm=True)
