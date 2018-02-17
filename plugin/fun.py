@@ -54,8 +54,33 @@ class Images:
             if font.lower() in fonts:
                 figlet = pyfiglet.Figlet(font=font)
                 art = figlet.renderText(text)
+
+                if len(art) >= 2000:
+                    embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                          description="Unfortunate discords handles a character limitation of 2000 characters.\nDuo this fact you have a new DM message.\nIf not check your privacy settings.",
+                                          color=0xf20006)
+                    last_message = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
+
+                    data = "```py\n{}\n```".format(art)
+
+                    async with aiohttp.ClientSession() as session:
+                        async with session.post("https://hastebin.com/documents", data="\n".join(data)) as response:
+                            key = (await response.json())["key"]
+
+                    await self.bot.send_typing(ctx.message.channel)
+
+                    embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
+                                          description=f"https://hastebin.com/{key}.md",
+                                          colour=0xf20006)
+                    user = await self.bot.get_user_info(ctx.message.author.id)
+                    last_message = await self.bot.send_message(user, embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
+                    return
+
                 embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                      description="```py\n{}\n```".format(art[:1999]),
+                                      description="```py\n{}\n```".format(art),
                                       color=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
