@@ -89,6 +89,7 @@ class Music:
         self.channels = self.tmp_config['channels']
         self.emojiUnicode = self.tmp_config['unicode']
         self.owner_list = self.config['owner-id']
+        self.music_playing = []
         try:
             self.database = Database(self.bot)
             self.database_file_found = True
@@ -154,49 +155,57 @@ class Music:
     @commands.command(pass_context=True)
     async def play(self, ctx):
         """
-        Plays a playlist.
+        Play a music playlist.
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!playplaylist in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
-        state = self.get_voice_state(ctx.message.server)
-        opts = {
-            'default_search': 'auto',
-            'quiet': True,
-        }
-
-        if state.voice is None:
-            success = await ctx.invoke(self.summon)
-            if not success:
-                return
-
-        try:
-            self.database.cur.execute("select * from botzilla.musicque order by random() limit 30;")
-            songs = self.database.cur.fetchall()
-            self.database.cur.execute("ROLLBACK;")
-
-            for song in songs:
-                song = song[0]
-                print(song)
-                player = await state.voice.create_ytdl_player(song, ytdl_options=opts)
-                player.volume = 1
-                player.start()
-                embed = discord.Embed(title='MusicPlayer:',
-                                      description='**Now playing:**\n`{}`\n**Duration:**\n`{}`\n\nYou can stop me anytime with **`{}stop`**'.format(
-                                          player.title, player.duration, self.config['prefix']),
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, '\U0001f3b5')
-                await asyncio.sleep(player.duration)
-                player.stop()
-
-        except Exception as e:
-            fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```\nPlease send a {}report <error message>'.format(type(e).__name__, e.args, self.config['prefix'])
+        if ctx.message.server.id in self.music_playing:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=fmt,
+                                  description='Music is already playing in another voice channel.\nJoin that one instead :smile:',
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
-            await ctx.invoke(self.stop)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+            return
+        else:
+            state = self.get_voice_state(ctx.message.server)
+            opts = {
+                'default_search': 'auto',
+                'quiet': True,
+            }
+
+            if state.voice is None:
+                success = await ctx.invoke(self.summon)
+                if not success:
+                    return
+
+            try:
+                self.database.cur.execute("select * from botzilla.musicque order by random() limit 30;")
+                songs = self.database.cur.fetchall()
+                self.database.cur.execute("ROLLBACK;")
+
+                for song in songs:
+                    song = song[0]
+                    print(song)
+                    player = await state.voice.create_ytdl_player(song, ytdl_options=opts)
+                    player.volume = 1
+                    player.start()
+                    embed = discord.Embed(title='MusicPlayer:',
+                                          description='**Now playing:**\n`{}`\n**Duration:**\n`{}`\n\nYou can stop me anytime with **`{}stop`**'.format(
+                                              player.title, player.duration, self.config['prefix']),
+                                          colour=0xf20006)
+                    last_message = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(last_message, '\U0001f3b5')
+                    await asyncio.sleep(player.duration)
+                    player.stop()
+
+            except Exception as e:
+                fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```\nPlease send a {}report <error message>'.format(type(e).__name__, e.args, self.config['prefix'])
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=fmt,
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
+                await ctx.invoke(self.stop)
 
 
     async def volume(self, ctx, value : int = None):
@@ -282,6 +291,8 @@ class Music:
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, '\U0001f44b')
+            if ctx.message.server.id in self.music_playing:
+                self.music_playing.remove(ctx.message.server.id)
 
 
     async def skip(self, ctx):
