@@ -119,7 +119,6 @@ class Music:
                 pass
 
 
-    @commands.command(pass_context=True, no_pm=True)
     async def summon(self, ctx):
         """
         Summons the bot to join your voice channel.
@@ -154,68 +153,13 @@ class Music:
         return True
 
 
-    @commands.command(pass_context=True, no_pm=True)
-    async def play(self, ctx, *, song : str = None):
-        """
-        Plays a song.
-        If there is a song currently in the queue, then it is
-        queued until the next song is done playing.
-        This command automatically searches as well from YouTube.
-        The list of supported sites can be found here:
-        https://rg3.github.io/youtube-dl/supportedsites.html
-        """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!play <{song}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        if song is None:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Perhaps you want to read the **`{}help play`** function'.format(self.config['prefix']),
-                                  colour=0xf20006)
-            last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
-            return
-
-        if True:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Currently the Music category is down, you may experience issues with it... I\'m working on it',
-                                  colour=0xf20006)
-            last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
-            return
-
-        await self.bot.send_typing(ctx.message.channel)
-        state = self.get_voice_state(ctx.message.server)
-        opts = {
-            'default_search': 'auto',
-            'quiet': True,
-        }
-
-        if state.voice is None:
-            success = await ctx.invoke(self.summon)
-            if not success:
-                return
-
-        try:
-            player = await state.voice.create_ytdl_player(song, ytdl_options=opts, after=state.toggle_next)
-        except Exception as e:
-            fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```'
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=fmt.format(type(e).__name__, e),
-                                  colour=0xf20006)
-            last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
-        else:
-            player.volume = 1
-            entry = VoiceEntry(ctx.message, player)
-            await state.songs.put(entry)
-
-
     @commands.command(pass_context=True)
-    async def playplaylist(self, ctx):
+    async def play(self, ctx):
         """
         Plays a playlist.
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!playplaylist in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
-        await self.bot.send_typing(ctx.message.channel)
         state = self.get_voice_state(ctx.message.server)
         opts = {
             'default_search': 'auto',
@@ -238,7 +182,12 @@ class Music:
                 player = await state.voice.create_ytdl_player(song, ytdl_options=opts)
                 player.volume = 1
                 player.start()
-                print(player.duration)
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='**Now playing:**\n`{}`\n**Duration:**\n``\n\nYou can stop me anytime with **`{}stop`**'.format(
+                                          player.title, player.duration, self.config['prefix']),
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, '\U0001f3b5')
                 await asyncio.sleep(player.duration)
                 player.stop()
 
@@ -252,7 +201,6 @@ class Music:
             await ctx.invoke(self.stop)
 
 
-    @commands.command(pass_context=True, no_pm=True)
     async def volume(self, ctx, value : int = None):
         """
         Sets the volume of the currently playing song.
@@ -276,7 +224,7 @@ class Music:
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
-    @commands.command(pass_context=True, no_pm=True)
+
     async def pause(self, ctx):
         """
         Pauses the currently played song.
@@ -293,7 +241,7 @@ class Music:
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
-    @commands.command(pass_context=True, no_pm=True)
+
     async def resume(self, ctx):
         """
         Resumes the currently played song.
@@ -338,7 +286,6 @@ class Music:
             await self.bot.add_reaction(last_message, '\U0001f44b')
 
 
-    @commands.command(pass_context=True, no_pm=True)
     async def skip(self, ctx):
         """
         Vote to skip a song. The song requester can automatically skip.
@@ -385,8 +332,8 @@ class Music:
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
 
-    @commands.command(pass_context=True, no_pm=True, name='np')
-    async def playing(self, ctx):
+
+    async def np(self, ctx):
         """
         Shows info about the currently played song.
         """
