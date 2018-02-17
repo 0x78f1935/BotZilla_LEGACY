@@ -239,19 +239,8 @@ class Music:
                 player.volume = 1
                 entry = VoiceEntry(ctx.message, player)
                 await state.songs.put(entry)
-
-                video_id = re.search(r'(=)[^.\s]*' ,song).group()
-                url = 'https://www.googleapis.com/youtube/v3/videos?id={}&key={}&part=contentDetails'.format(video_id[1:], self.config['youtube-v3-key'])
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as response:
-                        source = await response.json(encoding='utf8')
-
-                source = json.dumps(source, indent=2)
-                source = json.loads(source)
-
-                time_in_float = isodate.parse_duration(source['items'][0]['contentDetails']['duration'])
-                round_time = int(round(time_in_float.total_seconds()))
-                await asyncio.sleep(round_time)
+                print(player.duration)
+                await asyncio.sleep(player.duration)
 
         except Exception as e:
             fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```\nPlease send a {}report <error message>'.format(type(e).__name__, e.args, self.config['prefix'])
