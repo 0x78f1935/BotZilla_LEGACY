@@ -195,7 +195,7 @@ class Music:
                         last_message = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                         print(self.music_playing[ctx.message.server.id])
-
+                        return
                 else:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Please.. use a youtube link or use **`{}help play`** instead'.format(
