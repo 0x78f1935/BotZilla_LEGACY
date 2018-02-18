@@ -251,8 +251,14 @@ class Music:
         if state.voice is None:
             state.voice = await self.bot.join_voice_channel(summoned_channel)
         else:
-            await state.voice.move_to(summoned_channel)
-
+            if ctx.message.author.id in self.owner_list:
+                await state.voice.move_to(summoned_channel)
+            else:
+                embed = discord.Embed(title='MusicPlayer:',
+                                      description='There is already a channel with botzilla in it.\nJoin that one instead :smiley:',
+                                      colour=0xf20006)
+                m = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(m, self.emojiUnicode['warning'])
         return True
 
     @commands.command(pass_context=True, no_pm=True)
