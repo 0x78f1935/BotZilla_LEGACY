@@ -230,6 +230,7 @@ async def on_member_join(member):
 @bot.event
 async def on_message_edit(before, message):
     if message.author.bot: return
+    if str(message.content).startswith('{}play'.format(config['prefix'])): return
 
     database.cur.execute("SELECT ID FROM botzilla.blacklist;")
     row = database.cur.fetchall()

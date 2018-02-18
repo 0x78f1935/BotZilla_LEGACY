@@ -190,7 +190,7 @@ class Music:
                             server_que.append(url)
                             server_que.pop(0)
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                                  description='**`{}`** has **been** added to the playlist'.format(url),
+                                                  description='**`{}`** has been **added** to the playlist'.format(url),
                                                   colour=0xf20006)
                             last_message = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -207,7 +207,7 @@ class Music:
                         else:
                             server_que.append(url)
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                                  description='**`{}`** has been added to the playlist'.format(url),
+                                                  description='**`{}`** has been **added** to the playlist'.format(url),
                                                   colour=0xf20006)
                             last_message = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -225,7 +225,7 @@ class Music:
         if ctx.message.server.id in self.music_playing:
             if self.music_playing[ctx.message.server.id][0] == '1':
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Music is already playing in another voice channel.\nJoin that one instead :smile:',
+                                      description='Music is **already** playing in another voice channel.\nJoin that one instead :smile:',
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
