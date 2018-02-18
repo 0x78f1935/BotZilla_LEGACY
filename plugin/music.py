@@ -222,7 +222,12 @@ class Music:
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
 
-        try:
+        if ctx.message.server.id not in self.music_playing:
+            self.music_playing[ctx.message.server.id] = ['1', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
+
+        self.music_playing[ctx.message.server.id][0] = 1
+
+        if url is None:
             if ctx.message.server.id in self.music_playing:
                 if self.music_playing[ctx.message.server.id][0] == '1':
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -231,15 +236,7 @@ class Music:
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                     return
-        except Exception as e:
-            pass
 
-        if ctx.message.server.id not in self.music_playing:
-            self.music_playing[ctx.message.server.id] = ['1', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
-
-        self.music_playing[ctx.message.server.id][0] = 1
-
-        if url is None:
             state = self.get_voice_state(ctx.message.server)
             opts = {
                 'default_search': 'auto',
