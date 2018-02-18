@@ -153,7 +153,7 @@ class Music:
 
 
     @commands.command(pass_context=True)
-    async def play(self, ctx, *, url=None):
+    async def play(self, ctx, url=None):
         """
         Play a music playlist.
         """
@@ -204,7 +204,7 @@ class Music:
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
-        else:
+        if url is None:
             state = self.get_voice_state(ctx.message.server)
             opts = {
                 'default_search': 'auto',
