@@ -84,13 +84,15 @@ class Images:
                     embed = discord.Embed(title="{}".format(ctx.message.author.name),
                                           description="Unfortunate discords handles a character limitation of 2000 characters.\nDue to this fact try to shorten your text",
                                           color=0xf20006)
+                    embed.set_footer(text="**Font:** **`{}`**".format(font[0]))
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
                     return
 
                 embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                      description="**Font:** **`{}`** ```py\n{}\n```".format(font, art),
+                                      description="```py\n{}\n```".format(art),
                                       color=0xf20006)
+                embed.set_footer(text="**Font:** **`{}`**".format(font[0]))
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                 return
