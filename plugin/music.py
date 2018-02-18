@@ -7,6 +7,7 @@ import datetime
 import math
 import random
 import json
+import re
 from collections import deque
 
 
@@ -283,7 +284,7 @@ class Music:
         shuffle = True if ' +shuffle' in song else False
         if shuffle:
             song.replace(' +shuffle', '')
-        if 'playlist?list=' in song:
+        if re.search(r'(https?://)?(www.)?youtube(.com)/[\w\d_\-?=&/]+', song) and 'index' in song.lower() or 'list' in song.lower():
             embed = discord.Embed(title='MusicPlayer:',
                                   description='Playlist detected, enqueuing all items...',
                                   colour=0xf20006)
