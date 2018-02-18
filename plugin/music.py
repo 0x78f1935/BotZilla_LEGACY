@@ -216,7 +216,8 @@ class Music:
                 if not success:
                     return
 
-            self.music_playing[ctx.message.server.id] = []
+            if ctx.message.server.id not in self.music_playing:
+                self.music_playing[ctx.message.server.id] = []
             try:
                 for songs in range(30):
                     self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
