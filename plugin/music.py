@@ -441,6 +441,7 @@ class Music:
                                   colour=0xf20006)
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
+            state.skip()
             state.toggle_next()
             return
 
@@ -450,18 +451,20 @@ class Music:
                                   colour=0xf20006)
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
+            state.skip()
             state.toggle_next()
             return
 
         elif voter.id not in state.skip_votes:
             state.skip_votes.add(voter.id)
             total_votes = len(state.skip_votes)
-            if total_votes >= math.ceil(int(round((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2))):
+            if total_votes >= math.ceil((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2):
                 embed = discord.Embed(title='MusicPlayer:',
                                       description='Skip vote passed, skipping song...',
                                       colour=0xf20006)
                 out = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(out, self.emojiUnicode['succes'])
+                state.skip()
                 state.toggle_next()
                 return
 
