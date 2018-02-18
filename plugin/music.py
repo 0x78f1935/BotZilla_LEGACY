@@ -34,6 +34,10 @@ class VoiceEntry:
         self.description = None
         self.upload_date = None
         self.doit = True
+        self.tmp_config = json.loads(str(open('./options/config.js').read()))
+        self.config = self.tmp_config['config']
+        self.emojiUnicode = self.tmp_config['unicode']
+        self.owner_list = self.config['owner-id']
 
     async def getInfo(self):
         opts = {
@@ -58,10 +62,6 @@ class VoiceEntry:
             if self.duration is None:
                 self.duration = 0
             self.uploader = info.get('uploader')
-            self.tmp_config = json.loads(str(open('./options/config.js').read()))
-            self.config = self.tmp_config['config']
-            self.emojiUnicode = self.tmp_config['unicode']
-            self.owner_list = self.config['owner-id']
 
             is_twitch = 'twitch' in self.url
             if is_twitch:
