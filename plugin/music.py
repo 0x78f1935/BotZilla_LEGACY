@@ -489,7 +489,11 @@ class Music:
         state = self.get_voice_state(ctx.message.server)
         entries = [x for x in state.songs._queue]
         if len(entries) == 0:
-            out = await self.bot.say("There are currently no songs in the queue!")
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='There are currently no songs in the queue!',
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['warning'])
             await asyncio.sleep(10)
             try:
                 await self.bot.delete_messages([ctx.message, out])
@@ -499,7 +503,7 @@ class Music:
         else:
             counter = 1
             totalduration = 0
-            send = 'Found queue of **{1}** for **{0}**\n'.format(
+            send = 'Found queue of **{1}** for **{0}**\n\n'.format(
                 ctx.message.server.name, len(entries))
             for entry in entries[:10]:
                 requester = entry.requester
@@ -512,7 +516,7 @@ class Music:
                 if entry.duration is None:
                     entry.duration = 0
                 totalduration += entry.duration
-            send += 'Total duration: `[{0}]`'.format(
+            send += '\t- Total duration: `[{0}]`'.format(
                 datetime.timedelta(seconds=totalduration))
             embed = discord.Embed(title='MusicPlayer:',
                                   description=send,
