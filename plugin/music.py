@@ -424,8 +424,8 @@ class Music:
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
 
-        state.skip()
-
+        await ctx.invole(self.stop)
+        await ctx.invole(self.play)
 
     async def np(self, ctx):
         """
