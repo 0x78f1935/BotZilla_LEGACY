@@ -234,44 +234,6 @@ class Music:
             except:
                 pass
 
-    @commands.command(pass_context=True, no_pm=True)
-    async def join(self, ctx, *, channel: discord.Channel):
-        """Joins a voice channel."""
-        try:
-            await self.bot.create_voice_client(channel)
-        except discord.InvalidArgument:
-            embed = discord.Embed(title='MusicPlayer:',
-                                  description='This is not a voice channel...',
-                                  colour=0xf20006)
-            out = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(out, self.emojiUnicode['warning'])
-            await asyncio.sleep(5)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
-        except discord.ClientException:
-            embed = discord.Embed(title='MusicPlayer:',
-                                  description='Already in a voice channel...',
-                                  colour=0xf20006)
-            out = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(out, self.emojiUnicode['warning'])
-            await asyncio.sleep(5)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
-        else:
-            embed = discord.Embed(title='MusicPlayer:',
-                                  description='Ready to play audio in: **`{}`**'.format(channel.name),
-                                  colour=0xf20006)
-            out = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(out, self.emojiUnicode['warning'])
-            await asyncio.sleep(5)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
 
     @commands.command(pass_context=True, no_pm=True)
     async def summon(self, ctx):
