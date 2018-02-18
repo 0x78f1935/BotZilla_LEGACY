@@ -259,7 +259,7 @@ class Music:
                     self.database.cur.execute("ROLLBACK;")
                     server_que = self.music_playing[ctx.message.server.id][1]
                     server_que.append(song[0][0])
-                    print(f'song added {song}')
+                    print(f'song added {song[0][0]}')
 
                     if not server_que:
                         await ctx.invoke(self.stop)
