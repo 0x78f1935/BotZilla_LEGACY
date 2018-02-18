@@ -346,7 +346,7 @@ class Music:
             player.pause()
 
     @commands.command(pass_context=True, no_pm=True)
-    async def resume(slef, ctx):
+    async def resume(self, ctx):
         """Resumes the currently played song."""
         state = self.get_voice_state(ctx.message.server)
         if state.is_playing():
