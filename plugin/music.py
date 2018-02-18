@@ -173,18 +173,10 @@ class VoiceState:
             self.currentplayer = self.create_player(self.current)
             if not self.empty:
                 if not self.repeat:
-                    embed = discord.Embed(title='MusicPlayer:',
-                                          description='Now playing: **`{}`**'.format(str(self.current)),
-                                          colour=0xf20006)
-                    out = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(out, '\U0001f3b5')
+                    await self.bot.send_message(self.current.channel, 'Now playing ' + str(self.current))
                     out = None
                 else:
-                    embed = discord.Embed(title='MusicPlayer:',
-                                          description='Repeating: **`{}`**'.format(str(self.current)),
-                                          colour=0xf20006)
-                    out = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(out, '\U0001f3b5')
+                    out = await self.bot.send_message(self.current.channel, 'Repeating ' + str(self.current))
             self.currenttime = datetime.datetime.now()
             self.currentplayer.start()
             if out:
