@@ -239,6 +239,10 @@ class Music:
 
             self.music_playing[ctx.message.server.id][0] = '1'
             state = self.get_voice_state(ctx.message.server)
+
+            if ctx.message.server.id not in self.voice_states:
+                self.voice_states[ctx.message.server.id] = state
+
             opts = {
                 'default_search': 'auto',
                 'quiet': True,
