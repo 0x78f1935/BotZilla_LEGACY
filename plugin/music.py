@@ -181,14 +181,20 @@ class Music:
                     return
 
                 else:
+                    server_que = self.music_playing[ctx.message.server.id][1]
+                    # somewhere here is a weird duplication bug. The bot triggers why, i have no clue why
                     if ctx.message.server.id not in self.music_playing:
-                        self.music_playing[ctx.message.server.id] = ['0', ['']]
-                        server_que = self.music_playing[ctx.message.server.id][1]
-                        server_que.append(url)
-                        server_que.pop(0)
+                        self.music_playing[ctx.message.server.id] = ['0', ['t']]
+                        if url in server_que:
+                            pass
+                        else:
+                            server_que.append(url)
+                            server_que.pop(0)
                     else:
-                        server_que = self.music_playing[ctx.message.server.id][1]
-                        server_que.append(url)
+                        if url in server_que:
+                            pass
+                        else:
+                            server_que.append(url)
 
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='**`{}`** has been added to the playlist'.format(url),
