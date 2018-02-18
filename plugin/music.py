@@ -322,25 +322,12 @@ class Music:
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                     out = None
-                    await asyncio.sleep(15)
-                    try:
-                        if out is not None:
-                            await self.bot.delete_messages([ctx.message, out, last_message])
-                        else:
-                            await self.bot.delete_messages([ctx.message, last_message])
-                    except:
-                        pass
                 else:
                     embed = discord.Embed(title='MusicPlayer:',
                                           description='Successfully enqueued **`{}`** entries!'.format(len(songlist)),
                                           colour=0xf20006)
                     out = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(out, self.emojiUnicode['succes'])
-                    await asyncio.sleep(5)
-                    try:
-                        await self.bot.delete_messages([ctx.message, out, last_message])
-                    except:
-                        pass
         else:
             entry = VoiceEntry(self.bot, ctx.message, song)
             await entry.getInfo()
@@ -353,14 +340,6 @@ class Music:
                     await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                     out = None
                     await state.songs.put(entry)
-                    await asyncio.sleep(15)
-                    try:
-                        if out is not None:
-                            await self.bot.delete_messages([ctx.message, out])
-                        else:
-                            await self.bot.delete_message(ctx.message)
-                    except:
-                        pass
                 else:
                     embed = discord.Embed(title='MusicPlayer:',
                                           description='Enqueued : **`{}`**'.format(str(entry)),
@@ -368,11 +347,6 @@ class Music:
                     out = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(out, self.emojiUnicode['succes'])
                     await state.songs.put(entry)
-                    await asyncio.sleep(5)
-                    try:
-                        await self.bot.delete_messages([ctx.message, out])
-                    except:
-                        pass
             else:
                 await self.bot.delete_message(ctx.message)
 
@@ -390,11 +364,7 @@ class Music:
                                   colour=0xf20006)
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
-            await asyncio.sleep(5)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
+
 
     @commands.command(pass_context=True, no_pm=True)
     async def pause(self, ctx):
@@ -468,11 +438,7 @@ class Music:
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['warning'])
             await asyncio.sleep(5)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-                return
-            except:
-                pass
+
 
         voter = ctx.message.author
         if voter == state.current.requester:
@@ -483,10 +449,7 @@ class Music:
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             state.skip()
             await asyncio.sleep(5)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
+
 
         elif voter.id in self.owner_list:
             embed = discord.Embed(title='MusicPlayer:',
@@ -496,10 +459,7 @@ class Music:
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             state.skip()
             await asyncio.sleep(5)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
+
 
         elif voter.id not in state.skip_votes:
             state.skip_votes.add(voter.id)
@@ -511,11 +471,6 @@ class Music:
                 out = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(out, self.emojiUnicode['succes'])
                 state.skip()
-                await asyncio.sleep(5)
-                try:
-                    await self.bot.delete_messages([ctx.message, out])
-                except:
-                    pass
 
             else:
                 embed = discord.Embed(title='MusicPlayer:',
@@ -524,10 +479,7 @@ class Music:
                 out = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(out, self.emojiUnicode['succes'])
                 await asyncio.sleep(5)
-                try:
-                    await self.bot.delete_messages([ctx.message, out])
-                except:
-                    pass
+
 
         else:
             embed = discord.Embed(title='MusicPlayer:',
@@ -535,11 +487,6 @@ class Music:
                                   colour=0xf20006)
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['warning'])
-            await asyncio.sleep(5)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
 
     @commands.command(pass_context=True, no_pm=True)
     async def np(self, ctx):
@@ -561,11 +508,7 @@ class Music:
                                   colour=0xf20006)
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
-            await asyncio.sleep(10)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
+
 
     @commands.command(name='que', pass_context=True, no_pm=True)
     async def _list(self, ctx):
@@ -579,10 +522,7 @@ class Music:
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['warning'])
             await asyncio.sleep(10)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
+
 
         else:
             counter = 1
@@ -608,10 +548,7 @@ class Music:
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             await asyncio.sleep(10)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
+
 
     @commands.command(name="info", pass_context=True, no_pm=True)
     async def _info(self, ctx):
@@ -641,8 +578,3 @@ Duration: `[{3[0]}m {3[1]}s/{4[0]}m {4[1]}s]`
                                   colour=0xf20006)
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
-            await asyncio.sleep(10)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
