@@ -112,7 +112,7 @@ class Music:
         state.voice = voice
 
     def __unload(self):
-        for state in self.voice_states.values():
+        for state in self.music_playing.values():
             try:
                 state.audio_player.cancel()
                 if state.voice:
@@ -390,7 +390,7 @@ class Music:
 
         try:
             state.audio_player.cancel()
-            del self.voice_states[server.id]
+            del self.music_playing[server.id]
             await state.voice.disconnect()
         except:
             pass
