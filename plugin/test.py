@@ -53,7 +53,7 @@ class TestScripts:
                          'https://media.discordapp.net/attachments/407238426417430539/414844574385569794/sebisauce_13.png',
                          'https://media.discordapp.net/attachments/407238426417430539/414844592048046090/sebisauce_14.png',
                          'https://media.discordapp.net/attachments/407238426417430539/414844605885054976/sebisauce_15.png']
-        url = random.sample(sebisauce_img, 1)
+        url = random.choice(sebisauce_img)
         embed = discord.Embed(title="\t",
                               description="\t",
                               color=0xf20006)
