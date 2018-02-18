@@ -92,10 +92,10 @@ class Music:
             pass
 
     def get_voice_state(self, server):
-        state = self.music_player.get(server.id)
+        state = self.voice_states.get(server.id)
         if state is None:
             state = VoiceState(self.bot)
-            self.music_player[server.id] = state
+            self.voice_states[server.id] = state
 
         return state
 
@@ -105,7 +105,7 @@ class Music:
         state.voice = voice
 
     def __unload(self):
-        for state in self.music_player.values():
+        for state in self.voice_states.values():
             try:
                 state.audio_player.cancel()
                 if state.voice:
@@ -231,6 +231,13 @@ class Music:
 
             self.music_playing[ctx.message.server.id][0] = '1'
             state = self.get_voice_state(ctx.message.server)
+
+            if ctx.message.server.id not in self.voice_states:
+                self.voice_states[ctx.message.server.id] = state
+
+            else:
+                music_state = {ctx.message.server.id: state}
+                self.voice_states.update(music_state)
 
             opts = {
                 'default_search': 'auto',
@@ -390,7 +397,7 @@ class Music:
 
         try:
             state.audio_player.cancel()
-            del self.music_player[server.id]
+            del self.voice_states[server.id]
             await state.voice.disconnect()
         except:
             pass
