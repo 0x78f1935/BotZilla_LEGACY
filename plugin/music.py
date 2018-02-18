@@ -407,6 +407,7 @@ class Music:
                 out = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(out, self.emojiUnicode['warning'])
 
+
     @commands.command(pass_context=True, no_pm=True)
     async def resume(self, ctx):
         """Resumes the currently played song."""
@@ -414,6 +415,14 @@ class Music:
         if state.is_playing():
             player = state.player
             player.resume()
+        else:
+            if state.current is None:
+                embed = discord.Embed(title='MusicPlayer:',
+                                      description='Not playing anything.',
+                                      colour=0xf20006)
+                out = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(out, self.emojiUnicode['warning'])
+
 
     @commands.command(pass_context=True, no_pm=True)
     async def stop(self, ctx):
