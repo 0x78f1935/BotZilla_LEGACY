@@ -225,17 +225,17 @@ class Music:
         if ctx.message.server.id not in self.music_playing:
             self.music_playing[ctx.message.server.id] = ['1', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
 
-        self.music_playing[ctx.message.server.id][0] = 1
+
 
         if url is None:
-            if ctx.message.server.id in self.music_playing:
-                if self.music_playing[ctx.message.server.id][0] == '1':
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Music is **already** playing in another voice channel.\nJoin that one instead :smile:',
-                                          colour=0xf20006)
-                    last_message = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                    return
+
+            if self.music_playing[ctx.message.server.id][0] == '1':
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='There is already somewhere music playing\nJoin that channel instead :smiley:',
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+                return
 
             state = self.get_voice_state(ctx.message.server)
             opts = {
@@ -261,12 +261,7 @@ class Music:
                     print(self.music_playing)
 
                     if not server_que:
-                        embed = discord.Embed(title='MusicPlayer:',
-                                              description='Playlist is **empty**, use **`{}play`** for a new playlist!'.format(
-                                                  self.config['prefix']),
-                                              colour=0xf20006)
-                        last_message = await self.bot.say(embed=embed)
-                        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+                        break
                     else:
 
                         player = await state.voice.create_ytdl_player(server_que.pop(0), ytdl_options=opts)
@@ -280,6 +275,7 @@ class Music:
                         last_message = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(last_message, '\U0001f3b5')
 
+                        self.music_playing[ctx.message.server.id][0] = '1'
                         await asyncio.sleep(player.duration)
 
                         if self.music_playing[ctx.message.server.id][0] == '0':
@@ -287,6 +283,7 @@ class Music:
                             break
 
                         player.stop()
+
 
                 embed = discord.Embed(title='MusicPlayer:',
                                       description='Playlist is **empty**, use **`{}play`** for a new playlist!'.format(
