@@ -156,7 +156,8 @@ class Music:
     async def play(self, ctx, url=None):
         """
         This command is multifunctional.
-        Use !!play to start the playlist. Random tracks will be added to the playlist.
+        Use !!play to start the playlist.
+        Random tracks will be added to the playlist.
         This keeps going until 100 tracks are finished with playing.
         Use !!play <youtube url> to add a song to the playlist
         """
