@@ -160,12 +160,10 @@ class Music:
 
                 # Raise error if there are no items in the server_que
                 if not server_que:
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='There are no songs in the playlist :cry:',
-                                          colour=0xf20006)
-                    last_message = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
-                    return
+                    self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
+                    song = self.database.cur.fetchall()
+                    self.database.cur.execute("ROLLBACK;")
+                    server_que.append(song[0][0])
 
                 # Dubble is_playing check
                 if is_playing == 'False':
