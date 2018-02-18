@@ -297,31 +297,31 @@ class Music:
                             songlist.append(
                                 'https://www.youtube.com/watch?v={}'.format(e['id']))
 
-                firstsong = None
-                weeee = True if not state.is_playing() else False
-                if shuffle:
-                    random.shuffle(songlist)
-                for video in songlist:
-                    entry = VoiceEntry(self.bot, ctx.message, video)
-                    await entry.getInfo()
-                    if not entry.doit:
-                        continue
-                    if songlist.index(video) == 0:
-                        firstsong = entry
-                    await state.songs.put(entry)
-                if weeee:
-                    embed = discord.Embed(title='MusicPlayer:',
-                                          description='Successfully enqueued\n**`{}`**\nentries and started playing\n**`{}`**'.format(len(songlist), firstsong),
-                                          colour=0xf20006)
-                    last_message = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                    out = None
-                else:
-                    embed = discord.Embed(title='MusicPlayer:',
-                                          description='Successfully enqueued **`{}`** entries!'.format(len(songlist)),
-                                          colour=0xf20006)
-                    out = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(out, self.emojiUnicode['succes'])
+            firstsong = None
+            weeee = True if not state.is_playing() else False
+            if shuffle:
+                random.shuffle(songlist)
+            for video in songlist:
+                entry = VoiceEntry(self.bot, ctx.message, video)
+                await entry.getInfo()
+                if not entry.doit:
+                    continue
+                if songlist.index(video) == 0:
+                    firstsong = entry
+                await state.songs.put(entry)
+            if weeee:
+                embed = discord.Embed(title='MusicPlayer:',
+                                      description='Successfully enqueued\n**`{}`**\nentries and started playing\n**`{}`**'.format(len(songlist), firstsong),
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+                out = None
+            else:
+                embed = discord.Embed(title='MusicPlayer:',
+                                      description='Successfully enqueued **`{}`** entries!'.format(len(songlist)),
+                                      colour=0xf20006)
+                out = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(out, self.emojiUnicode['succes'])
         else:
             entry = VoiceEntry(self.bot, ctx.message, song)
             await entry.getInfo()
