@@ -259,7 +259,8 @@ class Music:
 
         return True
 
-    @commands.command(pass_context=True, no_pm=True)
+
+    @music.command(pass_context=True, no_pm=True)
     async def play(self, ctx, *, song: str):
         """Plays a song.
         If there is a song currently in the queue, then it is
@@ -281,22 +282,19 @@ class Music:
         shuffle = True if ' +shuffle' in song else False
         if shuffle:
             song.replace(' +shuffle', '')
-        if re.search(r'(https?://)?(www.)?youtube(.com)/[\w\d_\-?=&/]+', song):
-            #If playlist
-            if 'index' in song.lower() or 'list' in song.lower():
-                embed = discord.Embed(title='MusicPlayer:',
-                                      description='Playlist detected, enqueuing all items...',
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, '\U0001f3b5')
-                info = ytdl.extract_info(song, download=False, process=False)
-                songlist = []
-                for e in info['entries']:
-                    if e:
-                        if 'youtube' in info['extractor']:
-                            songlist.append(
-                                'https://www.youtube.com/watch?v={}'.format(e['id']))
-
+        if 'playlist?list=' in song:
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Playlist detected, enqueuing all items...',
+                                  colour=0xf20006)
+            playlist_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, '\U0001f3b5')
+            info = ytdl.extract_info(song, download=False, process=False)
+            songlist = []
+            for e in info['entries']:
+                if e:
+                    if 'youtube' in info['extractor']:
+                        songlist.append(
+                            'https://www.youtube.com/watch?v={}'.format(e['id']))
             firstsong = None
             weeee = True if not state.is_playing() else False
             if shuffle:
@@ -316,12 +314,26 @@ class Music:
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                 out = None
+                await asyncio.sleep(15)
+                try:
+                    if out is not None:
+                        await self.bot.delete_messages([ctx.message, out, playlist_message])
+                    else:
+                        await self.bot.delete_messages([ctx.message, playlist_message])
+                except:
+                    pass
             else:
+
                 embed = discord.Embed(title='MusicPlayer:',
                                       description='Successfully enqueued **`{}`** entries!'.format(len(songlist)),
                                       colour=0xf20006)
                 out = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(out, self.emojiUnicode['succes'])
+                await asyncio.sleep(5)
+                try:
+                    await self.bot.delete_messages([ctx.message, out, playlist_message])
+                except:
+                    pass
         else:
             entry = VoiceEntry(self.bot, ctx.message, song)
             await entry.getInfo()
@@ -334,6 +346,14 @@ class Music:
                     await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                     out = None
                     await state.songs.put(entry)
+                    await asyncio.sleep(15)
+                    try:
+                        if out is not None:
+                            await self.bot.delete_messages([ctx.message, out])
+                        else:
+                            await self.bot.delete_message(ctx.message)
+                    except:
+                        pass
                 else:
                     embed = discord.Embed(title='MusicPlayer:',
                                           description='Enqueued : **`{}`**'.format(str(entry)),
@@ -341,8 +361,14 @@ class Music:
                     out = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(out, self.emojiUnicode['succes'])
                     await state.songs.put(entry)
+                    await asyncio.sleep(5)
+                    try:
+                        await self.bot.delete_messages([ctx.message, out])
+                    except:
+                        pass
             else:
                 await self.bot.delete_message(ctx.message)
+
 
     @commands.command(pass_context=True, no_pm=True)
     async def volume(self, ctx, value: int):
@@ -421,65 +447,65 @@ class Music:
 
     @commands.command(pass_context=True, no_pm=True)
     async def skip(self, ctx):
-        """
-        Vote to skip a song. The song requester can force skip.
+        """Vote to skip a song. The song requester can automatically skip.
         Majority vote is needed for the song to be skipped.
         """
         state = self.get_voice_state(ctx.message.server)
         if not state.is_playing():
-            embed = discord.Embed(title='MusicPlayer:',
-                                  description='Not playing any music right now...\nUse **`{}help skip`** for more info'.format(self.config['prefix']),
-                                  colour=0xf20006)
-            out = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(out, self.emojiUnicode['warning'])
-            return
+            out = await self.bot.say('Not playing any music right now...')
+            await asyncio.sleep(5)
+            try:
+                await self.bot.delete_messages([ctx.message, out])
+                return
+            except:
+                pass
 
         voter = ctx.message.author
-        if voter.id in self.owner_list:
-            embed = discord.Embed(title='MusicPlayer:',
-                                  description='Bot owner requested skipping song...',
-                                  colour=0xf20006)
-            out = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
+        if voter == state.current.requester:
+            out = await self.bot.say('Requester requested skipping song...')
             state.skip()
             await asyncio.sleep(5)
+            try:
+                await self.bot.delete_messages([ctx.message, out])
+            except:
+                pass
 
-
-        elif voter == state.current.requester:
-            embed = discord.Embed(title='MusicPlayer:',
-                                  description='Requester requested skipping song...',
-                                  colour=0xf20006)
-            out = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
+        elif voter.id == self.bot.ownerid:
+            out = await self.bot.say('Bot owner requested skipping song...')
             state.skip()
             await asyncio.sleep(5)
+            try:
+                await self.bot.delete_messages([ctx.message, out])
+            except:
+                pass
 
         elif voter.id not in state.skip_votes:
             state.skip_votes.add(voter.id)
             total_votes = len(state.skip_votes)
             if total_votes >= math.ceil((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2):
-                embed = discord.Embed(title='MusicPlayer:',
-                                      description='Skip vote passed, skipping song...',
-                                      colour=0xf20006)
-                out = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(out, self.emojiUnicode['succes'])
+                out = await self.bot.say('Skip vote passed, skipping song...')
                 state.skip()
                 await asyncio.sleep(5)
+                try:
+                    await self.bot.delete_messages([ctx.message, out])
+                except:
+                    pass
 
             else:
-                embed = discord.Embed(title='MusicPlayer:',
-                                      description='Skip vote added, currently at [{}/{}]'.format(total_votes, math.ceil((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2)),
-                                      colour=0xf20006)
-                out = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(out, self.emojiUnicode['succes'])
-                return
+                out = await self.bot.say('Skip vote added, currently at [{}/{}]'.format(total_votes, math.ceil((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2)))
+                await asyncio.sleep(5)
+                try:
+                    await self.bot.delete_messages([ctx.message, out])
+                except:
+                    pass
+
         else:
-            embed = discord.Embed(title='MusicPlayer:',
-                                  description='You have already voted to skip this song.',
-                                  colour=0xf20006)
-            out = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(out, self.emojiUnicode['warning'])
-            return
+            out = await self.bot.say('You have already voted to skip this song.')
+            await asyncio.sleep(5)
+            try:
+                await self.bot.delete_messages([ctx.message, out])
+            except:
+                pass
 
     @commands.command(pass_context=True, no_pm=True)
     async def np(self, ctx):
