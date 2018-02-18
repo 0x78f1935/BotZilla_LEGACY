@@ -98,6 +98,7 @@ class Music:
             pass
 
     def get_voice_state(self, server):
+        print(server.id)
         state = self.music_playing.get(server.id)
         if state is None:
             state = VoiceState(self.bot)
