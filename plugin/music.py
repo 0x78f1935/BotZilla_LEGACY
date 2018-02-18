@@ -165,15 +165,7 @@ class Music:
 
         if url:
             if re.search(r'(https?://)?(www.)?youtube(.com)/[\w\d_\-?=&/]+', url):
-                if 'index' in url.lower():
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Please.. don\'t use a youtube playlists, use **`{}help play`** instead'.format(self.config['prefix']),
-                                          colour=0xf20006)
-                    last_message = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
-                    return
-
-                elif 'list' in url.lower():
+                if 'index' in url.lower() or 'list' in url.lower():
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Please.. don\'t use a youtube playlists, use **`{}help play`** instead'.format(self.config['prefix']),
                                           colour=0xf20006)
@@ -188,12 +180,17 @@ class Music:
                         self.music_playing[ctx.message.server.id] = ['0', ['t']]
                         server_que = self.music_playing[ctx.message.server.id][1]
                         if url in server_que:
-                            pass
+                            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                                  description='**`{}`** has **already** been added to the playlist'.format(url),
+                                                  colour=0xf20006)
+                            last_message = await self.bot.say(embed=embed)
+                            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+                            return
                         else:
                             server_que.append(url)
                             server_que.pop(0)
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                                  description='**`{}`** has been added to the playlist'.format(url),
+                                                  description='**`{}`** has **been** added to the playlist'.format(url),
                                                   colour=0xf20006)
                             last_message = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -201,7 +198,12 @@ class Music:
                     else:
                         server_que = self.music_playing[ctx.message.server.id][1]
                         if url in server_que:
-                            pass
+                            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                                  description='**`{}`** has **already** been added to the playlist'.format(url),
+                                                  colour=0xf20006)
+                            last_message = await self.bot.say(embed=embed)
+                            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+                            return
                         else:
                             server_que.append(url)
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
