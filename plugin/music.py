@@ -77,7 +77,11 @@ class VoiceEntry:
             self.upload_date = date
         except TypeError:
             self.doit = False
-            out = await self.bot.say('Something went wrong with gathering the info.')
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Something went wrong while gathering youtube data.\nPerhaps a video in the playlist is not available anymore',
+                                  colour=0xf20006)
+            out = await self.bot.send_message(self.current.channel, embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             await asyncio.sleep(5)
             await self.bot.delete_message(out)
 
@@ -286,7 +290,7 @@ class Music:
             song.replace(' +shuffle', '')
         if re.search(r'(https?://)?(www.)?youtube(.com)/[\w\d_\-?=&/]+', song) and 'index' in song.lower() or 'list' in song.lower():
             embed = discord.Embed(title='MusicPlayer:',
-                                  description='Playlist detected, enqueuing all items...',
+                                  description='Playlist detected, enqueuing all items...\nThis can take a while',
                                   colour=0xf20006)
             playlistout = await self.bot.say(embed=embed)
             await self.bot.add_reaction(playlistout, '\U0001f3b5')
