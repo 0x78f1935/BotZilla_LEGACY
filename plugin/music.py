@@ -159,8 +159,45 @@ class Music:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!play in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
-        if ctx.message.server.id in self.music_playing and url==None:
-            if self.music_playing[ctx.message.server.id][0] == True:
+        if url:
+            if re.search(r'(https?://)?(www.)?youtube(.com)/[\w\d_\-?=&/]+', url):
+                if 'index' in url.lower():
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Please.. don\'t use a youtube playlists, use **`{}help play`** instead'.format(self.config['prefix']),
+                                          colour=0xf20006)
+                    last_message = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+                    return
+                elif 'list' in url.lower():
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Please.. don\'t use a youtube playlists, use **`{}help play`** instead'.format(self.config['prefix']),
+                                          colour=0xf20006)
+                    last_message = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+                    return
+                else:
+                    if ctx.message.server.id not in self.music_playing:
+                        self.music_playing[ctx.message.server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
+                    server_que = self.music_playing[ctx.message.server.id][1]
+                    server_que.append(url)
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='**`{}`** has been added to the playlist'.format(url),
+                                          colour=0xf20006)
+                    last_message = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+                    print(self.music_playing[ctx.message.server.id])
+                    return
+            else:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Please.. use a youtube link or use **`{}help play`** instead'.format(
+                                          self.config['prefix']),
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
+                return
+
+        if ctx.message.server.id in self.music_playing:
+            if self.music_playing[ctx.message.server.id][0] == '1':
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Music is already playing in another voice channel.\nJoin that one instead :smile:',
                                       colour=0xf20006)
@@ -168,44 +205,6 @@ class Music:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                 return
         else:
-
-            if url:
-                if re.search(r'(https?://)?(www.)?youtube(.com)/[\w\d_\-?=&/]+', url):
-                    if 'index' in url.lower():
-                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                              description='Please.. don\'t use a youtube playlists, use **`{}help play`** instead'.format(self.config['prefix']),
-                                              colour=0xf20006)
-                        last_message = await self.bot.say(embed=embed)
-                        await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
-                        return
-                    elif 'list' in url.lower():
-                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                              description='Please.. don\'t use a youtube playlists, use **`{}help play`** instead'.format(self.config['prefix']),
-                                              colour=0xf20006)
-                        last_message = await self.bot.say(embed=embed)
-                        await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
-                        return
-                    else:
-                        if ctx.message.server.id not in self.music_playing:
-                            self.music_playing[ctx.message.server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
-                        server_que = self.music_playing[ctx.message.server.id][1]
-                        server_que.append(url)
-                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                              description='**`{}`** has been added to the playlist'.format(url),
-                                              colour=0xf20006)
-                        last_message = await self.bot.say(embed=embed)
-                        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                        print(self.music_playing[ctx.message.server.id])
-                        return
-                else:
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Please.. use a youtube link or use **`{}help play`** instead'.format(
-                                              self.config['prefix']),
-                                          colour=0xf20006)
-                    last_message = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
-                    return
-
             state = self.get_voice_state(ctx.message.server)
             opts = {
                 'default_search': 'auto',
@@ -218,11 +217,11 @@ class Music:
                     return
 
             if ctx.message.server.id not in self.music_playing:
-                self.music_playing[ctx.message.server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
-
-            self.music_playing[ctx.message.server.id][0] = 1
+                self.music_playing[ctx.message.server.id] = ['1', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
+            else:
+                self.music_playing[ctx.message.server.id][0] = 1
             try:
-                for songs in range(30):
+                for songs in range(100):
                     self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
                     song = self.database.cur.fetchall()
                     self.database.cur.execute("ROLLBACK;")
@@ -240,21 +239,26 @@ class Music:
                     player = await state.voice.create_ytdl_player(server_que.pop(0), ytdl_options=opts)
 
                     if self.music_playing[ctx.message.server.id][0] == '0':
-                        player.stop()
+                        await ctx.invoke(self.stop)
                         break
-                    print(song)
-                    player.volume = 1
-                    player.start()
+                    else:
+                        print(song)
+                        player.volume = 1
+                        player.start()
+
                     embed = discord.Embed(title='MusicPlayer:',
                                           description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n\nYou can stop me anytime with **`{}stop`**'.format(
                                               player.title, player.duration, self.config['prefix']),
                                           colour=0xf20006)
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, '\U0001f3b5')
+
                     await asyncio.sleep(player.duration)
+
                     if self.music_playing[ctx.message.server.id][0] == '0':
-                        player.stop()
+                        await ctx.invoke(self.stop)
                         break
+
                     player.stop()
 
                 embed = discord.Embed(title='MusicPlayer:',
