@@ -187,8 +187,8 @@ class Music:
                         return
                     else:
                         if ctx.message.server.id not in self.music_playing:
-                            self.music_playing[ctx.message.server.id] = [True]
-                        server_que = self.music_playing[ctx.message.server.id]
+                            self.music_playing[ctx.message.server.id] = ['0', []]
+                        server_que = self.music_playing[ctx.message.server.id][1][0]
                         server_que.append(url)
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description='**`{}`** has been added to the playlist'.format(url),
@@ -218,13 +218,15 @@ class Music:
                     return
 
             if ctx.message.server.id not in self.music_playing:
-                self.music_playing[ctx.message.server.id] = [True]
+                self.music_playing[ctx.message.server.id] = ['0', []]
+
+            self.music_playing[ctx.message.server.id][0] = 1
             try:
                 for songs in range(30):
                     self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
                     song = self.database.cur.fetchall()
                     self.database.cur.execute("ROLLBACK;")
-                    server_que = self.music_playing[ctx.message.server.id]
+                    server_que = self.music_playing[ctx.message.server.id][1]
                     server_que.append(song[0][0])
                     if not server_que:
                         embed = discord.Embed(title='MusicPlayer:',
@@ -235,9 +237,9 @@ class Music:
                         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                         return
 
-                    player = await state.voice.create_ytdl_player(server_que.pop(1), ytdl_options=opts)
+                    player = await state.voice.create_ytdl_player(server_que.pop(0), ytdl_options=opts)
 
-                    if self.music_playing[server_que][0] == False:
+                    if self.music_playing[ctx.message.server.id][0] == '0':
                         player.stop()
                         break
                     print(song)
@@ -250,7 +252,7 @@ class Music:
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, '\U0001f3b5')
                     await asyncio.sleep(player.duration)
-                    if self.music_playing[server_que][0] == False:
+                    if self.music_playing[ctx.message.server.id][0] == '0':
                         player.stop()
                         break
                     player.stop()
@@ -337,7 +339,7 @@ class Music:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!stop in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
-        if ctx.message.server.id not in self.music_playing and self.music_playing[ctx.message.server.id][0] == False:
+        if ctx.message.server.id not in self.music_playing and self.music_playing[ctx.message.server.id][0] == '0':
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='There is no music playing :( use **`{}help play`** for more information'.format(
                                       self.config['prefix']),
@@ -365,8 +367,10 @@ class Music:
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, '\U0001f44b')
-            if ctx.message.server.id in self.music_playing:
-                self.music_playing.remove(ctx.message.server.id)
+            if ctx.message.server.id not in self.music_playing:
+                self.music_playing[ctx.message.server.id] = ['0', []]
+            else:
+                self.music_playing[ctx.message.server.id][0] = 0
 
 
     async def skip(self, ctx):
