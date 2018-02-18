@@ -462,8 +462,8 @@ class Music:
                 pass
 
     @commands.command(pass_context=True, no_pm=True)
-    async def playing(self, ctx):
-        """Shows the currently played song."""
+    async def np(self, ctx):
+        """Shows what is playing right now."""
         state = self.get_voice_state(ctx.message.server)
         if state.current is None:
             await self.bot.say('Not playing anything.')
@@ -472,8 +472,11 @@ class Music:
             t1 = state.currenttime
             t2 = datetime.datetime.now()
             duration = (t2 - t1).total_seconds()
-            out = await self.bot.say(
-                'Now playing {0} `[skips: {1}/{2}] [{3[0]}m {3[1]}s/{4[0]}m {4[1]}s]`'.format(state.current, skip_count, math.ceil((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2), divmod(math.floor(duration), 60), divmod(state.current.duration, 60)))
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Now playing {0} `[skips: {1}/{2}] [{3[0]}m {3[1]}s/{4[0]}m {4[1]}s]`'.format(state.current, skip_count, math.ceil((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2), divmod(math.floor(duration), 60), divmod(state.current.duration, 60)),
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             await asyncio.sleep(10)
             try:
                 await self.bot.delete_messages([ctx.message, out])
