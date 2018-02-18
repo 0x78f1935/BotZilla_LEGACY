@@ -445,6 +445,17 @@ class Music:
         if state.is_playing():
             player = state.player
             player.stop()
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Oke then... :angry:\nMusic player ended..',
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
+        else:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Nothing to stop, use **`{}play`** to add a song to the queue'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
 
         try:
             state.audio_player.cancel()
