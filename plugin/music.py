@@ -179,9 +179,14 @@ class Music:
 
                 else:
                     if ctx.message.server.id not in self.music_playing:
-                        self.music_playing[ctx.message.server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
-                    server_que = self.music_playing[ctx.message.server.id][1]
-                    server_que.append(url)
+                        self.music_playing[ctx.message.server.id] = ['0', ['']]
+                        server_que = self.music_playing[ctx.message.server.id][1]
+                        server_que.append(url)
+                        server_que.pop(0)
+                    else:
+                        server_que = self.music_playing[ctx.message.server.id][1]
+                        server_que.append(url)
+
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='**`{}`** has been added to the playlist'.format(url),
                                           colour=0xf20006)
@@ -341,7 +346,16 @@ class Music:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!stop in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
-        if ctx.message.server.id not in self.music_playing and self.music_playing[ctx.message.server.id][0] == '0':
+        if ctx.message.server.id not in self.music_playing:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='There is no music playing :( use **`{}help play`** for more information'.format(
+                                      self.config['prefix']),
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+            return
+
+        if ctx.message.server.id in self.music_playing and self.music_playing[ctx.message.server.id][0] == '0':
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='There is no music playing :( use **`{}help play`** for more information'.format(
                                       self.config['prefix']),
@@ -369,10 +383,7 @@ class Music:
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, '\U0001f44b')
-            if ctx.message.server.id not in self.music_playing:
-                self.music_playing[ctx.message.server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
-            else:
-                self.music_playing[ctx.message.server.id][0] = 0
+            self.music_playing[ctx.message.server.id][0] = 0
 
 
     async def skip(self, ctx):
