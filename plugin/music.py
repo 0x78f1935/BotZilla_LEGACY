@@ -217,42 +217,7 @@ class Music:
             except:
                 pass
 
-    @commands.group(
-        pass_context=True,
-        description='Various music/voice channel commands for Luna.',
-        aliases=['lm', "Im"])
-    async def music(self, ctx):
-        """Music commands for Luna."""
-        pass
-
-    @music.command(no_pm=True)
-    async def join(self, *, channel: discord.Channel):
-        """Joins a voice channel."""
-        try:
-            await self.bot.create_voice_client(channel)
-        except discord.InvalidArgument:
-            out = await self.bot.say('This is not a voice channel...')
-            await asyncio.sleep(5)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
-        except discord.ClientException:
-            out = await self.bot.say('Already in a voice channel...')
-            await asyncio.sleep(5)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
-        else:
-            out = await self.bot.say('Ready to play audio in ' + channel.name)
-            await asyncio.sleep(5)
-            try:
-                await self.bot.delete_messages([ctx.message, out])
-            except:
-                pass
-
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def summon(self, ctx):
         """Summons the bot to join your voice channel."""
         summoned_channel = ctx.message.author.voice_channel
@@ -268,7 +233,7 @@ class Music:
 
         return True
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def play(self, ctx, *, song: str):
         """Plays a song.
         If there is a song currently in the queue, then it is
@@ -356,7 +321,7 @@ class Music:
             else:
                 await self.bot.delete_message(ctx.message)
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def volume(self, ctx, value: int):
         """Sets the volume of the currently playing song."""
         state = self.get_voice_state(ctx.message.server)
@@ -372,7 +337,7 @@ class Music:
             except:
                 pass
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def pause(self, ctx):
         """Pauses the currently played song."""
         state = self.get_voice_state(ctx.message.server)
@@ -380,7 +345,7 @@ class Music:
             player = state.player
             player.pause()
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def resume(slef, ctx):
         """Resumes the currently played song."""
         state = self.get_voice_state(ctx.message.server)
@@ -388,7 +353,7 @@ class Music:
             player = state.player
             player.resume()
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def stop(self, ctx):
         """Stops playing audio and leaves the voice channel.
         This also clears the queue.
@@ -407,7 +372,7 @@ class Music:
         except:
             pass
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def skip(self, ctx):
         """Vote to skip a song. The song requester can automatically skip.
         Majority vote is needed for the song to be skipped.
@@ -444,7 +409,7 @@ class Music:
         elif voter.id not in state.skip_votes:
             state.skip_votes.add(voter.id)
             total_votes = len(state.skip_votes)
-            if total_votes >= math.ceil((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2):
+            if total_votes >= math.ceil(int(round((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2))):
                 out = await self.bot.say('Skip vote passed, skipping song...')
                 state.skip()
                 await asyncio.sleep(5)
@@ -469,8 +434,8 @@ class Music:
             except:
                 pass
 
-    @music.command(pass_context=True, no_pm=True)
-    async def playing(self, ctx):
+    @commands.command(pass_context=True, no_pm=True)
+    async def np(self, ctx):
         """Shows the currently played song."""
         state = self.get_voice_state(ctx.message.server)
         if state.current is None:
@@ -488,7 +453,7 @@ class Music:
             except:
                 pass
 
-    @music.command(name='list', pass_context=True, no_pm=True)
+    @commands.command(name='que', pass_context=True, no_pm=True)
     async def _list(self, ctx):
         """Shows the queue for your server."""
         state = self.get_voice_state(ctx.message.server)
@@ -526,7 +491,7 @@ class Music:
             except:
                 pass
 
-    @music.command(name="info", pass_context=True, no_pm=True)
+    @commands.command(name="info", pass_context=True, no_pm=True)
     async def _info(self, ctx):
         """Shows info about the currently played song."""
         state = self.get_voice_state(ctx.message.server)
@@ -551,22 +516,3 @@ Duration: `[{3[0]}m {3[1]}s/{4[0]}m {4[1]}s]`
                 await self.bot.delete_messages([ctx.message, out])
             except:
                 pass
-
-
-    @music.command(name="repeat", pass_context=True, no_pm=True)
-    async def _repeat(self, ctx):
-        state = self.get_voice_state(ctx.message.server)
-        if state.current is None:
-            out = await self.bot.say('Not playing anything.')
-        else:
-            if not state.repeat:
-                state.repeat = True
-                out = await self.bot.say('Repeating {}'.format(state.current))
-            else:
-                state.repeat = False
-                out = await self.bot.say('Stopped repeating {}, continuing queue'.format(state.current))
-        await asyncio.sleep(10)
-        try:
-            await self.bot.delete_messages([ctx.message, out])
-        except:
-            pass
