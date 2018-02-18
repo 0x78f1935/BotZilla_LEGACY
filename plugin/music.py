@@ -511,7 +511,7 @@ class Music:
                     divmod(entry.duration, 60), counter, entry.title, requester.display_name)
                 counter += 1
             if len(entries) > 10:
-                send += 'And {} more...\n'.format(str(len(entries) - 10))
+                send += 'And **`{}`** more...\n'.format(str(len(entries) - 10))
             for entry in entries:
                 if entry.duration is None:
                     entry.duration = 0
