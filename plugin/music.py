@@ -179,14 +179,14 @@ class VoiceState:
             if not self.empty:
                 if not self.repeat:
                     embed = discord.Embed(title='MusicPlayer:',
-                                          description='Now playing: **`{}`**'.format(str(self.current)),
+                                          description='Now playing: {}'.format(str(self.current)),
                                           colour=0xf20006)
                     m = await self.bot.send_message(self.current.channel, embed=embed)
                     await self.bot.add_reaction(m, self.emojiUnicode['succes'])
                     out = None
                 else:
                     embed = discord.Embed(title='MusicPlayer:',
-                                          description='Repeating: **`{}`**'.format(str(self.current)),
+                                          description='Repeating: {}'.format(str(self.current)),
                                           colour=0xf20006)
                     m = await self.bot.send_message(self.current.channel, embed=embed)
                     await self.bot.add_reaction(m, self.emojiUnicode['succes'])
@@ -240,21 +240,33 @@ class Music:
         try:
             await self.bot.create_voice_client(channel)
         except discord.InvalidArgument:
-            out = await self.bot.say('This is not a voice channel...')
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='This is not a voice channel...',
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['warning'])
             await asyncio.sleep(5)
             try:
                 await self.bot.delete_messages([ctx.message, out])
             except:
                 pass
         except discord.ClientException:
-            out = await self.bot.say('Already in a voice channel...')
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Already in a voice channel...',
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['warning'])
             await asyncio.sleep(5)
             try:
                 await self.bot.delete_messages([ctx.message, out])
             except:
                 pass
         else:
-            out = await self.bot.say('Ready to play audio in ' + channel.name)
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Ready to play audio in: **`{}`**'.format(channel.name),
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['warning'])
             await asyncio.sleep(5)
             try:
                 await self.bot.delete_messages([ctx.message, out])
@@ -266,7 +278,11 @@ class Music:
         """Summons the bot to join your voice channel."""
         summoned_channel = ctx.message.author.voice_channel
         if summoned_channel is None:
-            await self.bot.say('You are not in a voice channel.')
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='You are not in a voice channel..',
+                                  colour=0xf20006)
+            m = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(m, self.emojiUnicode['warning'])
             return False
 
         state = self.get_voice_state(ctx.message.server)
