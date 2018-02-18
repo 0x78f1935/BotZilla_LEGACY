@@ -411,8 +411,7 @@ class Music:
     @commands.command(pass_context=True)
     async def skip(self, ctx):
         """
-        Vote to skip a song. The song requester can automatically skip.
-        3 skip votes are needed for the song to be skipped.
+        Skip a song, this command is currently under development
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!skip in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         state = self.music_player[ctx.message.server.id]
