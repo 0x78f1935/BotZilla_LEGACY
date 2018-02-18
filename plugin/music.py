@@ -405,38 +405,54 @@ class Music:
 
     @commands.command(pass_context=True, no_pm=True)
     async def pause(self, ctx):
-        """Pauses the currently played song."""
+        """
+        Pauses the currently played song.
+        """
         state = self.get_voice_state(ctx.message.server)
         if state.is_playing():
             player = state.player
             player.pause()
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Pause music',
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
         else:
             if state.current is None:
                 embed = discord.Embed(title='MusicPlayer:',
                                       description='Not playing anything.',
                                       colour=0xf20006)
-                out = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(out, self.emojiUnicode['warning'])
+                m = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(m, self.emojiUnicode['warning'])
 
 
     @commands.command(pass_context=True, no_pm=True)
     async def resume(self, ctx):
-        """Resumes the currently played song."""
+        """
+        Resumes the currently played song.
+        """
         state = self.get_voice_state(ctx.message.server)
         if state.is_playing():
             player = state.player
             player.resume()
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Resume music',
+                                  colour=0xf20006)
+            m = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(m, self.emojiUnicode['succes'])
         else:
             if state.current is None:
                 embed = discord.Embed(title='MusicPlayer:',
                                       description='Not playing anything.',
                                       colour=0xf20006)
-                out = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(out, self.emojiUnicode['warning'])
+                m = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(m, self.emojiUnicode['warning'])
+
 
     @commands.command(pass_context=True, no_pm=True)
     async def stop(self, ctx):
-        """Stops playing audio and leaves the voice channel.
+        """
+        Stops playing audio and leaves the voice channel.
         This also clears the queue.
         """
         server = ctx.message.server
@@ -446,16 +462,16 @@ class Music:
             player = state.player
             player.stop()
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Oke then... :angry:\nMusic player ended..',
+                                  description='Oke then... :angry:\nMusic player ended',
                                   colour=0xf20006)
-            out = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
+            m = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(m, self.emojiUnicode['succes'])
         else:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Nothing to stop, use **`{}play`** to add a song to the queue'.format(self.config['prefix']),
                                   colour=0xf20006)
-            out = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
+            m = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(m, self.emojiUnicode['warning'])
 
         try:
             state.audio_player.cancel()
@@ -471,7 +487,11 @@ class Music:
         """
         state = self.get_voice_state(ctx.message.server)
         if not state.is_playing():
-            out = await self.bot.say('Not playing any music right now...')
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Not playing any music right now...\nUse **`{}help play`** for more info'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['warning'])
             await asyncio.sleep(5)
             try:
                 await self.bot.delete_messages([ctx.message, out])
@@ -481,7 +501,11 @@ class Music:
 
         voter = ctx.message.author
         if voter == state.current.requester:
-            out = await self.bot.say('Requester requested skipping song...')
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Requester requested skipping song...',
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             state.skip()
             await asyncio.sleep(5)
             try:
@@ -489,8 +513,12 @@ class Music:
             except:
                 pass
 
-        elif voter.id == self.bot.ownerid:
-            out = await self.bot.say('Bot owner requested skipping song...')
+        elif voter.id == self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Bot owner requested skipping song...',
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             state.skip()
             await asyncio.sleep(5)
             try:
@@ -502,7 +530,11 @@ class Music:
             state.skip_votes.add(voter.id)
             total_votes = len(state.skip_votes)
             if total_votes >= math.ceil((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2):
-                out = await self.bot.say('Skip vote passed, skipping song...')
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Skip vote passed, skipping song...',
+                                      colour=0xf20006)
+                out = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(out, self.emojiUnicode['succes'])
                 state.skip()
                 await asyncio.sleep(5)
                 try:
@@ -511,7 +543,11 @@ class Music:
                     pass
 
             else:
-                out = await self.bot.say('Skip vote added, currently at [{}/{}]'.format(total_votes, math.ceil((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2)))
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Skip vote added, currently at [{}/{}]'.format(total_votes, math.ceil((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2)),
+                                      colour=0xf20006)
+                out = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(out, self.emojiUnicode['succes'])
                 await asyncio.sleep(5)
                 try:
                     await self.bot.delete_messages([ctx.message, out])
@@ -519,7 +555,11 @@ class Music:
                     pass
 
         else:
-            out = await self.bot.say('You have already voted to skip this song.')
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You have already voted to skip this song.',
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             await asyncio.sleep(5)
             try:
                 await self.bot.delete_messages([ctx.message, out])
