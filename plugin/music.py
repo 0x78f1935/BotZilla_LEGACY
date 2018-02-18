@@ -182,6 +182,7 @@ class Music:
                             return
                         else:
                             song = server_que.pop(0)
+                            print(self.player)
                             self.player = await self.player.create_ytdl_player(song)
                             self.player.volume = 1
                             self.player.start()
