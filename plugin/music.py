@@ -178,15 +178,10 @@ class VoiceState:
             self.empty = self.songs.empty()
             if not self.repeat:
                 self.current = await self.songs.get()
-                entries = [x for x in self.songs._queue]
-                if len(entries) == 0:
-                    embed = discord.Embed(title='MusicPlayer:',
-                                          description='There are currently no songs in the queue!',
-                                          colour=0xf20006)
-                    out = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(out, self.emojiUnicode['warning'])
-                    break
-                self.songs._queue = self.sortclumps(self.songs._queue, 2, entries)
+                try:
+                    self.songs._queue = self.sortclumps(self.songs._queue, 2, deque())
+                except Exception as e:
+                    self.songs._queue = self.sortclumps(self.songs._queue, 2, [x for x in self.songs._queue])
             self.currentplayer = self.create_player(self.current)
             if not self.empty:
                 if not self.repeat:
