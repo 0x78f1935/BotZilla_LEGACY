@@ -148,7 +148,7 @@ class Music:
 
 
     @commands.command(pass_context=True)
-    async def play(self, ctx, , skip=False, url=None):
+    async def play(self, ctx, skip=False, url=None):
         """
         This command is multifunctional.
         Use !!play to start the playlist.
