@@ -178,7 +178,7 @@ class Information:
             return
 
 
-    @commands.command(pass_context=True, aliases=["oauth", "invite", "join"])
+    @commands.command(pass_context=True, aliases=["oauth", "invite"])
     async def inv(self, ctx):
         """
         Invite BotZilla to your server!
