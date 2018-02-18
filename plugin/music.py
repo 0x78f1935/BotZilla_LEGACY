@@ -252,28 +252,28 @@ class Music:
 
             print(self.music_playing)
 
-            try:
-                while True:
-                    self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
-                    song = self.database.cur.fetchall()
-                    self.database.cur.execute("ROLLBACK;")
-                    server_que = self.music_playing[ctx.message.server.id][1]
-                    server_que.append(song[0][0])
-                    print(f'song added {song[0][0]}')
+            while True:
+                self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
+                song = self.database.cur.fetchall()
+                self.database.cur.execute("ROLLBACK;")
+                server_que = self.music_playing[ctx.message.server.id][1]
+                server_que.append(song[0][0])
+                print(f'song added {song[0][0]}')
 
-                    if not server_que:
-                        await ctx.invoke(self.stop)
-                        break
-                    else:
-                        current_song = server_que.pop(0)
-                        player = await state.voice.create_ytdl_player(current_song, ytdl_options=opts)
-                        player.volume = 1
-                        player.start()
+                if not server_que:
+                    await ctx.invoke(self.stop)
+                    break
+                else:
+                    current_song = server_que.pop(0)
+                    player = await state.voice.create_ytdl_player(current_song, ytdl_options=opts)
+                    player.volume = 1
+                    player.start()
 
-                        if current_song not in self.music_playing[ctx.message.server.id][1]:
-                            if player.url == 'https://www.youtube.com/watch?v=cdwal5Kw3Fc':
-                                pass
-                            else:
+                    if current_song not in self.music_playing[ctx.message.server.id][1]:
+                        if player.url == 'https://www.youtube.com/watch?v=cdwal5Kw3Fc':
+                            pass
+                        else:
+                            if current_song == player.url:
                                 embed = discord.Embed(title='MusicPlayer:',
                                                       description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n\n`{}`\n\nYou can stop me anytime with **`{}stop`**'.format(
                                                           player.title, player.duration, current_song, self.config['prefix']),
@@ -281,30 +281,21 @@ class Music:
                                 last_message = await self.bot.say(embed=embed)
                                 await self.bot.add_reaction(last_message, '\U0001f3b5')
 
-                        await asyncio.sleep(player.duration)
+                    await asyncio.sleep(player.duration)
 
-                        if self.music_playing[ctx.message.server.id][0] == '0':
-                            await ctx.invoke(self.stop)
-                            break
+                    if self.music_playing[ctx.message.server.id][0] == '0':
+                        await ctx.invoke(self.stop)
+                        break
 
-                        player.stop()
+                    player.stop()
 
 
-                embed = discord.Embed(title='MusicPlayer:',
-                                      description='Playlist is **empty**, use **`{}play`** for a new playlist!'.format(
-                                          self.config['prefix']),
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-
-            except Exception as e:
-                fmt = 'An error occurred while processing this request: ```Python\n{}: {}\n```\nPlease send a {}report <error message>'.format(type(e).__name__, e.args, self.config['prefix'])
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=fmt,
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
-                await ctx.invoke(self.stop)
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Playlist is **empty**, use **`{}play`** for a new playlist!'.format(
+                                      self.config['prefix']),
+                                  colour=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
 
     async def volume(self, ctx, value : int = None):
@@ -392,6 +383,7 @@ class Music:
 
         server = ctx.message.server
         state = self.get_voice_state(server)
+        self.music_playing[ctx.message.server.id][0] = 0
 
         if state.is_playing():
             player = state.player
@@ -409,7 +401,6 @@ class Music:
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, '\U0001f44b')
-            self.music_playing[ctx.message.server.id][0] = 0
 
 
     async def skip(self, ctx):
