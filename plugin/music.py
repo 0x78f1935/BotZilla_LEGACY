@@ -272,14 +272,15 @@ class Music:
                     if current_song not in self.music_playing[ctx.message.server.id][1]:
                         if player.url == 'https://www.youtube.com/watch?v=cdwal5Kw3Fc':
                             pass
+                        elif current_song == player.url:
+                            embed = discord.Embed(title='MusicPlayer:',
+                                                  description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n\n`{}`\n\nYou can stop me anytime with **`{}stop`**'.format(
+                                                      player.title, player.duration, current_song, self.config['prefix']),
+                                                  colour=0xf20006)
+                            last_message = await self.bot.say(embed=embed)
+                            await self.bot.add_reaction(last_message, '\U0001f3b5')
                         else:
-                            if current_song == player.url:
-                                embed = discord.Embed(title='MusicPlayer:',
-                                                      description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n\n`{}`\n\nYou can stop me anytime with **`{}stop`**'.format(
-                                                          player.title, player.duration, current_song, self.config['prefix']),
-                                                      colour=0xf20006)
-                                last_message = await self.bot.say(embed=embed)
-                                await self.bot.add_reaction(last_message, '\U0001f3b5')
+                            break
 
                     await asyncio.sleep(player.duration)
 
