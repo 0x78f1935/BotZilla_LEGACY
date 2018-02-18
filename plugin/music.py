@@ -483,7 +483,7 @@ class Music:
             except:
                 pass
 
-    @commands.command(name='que', pass_context=True, no_pm=True)
+    @commands.command(name='queue', pass_context=True, no_pm=True)
     async def _list(self, ctx):
         """Shows the queue for your server."""
         state = self.get_voice_state(ctx.message.server)
@@ -507,7 +507,7 @@ class Music:
                 ctx.message.server.name, len(entries))
             for entry in entries[:10]:
                 requester = entry.requester
-                send += '`[{0[0]}m {0[1]}s]` {1}. **{2}** requested by **{3}**\n'.format(
+                send += '-\t`[{0[0]}m {0[1]}s]` {1}. **{2}** requested by **{3}**\n'.format(
                     divmod(entry.duration, 60), counter, entry.title, requester.display_name)
                 counter += 1
             if len(entries) > 10:
@@ -516,7 +516,7 @@ class Music:
                 if entry.duration is None:
                     entry.duration = 0
                 totalduration += entry.duration
-            send += '\t- Total duration: `[{0}]`'.format(
+            send += '\n**Total duration:** **`[{0}]`**'.format(
                 datetime.timedelta(seconds=totalduration))
             embed = discord.Embed(title='MusicPlayer:',
                                   description=send,
