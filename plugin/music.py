@@ -253,13 +253,13 @@ class Music:
             print(self.music_playing)
 
             try:
-                for songs in range(100):
+                while True:
                     self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
                     song = self.database.cur.fetchall()
                     self.database.cur.execute("ROLLBACK;")
                     server_que = self.music_playing[ctx.message.server.id][1]
                     server_que.append(song[0][0])
-                    print(self.music_playing)
+                    print(f'song added {song}')
 
                     if not server_que:
                         await ctx.invoke(self.stop)
@@ -276,7 +276,7 @@ class Music:
                             else:
                                 embed = discord.Embed(title='MusicPlayer:',
                                                       description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n\n`{}`\n\nYou can stop me anytime with **`{}stop`**'.format(
-                                                          player.title, player.duration, player.url, self.config['prefix']),
+                                                          player.title, player.duration, current_song, self.config['prefix']),
                                                       colour=0xf20006)
                                 last_message = await self.bot.say(embed=embed)
                                 await self.bot.add_reaction(last_message, '\U0001f3b5')
