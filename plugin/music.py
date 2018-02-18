@@ -168,6 +168,7 @@ class Music:
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                     return
+
                 elif 'list' in url.lower():
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Please.. don\'t use a youtube playlists, use **`{}help play`** instead'.format(self.config['prefix']),
@@ -175,6 +176,7 @@ class Music:
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                     return
+
                 else:
                     if ctx.message.server.id not in self.music_playing:
                         self.music_playing[ctx.message.server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
@@ -186,7 +188,6 @@ class Music:
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                     print(self.music_playing[ctx.message.server.id])
-                    return
             else:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Please.. use a youtube link or use **`{}help play`** instead'.format(
@@ -194,7 +195,6 @@ class Music:
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
-                return
 
         if ctx.message.server.id in self.music_playing:
             if self.music_playing[ctx.message.server.id][0] == '1':
@@ -203,7 +203,7 @@ class Music:
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                return
+
         else:
             state = self.get_voice_state(ctx.message.server)
             opts = {
