@@ -75,7 +75,7 @@ class Images:
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
         else:
-            if font.lower() == 'random':
+            if font.lower() == 'random' or font.lower() not in fonts:
                 font = random.sample(fonts, 1)
                 figlet = pyfiglet.Figlet(font=font[0])
                 art = figlet.renderText(text)
