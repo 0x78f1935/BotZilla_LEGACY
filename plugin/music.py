@@ -280,7 +280,7 @@ class Music:
                             last_message = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(last_message, '\U0001f3b5')
 
-                    player.is_done()
+                    await asyncio.sleep(player.duration+2)
 
                     if self.music_playing[ctx.message.server.id][0] == '0':
                         await ctx.invoke(self.stop)
