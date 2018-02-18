@@ -43,7 +43,7 @@ class Images:
         caligraphy, catwalk, chunky, coinstak, colossal, computer, contessa,
         Full list: https://www.flamingtext.com/tools/figlet/fontlist.html
         '''
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!text <{text}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!ascii <{font}> <{text}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         fonts = ["3-d", "3x5", "5lineoblique", "acrobatic", "alligator2", "alligator", "alphabet", "avatar", "banner3",
                  "banner4", "banner", "barbwire", "basic", "bell", "bigchief", "big", "binary", "block", "broadway",
                  "bubble", "bulbhead", "calgphy2", "caligraphy", "catwalk", "chunky", "coinstak", "colossal",
