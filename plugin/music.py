@@ -371,8 +371,21 @@ class Music:
                 await self.bot.delete_message(ctx.message)
 
     @commands.command(pass_context=True, no_pm=True)
-    async def volume(self, ctx, value: int):
-        """Sets the volume of the currently playing song."""
+    async def volume(self, ctx, value: int = None):
+        """
+        Sets the volume of the currently playing song.
+        Volume can be set between 0 and 100.
+        """
+        if value == None or value < 0 or value > 100:
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='You should consider to read the manual.\nTo open the help function use **`{}help volume`**'.format(
+                                      self.config['prefix']
+                                  ),
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['error'])
+            return
+
         state = self.get_voice_state(ctx.message.server)
         if state.is_playing():
             player = state.player
