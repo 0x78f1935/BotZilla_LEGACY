@@ -38,7 +38,10 @@ class VoiceState:
         self.current = None
         self.voice = None
         self.bot = bot
+        self.play_next_song = asyncio.Event()
+        self.songs = asyncio.Queue()
         self.skip_votes = set() # a set of user_ids that voted
+        self.audio_player = self.bot.loop.create_task(self.audio_player_task())
 
     def is_playing(self):
         if self.voice is None or self.current is None:
@@ -58,6 +61,18 @@ class VoiceState:
 
     def toggle_next(self):
         self.bot.loop.call_soon_threadsafe(self.play_next_song.set)
+
+    async def audio_player_task(self):
+        while True:
+            self.play_next_song.clear()
+            self.current = await self.songs.get()
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Now playing: **`{}`**'.format(self.current),
+                                  colour=0xf20006)
+            last_message = await self.bot.send_message(self.current.channel, embed=embed)
+            await self.bot.add_reaction(last_message, '\U0001f3b5')
+            self.current.player.start()
+            await self.play_next_song.wait()
 
 class Music:
     """
@@ -83,13 +98,10 @@ class Music:
             pass
 
     def get_voice_state(self, server):
-        if server.id not in self.music_playing:
-            self.music_playing[server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
-        state = self.music_playing.get(server.id)
+        state = self.voice_states.get(server.id)
         if state is None:
             state = VoiceState(self.bot)
-            self.music_playing[server.id] = state
-
+            self.voice_states[server.id] = state
 
         return state
 
@@ -99,7 +111,7 @@ class Music:
         state.voice = voice
 
     def __unload(self):
-        for state in self.music_playing.values():
+        for state in self.voice_states.values():
             try:
                 state.audio_player.cancel()
                 if state.voice:
@@ -377,7 +389,7 @@ class Music:
 
         try:
             state.audio_player.cancel()
-            del self.music_playing[server.id]
+            del self.voice_states[server.id]
             await state.voice.disconnect()
         except:
             pass
