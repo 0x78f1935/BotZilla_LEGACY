@@ -58,6 +58,10 @@ class VoiceEntry:
             if self.duration is None:
                 self.duration = 0
             self.uploader = info.get('uploader')
+            self.tmp_config = json.loads(str(open('./options/config.js').read()))
+            self.config = self.tmp_config['config']
+            self.emojiUnicode = self.tmp_config['unicode']
+            self.owner_list = self.config['owner-id']
 
             is_twitch = 'twitch' in self.url
             if is_twitch:
@@ -80,7 +84,7 @@ class VoiceEntry:
             embed = discord.Embed(title='MusicPlayer:',
                                   description='Something went wrong while gathering youtube data.\nPerhaps a video in the playlist is not available anymore',
                                   colour=0xf20006)
-            out = await self.bot.send_message(self.current.channel, embed=embed)
+            out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             await asyncio.sleep(5)
             await self.bot.delete_message(out)
