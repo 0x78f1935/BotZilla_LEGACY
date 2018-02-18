@@ -135,15 +135,6 @@ class Music:
                 self.database.cur.execute("ROLLBACK;")
                 server_que.append(song[0][0])
 
-            # If not in voicechannel raise error
-            if is_in_voice_channel == 'False':
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='I am not in a voice channel, use **`{}help play`** for more info'.format(
-                                          self.config['prefix']),
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
-                return
 
             ## If in voice_channel play music
             if is_in_voice_channel == 'True':
