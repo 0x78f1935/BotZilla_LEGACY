@@ -56,6 +56,7 @@ class TestScripts:
                               description="\t",
                               color=0xf20006)
         embed.set_image(url=random.sample(sebisauce_img, 1))
+        await self.bot.say(embed=embed)
 
 ########################################################################################################################################
 
