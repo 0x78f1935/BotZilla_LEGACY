@@ -237,6 +237,7 @@ class Music:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                 return
 
+            self.music_playing[ctx.message.server.id][0] = '1'
             state = self.get_voice_state(ctx.message.server)
             opts = {
                 'default_search': 'auto',
@@ -274,8 +275,6 @@ class Music:
                                               colour=0xf20006)
                         last_message = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(last_message, '\U0001f3b5')
-
-                        self.music_playing[ctx.message.server.id][0] = '1'
                         await asyncio.sleep(player.duration)
 
                         if self.music_playing[ctx.message.server.id][0] == '0':
