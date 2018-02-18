@@ -435,6 +435,14 @@ class Music:
         if state.is_playing():
             player = state.player
             player.stop()
+        else:
+            if state.current is None:
+                embed = discord.Embed(title='MusicPlayer:',
+                                      description='Not playing anything.',
+                                      colour=0xf20006)
+                out = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(out, self.emojiUnicode['warning'])
+                return
 
         try:
             state.audio_player.cancel()
