@@ -123,7 +123,7 @@ class Music:
             if self.requester_in_voice_channel:
                 self.player = self.bot.join_voice_channel(self.requester_in_voice_channel)
                 self.music_json[ctx.message.server.id]['voice_channel'] = 'True'
-                self.music_json[ctx.message.server.id][self.requester_in_voice_channel] = self.requester_in_voice_channel
+                self.music_json[ctx.message.server.id]['voice_channel_name'] = self.requester_in_voice_channel
 
 
         if is_playing == 'False':
