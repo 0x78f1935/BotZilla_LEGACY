@@ -35,6 +35,7 @@ class Images:
         '''
         !!ascii <font> <text>
         Transform any text to ascii art.
+        !!ascii random This is a example
         All available fonts can you find here:
         3-d, 3x5, 5lineoblique, acrobatic, alligator2, alligator, alphabet,
         avatar, banner3, banner4, banner, barbwire, basic, bell, weird
@@ -67,25 +68,33 @@ class Images:
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
         elif font == None:
-            font = random.sample(fonts, 1)
-            figlet = pyfiglet.Figlet(font=font)
-            art = figlet.renderText(text)
-
-            if len(art) >= 2000:
-                embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                      description="Unfortunate discords handles a character limitation of 2000 characters.\nDue to this fact try to shorten your text",
-                                      color=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
-                return
-
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                  description="```py\n{}\n```".format(art),
+                                  description="You should check out **`{}help ascii`**".format(self.config['prefix']),
                                   color=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
         else:
+            if font.lower() == 'random':
+                font = random.sample(fonts, 1)
+                figlet = pyfiglet.Figlet(font=font)
+                art = figlet.renderText(text)
+
+                if len(art) >= 2000:
+                    embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                          description="Unfortunate discords handles a character limitation of 2000 characters.\nDue to this fact try to shorten your text",
+                                          color=0xf20006)
+                    last_message = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
+                    return
+
+                embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                      description="```py\n{}\n```".format(art),
+                                      color=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+                return
+
             if font.lower() in fonts:
                 figlet = pyfiglet.Figlet(font=font)
                 art = figlet.renderText(text)
