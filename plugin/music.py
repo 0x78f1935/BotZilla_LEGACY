@@ -194,6 +194,7 @@ class Music:
                                               colour=0xf20006)
                         last_message = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+                        print(self.music_playing[ctx.message.server.id])
 
                 else:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
