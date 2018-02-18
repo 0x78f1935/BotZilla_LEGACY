@@ -89,7 +89,7 @@ class Images:
                     return
 
                 embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                      description="```py\n{}\n```".format(art),
+                                      description="**Font:** **`{}`** ```py\n{}\n```".format(font, art),
                                       color=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
