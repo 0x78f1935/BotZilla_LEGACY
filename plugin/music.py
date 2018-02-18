@@ -192,19 +192,26 @@ class Music:
                         else:
                             server_que.append(url)
                             server_que.pop(0)
+                            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                                  description='**`{}`** has been added to the playlist'.format(url),
+                                                  colour=0xf20006)
+                            last_message = await self.bot.say(embed=embed)
+                            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+                            print(self.music_playing[ctx.message.server.id])
                     else:
                         server_que = self.music_playing[ctx.message.server.id][1]
                         if url in server_que:
                             pass
                         else:
                             server_que.append(url)
+                            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                                  description='**`{}`** has been added to the playlist'.format(url),
+                                                  colour=0xf20006)
+                            last_message = await self.bot.say(embed=embed)
+                            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+                            print(self.music_playing[ctx.message.server.id])
+                    # The weird bug section ends here.. fixed it with this if else statement
 
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='**`{}`** has been added to the playlist'.format(url),
-                                          colour=0xf20006)
-                    last_message = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                    print(self.music_playing[ctx.message.server.id])
             else:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Please.. use a youtube link or use **`{}help play`** instead'.format(
