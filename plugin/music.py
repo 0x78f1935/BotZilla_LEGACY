@@ -420,36 +420,7 @@ class Music:
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
 
-        voter = ctx.message.author
-        if voter == state.current.requester:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Requester requested skipping song...',
-                                  colour=0xf20006)
-            last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-            state.skip()
-        elif voter.id not in state.skip_votes:
-            state.skip_votes.add(voter.id)
-            total_votes = len(state.skip_votes)
-            if total_votes >= 3:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Skip vote passed, skipping song...',
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                state.skip()
-            else:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Skip vote added, currently at {}/3'.format(total_votes),
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
-        else:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You have already voted to skip this song.',
-                                  colour=0xf20006)
-            last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
+        state.skip()
 
 
     async def np(self, ctx):
