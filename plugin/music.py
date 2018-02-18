@@ -38,8 +38,6 @@ class VoiceState:
         self.current = None
         self.voice = None
         self.bot = bot
-        self.play_next_song = asyncio.Event()
-        self.songs = asyncio.Queue()
         self.skip_votes = set() # a set of user_ids that voted
 
     def is_playing(self):
@@ -85,7 +83,8 @@ class Music:
             pass
 
     def get_voice_state(self, server):
-        print(server.id)
+        if server.id not in self.music_playing:
+            self.music_playing[server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
         state = self.music_playing.get(server.id)
         if state is None:
             state = VoiceState(self.bot)
