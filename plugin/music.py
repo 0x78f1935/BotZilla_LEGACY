@@ -81,7 +81,11 @@ class VoiceEntry:
             self.upload_date = date
         except TypeError:
             self.doit = False
-            out = await self.bot.say('Something went wrong with gathering the info.')
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Something went wrong with gathering the info.\nSkipping url..',
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, '\u23e9')
             await asyncio.sleep(5)
             await self.bot.delete_message(out)
 
@@ -180,14 +184,14 @@ class VoiceState:
             if not self.empty:
                 if not self.repeat:
                     embed = discord.Embed(title='MusicPlayer:',
-                                          description='Now playing ' + str(self.current),
+                                          description='Now playing: **`{}`**'.format(str(self.current)),
                                           colour=0xf20006)
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, '\U0001f3b5')
                     out = None
                 else:
                     embed = discord.Embed(title='MusicPlayer:',
-                                          description='Repeating ' + str(self.current),
+                                          description='Repeating: **`{}`**'.format(str(self.current)),
                                           colour=0xf20006)
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, '\U0001f3b5')
@@ -328,7 +332,7 @@ class Music:
                         pass
                 else:
                     embed = discord.Embed(title='MusicPlayer:',
-                                          description='Successfully enqueued **{}** entries!'.format(len(songlist)),
+                                          description='Successfully enqueued **`{}`** entries!'.format(len(songlist)),
                                           colour=0xf20006)
                     out = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(out, self.emojiUnicode['succes'])
