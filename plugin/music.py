@@ -411,7 +411,7 @@ class Music:
         3 skip votes are needed for the song to be skipped.
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!skip in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        state = self.get_voice_state(ctx.message.server)
+        state = self.music_player[ctx.message.server.id]
         if not state.is_playing():
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Not playing any music right now...',
