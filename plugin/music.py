@@ -218,8 +218,8 @@ class Music:
 
             if ctx.message.server.id not in self.music_playing:
                 self.music_playing[ctx.message.server.id] = ['1', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
-            else:
-                self.music_playing[ctx.message.server.id][0] = 1
+
+            self.music_playing[ctx.message.server.id][0] = 1
 
             try:
                 for songs in range(100):
