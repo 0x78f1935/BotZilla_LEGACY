@@ -483,7 +483,7 @@ class Music:
             except:
                 pass
 
-    @commands.command(name='list', pass_context=True, no_pm=True)
+    @commands.command(name='que', pass_context=True, no_pm=True)
     async def _list(self, ctx):
         """Shows the queue for your server."""
         state = self.get_voice_state(ctx.message.server)
@@ -514,7 +514,11 @@ class Music:
                 totalduration += entry.duration
             send += 'Total duration: `[{0}]`'.format(
                 datetime.timedelta(seconds=totalduration))
-            out = await self.bot.say(send)
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description=send,
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             await asyncio.sleep(10)
             try:
                 await self.bot.delete_messages([ctx.message, out])
