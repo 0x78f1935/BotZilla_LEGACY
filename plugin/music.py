@@ -161,7 +161,6 @@ class VoiceState:
         self.skip_votes.clear()
         if self.is_playing():
             self.player.stop()
-            self.toggle_next(self)
 
     def toggle_next(self):
         self.bot.loop.call_soon_threadsafe(self.play_next_song.set)
@@ -442,7 +441,7 @@ class Music:
                                   colour=0xf20006)
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
-            state.skip()
+            state.toggle_next()
             return
 
         elif voter == state.current.requester:
@@ -451,7 +450,7 @@ class Music:
                                   colour=0xf20006)
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
-            state.skip()
+            state.toggle_next()
             return
 
         elif voter.id not in state.skip_votes:
@@ -463,7 +462,7 @@ class Music:
                                       colour=0xf20006)
                 out = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(out, self.emojiUnicode['succes'])
-                state.skip()
+                state.toggle_next()
                 return
 
             else:
