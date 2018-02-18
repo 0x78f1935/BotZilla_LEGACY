@@ -442,8 +442,8 @@ class Music:
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             state.skip()
-            state.toggle_next()
-            return
+            await asyncio.sleep(5)
+
 
         elif voter == state.current.requester:
             embed = discord.Embed(title='MusicPlayer:',
@@ -452,8 +452,7 @@ class Music:
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             state.skip()
-            state.toggle_next()
-            return
+            await asyncio.sleep(5)
 
         elif voter.id not in state.skip_votes:
             state.skip_votes.add(voter.id)
@@ -465,8 +464,7 @@ class Music:
                 out = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(out, self.emojiUnicode['succes'])
                 state.skip()
-                state.toggle_next()
-                return
+                await asyncio.sleep(5)
 
             else:
                 embed = discord.Embed(title='MusicPlayer:',
