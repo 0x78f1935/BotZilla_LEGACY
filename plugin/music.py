@@ -220,6 +220,7 @@ class Music:
                 self.music_playing[ctx.message.server.id] = ['1', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
             else:
                 self.music_playing[ctx.message.server.id][0] = 1
+
             try:
                 for songs in range(100):
                     self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
@@ -227,6 +228,7 @@ class Music:
                     self.database.cur.execute("ROLLBACK;")
                     server_que = self.music_playing[ctx.message.server.id][1]
                     server_que.append(song[0][0])
+                    print(self.music_playing)
                     if not server_que:
                         embed = discord.Embed(title='MusicPlayer:',
                                               description='Playlist is **empty**, use **`{}play`** for a new playlist!'.format(
