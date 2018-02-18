@@ -279,7 +279,7 @@ class Music:
         The list of supported sites can be found here:
         https://rg3.github.io/youtube-dl/supportedsites.html
         """
-        await self.bot.send_typing()
+        await self.bot.send_typing(ctx.message.channel)
         state = self.get_voice_state(ctx.message.server)
         ytdl = youtube_dl.YoutubeDL({
             "format": 'best',
