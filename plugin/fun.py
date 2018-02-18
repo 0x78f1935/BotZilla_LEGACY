@@ -77,7 +77,7 @@ class Images:
         else:
             if font.lower() == 'random':
                 font = random.sample(fonts, 1)
-                figlet = pyfiglet.Figlet(font=font)
+                figlet = pyfiglet.Figlet(font=font[0])
                 art = figlet.renderText(text)
 
                 if len(art) >= 2000:
