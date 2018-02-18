@@ -187,7 +187,7 @@ class Music:
                         return
                     else:
                         if ctx.message.server.id not in self.music_playing:
-                            self.music_playing[ctx.message.server.id] = ['0', []]
+                            self.music_playing[ctx.message.server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
                         server_que = self.music_playing[ctx.message.server.id][1][0]
                         server_que.append(url)
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -218,7 +218,7 @@ class Music:
                     return
 
             if ctx.message.server.id not in self.music_playing:
-                self.music_playing[ctx.message.server.id] = ['0', []]
+                self.music_playing[ctx.message.server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
 
             self.music_playing[ctx.message.server.id][0] = 1
             try:
@@ -368,7 +368,7 @@ class Music:
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, '\U0001f44b')
             if ctx.message.server.id not in self.music_playing:
-                self.music_playing[ctx.message.server.id] = ['0', []]
+                self.music_playing[ctx.message.server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
             else:
                 self.music_playing[ctx.message.server.id][0] = 0
 
