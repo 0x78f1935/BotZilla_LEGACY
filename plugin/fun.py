@@ -43,6 +43,22 @@ class Images:
         Full list: https://www.flamingtext.com/tools/figlet/fontlist.html
         '''
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!text <{text}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        fonts = ["3-d", "3x5", "5lineoblique", "acrobatic", "alligator2", "alligator", "alphabet", "avatar", "banner3",
+                 "banner4", "banner", "barbwire", "basic", "bell", "bigchief", "big", "binary", "block", "broadway",
+                 "bubble", "bulbhead", "calgphy2", "caligraphy", "catwalk", "chunky", "coinstak", "colossal",
+                 "computer", "contessa", "contrast", "cosmic", "cosmike", "crawford", "cricket", "cyberlarge",
+                 "cybermedium", "cybersmall", "decimal", "diamond", "digital", "doh", "doom", "dotmatrix", "double",
+                 "drpepper", "eftichess", "eftifont", "eftipiti", "eftirobot", "eftitalic", "eftiwall", "eftiwater",
+                 "epic", "fender", "fourtops", "fuzzy", "goofy", "gothic", "graffiti", "hex", "hollywood", "invita",
+                 "isometric1", "isometric2", "isometric3", "isometric4", "italic", "ivrit", "jazmine", "katakana",
+                 "kban", "larry3d", "lcd", "lean", "letters", "linux", "lockergnome", "madrid", "marquee", "maxfour",
+                 "mike", "mini", "mirror", "mnemonic", "nancyj-fancy", "nancyj", "nancyj-underlined", "nipples", "o8",
+                 "octal", "ogre", "os2", "pawp", "peaks", "pebbles", "pepper", "poison", "puffy", "pyramid",
+                 "rectangles", "relief2", "relief", "rev", "roman", "rot13", "rounded", "rowancap", "rozzo", "sblood",
+                 "script", "serifcap", "shadow", "short", "slant", "slide", "slscript", "small", "smisome1",
+                 "smkeyboard", "smscript", "smshadow", "smslant", "speed", "stacey", "stampatello", "standard",
+                 "starwars", "stellar", "stop", "straight", "tanja", "term", "thick", "thin", "threepoint", "ticks",
+                 "ticksslant", "tinker-toy", "tombstone", "trek", "twopoint", "univers", "usaflag", "weird", "whimsy"]
         if text == None:
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
                                   description="You should check out **`{}help ascii`**".format(self.config['prefix']),
@@ -51,14 +67,25 @@ class Images:
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
         elif font == None:
+            font = random.sample(fonts, 1)
+            figlet = pyfiglet.Figlet(font=font)
+            art = figlet.renderText(text)
+
+            if len(art) >= 2000:
+                embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                      description="Unfortunate discords handles a character limitation of 2000 characters.\nDue to this fact try to shorten your text",
+                                      color=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
+                return
+
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                  description="You should check out **`{}help ascii`**".format(self.config['prefix']),
+                                  description="```py\n{}\n```".format(art),
                                   color=0xf20006)
             last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             return
         else:
-            fonts = ["3-d", "3x5", "5lineoblique", "acrobatic", "alligator2", "alligator", "alphabet", "avatar", "banner3", "banner4", "banner", "barbwire", "basic", "bell", "bigchief", "big", "binary", "block", "broadway", "bubble", "bulbhead", "calgphy2", "caligraphy", "catwalk", "chunky", "coinstak", "colossal", "computer", "contessa", "contrast", "cosmic", "cosmike", "crawford", "cricket", "cyberlarge", "cybermedium", "cybersmall", "decimal", "diamond", "digital", "doh", "doom", "dotmatrix", "double", "drpepper", "eftichess", "eftifont", "eftipiti", "eftirobot", "eftitalic", "eftiwall", "eftiwater", "epic", "fender", "fourtops", "fuzzy", "goofy", "gothic", "graffiti", "hex", "hollywood", "invita", "isometric1", "isometric2", "isometric3", "isometric4", "italic", "ivrit", "jazmine", "katakana", "kban", "larry3d", "lcd", "lean", "letters", "linux", "lockergnome", "madrid", "marquee", "maxfour", "mike", "mini", "mirror", "mnemonic", "nancyj-fancy", "nancyj", "nancyj-underlined", "nipples", "o8", "octal", "ogre", "os2", "pawp", "peaks", "pebbles", "pepper", "poison", "puffy", "pyramid", "rectangles", "relief2", "relief", "rev", "roman", "rot13", "rounded", "rowancap", "rozzo", "sblood", "script", "serifcap", "shadow", "short", "slant", "slide", "slscript", "small", "smisome1", "smkeyboard", "smscript", "smshadow", "smslant", "speed", "stacey", "stampatello", "standard", "starwars", "stellar", "stop", "straight", "tanja", "term", "thick", "thin", "threepoint", "ticks", "ticksslant", "tinker-toy", "tombstone", "trek", "twopoint", "univers", "usaflag", "weird", "whimsy"]
             if font.lower() in fonts:
                 figlet = pyfiglet.Figlet(font=font)
                 art = figlet.renderText(text)
