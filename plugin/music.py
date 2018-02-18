@@ -265,17 +265,17 @@ class Music:
                         await ctx.invoke(self.stop)
                         break
                     else:
-
-                        player = await state.voice.create_ytdl_player(server_que.pop(0), ytdl_options=opts)
+                        current_song = server_que.pop(0)
+                        player = await state.voice.create_ytdl_player(current_song, ytdl_options=opts)
                         player.volume = 1
                         player.start()
 
-                        if player.url not in self.music_playing[ctx.message.server.id][1]:
+                        if current_song not in self.music_playing[ctx.message.server.id][1]:
                             if player.url == 'https://www.youtube.com/watch?v=cdwal5Kw3Fc':
                                 pass
                             else:
                                 embed = discord.Embed(title='MusicPlayer:',
-                                                      description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n`{}`\n\nYou can stop me anytime with **`{}stop`**'.format(
+                                                      description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n\n`{}`\n\nYou can stop me anytime with **`{}stop`**'.format(
                                                           player.title, player.duration, player.url, self.config['prefix']),
                                                       colour=0xf20006)
                                 last_message = await self.bot.say(embed=embed)
