@@ -188,7 +188,7 @@ class Music:
                     else:
                         if ctx.message.server.id not in self.music_playing:
                             self.music_playing[ctx.message.server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
-                        server_que = self.music_playing[ctx.message.server.id][1][0]
+                        server_que = self.music_playing[ctx.message.server.id][1]
                         server_que.append(url)
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description='**`{}`** has been added to the playlist'.format(url),
