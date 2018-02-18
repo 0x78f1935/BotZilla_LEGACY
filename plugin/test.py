@@ -44,7 +44,7 @@ class TestScripts:
         await self.bot.send_typing(ctx.message.channel)
         sebisauce_img = ['https://cdn.discordapp.com/attachments/407238426417430539/414844386212446210/sebisauce_3.png',
                          'https://media.discordapp.net/attachments/407238426417430539/414844423382368277/sebisauce_1.png',
-                         'https://media.discordapp.net/attachments/407238426417430539/414844448367968276/sebisauce_2.png?width=493&height=702',
+                         'https://media.discordapp.net/attachments/407238426417430539/414844448367968276/sebisauce_2.png',
                          'https://media.discordapp.net/attachments/407238426417430539/414844479519064064/sebisauce_6.png',
                          'https://media.discordapp.net/attachments/407238426417430539/414844498779176961/sebisauce_8.png',
                          'https://media.discordapp.net/attachments/407238426417430539/414844517032787979/sebisauce_9.png',
@@ -57,7 +57,7 @@ class TestScripts:
         embed = discord.Embed(title="\t",
                               description="\t",
                               color=0xf20006)
-        embed.set_image(url=url[0])
+        embed.set_image(url=url)
         await self.bot.say(embed=embed)
 
 ########################################################################################################################################
