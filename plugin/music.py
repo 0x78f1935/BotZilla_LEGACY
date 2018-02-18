@@ -588,9 +588,11 @@ class Music:
             except:
                 pass
 
-    @commands.command(name='queue', pass_context=True, no_pm=True)
+    @commands.command(name='queue', pass_context=True, aliases=["que", "list"])
     async def _list(self, ctx):
-        """Shows the queue for your server."""
+        """
+        Shows the queue for your server.
+        """
         state = self.get_voice_state(ctx.message.server)
         entries = [x for x in state.songs._queue]
         if len(entries) == 0:
@@ -645,15 +647,19 @@ class Music:
             t1 = state.currenttime
             t2 = datetime.datetime.now()
             duration = (t2 - t1).total_seconds()
-            send = """Currently played song: **{0.title}**
-Uploader: **{0.uploader}**
-Views: *{0.views}*
-Likes/Dislikes: *{0.likes}/{0.dislikes}*
-Upload date: **{0.upload_date}**
-Skips: `[skips: {1}/{2}]`
+            send = """Currently played song: **`{0.title}`**
+Uploader: **`{0.uploader}`**
+Views: **`{0.views}`**
+Likes/Dislikes: :thumbsup:**`{0.likes}`**/**`{0.dislikes}`**:thumbsdown:
+Upload date: **`{0.upload_date}`**
+Skips: `[skips: `**`{1}`**`/`**`{2}`**`]`
 Duration: `[{3[0]}m {3[1]}s/{4[0]}m {4[1]}s]`
 """.format(state.current, skip_count, math.ceil((len(ctx.message.server.me.voice_channel.voice_members) - 1) / 2), divmod(math.floor(duration), 60), divmod(state.current.duration, 60))
-            out = await self.bot.say(send)
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description=send,
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             await asyncio.sleep(10)
             try:
                 await self.bot.delete_messages([ctx.message, out])
@@ -664,14 +670,26 @@ Duration: `[{3[0]}m {3[1]}s/{4[0]}m {4[1]}s]`
     async def _repeat(self, ctx):
         state = self.get_voice_state(ctx.message.server)
         if state.current is None:
-            out = await self.bot.say('Not playing anything.')
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Not playing anything.',
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['warning'])
         else:
             if not state.repeat:
                 state.repeat = True
-                out = await self.bot.say('Repeating {}'.format(state.current))
+                embed = discord.Embed(title='MusicPlayer:',
+                                      description='Repeating {}'.format(state.current),
+                                      colour=0xf20006)
+                out = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             else:
                 state.repeat = False
-                out = await self.bot.say('Stopped repeating {}, continuing queue'.format(state.current))
+                embed = discord.Embed(title='MusicPlayer:',
+                                      description='Stopped repeating {}, continuing queue'.format(state.current),
+                                      colour=0xf20006)
+                out = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(out, self.emojiUnicode['succes'])
         await asyncio.sleep(10)
         try:
             await self.bot.delete_messages([ctx.message, out])
