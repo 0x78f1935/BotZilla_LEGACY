@@ -225,7 +225,7 @@ class Music:
         """Music commands for Luna."""
         pass
 
-    @music.command(no_pm=True)
+    @commands.command(no_pm=True)
     async def join(self, *, channel: discord.Channel):
         """Joins a voice channel."""
         try:
@@ -252,7 +252,7 @@ class Music:
             except:
                 pass
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def summon(self, ctx):
         """Summons the bot to join your voice channel."""
         summoned_channel = ctx.message.author.voice_channel
@@ -268,7 +268,7 @@ class Music:
 
         return True
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def play(self, ctx, *, song: str):
         """Plays a song.
         If there is a song currently in the queue, then it is
@@ -356,7 +356,7 @@ class Music:
             else:
                 await self.bot.delete_message(ctx.message)
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def volume(self, ctx, value: int):
         """Sets the volume of the currently playing song."""
         state = self.get_voice_state(ctx.message.server)
@@ -372,7 +372,7 @@ class Music:
             except:
                 pass
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def pause(self, ctx):
         """Pauses the currently played song."""
         state = self.get_voice_state(ctx.message.server)
@@ -380,7 +380,7 @@ class Music:
             player = state.player
             player.pause()
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def resume(slef, ctx):
         """Resumes the currently played song."""
         state = self.get_voice_state(ctx.message.server)
@@ -388,7 +388,7 @@ class Music:
             player = state.player
             player.resume()
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def stop(self, ctx):
         """Stops playing audio and leaves the voice channel.
         This also clears the queue.
@@ -407,7 +407,7 @@ class Music:
         except:
             pass
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def skip(self, ctx):
         """Vote to skip a song. The song requester can automatically skip.
         Majority vote is needed for the song to be skipped.
@@ -469,7 +469,7 @@ class Music:
             except:
                 pass
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def playing(self, ctx):
         """Shows the currently played song."""
         state = self.get_voice_state(ctx.message.server)
@@ -488,7 +488,7 @@ class Music:
             except:
                 pass
 
-    @music.command(name='list', pass_context=True, no_pm=True)
+    @commands.command(name='list', pass_context=True, no_pm=True)
     async def _list(self, ctx):
         """Shows the queue for your server."""
         state = self.get_voice_state(ctx.message.server)
@@ -526,7 +526,7 @@ class Music:
             except:
                 pass
 
-    @music.command(name="info", pass_context=True, no_pm=True)
+    @commands.command(name="info", pass_context=True, no_pm=True)
     async def _info(self, ctx):
         """Shows info about the currently played song."""
         state = self.get_voice_state(ctx.message.server)
@@ -552,7 +552,7 @@ Duration: `[{3[0]}m {3[1]}s/{4[0]}m {4[1]}s]`
             except:
                 pass
 
-    @music.command(name="repeat", pass_context=True, no_pm=True)
+    @commands.command(name="repeat", pass_context=True, no_pm=True)
     async def _repeat(self, ctx):
         state = self.get_voice_state(ctx.message.server)
         if state.current is None:
