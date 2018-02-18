@@ -246,7 +246,9 @@ class Music:
 
     @commands.command(pass_context=True, no_pm=True)
     async def summon(self, ctx):
-        """Summons the bot to join your voice channel."""
+        """
+        Summons the bot to join your voice channel.
+        """
         summoned_channel = ctx.message.author.voice_channel
         if summoned_channel is None:
             embed = discord.Embed(title='MusicPlayer:',
@@ -272,12 +274,14 @@ class Music:
 
     @commands.command(pass_context=True, no_pm=True)
     async def play(self, ctx, *, song: str):
-        """Plays a song.
+        """
+        Plays a song.
         If there is a song currently in the queue, then it is
         queued until the next song is done playing.
         This command automatically searches as well from YouTube.
         The list of supported sites can be found here:
         https://rg3.github.io/youtube-dl/supportedsites.html
+        You also can add a playlist, or just search on keyword
         """
         await self.bot.send_typing(ctx.message.channel)
         state = self.get_voice_state(ctx.message.server)
@@ -464,7 +468,8 @@ class Music:
 
     @commands.command(pass_context=True, no_pm=True)
     async def skip(self, ctx):
-        """Vote to skip a song. The song requester can automatically skip.
+        """
+        Vote to skip a song. The song requester can automatically skip.
         Majority vote is needed for the song to be skipped.
         """
         state = self.get_voice_state(ctx.message.server)
@@ -525,7 +530,9 @@ class Music:
 
     @commands.command(pass_context=True, no_pm=True)
     async def np(self, ctx):
-        """Shows what is playing right now."""
+        """
+        Shows what is playing right now.
+        """
         state = self.get_voice_state(ctx.message.server)
         if state.current is None:
             await self.bot.say('Not playing anything.')
@@ -544,7 +551,7 @@ class Music:
     @commands.command(name='queue', pass_context=True, aliases=["que", "list"])
     async def _list(self, ctx):
         """
-        Shows the queue for your server.
+        Shows the music queue for your server.
         """
         state = self.get_voice_state(ctx.message.server)
         entries = [x for x in state.songs._queue]
@@ -554,7 +561,6 @@ class Music:
                                   colour=0xf20006)
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['warning'])
-
 
         else:
             counter = 1
@@ -583,7 +589,9 @@ class Music:
 
     @commands.command(name="info", pass_context=True, no_pm=True)
     async def _info(self, ctx):
-        """Shows info about the currently played song."""
+        """
+        Shows info about the currently played song.
+        """
         state = self.get_voice_state(ctx.message.server)
         if state.current is None:
             await self.bot.say('Not playing anything.')
@@ -609,6 +617,9 @@ Duration: `[{3[0]}m {3[1]}s/{4[0]}m {4[1]}s]`
 
     @commands.command(name="repeat", pass_context=True, no_pm=True)
     async def _repeat(self, ctx):
+        """
+        Toggle repeat the current playing song
+        """
         state = self.get_voice_state(ctx.message.server)
         if state.current is None:
             embed = discord.Embed(title='MusicPlayer:',
