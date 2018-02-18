@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import json
 import datetime
+import random
 
 tmp_config = json.loads(str(open('./options/config.js').read()))
 config = tmp_config['config']
@@ -34,6 +35,27 @@ class TestScripts:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
+
+    @commands.command(pass_context=True)
+    async def sebisauce(self, ctx):
+        """
+        Sebisauce
+        """
+        sebisauce_img = ['https://cdn.discordapp.com/attachments/407238426417430539/414844386212446210/sebisauce_3.png',
+                         'https://media.discordapp.net/attachments/407238426417430539/414844423382368277/sebisauce_1.png',
+                         'https://media.discordapp.net/attachments/407238426417430539/414844448367968276/sebisauce_2.png?width=493&height=702',
+                         'https://media.discordapp.net/attachments/407238426417430539/414844479519064064/sebisauce_6.png',
+                         'https://media.discordapp.net/attachments/407238426417430539/414844498779176961/sebisauce_8.png',
+                         'https://media.discordapp.net/attachments/407238426417430539/414844517032787979/sebisauce_9.png',
+                         'https://media.discordapp.net/attachments/407238426417430539/414844533898084352/sebisauce_10.png',
+                         'https://media.discordapp.net/attachments/407238426417430539/414844552730640384/sebisauce_12.png',
+                         'https://media.discordapp.net/attachments/407238426417430539/414844574385569794/sebisauce_13.png',
+                         'https://media.discordapp.net/attachments/407238426417430539/414844592048046090/sebisauce_14.png',
+                         'https://media.discordapp.net/attachments/407238426417430539/414844605885054976/sebisauce_15.png']
+        embed = discord.Embed(title="\t",
+                              description="\t",
+                              color=0xf20006)
+        embed.set_image(url=random.sample(sebisauce_img, 1))
 
 ########################################################################################################################################
 
