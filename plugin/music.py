@@ -260,7 +260,7 @@ class Music:
         return True
 
 
-    @music.command(pass_context=True, no_pm=True)
+    @commands.command(pass_context=True, no_pm=True)
     async def play(self, ctx, *, song: str):
         """Plays a song.
         If there is a song currently in the queue, then it is
