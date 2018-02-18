@@ -223,7 +223,7 @@ class Music:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
 
         if ctx.message.server.id not in self.music_playing:
-            self.music_playing[ctx.message.server.id] = ['1', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
+            self.music_playing[ctx.message.server.id] = ['0', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
 
 
 
