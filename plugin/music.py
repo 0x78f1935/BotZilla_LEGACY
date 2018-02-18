@@ -421,39 +421,37 @@ class Music:
 
     @commands.command(pass_context=True, no_pm=True)
     async def skip(self, ctx):
-        """Vote to skip a song. The song requester can automatically skip.
+        """
+        Vote to skip a song. The song requester can force skip.
         Majority vote is needed for the song to be skipped.
         """
         state = self.get_voice_state(ctx.message.server)
         if not state.is_playing():
             embed = discord.Embed(title='MusicPlayer:',
-                                  description='Not playing any music right now...',
+                                  description='Not playing any music right now...\nUse **`{}help skip`** for more info'.format(self.config['prefix']),
                                   colour=0xf20006)
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['warning'])
-            await asyncio.sleep(5)
-
+            return
 
         voter = ctx.message.author
-        if voter == state.current.requester:
-            embed = discord.Embed(title='MusicPlayer:',
-                                  description='Requester requested skipping song...',
-                                  colour=0xf20006)
-            out = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
-            state.skip()
-            await asyncio.sleep(5)
-
-
-        elif voter.id in self.owner_list:
+        if voter.id in self.owner_list:
             embed = discord.Embed(title='MusicPlayer:',
                                   description='Bot owner requested skipping song...',
                                   colour=0xf20006)
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             state.skip()
-            await asyncio.sleep(5)
+            return
 
+        elif voter == state.current.requester:
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Requester requested skipping song...',
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
+            state.skip()
+            return
 
         elif voter.id not in state.skip_votes:
             state.skip_votes.add(voter.id)
@@ -465,6 +463,7 @@ class Music:
                 out = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(out, self.emojiUnicode['succes'])
                 state.skip()
+                return
 
             else:
                 embed = discord.Embed(title='MusicPlayer:',
@@ -472,15 +471,14 @@ class Music:
                                       colour=0xf20006)
                 out = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(out, self.emojiUnicode['succes'])
-                await asyncio.sleep(5)
-
-
+                return
         else:
             embed = discord.Embed(title='MusicPlayer:',
                                   description='You have already voted to skip this song.',
                                   colour=0xf20006)
             out = await self.bot.say(embed=embed)
             await self.bot.add_reaction(out, self.emojiUnicode['warning'])
+            return
 
     @commands.command(pass_context=True, no_pm=True)
     async def np(self, ctx):
