@@ -284,7 +284,12 @@ class Music:
         if shuffle:
             song.replace(' +shuffle', '')
         if 'playlist?list=' in song:
-            playlistout = await self.bot.say('Playlist detected, enqueuing all items...')
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Playlist detected, enqueuing all items...',
+                                  colour=0xf20006)
+            playlistout = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(playlistout, '\U0001f3b5')
+
             info = ytdl.extract_info(song, download=False, process=False)
             songlist = []
             for e in info['entries']:
@@ -305,7 +310,11 @@ class Music:
                     firstsong = entry
                 await state.songs.put(entry)
             if weeee:
-                await self.bot.say('Successfully enqueued **{}** entries and started playing {}'.format(len(songlist), firstsong))
+                embed = discord.Embed(title='MusicPlayer:',
+                                      description='Successfully enqueued **{}** entries and started playing {}'.format(len(songlist), firstsong),
+                                      colour=0xf20006)
+                m = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(m, self.emojiUnicode['succes'])
                 out = None
                 await asyncio.sleep(15)
                 try:
@@ -316,7 +325,11 @@ class Music:
                 except:
                     pass
             else:
-                out = await self.bot.say('Successfully enqueued **{}** entries!'.format(len(songlist)))
+                embed = discord.Embed(title='MusicPlayer:',
+                                      description='Successfully enqueued **{}** entries!'.format(len(songlist)),
+                                      colour=0xf20006)
+                out = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(out, self.emojiUnicode['succes'])
                 await asyncio.sleep(5)
                 try:
                     await self.bot.delete_messages([ctx.message, out, playlistout])
@@ -327,7 +340,11 @@ class Music:
             await entry.getInfo()
             if entry.doit:
                 if not state.is_playing():
-                    await self.bot.say('Enqueued and now playing ' + str(entry))
+                    embed = discord.Embed(title='MusicPlayer:',
+                                          description='Enqueued and now playing: {}'.format(str(entry)),
+                                          colour=0xf20006)
+                    m = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(m, self.emojiUnicode['succes'])
                     out = None
                     await state.songs.put(entry)
                     await asyncio.sleep(15)
@@ -339,7 +356,11 @@ class Music:
                     except:
                         pass
                 else:
-                    out = await self.bot.say('Enqueued ' + str(entry))
+                    embed = discord.Embed(title='MusicPlayer:',
+                                          description='Enqueued: {}'.format(str(entry)),
+                                          colour=0xf20006)
+                    out = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(out, self.emojiUnicode['succes'])
                     await state.songs.put(entry)
                     await asyncio.sleep(5)
                     try:
@@ -358,7 +379,11 @@ class Music:
             if value > 200:
                 value = 200
             player.volume = value / 100
-            out = await self.bot.say('Set the volume to {:.0%}'.format(player.volume))
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Set the volume to {:.0%}'.format(player.volume),
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['succes'])
             await asyncio.sleep(5)
             try:
                 await self.bot.delete_messages([ctx.message, out])
