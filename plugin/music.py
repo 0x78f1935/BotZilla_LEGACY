@@ -220,6 +220,7 @@ class Music:
                 self.music_playing[ctx.message.server.id] = ['1', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
 
             self.music_playing[ctx.message.server.id][0] = 1
+            print(self.music_playing)
 
             try:
                 for songs in range(100):
@@ -229,6 +230,7 @@ class Music:
                     server_que = self.music_playing[ctx.message.server.id][1]
                     server_que.append(song[0][0])
                     print(self.music_playing)
+
                     if not server_que:
                         embed = discord.Embed(title='MusicPlayer:',
                                               description='Playlist is **empty**, use **`{}play`** for a new playlist!'.format(
@@ -236,32 +238,26 @@ class Music:
                                               colour=0xf20006)
                         last_message = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                        return
-
-                    player = await state.voice.create_ytdl_player(server_que.pop(0), ytdl_options=opts)
-
-                    if self.music_playing[ctx.message.server.id][0] == '0':
-                        await ctx.invoke(self.stop)
-                        break
                     else:
-                        print(song)
+
+                        player = await state.voice.create_ytdl_player(server_que.pop(0), ytdl_options=opts)
                         player.volume = 1
                         player.start()
 
-                    embed = discord.Embed(title='MusicPlayer:',
-                                          description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n\nYou can stop me anytime with **`{}stop`**'.format(
-                                              player.title, player.duration, self.config['prefix']),
-                                          colour=0xf20006)
-                    last_message = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(last_message, '\U0001f3b5')
+                        embed = discord.Embed(title='MusicPlayer:',
+                                              description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n\nYou can stop me anytime with **`{}stop`**'.format(
+                                                  player.title, player.duration, self.config['prefix']),
+                                              colour=0xf20006)
+                        last_message = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(last_message, '\U0001f3b5')
 
-                    await asyncio.sleep(player.duration)
+                        await asyncio.sleep(player.duration)
 
-                    if self.music_playing[ctx.message.server.id][0] == '0':
-                        await ctx.invoke(self.stop)
-                        break
+                        if self.music_playing[ctx.message.server.id][0] == '0':
+                            await ctx.invoke(self.stop)
+                            break
 
-                    player.stop()
+                        player.stop()
 
                 embed = discord.Embed(title='MusicPlayer:',
                                       description='Playlist is **empty**, use **`{}play`** for a new playlist!'.format(
