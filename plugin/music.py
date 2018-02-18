@@ -325,14 +325,14 @@ class Music:
                 await state.songs.put(entry)
             if weeee:
                 embed = discord.Embed(title='MusicPlayer:',
-                                      description='{}\nSuccessfully enqueued **{}** entries and started playing {}'.format(ctx.message.author.mention, len(songlist), firstsong),
+                                      description='{} Your playlist import is done,\nSuccessfully enqueued **{}** entries and started playing {}'.format(ctx.message.author.mention, len(songlist), firstsong),
                                       colour=0xf20006)
                 m = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(m, self.emojiUnicode['succes'])
 
             else:
                 embed = discord.Embed(title='MusicPlayer:',
-                                      description='Successfully enqueued **{}** entries!'.format(len(songlist)),
+                                      description='{} Your playlist import is done,\nSuccessfully enqueued **{}** entries!'.format(ctx.message.author.mention, len(songlist)),
                                       colour=0xf20006)
                 out = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(out, self.emojiUnicode['succes'])
