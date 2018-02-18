@@ -161,6 +161,7 @@ class VoiceState:
         self.skip_votes.clear()
         if self.is_playing():
             self.player.stop()
+            self.toggle_next(self)
 
     def toggle_next(self):
         self.bot.loop.call_soon_threadsafe(self.play_next_song.set)
