@@ -101,7 +101,8 @@ class Music:
         state = self.music_playing.get(server.id)
         if state is None:
             state = VoiceState(self.bot)
-            self.voice_states[server.id] = state
+            self.music_playing[server.id] = state
+
 
         return state
 
