@@ -222,14 +222,17 @@ class Music:
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
 
-        if ctx.message.server.id in self.music_playing:
-            if self.music_playing[ctx.message.server.id][0] == '1':
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Music is **already** playing in another voice channel.\nJoin that one instead :smile:',
-                                      colour=0xf20006)
-                last_message = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-                return
+        try:
+            if ctx.message.server.id in self.music_playing:
+                if self.music_playing[ctx.message.server.id][0] == '1':
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Music is **already** playing in another voice channel.\nJoin that one instead :smile:',
+                                          colour=0xf20006)
+                    last_message = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+                    return
+        except Exception as e:
+            pass
 
         if ctx.message.server.id not in self.music_playing:
             self.music_playing[ctx.message.server.id] = ['1', ['https://www.youtube.com/watch?v=cdwal5Kw3Fc']]
