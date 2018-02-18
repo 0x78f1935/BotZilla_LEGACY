@@ -98,7 +98,7 @@ class Music:
             pass
 
     def get_voice_state(self, server):
-        state = self.voice_states.get(server.id)
+        state = self.music_playing.get(server.id)
         if state is None:
             state = VoiceState(self.bot)
             self.voice_states[server.id] = state
@@ -279,8 +279,7 @@ class Music:
                                                   colour=0xf20006)
                             last_message = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(last_message, '\U0001f3b5')
-
-                    await asyncio.sleep(player.duration+2)
+                            await asyncio.sleep(player.duration + 2)
 
                     if self.music_playing[ctx.message.server.id][0] == '0':
                         await ctx.invoke(self.stop)
