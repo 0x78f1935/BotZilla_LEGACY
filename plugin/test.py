@@ -52,7 +52,8 @@ class TestScripts:
                          'https://media.discordapp.net/attachments/407238426417430539/414844552730640384/sebisauce_12.png',
                          'https://media.discordapp.net/attachments/407238426417430539/414844574385569794/sebisauce_13.png',
                          'https://media.discordapp.net/attachments/407238426417430539/414844592048046090/sebisauce_14.png',
-                         'https://media.discordapp.net/attachments/407238426417430539/414844605885054976/sebisauce_15.png']
+                         'https://media.discordapp.net/attachments/407238426417430539/414844605885054976/sebisauce_15.png',
+                         'https://media.discordapp.net/attachments/407238426417430539/414860605976084490/unknown.png']
         url = random.choice(sebisauce_img)
         embed = discord.Embed(title="\t",
                               description="\t",
