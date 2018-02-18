@@ -159,7 +159,7 @@ class Music:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!play in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
-        if ctx.message.server.id in self.music_playing and url==None:
+        if ctx.message.server.id in self.music_playing and self.music_playing[ctx.message.server.id][0] == True and url==None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Music is already playing in another voice channel.\nJoin that one instead :smile:',
                                   colour=0xf20006)
@@ -186,7 +186,7 @@ class Music:
                         return
                     else:
                         if ctx.message.server.id not in self.music_playing:
-                            self.music_playing[ctx.message.server.id] = []
+                            self.music_playing[ctx.message.server.id] = [True]
                         server_que = self.music_playing[ctx.message.server.id]
                         server_que.append(url)
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -217,7 +217,7 @@ class Music:
                     return
 
             if ctx.message.server.id not in self.music_playing:
-                self.music_playing[ctx.message.server.id] = []
+                self.music_playing[ctx.message.server.id] = [True]
             try:
                 for songs in range(30):
                     self.database.cur.execute("select * from botzilla.musicque order by random() limit 1;")
@@ -234,9 +234,9 @@ class Music:
                         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                         return
 
-                    player = await state.voice.create_ytdl_player(server_que.pop(0), ytdl_options=opts)
+                    player = await state.voice.create_ytdl_player(server_que.pop(1), ytdl_options=opts)
 
-                    if ctx.message.server.id not in self.music_playing:
+                    if self.music_playing[server_que][0] == False:
                         player.stop()
                         break
                     print(song)
@@ -249,7 +249,7 @@ class Music:
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, '\U0001f3b5')
                     await asyncio.sleep(player.duration)
-                    if ctx.message.server.id not in self.music_playing:
+                    if self.music_playing[server_que][0] == False:
                         player.stop()
                         break
                     player.stop()
@@ -336,7 +336,7 @@ class Music:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!stop in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
-        if ctx.message.server.id not in self.music_playing:
+        if ctx.message.server.id not in self.music_playing and self.music_playing[ctx.message.server.id][0] == False:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='There is no music playing :( use **`{}help play`** for more information'.format(
                                       self.config['prefix']),
