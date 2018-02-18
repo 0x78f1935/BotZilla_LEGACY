@@ -65,7 +65,7 @@ class VoiceState:
 
     async def audio_player_task(self):
         m = Music(self.bot)
-        await m.play()
+
 
 class Music:
     """
@@ -83,6 +83,7 @@ class Music:
         self.emojiUnicode = self.tmp_config['unicode']
         self.owner_list = self.config['owner-id']
         self.music_playing = {}
+        self.music_player = {}
         try:
             self.database = Database(self.bot)
             self.database_file_found = True
@@ -205,8 +206,6 @@ class Music:
                             last_message = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
                             print(self.music_playing[ctx.message.server.id])
-                    # The weird bug section ends here.. fixed it with this if else statement
-
             else:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Please.. use a youtube link or use **`{}help play`** instead'.format(
@@ -263,6 +262,14 @@ class Music:
                 else:
                     current_song = server_que.pop(0)
                     player = await state.voice.create_ytdl_player(current_song, ytdl_options=opts)
+
+                    if ctx.message.server.id not in self.music_player:
+                        self.music_player[ctx.message.server.id] = player
+
+                    else:
+                        music_update = {ctx.message.server.id : player}
+                        self.music_player.update(music_update)
+
                     player.volume = 1
                     player.start()
 
