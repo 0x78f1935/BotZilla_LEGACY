@@ -114,7 +114,7 @@ class Music:
                 pass
 
     @commands.command(pass_context=True)
-    async def summon(self, ctx):
+    async def summon(self, ctx, skip=False):
         """
         Summons the bot to join your voice channel.
         You have to be in a voice channel to be able to use this command
@@ -131,12 +131,13 @@ class Music:
 
         state = self.get_voice_state(ctx.message.server)
         if state.voice is None:
-            state.voice = await self.bot.join_voice_channel(summoned_channel)
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You can start me at any time.\nUse **`{0}play`** to start me. **`{0}help play`** for more information'.format(self.config['prefix']),
-                                  colour=0xf20006)
-            last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+            if skip == False:
+                state.voice = await self.bot.join_voice_channel(summoned_channel)
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='You can start me at any time.\nUse **`{0}play`** to start me. **`{0}help play`** for more information'.format(self.config['prefix']),
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
         else:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Music is already playing in another voice channel.\nJoin that one instead :smile:',
@@ -147,7 +148,7 @@ class Music:
 
 
     @commands.command(pass_context=True)
-    async def play(self, ctx, url=None):
+    async def play(self, ctx, , skip=False, url=None):
         """
         This command is multifunctional.
         Use !!play to start the playlist.
@@ -245,7 +246,7 @@ class Music:
             }
 
             if state.voice is None:
-                success = await ctx.invoke(self.summon)
+                success = await ctx.invoke(self.summon(skip=skip))
                 if not success:
                     return
 
@@ -362,7 +363,7 @@ class Music:
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
     @commands.command(pass_context=True, no_pm=True)
-    async def stop(self, ctx):
+    async def stop(self, ctx, skip=False):
         """
         Stops playing audio and leaves the voice channel.
         This also clears the queue.
@@ -402,11 +403,12 @@ class Music:
         except:
             pass
         finally:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Oke then... :angry:',
-                                  colour=0xf20006)
-            last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, '\U0001f44b')
+            if skip == False:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Oke then... :angry:',
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, '\U0001f44b')
 
     @commands.command(pass_context=True)
     async def skip(self, ctx):
@@ -424,8 +426,8 @@ class Music:
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
 
-        await ctx.invoke(self.stop)
-        await ctx.invoke(self.play)
+        await ctx.invoke(self.stop(skip=True))
+        await ctx.invoke(self.play(skip=True))
 
     async def np(self, ctx):
         """
