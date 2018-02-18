@@ -159,13 +159,14 @@ class Music:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!play in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
-        if ctx.message.server.id in self.music_playing and self.music_playing[ctx.message.server.id][0] == True and url==None:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Music is already playing in another voice channel.\nJoin that one instead :smile:',
-                                  colour=0xf20006)
-            last_message = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-            return
+        if ctx.message.server.id in self.music_playing and url==None:
+            if self.music_playing[ctx.message.server.id][0] == True:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Music is already playing in another voice channel.\nJoin that one instead :smile:',
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+                return
         else:
 
             if url:
