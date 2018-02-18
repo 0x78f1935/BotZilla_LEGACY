@@ -217,14 +217,6 @@ class Music:
             except:
                 pass
 
-    @commands.group(
-        pass_context=True,
-        description='Various music/voice channel commands for Luna.',
-        aliases=['lm', "Im"])
-    async def music(self, ctx):
-        """Music commands for Luna."""
-        pass
-
     @commands.command(no_pm=True)
     async def join(self, *, channel: discord.Channel):
         """Joins a voice channel."""
