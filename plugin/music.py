@@ -119,13 +119,6 @@ class Music:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                 return
 
-            # Change is_in_voice_channel to true
-            if self.requester_in_voice_channel:
-                self.player = self.bot.join_voice_channel(self.requester_in_voice_channel)
-                self.music_json[ctx.message.server.id]['voice_channel'] = 'True'
-                self.music_json[ctx.message.server.id]['voice_channel_name'] = self.requester_in_voice_channel
-
-
         if is_playing == 'False':
             # reload global function variables
             # - server_que : list
@@ -181,7 +174,22 @@ class Music:
                             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                             return
                         else:
+                            # reload global function variables
+                            # - server_que : list
+                            server_que = self.music_json[ctx.message.server.id]['que']
+                            # - is_playing : str-bool
+                            is_playing = self.music_json[ctx.message.server.id]['playing']
+                            # - is_in_voice_channel : str-bool
+                            is_in_voice_channel = self.music_json[ctx.message.server.id]['voice_channel']
                             song = server_que.pop(0)
+
+                            # Change is_in_voice_channel to true
+                            if is_in_voice_channel == 'False':
+                                if self.requester_in_voice_channel:
+                                    self.player = self.bot.join_voice_channel(self.requester_in_voice_channel)
+                                    self.music_json[ctx.message.server.id]['voice_channel'] = 'True'
+                                    self.music_json[ctx.message.server.id]['voice_channel_name'] = self.requester_in_voice_channel
+
                             print(self.player)
                             self.player = await self.player.create_ytdl_player(song)
                             self.player.volume = 1
