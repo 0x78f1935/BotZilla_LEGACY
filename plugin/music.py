@@ -401,7 +401,7 @@ class Music:
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, '\U0001f44b')
 
-
+    @commands.command(pass_context=True)
     async def skip(self, ctx):
         """
         Vote to skip a song. The song requester can automatically skip.
