@@ -173,7 +173,6 @@ class VoiceState:
 
     async def audio_player_task(self):
         while True:
-            out = None
             self.play_next_song.clear()
             self.skip_votes.clear()
             self.empty = self.songs.empty()
@@ -188,7 +187,6 @@ class VoiceState:
                                           colour=0xf20006)
                     last_message = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(last_message, '\U0001f3b5')
-                    out = None
                 else:
                     embed = discord.Embed(title='MusicPlayer:',
                                           description='Repeating: **`{}`**'.format(str(self.current)),
@@ -197,13 +195,6 @@ class VoiceState:
                     await self.bot.add_reaction(last_message, '\U0001f3b5')
             self.currenttime = datetime.datetime.now()
             self.currentplayer.start()
-            if out:
-                try:
-                    await asyncio.sleep(15)
-                    if out is not None:
-                        await self.bot.delete_message(out)
-                except:
-                    pass
             await self.play_next_song.wait()
 
 
