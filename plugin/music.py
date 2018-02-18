@@ -139,7 +139,7 @@ class Music:
         if state.voice is None:
             state.voice = await self.bot.join_voice_channel(summoned_channel)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You can stop me at any time.\nUse `{}stop` to stop me. You can also pause and resume me\nuse `{}help Music` for more information'.format(self.config['prefix'], self.config['prefix']),
+                                  description='You can start me at any time.\nUse `{}play` to start me. `{}help play` for more information'.format(self.config['prefix'], self.config['prefix']),
                                   colour=0xf20006)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -269,12 +269,14 @@ class Music:
                         player.volume = 1
                         player.start()
 
-                        embed = discord.Embed(title='MusicPlayer:',
-                                              description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n\nYou can stop me anytime with **`{}stop`**'.format(
-                                                  player.title, player.duration, self.config['prefix']),
-                                              colour=0xf20006)
-                        last_message = await self.bot.say(embed=embed)
-                        await self.bot.add_reaction(last_message, '\U0001f3b5')
+                        if player.url not in self.music_playing[ctx.message.server.id][1]:
+                            embed = discord.Embed(title='MusicPlayer:',
+                                                  description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n\nYou can stop me anytime with **`{}stop`**'.format(
+                                                      player.title, player.duration, self.config['prefix']),
+                                                  colour=0xf20006)
+                            last_message = await self.bot.say(embed=embed)
+                            await self.bot.add_reaction(last_message, '\U0001f3b5')
+
                         await asyncio.sleep(player.duration)
 
                         if self.music_playing[ctx.message.server.id][0] == '0':
