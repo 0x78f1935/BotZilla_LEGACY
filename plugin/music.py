@@ -41,6 +41,7 @@ class VoiceState:
         self.play_next_song = asyncio.Event()
         self.songs = asyncio.Queue()
         self.skip_votes = set() # a set of user_ids that voted
+
         self.audio_player = self.bot.loop.create_task(self.audio_player_task())
 
     def is_playing(self):
@@ -63,16 +64,8 @@ class VoiceState:
         self.bot.loop.call_soon_threadsafe(self.play_next_song.set)
 
     async def audio_player_task(self):
-        while True:
-            self.play_next_song.clear()
-            self.current = await self.songs.get()
-            embed = discord.Embed(title='MusicPlayer:',
-                                  description='Now playing: **`{}`**'.format(self.current),
-                                  colour=0xf20006)
-            last_message = await self.bot.send_message(self.current.channel, embed=embed)
-            await self.bot.add_reaction(last_message, '\U0001f3b5')
-            self.current.player.start()
-            await self.play_next_song.wait()
+        m = Music(self.bot)
+        await m.play()
 
 class Music:
     """
