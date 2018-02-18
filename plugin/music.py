@@ -155,7 +155,10 @@ class Music:
     @commands.command(pass_context=True)
     async def play(self, ctx, url=None):
         """
-        Play a music playlist.
+        This command is multifunctional.
+        Use !!play to start the playlist. Random tracks will be added to the playlist.
+        This keeps going until 100 tracks are finished with playing.
+        Use !!play <youtube url> to add a song to the playlist
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!play in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
