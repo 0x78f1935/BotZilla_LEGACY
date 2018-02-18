@@ -6,6 +6,7 @@ import asyncio
 import datetime
 import math
 import random
+import json
 from collections import deque
 
 
@@ -104,6 +105,10 @@ class VoiceState:
         self.songs = asyncio.Queue()
         self.skip_votes = set()  # a set of user_ids that voted
         self.audio_player = self.bot.loop.create_task(self.audio_player_task())
+        self.tmp_config = json.loads(str(open('./options/config.js').read()))
+        self.config = self.tmp_config['config']
+        self.emojiUnicode = self.tmp_config['unicode']
+        self.owner_list = self.config['owner-id']
 
     def is_playing(self):
         if self.voice is None or self.currentplayer is None:
@@ -173,10 +178,18 @@ class VoiceState:
             self.currentplayer = self.create_player(self.current)
             if not self.empty:
                 if not self.repeat:
-                    await self.bot.send_message(self.current.channel, 'Now playing ' + str(self.current))
+                    embed = discord.Embed(title='MusicPlayer:',
+                                          description='Now playing: **`{}`**'.format(str(self.current)),
+                                          colour=0xf20006)
+                    m = await self.bot.send_message(self.current.channel, embed=embed)
+                    await self.bot.add_reaction(m, self.emojiUnicode['succes'])
                     out = None
                 else:
-                    out = await self.bot.send_message(self.current.channel, 'Repeating ' + str(self.current))
+                    embed = discord.Embed(title='MusicPlayer:',
+                                          description='Repeating: **`{}`**'.format(str(self.current)),
+                                          colour=0xf20006)
+                    m = await self.bot.send_message(self.current.channel, embed=embed)
+                    await self.bot.add_reaction(m, self.emojiUnicode['succes'])
             self.currenttime = datetime.datetime.now()
             self.currentplayer.start()
             if out:
@@ -194,6 +207,10 @@ class Music:
     def __init__(self, _bot):
         self.bot = _bot
         self.voice_states = {}
+        self.tmp_config = json.loads(str(open('./options/config.js').read()))
+        self.config = self.tmp_config['config']
+        self.emojiUnicode = self.tmp_config['unicode']
+        self.owner_list = self.config['owner-id']
 
     def get_voice_state(self, server):
         state = self.voice_states.get(server.id)
