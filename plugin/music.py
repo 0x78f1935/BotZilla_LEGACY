@@ -262,6 +262,7 @@ class Music:
                     print(self.music_playing)
 
                     if not server_que:
+                        await ctx.invoke(self.stop)
                         break
                     else:
 
@@ -274,8 +275,8 @@ class Music:
                                 pass
                             else:
                                 embed = discord.Embed(title='MusicPlayer:',
-                                                      description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n\nYou can stop me anytime with **`{}stop`**'.format(
-                                                          player.title, player.duration, self.config['prefix']),
+                                                      description='**Now playing:**\n`{}`\n**Duration:**\n`{}` seconds\n`{}`\n\nYou can stop me anytime with **`{}stop`**'.format(
+                                                          player.title, player.duration, player.url, self.config['prefix']),
                                                       colour=0xf20006)
                                 last_message = await self.bot.say(embed=embed)
                                 await self.bot.add_reaction(last_message, '\U0001f3b5')
