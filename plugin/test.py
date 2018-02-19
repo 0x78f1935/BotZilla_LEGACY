@@ -45,12 +45,12 @@ class TestScripts:
         url = 'https://sebisauce.herokuapp.com/api/random'
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
-                source = await response.json(encoding='utf8')
-        source = json.dumps(source)
-        data = json.loads(source)
+                data = await response.json(encoding='utf8')
+
         im = data['file']
         embed = discord.Embed(title='\t', description='\t', color=0xf20006)
         embed.set_image(url=im)
+        embed.set_footer(text="Data © Sebi\'s Bot Tutorial contributors, discord.gg/GWdhBSp")
         await self.bot.say(embed=embed)
 
 
