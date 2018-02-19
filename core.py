@@ -149,6 +149,26 @@ async def get_users():
     print('DATABASE USER IMPORT DONE')
 
 
+async def get_new_server_users(server):
+    """
+    Update datebase with current active users
+    """
+
+    for member in server.members:
+        try:
+            username = str(member.name).replace("'", '').replace(';', '')
+            database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ('{}', '{}');".format(member.id, username))
+            database.cur.execute("ROLLBACK;")
+
+        except Exception as e:
+            if 'duplicate key' in str(e.args):
+                pass
+            else:
+                print(f'{type(e).__name__} : {e}')
+
+    print('DATABASE USER IMPORT DONE')
+
+
 async def total_online_user_tracker():
     while True:
         game = discord.Game(name='{} online users'.format(sum(1 for m in set(bot.get_all_members()) if m.status != discord.Status.offline)), type=3)
@@ -408,7 +428,7 @@ async def on_server_join(server):
     print('SERVER ADDED {} | {} BotZilla has been added'.format(server.name, server.id))
     if database_file_found:
         if database.database_online:
-            await get_users()
+            await get_new_server_users(server)
 
     if dbl is True:
         url = "https://discordbots.org/api/bots/{}/stats".format(bot.user.id)
