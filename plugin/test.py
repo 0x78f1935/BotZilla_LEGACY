@@ -3,6 +3,7 @@ from discord.ext import commands
 import json
 import datetime
 import random
+import aiohttp
 
 tmp_config = json.loads(str(open('./options/config.js').read()))
 config = tmp_config['config']
@@ -35,9 +36,23 @@ class TestScripts:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-
-    @commands.command(pass_context=True)
     async def sebisauce(self, ctx):
+        """
+        Sebisauce
+        """
+        url = 'https://sebisauce.herokuapp.com/api/random'
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                source = await response.json(encoding='utf8')
+        source = json.dumps(source)
+        data = json.loads(source)
+        im = data['file']
+        embed = discord.Embed(title='\t', description='\t', color=0xf20006)
+        embed.set_image(url=im)
+        await self.bot.say(embed=embed)
+
+
+    async def sebisauce_old(self, ctx):
         """
         Sebisauce
         """
@@ -54,6 +69,7 @@ class TestScripts:
                          'https://media.discordapp.net/attachments/407238426417430539/414844592048046090/sebisauce_14.png',
                          'https://media.discordapp.net/attachments/407238426417430539/414844605885054976/sebisauce_15.png',
                          'https://media.discordapp.net/attachments/407238426417430539/414860605976084490/unknown.png']
+
         url = random.choice(sebisauce_img)
         embed = discord.Embed(title="\t",
                               description="\t",
