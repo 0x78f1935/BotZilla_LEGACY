@@ -275,7 +275,7 @@ class Music:
     @commands.command(pass_context=True, no_pm=True)
     async def play(self, ctx, *, song: str = None):
         """
-        Plays a song.
+        Plays a song. !!play <SONG>
         If there is a song currently in the queue, then it is
         queued until the next song is done playing.
         This command automatically searches as well from YouTube.
@@ -473,6 +473,7 @@ class Music:
             await state.voice.disconnect()
         except:
             pass
+
 
     @commands.command(pass_context=True, no_pm=True)
     async def skip(self, ctx):
