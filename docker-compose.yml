@@ -11,11 +11,6 @@ services:
     hostname: database
     ports:
       - "6079:5432"
-    volumes:
-      - "./database/src:/database/src"
-      - "./database/tests:/database/tests"
-      - "./database/input:/database/input"
-      - "./database/pgtap:/database/pgtap"
 
 networks:
   gis_network:

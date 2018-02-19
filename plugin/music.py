@@ -543,7 +543,11 @@ class Music:
         """
         state = self.get_voice_state(ctx.message.server)
         if state.current is None:
-            await self.bot.say('Not playing anything.')
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Not playing anything.',
+                                  colour=0xf20006)
+            m = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(m, self.emojiUnicode['warning'])
         else:
             skip_count = len(state.skip_votes)
             t1 = state.currenttime
