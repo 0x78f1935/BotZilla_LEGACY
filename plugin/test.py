@@ -36,6 +36,8 @@ class TestScripts:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
+
+    @commands.command(pass_context=True)
     async def sebisauce(self, ctx):
         """
         Sebisauce
