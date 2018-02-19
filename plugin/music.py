@@ -273,7 +273,7 @@ class Music:
         return True
 
     @commands.command(pass_context=True, no_pm=True)
-    async def play(self, ctx, *, song: str):
+    async def play(self, ctx, *, song: str = None):
         """
         Plays a song.
         If there is a song currently in the queue, then it is
@@ -283,6 +283,14 @@ class Music:
         https://rg3.github.io/youtube-dl/supportedsites.html
         You also can add a playlist, or just search on keyword
         """
+        if song is None:
+            embed = discord.Embed(title='MusicPlayer:',
+                                  description='Give me a song, use **`{}help play`** for more info'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            m = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(m, self.emojiUnicode['warning'])
+            return
+
         await self.bot.send_typing(ctx.message.channel)
         state = self.get_voice_state(ctx.message.server)
         ytdl = youtube_dl.YoutubeDL({
