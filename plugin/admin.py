@@ -325,7 +325,7 @@ class AdminCommands:
     @commands.command(pass_context=True, hidden=True)
     async def git(self, ctx):
         """
-        Pull latest branch
+        Pull latest branch and shows information about the pull
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!git in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
