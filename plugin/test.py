@@ -40,7 +40,7 @@ class TestScripts:
     @commands.command(pass_context=True)
     async def sebisauce(self, ctx):
         """
-        Sebisauce
+        Sebisauce, api
         """
         url = 'https://sebisauce.herokuapp.com/api/random'
         async with aiohttp.ClientSession() as session:
@@ -54,9 +54,10 @@ class TestScripts:
         await self.bot.say(embed=embed)
 
 
+    @commands.command(pass_context=True)
     async def sebisauce_old(self, ctx):
         """
-        Sebisauce
+        Sebisauce, not api
         """
         await self.bot.send_typing(ctx.message.channel)
         sebisauce_img = ['https://cdn.discordapp.com/attachments/407238426417430539/414844386212446210/sebisauce_3.png',
