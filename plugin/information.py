@@ -595,9 +595,9 @@ class Utils:
     async def poll(self, ctx, timer = None, *questions_and_choices: str):
         """
         Makes a poll quickly for your server.
-        !!poll <Timer for voters> <<question>?<answer>;<answer>>
+        !!poll <Timer for voters> <<question> ? <answer> ; <answer>>
         You can only have up to 20 choices and one question.
-        Use `;` and `?` as a delimiter.
+        Use ; and ? as a delimiter.
         Example:   10 question? answerA; answer B; answerC
         a Voter get ^ seconds to vote in this situation
         """
@@ -613,6 +613,25 @@ class Utils:
         else:
             try:
                 timer = int(timer)
+                if timer >= 31556926:
+                    moment = 'year[s]'
+                    timer_layout = (timer // 31556926)
+                elif timer >= 2629743 and timer <= 31556925:
+                    moment = 'month[s]'
+                    timer_layout = (timer // 2629743)
+                elif timer >= 86400 and timer <= 2629742:
+                    moment = 'day[s]'
+                    timer_layout = (timer // 86400)
+                elif timer >= 3600 and timer <= 86399:
+                    moment = 'hour[s]'
+                    timer_layout = (timer // 3600)
+                elif timer >= 60 and timer <= 3599:
+                    moment = 'minute[s]'
+                    timer_layout = (timer//60)
+                else:
+                    moment = 'seconds[s]'
+                    timer_layout = timer
+                print(timer_layout, moment)
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='It\'s not a bad idea to read **`{}help poll`** first'.format(
@@ -666,8 +685,8 @@ class Utils:
             except:
                 pass
             embed = discord.Embed(title='{}\'s question'.format(ctx.message.author.name),
-                                  description='This poll will end in *`{} min`*\n\n**{}** asks:\n*```\n{}\n```*'.format(
-                                      int(timer//60), ctx.message.author.name, question),
+                                  description='This poll will end in *`{} {}`*\n\n**{}** asks:\n*```\n{}\n```*'.format(
+                                      timer_layout, moment, ctx.message.author.name, question),
                                   colour=0xf20006)
             answerpoll = {}
             for key, c in choices:
@@ -711,7 +730,7 @@ class Utils:
                 round = 0
                 b = await self.bot.get_message(ctx.message.channel, b.id)
                 for i in range(10-1):
-                    await asyncio.sleep(10)
+                    await asyncio.sleep(30)
                     embed = discord.Embed(title='Results of poll:',
                                           description='\t',
                                           colour=0xf20006)
@@ -720,6 +739,8 @@ class Utils:
                     embed.add_field(name='----', value='The server has chosen answer : **{}**'.format(str(answers_user[winner]).upper()))
                     if round != 8:
                         embed.set_footer(text='Next page in 10 seconds')
+                    else:
+                        embed.set_footer(text='End date {} {}'.format(datetime.datetime.today(), datetime.datetime.now()))
                     await self.bot.edit_message(b, embed=embed)
                     await self.bot.add_reaction(b, self.emojiUnicode['succes'])
                     # so the loop ends at the right position
@@ -727,11 +748,12 @@ class Utils:
                     if round == 8:
                         break
 
-                    await asyncio.sleep(10)
+                    await asyncio.sleep(30)
 
                     embed = discord.Embed(title='Results of poll:',
                                           description=f"Poll started by : **`{ctx.message.author.name}`**\nID number : **`{ctx.message.author.id}`**\nQuestion was :\n**```\n{question}\n```**",
                                           colour=0xf20006)
+                    embed.set_footer(text='Next page in 10 seconds')
                     await self.bot.edit_message(b, embed=embed)
                     await self.bot.add_reaction(b, self.emojiUnicode['succes'])
 
