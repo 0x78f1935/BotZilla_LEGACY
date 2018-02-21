@@ -683,7 +683,7 @@ class Utils:
                                       colour=0xf20006)
                 for key, c in choices:
                     embed.add_field(name='\t', value='{} : {}\n'.format(key, c), inline=False)
-                embed.add_field(name='The server has chosen answer :', value='**`{}`**'.format(winner.upper()))
+                embed.add_field(name='The server has chosen answer :', value='**`{}`**'.format(str(winner).upper()))
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
