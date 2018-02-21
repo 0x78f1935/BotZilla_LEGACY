@@ -736,7 +736,7 @@ class Utils:
                                           colour=0xf20006)
                     for key, value in answerpoll.items():
                         embed.add_field(name=':gear: Answer:', value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
-                    embed.add_field(name='----', value='The server has chosen answer : **{}**'.format(str(answers_user[winner]).upper()))
+                    embed.add_field(name='----', value='The server choose answer : **{}**'.format(str(answers_user[winner]).upper()))
                     if round != 8:
                         embed.set_footer(text='Next page in 10 seconds')
                     else:
