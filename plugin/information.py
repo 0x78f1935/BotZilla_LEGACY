@@ -657,7 +657,7 @@ class Utils:
             author = ctx.message.author
             # Try to pin the message
             try:
-                await self.bot.pin_mesage(POLL)
+                await self.bot.pin_message(POLL)
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='To get rid of this warning, please provide Bot2illa `Manage Messages Permissions`, Error:\n```py\n{}\n```\nPoll continues..'.format(
@@ -676,6 +676,7 @@ class Utils:
                     answers_user[reaction.count] = reaction.emoji
 
                 winner = max(answers_user.keys())
+                await self.bot.delete_message(message)
                 winner_message = f"Poll started by : **`{author.name}`**\nID number : {author.id}\nQuestion was :\n```\n{question}\n```\n\nAnswers you could choose:"
                 embed = discord.Embed(title='Results of poll:',
                                       description=winner_message,
