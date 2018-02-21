@@ -693,8 +693,8 @@ class Utils:
                                           description='\t',
                                           colour=0xf20006)
                     for key, value in answerpoll.items():
-                        embed.add_field(name='\t', value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
-                    embed.add_field(name='\t', value='The server has chosen answer : **`{}`**'.format(str(answers_user[winner]).upper()))
+                        embed.add_field(name=':gear: Answer:', value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
+                    embed.add_field(name='----', value='The server has chosen answer : **`{}`**'.format(str(answers_user[winner]).upper()))
                     b = await self.bot.edit_message(b, embed=embed)
                     await self.bot.add_reaction(message, self.emojiUnicode['succes'])
                     # so the loop ends at the right position
