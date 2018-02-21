@@ -681,7 +681,7 @@ class Utils:
                 embed = discord.Embed(title='Results of poll:',
                                       description=f"Poll started by : **`{ctx.message.author.name}`**\nID number : **`{ctx.message.author.id}`**\nQuestion was :\n**```\n{question}\n```**",
                                       colour=0xf20006)
-
+                embed.set_footer(text='Next page in 10 seconds')
                 b = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(b, self.emojiUnicode['succes'])
 
@@ -695,7 +695,9 @@ class Utils:
                                           colour=0xf20006)
                     for key, value in answerpoll.items():
                         embed.add_field(name=':gear: Answer:', value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
-                    embed.add_field(name='----', value='The server has chosen answer : **`{}`**'.format(str(answers_user[winner]).upper()))
+                    embed.add_field(name='----', value='The server has chosen answer : **{}**'.format(str(answers_user[winner]).upper()))
+                    if round != 8:
+                        embed.set_footer(text='Next page in 10 seconds')
                     await self.bot.edit_message(b, embed=embed)
                     await self.bot.add_reaction(b, self.emojiUnicode['succes'])
                     # so the loop ends at the right position
