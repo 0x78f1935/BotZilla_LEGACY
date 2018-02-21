@@ -654,7 +654,6 @@ class Utils:
             for emoji, _ in choices:
                 await self.bot.add_reaction(POLL, emoji)
 
-            author = ctx.message.author
             # Try to pin the message
             try:
                 await self.bot.pin_message(POLL)
@@ -667,7 +666,7 @@ class Utils:
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
             #Sleep for 30 min
-            await asyncio.sleep(1800)
+            await asyncio.sleep(30) # 1800 30 min
 
             try:
                 message = await self.bot.get_message(ctx.message.channel, POLL.id)
@@ -677,7 +676,7 @@ class Utils:
 
                 winner = max(answers_user.keys())
                 await self.bot.delete_message(message)
-                winner_message = f"Poll started by : **`{author.name}`**\nID number : {author.id}\nQuestion was :\n```\n{question}\n```\n\nAnswers you could choose:"
+                winner_message = f"Poll started by : **`{ctx.message.author.name}`**\nID number : {ctx.message.author.id}\nQuestion was :\n```\n{question}\n```\n\nAnswers you could choose:"
                 embed = discord.Embed(title='Results of poll:',
                                       description=winner_message,
                                       colour=0xf20006)
