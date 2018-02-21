@@ -678,12 +678,13 @@ class Utils:
 
                 winner = max(answers_user.keys())
                 await self.bot.delete_message(message)
-                winner_message = f"Poll started by : **`{ctx.message.author.name}`**\nID number : {ctx.message.author.id}\nQuestion was :\n```\n{question}\n```\n\nAnswers you could choose:"
                 embed = discord.Embed(title='Results of poll:',
-                                      description=winner_message,
+                                      description=f"Poll started by : **`{ctx.message.author.name}`**\nID number : {ctx.message.author.id}\nQuestion was :\n```\n{question}\n```\n\nAnswers you could choose:",
                                       colour=0xf20006)
+                print(answerpoll)
                 for key, value in answerpoll.items():
                     embed.add_field(name='\t', value='{} : {}\n'.format(key, value), inline=False)
+                print('answers added')
                 embed.add_field(name='The server has chosen answer :', value='**`{}`**'.format(str(winner).upper()))
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
