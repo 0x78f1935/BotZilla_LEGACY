@@ -749,7 +749,7 @@ class Utils:
                         for key, value in answerpoll.items():
                             embed.add_field(name=':gear: Answer:',
                                             value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
-
+                        embed.add_field(name='----', value='The server choose answer : **{}**'.format(str(answers_user[winner]).upper()))
                         embed.set_footer(text='End date {} {}'.format(datetime.datetime.today(), datetime.datetime.now()))
                         await self.bot.edit_message(b, embed=embed)
                         await self.bot.add_reaction(b, self.emojiUnicode['succes'])
