@@ -679,7 +679,7 @@ class Utils:
                 winner = max(answers_user.keys())
                 await self.bot.delete_message(message)
                 embed = discord.Embed(title='Results of poll:',
-                                      description=f"Poll started by : **`{ctx.message.author.name}`**\nID number : {ctx.message.author.id}\nQuestion was :\n```\n{question}\n```\n\nAnswers you could choose:",
+                                      description=f"Poll by : **`{ctx.message.author.name}`**\nID: {ctx.message.author.id}\nQuestion:\n```\n{question}\n```\n\nAnswers:",
                                       colour=0xf20006)
                 print(answerpoll)
                 for key, value in answerpoll.items():
