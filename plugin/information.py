@@ -647,8 +647,10 @@ class Utils:
             embed = discord.Embed(title='{}\'s question'.format(ctx.message.author.name),
                                   description='This poll will end in *`30 min`*\n\n**{}** asks:\n*```\n{}\n```*'.format(ctx.message.author.name, question),
                                   colour=0xf20006)
+            answerpoll = {}
             for key, c in choices:
                 embed.add_field(name='{} Answer:'.format(':gear:'), value='{} : {}\n'.format(key, c), inline=False)
+                answerpoll[key] = c
             POLL = await self.bot.say(embed=embed)
 
             for emoji, _ in choices:
@@ -666,7 +668,7 @@ class Utils:
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
             #Sleep for 30 min
-            await asyncio.sleep(30) # 1800 30 min
+            await asyncio.sleep(10) # 1800 30 min
 
             try:
                 message = await self.bot.get_message(ctx.message.channel, POLL.id)
@@ -680,8 +682,8 @@ class Utils:
                 embed = discord.Embed(title='Results of poll:',
                                       description=winner_message,
                                       colour=0xf20006)
-                for key, c in choices:
-                    embed.add_field(name='\t', value='{} : {}\n'.format(key, c), inline=False)
+                for key, value in answerpoll.items():
+                    embed.add_field(name='\t', value='{} : {}\n'.format(key, value), inline=False)
                 embed.add_field(name='The server has chosen answer :', value='**`{}`**'.format(str(winner).upper()))
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
