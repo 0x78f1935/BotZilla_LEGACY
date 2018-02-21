@@ -696,7 +696,7 @@ class Utils:
                         embed.add_field(name=':gear: Answer:', value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
                     embed.add_field(name='----', value='The server has chosen answer : **`{}`**'.format(str(answers_user[winner]).upper()))
                     await self.bot.edit_message(b, embed=embed)
-                    await self.bot.add_reaction(message, self.emojiUnicode['succes'])
+                    await self.bot.add_reaction(b, self.emojiUnicode['succes'])
                     # so the loop ends at the right position
                     round += 1
                     if round == 8:
