@@ -682,25 +682,28 @@ class Utils:
                                       description=f"Poll started by : **`{ctx.message.author.name}`**\nID number : **`{ctx.message.author.id}`**\nQuestion was :\n**```\n{question}\n```**",
                                       colour=0xf20006)
 
-                result = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(result, self.emojiUnicode['succes'])
+                message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(message, self.emojiUnicode['succes'])
 
                 # check for loop #round
                 round = 0
-                message = await self.bot.get_message(ctx.message.channel, result.id)
                 for i in range(10-1):
+                    message = await self.bot.get_message(ctx.message.channel, message.id)
                     embed = discord.Embed(title='Results of poll:',
                                           description='\t',
                                           colour=0xf20006)
                     for key, value in answerpoll.items():
-                        embed.add_field(name='\t', value='{}: {}\n'.format(key, value), inline=False)
-                    print('answers added')
+                        embed.add_field(name='{}'.format(str(key).upper()), value='{}'.format(str(value)), inline=False)
+                    print(f'answers added {key} {value}')
                     embed.add_field(name='The server has chosen answer :', value='**`{}`**'.format(str(answers_user[winner]).upper()))
-                    await self.bot.edit_message(message, embed=embed)
+                    message = await self.bot.edit_message(message, embed=embed)
+                    await self.bot.add_reaction(message, self.emojiUnicode['succes'])
                     # so the loop ends at the right position
                     round += 1
                     if round == 8:
                         break
+
+                    message = await self.bot.get_message(ctx.message.channel, message.id)
                     embed = discord.Embed(title='Results of poll:',
                                           description=f"Poll started by : **`{ctx.message.author.name}`**\nID number : **`{ctx.message.author.id}`**\nQuestion was :\n**```\n{question}\n```**",
                                           colour=0xf20006)
@@ -709,7 +712,8 @@ class Utils:
                     print(f'answers added {key} {value}')
                     embed.add_field(name='The server has chosen answer :', value='**`{}`**'.format(str(answers_user[winner]).upper()))
                     print(embed, type(embed), str(embed))
-                    await self.bot.edit_message(message, embed=embed)
+                    message = await self.bot.edit_message(message, embed=embed)
+                    await self.bot.add_reaction(message, self.emojiUnicode['succes'])
 
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
