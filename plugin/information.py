@@ -731,7 +731,7 @@ class Utils:
                 embed = discord.Embed(title='Results of poll:', description='\t', colour=0xf20006)
                 for key, value in answerpoll.items():
                     embed.add_field(name=':gear: Answer:', value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
-
+                embed.add_field(name='----', value='The server choose answer : **{}**'.format(str(answers_user[winner]).upper()))
                 embed.set_footer(text='End date {} {}'.format(datetime.datetime.today(), datetime.datetime.now()))
                 result_message = await self.bot.send_message(requester, embed=embed)
                 await self.bot.add_reaction(result_message, self.emojiUnicode['succes'])
