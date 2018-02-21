@@ -713,19 +713,28 @@ class Utils:
 
             try:
                 message = await self.bot.get_message(ctx.message.channel, POLL.id)
+                requester = await self.bot.get_user_info(ctx.message.author.id)
                 answers_user = {}
                 for reaction in message.reactions:
                     answers_user[reaction.count] = reaction.emoji
 
                 winner = max(answers_user.keys())
                 await self.bot.delete_message(message)
-                embed = discord.Embed(title='Results of poll:',
-                                      description=f"Poll started by : **`{ctx.message.author.name}`**\nID number : **`{ctx.message.author.id}`**\nQuestion was :\n**```\n{question}\n```**",
+                embed = discord.Embed(title='Results of poll:', description=f"Poll started by : **`{ctx.message.author.name}`**\nID number : **`{ctx.message.author.id}`**\nQuestion was :\n**```\n{question}\n```**",
                                       colour=0xf20006)
+                await self.bot.send_message(requester, embed=embed)
                 embed.set_footer(text='Next page in 10 seconds')
                 b = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(b, self.emojiUnicode['succes'])
 
+                # send poll results to requester
+                embed = discord.Embed(title='Results of poll:', description='\t', colour=0xf20006)
+                for key, value in answerpoll.items():
+                    embed.add_field(name=':gear: Answer:', value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
+
+                embed.set_footer(text='End date {} {}'.format(datetime.datetime.today(), datetime.datetime.now()))
+                result_message = await self.bot.send_message(requester, embed=embed)
+                await self.bot.add_reaction(result_message, self.emojiUnicode['succes'])
                 # check for loop #round
                 round = 0
                 b = await self.bot.get_message(ctx.message.channel, b.id)
