@@ -592,15 +592,25 @@ class Utils:
 
 
     @commands.command(pass_context=True)
-    async def poll(self, ctx, *questions_and_choices: str):
+    async def poll(self, ctx, timer : int = None, *questions_and_choices: str):
         """
         Makes a poll quickly for your server.
-        The first argument is the question and the rest are the choices.
+        !!poll <Timer for voters> <<question>?<answer>;<answer>>
         You can only have up to 20 choices and one question.
-        Use `;` as a delimiter.
-        Example: question? answerA; answer B; answerC
+        Use `;` and `?` as a delimiter.
+        Example:   10 question? answerA; answer B; answerC
+        a Voter get ^ seconds to vote in this situation
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!poll <{questions_and_choices}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+
+        if timer is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='It\'s not a bad idea to read **`{}help poll`** first'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            return
+
         if str(questions_and_choices) == '()':
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='It\'s not a bad idea to read **`{}help poll`** first'.format(self.config['prefix']),
@@ -645,7 +655,8 @@ class Utils:
             except:
                 pass
             embed = discord.Embed(title='{}\'s question'.format(ctx.message.author.name),
-                                  description='This poll will end in *`30 min`*\n\n**{}** asks:\n*```\n{}\n```*'.format(ctx.message.author.name, question),
+                                  description='This poll will end in *`{} min`*\n\n**{}** asks:\n*```\n{}\n```*'.format(
+                                      int(timer//60), ctx.message.author.name, question),
                                   colour=0xf20006)
             answerpoll = {}
             for key, c in choices:
@@ -668,7 +679,7 @@ class Utils:
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
             #Sleep for 30 min
-            await asyncio.sleep(10) # 1800 30 min
+            await asyncio.sleep(int(timer)) # 1800 30 min
 
             try:
                 message = await self.bot.get_message(ctx.message.channel, POLL.id)
