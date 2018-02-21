@@ -592,7 +592,7 @@ class Utils:
 
 
     @commands.command(pass_context=True)
-    async def poll(self, ctx, timer : int = None, *questions_and_choices: str):
+    async def poll(self, ctx, timer = None, *questions_and_choices: str):
         """
         Makes a poll quickly for your server.
         !!poll <Timer for voters> <<question>?<answer>;<answer>>
@@ -608,15 +608,26 @@ class Utils:
                                   description='It\'s not a bad idea to read **`{}help poll`** first'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
+        else:
+            try:
+                timer = int(timer)
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='It\'s not a bad idea to read **`{}help poll`** first'.format(
+                                          self.config['prefix']),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
 
         if str(questions_and_choices) == '()':
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='It\'s not a bad idea to read **`{}help poll`** first'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
         try:
