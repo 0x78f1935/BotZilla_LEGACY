@@ -17,7 +17,7 @@ owner_list = config['owner-id']
 class Help:
     def __init__(self, bot):
         self.bot = bot
-        bot_version = 'V0.5.1'
+        bot_version = 'V0.5.2'
         self.version = bot_version
         self.tmp_config = json.loads(str(open('./options/config.js').read()))
         self.config = self.tmp_config['config']
