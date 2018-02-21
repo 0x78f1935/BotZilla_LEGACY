@@ -703,6 +703,8 @@ class Utils:
                     if round == 8:
                         break
 
+                    await asyncio.sleep(5)
+
                     message = await self.bot.get_message(ctx.message.channel, message.id)
                     embed = discord.Embed(title='Results of poll:',
                                           description=f"Poll started by : **`{ctx.message.author.name}`**\nID number : **`{ctx.message.author.id}`**\nQuestion was :\n**```\n{question}\n```**",
