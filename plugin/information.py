@@ -695,7 +695,7 @@ class Utils:
                     for key, value in answerpoll.items():
                         embed.add_field(name=':gear: Answer:', value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
                     embed.add_field(name='----', value='The server has chosen answer : **`{}`**'.format(str(answers_user[winner]).upper()))
-                    b = await self.bot.edit_message(b, embed=embed)
+                    await self.bot.edit_message(b, embed=embed)
                     await self.bot.add_reaction(message, self.emojiUnicode['succes'])
                     # so the loop ends at the right position
                     round += 1
@@ -707,7 +707,7 @@ class Utils:
                     embed = discord.Embed(title='Results of poll:',
                                           description=f"Poll started by : **`{ctx.message.author.name}`**\nID number : **`{ctx.message.author.id}`**\nQuestion was :\n**```\n{question}\n```**",
                                           colour=0xf20006)
-                    b = await self.bot.edit_message(b, embed=embed)
+                    await self.bot.edit_message(b, embed=embed)
                     await self.bot.add_reaction(b, self.emojiUnicode['succes'])
 
             except Exception as e:
