@@ -652,6 +652,7 @@ class Utils:
             a = await self.bot.say(embed=embed)
             for emoji, _ in choices:
                 await self.bot.add_reaction(a, emoji)
+                print(emoji, _)
 
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -659,7 +660,6 @@ class Utils:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
-            await asyncio.sleep(10)
 
 
     @commands.command(pass_context=True)

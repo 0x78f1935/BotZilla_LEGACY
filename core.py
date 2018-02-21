@@ -236,8 +236,9 @@ async def on_ready():
 async def on_member_join(member):
     print('MEMBER JOINED {} | {} Joined: {}'.format(member.name, member.id, member.server))
     try:
+        m = str(member.name).format(';', '').format("'", "")
         database.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, \'{}\');'.format(
-            member.id, str(member.name).format(';', '').format("'", "")))
+            member.id, m))
         database.cur.execute("ROLLBACK;")
         print('DATABASE ADD {} | {} has been added to the database'.format(member.name, member.id))
     except Exception as e:
