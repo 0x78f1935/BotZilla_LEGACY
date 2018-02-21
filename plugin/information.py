@@ -687,16 +687,14 @@ class Utils:
 
                 # check for loop #round
                 round = 0
+                b = await self.bot.get_message(ctx.message.channel, b.id)
                 for i in range(10-1):
-                    b = await self.bot.get_message(ctx.message.channel, b.id)
                     embed = discord.Embed(title='Results of poll:',
                                           description='\t',
                                           colour=0xf20006)
                     for key, value in answerpoll.items():
-                        embed.add_field(name='{}'.format(str(key).upper()), value='{}'.format(str(value)), inline=False)
-                        print(f'answers added {key} {value}')
-                    embed.add_field(name='The server has chosen answer :', value='**`{}`**'.format(str(answers_user[winner]).upper()))
-                    print(embed)
+                        embed.add_field(name='\t', value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
+                    embed.add_field(name='\t', value='The server has chosen answer : **`{}`**'.format(str(answers_user[winner]).upper()))
                     b = await self.bot.edit_message(b, embed=embed)
                     await self.bot.add_reaction(message, self.emojiUnicode['succes'])
                     # so the loop ends at the right position
@@ -704,9 +702,8 @@ class Utils:
                     if round == 8:
                         break
 
-                    await asyncio.sleep(5)
+                    await asyncio.sleep(10)
 
-                    b = await self.bot.get_message(ctx.message.channel, b.id)
                     embed = discord.Embed(title='Results of poll:',
                                           description=f"Poll started by : **`{ctx.message.author.name}`**\nID number : **`{ctx.message.author.id}`**\nQuestion was :\n**```\n{question}\n```**",
                                           colour=0xf20006)
