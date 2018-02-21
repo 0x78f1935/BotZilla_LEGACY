@@ -644,15 +644,56 @@ class Utils:
                 await ctx.message.delete()
             except:
                 pass
-            embed = discord.Embed(title='{} asks:'.format(ctx.message.author.name),
-                                  description='**{}**'.format(question),
+            embed = discord.Embed(title='{}\'s question'.format(ctx.message.author.name),
+                                  description='This poll will end in *`30 min`*\n\n**{}** asks:\n*```\n{}\n```*'.format(ctx.message.author.name, question),
                                   colour=0xf20006)
             for key, c in choices:
                 embed.add_field(name='{} Answer:'.format(':gear:'), value='{} : {}\n'.format(key, c), inline=False)
-            a = await self.bot.say(embed=embed)
+            POLL = await self.bot.say(embed=embed)
+
             for emoji, _ in choices:
-                await self.bot.add_reaction(a, emoji)
-                print(emoji, _)
+                await self.bot.add_reaction(POLL, emoji)
+
+            author = ctx.message.author
+            # Try to pin the message
+            try:
+                await self.bot.pin_mesage(POLL)
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='To get rid of this warning, please provide Bot2illa `Manage Messages Permissions`, Error:\n```py\n{}\n```\nPoll continues..'.format(
+                                          e.args),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
+            #Sleep for 30 min
+            await asyncio.sleep(1800)
+
+            try:
+                message = await self.bot.get_message(ctx.message.channel, POLL.id)
+                answers_user = {}
+                for reaction in message.reactions:
+                    answers_user[reaction.count] = reaction.emoji
+
+                winner = max(answers_user.keys())
+                winner_message = f"Poll started by : **`{author.name}`**\nID number : {author.id}\nQuestion was :\n```\n{question}\n```\n\nAnswers you could choose:"
+                embed = discord.Embed(title='Results of poll:',
+                                      description=winner_message,
+                                      colour=0xf20006)
+                for key, c in choices:
+                    embed.add_field(name='\t', value='{} : {}\n'.format(key, c), inline=False)
+                embed.add_field(name='The server has chosen answer :', value='**`{}`**'.format(winner.upper()))
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Could not calculate total votes, Error:\n```py\n{}\n```'.format(
+                                          e.args),
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
 
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
