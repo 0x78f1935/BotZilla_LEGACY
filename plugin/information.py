@@ -706,8 +706,9 @@ class Utils:
                                           colour=0xf20006)
                     for key, value in answerpoll.items():
                         embed.add_field(name='\t', value='{}: {}\n'.format(key, value), inline=False)
-                    print('answers added')
+                    print(f'answers added {key} {value}')
                     embed.add_field(name='The server has chosen answer :', value='**`{}`**'.format(str(answers_user[winner]).upper()))
+                    print(embed, type(embed), str(embed))
                     await self.bot.edit_message(message, embed=embed)
 
             except Exception as e:
