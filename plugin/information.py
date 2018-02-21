@@ -689,6 +689,7 @@ class Utils:
                 round = 0
                 b = await self.bot.get_message(ctx.message.channel, b.id)
                 for i in range(10-1):
+                    await asyncio.sleep(10)
                     embed = discord.Embed(title='Results of poll:',
                                           description='\t',
                                           colour=0xf20006)
