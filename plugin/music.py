@@ -172,7 +172,7 @@ class VoiceState:
     def create_player(self, entry):
         player = self.voice.create_ffmpeg_player(
             entry.download_url, after=self.toggle_next)
-        player.volume = 0.55
+        player.volume = 1
         return player
 
     async def audio_player_task(self):
@@ -372,9 +372,9 @@ class Music:
     async def volume(self, ctx, value: int = None):
         """
         Sets the volume of the currently playing song.
-        Volume can be set between 0 and 100.
+        Volume can be set between 0 and 200 where 100 is default.
         """
-        if value == None or value < 0 or value > 100:
+        if value == None or value < 0 or value > 200:
             embed = discord.Embed(title='MusicPlayer:',
                                   description='You should consider to read the manual.\nTo open the help function use **`{}help volume`**'.format(
                                       self.config['prefix']
