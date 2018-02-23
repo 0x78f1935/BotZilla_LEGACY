@@ -541,6 +541,31 @@ class Utils:
     # ========================
     #   Bot related commands
 
+    @commands.command(pass_context=True)
+    async def profile(self, ctx):
+        """
+        Generate random user information. The information provided is all fake.
+        This could be used to make a user profiles for role play goals.
+        """
+        try:
+            url = 'https://randomuser.me/api/'
+            await self.bot.send_typing(ctx.message.channel)
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as response:
+                    data = await response.json(encoding='utf8')
+
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name), description='The following information is **fake**', colour=0xf20006)
+            embed.add_field(name='Name:', value='Name: {} {} {}\nGender: {}'.format(str(data['results'][0]['name']['title']).upper(), str(data['results'][0]['name']['first']).title(), str(data['results'][0]['name']['last']).title(), str(data['results'][0]['gender']).title()), inline=False)
+            embed.add_field(name='Location:', value='{}\n{}\n{}\n{}'.format(str(data['results'][0]['location']['street']).title(), str(data['results'][0]['location']['city']).title(), str(data['results'][0]['location']['state']).title(), data['results'][0]['location']['postcode']), inline=False)
+            embed.add_field(name='Online:', value='Email: {}\nUsername: {}\nPassword: {}'.format(data['results'][0]['email'], data['results'][0]['login']['username'], data['results'][0]['login']['password']), inline=False)
+            embed.add_field(name='Misc:',   value='Phone: {}\nCellPhone: {}'.format(data['results'][0]['phone'], data['results'][0]['cell']), inline=False)
+            embed.set_thumbnail(url=data['results'][0]['picture']['large'])
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name), description='Could not generate a user profile', colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
     @commands.command(pass_context=True)

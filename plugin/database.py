@@ -43,12 +43,6 @@ class Database:
                     self.database_settings['password']
                 ))
                 self.cur = self.conn.cursor()
-                self.cur.execute("select id from botzilla.music where type_channel = 'voice';")
-                rows = self.cur.fetchall()
-                self.cur.execute("ROLLBACK;")
-                for row in rows:
-                    for item in row:
-                        self.music_channels.append(item)
                 self.database_online = True
                 break
             except:
