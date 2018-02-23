@@ -544,7 +544,8 @@ class Utils:
     @commands.command(pass_context=True)
     async def profile(self, ctx):
         """
-        Generate random user information. The information provided is all fake.
+        Generate random user information.
+        The information provided is all fake.
         This could be used to make a user profiles for role play goals.
         """
         try:
