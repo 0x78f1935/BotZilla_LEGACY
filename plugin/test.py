@@ -99,7 +99,7 @@ class TestScripts:
 
 
     @commands.command(pass_context=True)
-    async def b(self, ctx, column=None, *, row=None):
+    async def b(self, ctx, row=None, *, column=None):
         """
         game test
         """
@@ -145,13 +145,13 @@ class TestScripts:
             gamehash = game[1]
             board = ast.literal_eval(str(game[2]).replace("<A>", "'").replace('<C>', ','))
             score = game[3]
-            ship_row = game[4]
-            ship_col = game[5]
+            ship_row = int(game[4])
+            ship_col = int(game[5])
 
             # make sure user input is a number
             try:
-                user_row = int(column)
-                user_col = int(row)
+                user_row = int(row)
+                user_col = int(column)
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Please make sure the column and row you provided are numbers',
