@@ -141,10 +141,10 @@ class TestScripts:
 
             # Check
             print(game)
-            id = game[0]
-            gamehash = game[1]
+            id = int(game[0])
+            gamehash = int(game[1])
             board = ast.literal_eval(str(game[2]).replace("<A>", "'").replace('<C>', ','))
-            score = game[3]
+            score = int(game[3])
             ship_row = int(game[4])
             ship_col = int(game[5])
 
@@ -176,21 +176,24 @@ class TestScripts:
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-                    return
                 elif board[user_row][user_col] == "X":
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='You already shot in that direction!',
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-                    return
                 else:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Miss, Your shot missed the ship!',
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-                    return
+                    board[user_row][user_col] = "1"
+                    self.database.cur.execute(f"delete from botzilla.battleship where ID = '{ctx.message.author.id}'")
+                    self.database.cur.execute("ROLLBACK;")
+                    board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
+                    self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col) VALUES ({id}, {gamehash}, '{board_db_insert}', {score}, {ship_row}, {ship_col});")
+                    self.database.cur.execute("ROLLBACK;")
 
         # If anything goes wrong, Raise exeption
         except Exception as e:
