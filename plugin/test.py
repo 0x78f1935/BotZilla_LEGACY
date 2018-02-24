@@ -113,12 +113,12 @@ class TestScripts:
                 print(f"User not found : {row}")
                 board = []
                 for x in range(0, 5):
-                    board.append(["O"] * 5)
+                    board.append(['O'] * 5)
                 score = 0
                 ship_row = random.randint(0, len(board) - 1)
                 ship_col = random.randint(0, len(board[0]) - 1)
 
-                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board}', {score}, {ship_row}, {ship_col});")
+                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, \"{board}\", {score}, {ship_row}, {ship_col});")
                 self.database.cur.execute("ROLLBACK;")
                 print("User created")
 
