@@ -107,15 +107,20 @@ class TestScripts:
             self.database.cur.execute(f"select {ctx.message.author.id} from botzilla.battleship")
             row = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
-            print(f"User not found : {row}")
+            if row is None:
+                print(f"User not found : {row}")
+                board = []
+                for x in range(0, 5):
+                    board.append(self.battleship_emoji_text['ocean'] * 5)
+                score = 0
+                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board}', {score});")
+                self.database.cur.execute("ROLLBACK;")
+                print("User created")
+
+        # If anything goes wrong, Raise exeption
         except Exception as e:
-            board = []
-            for x in range(0, 5):
-                board.append(self.battleship_emoji_text['ocean'] * 5)
-            score = 0
-            self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board}', {score});")
-            self.database.cur.execute("ROLLBACK;")
-            print("User created")
+            print(e)
+            print(e.args)
 
 
 
