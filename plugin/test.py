@@ -150,8 +150,8 @@ class TestScripts:
 
             # make sure user input is a number
             try:
-                user_row = int(row)
-                user_col = int(column)
+                user_row = int(column)
+                user_col = int(row)
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Please make sure the column and row you provided are numbers',
