@@ -128,6 +128,13 @@ class TestScripts:
                 self.database.cur.execute("ROLLBACK;")
             # Check
             print(row)
+            id = row[0]
+            gamehash = row[1]
+            board = row[2]
+            score = row[3]
+            ship_row = row[4]
+            ship_col = row[5]
+            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}')
 
         # If anything goes wrong, Raise exeption
         except Exception as e:
