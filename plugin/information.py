@@ -602,9 +602,9 @@ class Utils:
                 for i in per:
                     permissions.append(str(i))
                 perml = "\n".join(permissions)
-                perm_pretty = perml.replace('(', '').replace(')', '')
+                perm_pretty = perml.replace('(', '').replace(')', '').replace("'", "**").replace(', True', ':white_check_mark:').replace(', False', ':x:')
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='The following permissions are valid for\n\n`{}`\n\n```py\n{}\n```'.format(
+                                      description='The following permissions are valid for\n\n`{}`\n\n'.format(
                                           user.name, perm_pretty),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)

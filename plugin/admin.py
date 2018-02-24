@@ -7,7 +7,7 @@ import aiohttp
 import datetime
 try:
     from plugin.database import Database
-except:
+except Exception as e:
     pass
 import asyncio
 
@@ -64,7 +64,8 @@ class AdminCommands:
             await self.bot.kick(member)
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may not use this command you do not have permission in server:\n{}'.format(ctx.message.server.name),
+                                  description='You may not use this command you do not have permission in server:\n{}'.format(
+                                      ctx.message.server.name),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -191,7 +192,8 @@ class AdminCommands:
 
         if content is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You may want to read **`{}help sendalldm`** for more info'.format(self.config['prefix']),
+                                  description='You may want to read **`{}help sendalldm`** for more info'.format(
+                                      self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
