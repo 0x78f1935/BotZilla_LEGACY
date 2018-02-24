@@ -194,10 +194,8 @@ class TestScripts:
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                     board[user_row][user_col] = "1"
-                    self.database.cur.execute(f"delete from botzilla.battleship where ID = '{ctx.message.author.id}'")
-                    self.database.cur.execute("ROLLBACK;")
                     board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
-                    self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col) VALUES ({id}, {gamehash}, '{board_db_insert}', {score}, {ship_row}, {ship_col});")
+                    self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}' where ID = {id};")
                     self.database.cur.execute("ROLLBACK;")
 
         # If anything goes wrong, Raise exeption
