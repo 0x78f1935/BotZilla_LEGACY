@@ -600,10 +600,10 @@ class Utils:
                 per = member.server_permissions
                 permissions = []
                 for i in per:
-                    if 'True' in i:
+                    if 'True' in str(i):
                         i = str(i).replace(', True', '')
                         i = ':white_check_mark: : {}'.format(i)
-                    if 'False' in i:
+                    if 'False' in str(i):
                         i = str(i).replace(', False', ':x:')
                         i = ':x: : {}'.format(i)
                     permissions.append(str(i))
