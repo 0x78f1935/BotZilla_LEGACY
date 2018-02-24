@@ -107,7 +107,6 @@ venv.bak/
 .idea
 
 # BotZilla Config
-*.js
 *.json
 /options/config.js
 /export/*

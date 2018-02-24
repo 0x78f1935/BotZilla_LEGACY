@@ -7,5 +7,6 @@
     "ocean" : ":ocean:",
     "bomb" : ":bomb:",
     "x" : ":x:",
-    "fire" : ":fire:"
+    "fire" : ":fire:",
+    "boats" : [":motorboat:", ":rowboat:", ":speedboat:", ":sailboat:"]
 }
