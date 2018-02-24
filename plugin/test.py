@@ -107,6 +107,8 @@ class TestScripts:
             self.database.cur.execute(f"select {ctx.message.author.id} from botzilla.battleship")
             row = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
+
+            # If no game for user, Make game for user
             if row is None:
                 print(f"User not found : {row}")
                 board = []
@@ -117,6 +119,9 @@ class TestScripts:
                 self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board}', {score});")
                 self.database.cur.execute("ROLLBACK;")
                 print("User created")
+
+            # Check
+            print(row)
 
         # If anything goes wrong, Raise exeption
         except Exception as e:
