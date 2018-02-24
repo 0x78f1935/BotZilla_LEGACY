@@ -104,10 +104,10 @@ class TestScripts:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship <column> <row> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         try:
-            print("User not found")
             self.database.cur.execute(f"select {ctx.message.author.id} from botzilla.battleship")
             row = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
+            print(f"User not found : {row}")
         except Exception as e:
             board = []
             for x in range(0, 5):
