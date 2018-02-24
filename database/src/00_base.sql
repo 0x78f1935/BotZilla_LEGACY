@@ -8,7 +8,7 @@ CREATE TABLE botzilla.users(
 CREATE TABLE botzilla.help(
     name varchar(200) primary key,
     cog varchar(200),
-    info varchar(1500)
+    info varchar(1500).
 );
 
 CREATE TABLE botzilla.music(
@@ -22,7 +22,9 @@ CREATE TABLE botzilla.battleship(
     ID bigserial primary key,
     gamehash varchar(508),
     board varchar(508),
-    score varchar(508)
+    score varchar(508),
+    ship_row varchar(508),
+    ship_col varchar(508)
 );
 
 CREATE TABLE botzilla.blacklist(
