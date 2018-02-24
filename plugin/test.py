@@ -99,7 +99,7 @@ class TestScripts:
 
 
     @commands.command(pass_context=True)
-    async def b(self, ctx):
+    async def b(self, ctx, column, row):
         """
         game test
         """
@@ -129,6 +129,15 @@ class TestScripts:
             self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ctx.message.author.id}'")
             row = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
+
+            # if no column or row show game board and info about game... TO DO
+            if column is None or row is None:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='profile here',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
 
             # Check
             print(row)
