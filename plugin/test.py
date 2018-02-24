@@ -123,7 +123,9 @@ class TestScripts:
                 self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board_db_insert}', {score}, {ship_row}, {ship_col});")
                 self.database.cur.execute("ROLLBACK;")
                 print("User created")
-
+                self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ctx.message.author.id}'")
+                row = self.database.cur.fetchone()
+                self.database.cur.execute("ROLLBACK;")
             # Check
             print(row)
 
