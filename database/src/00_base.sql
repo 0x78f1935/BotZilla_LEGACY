@@ -18,6 +18,13 @@ CREATE TABLE botzilla.music(
     type_channel varchar(24)
 );
 
+CREATE TABLE botzilla.battleship(
+    ID bigserial primary key,
+    gamehash varchar(508),
+    board varchar(508),
+    score varchar(508)
+);
+
 CREATE TABLE botzilla.blacklist(
     ID bigserial primary key,
     server_name varchar(508),

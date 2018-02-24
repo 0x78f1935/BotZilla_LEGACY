@@ -84,9 +84,9 @@ class TestScripts:
 
 
     @commands.command(pass_context=True)
-    async def t(self, ctx):
+    async def b(self, ctx):
         """
-        test
+        game test
         """
         pass
 
