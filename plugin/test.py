@@ -176,7 +176,7 @@ class TestScripts:
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-                elif board[user_row][user_col] == "X":
+                elif board[user_row][user_col] == 1:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='You already shot in that direction!',
                                           colour=0xf20006)
