@@ -18,6 +18,7 @@ class TestScripts:
     def __init__(self, bot):
         self.bot = bot
         self.tmp_config = json.loads(str(open('./options/config.js').read()))
+        self.battleship_emoji = json.loads(str(open('./options/battleship.js').read()))
         self.config = self.tmp_config['config']
         self.emojiUnicode = self.tmp_config['unicode']
         self.exchange = self.tmp_config['exchange']
@@ -99,6 +100,7 @@ class TestScripts:
         """
         game test
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship <column> <row> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         pass
 
 
