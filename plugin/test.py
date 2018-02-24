@@ -160,7 +160,7 @@ class TestScripts:
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
 
-            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}')
+            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {user_row}\nUser col: {user_col}')
 
         # If anything goes wrong, Raise exeption
         except Exception as e:
