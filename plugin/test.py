@@ -133,7 +133,7 @@ class TestScripts:
             print(row)
             id = row[0]
             gamehash = row[1]
-            board = row[2]
+            board = list(str(row[2]).replace("<A>", "'").replace('<C>', ','))
             score = row[3]
             ship_row = row[4]
             ship_col = row[5]
