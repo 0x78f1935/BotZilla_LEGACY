@@ -99,18 +99,18 @@ class TestScripts:
 
 
     @commands.command(pass_context=True)
-    async def b(self, ctx, column, row):
+    async def b(self, ctx, column=None, *, row=None):
         """
         game test
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship <column> <row> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         try:
             self.database.cur.execute(f"select {ctx.message.author.id} from botzilla.battleship")
-            row = self.database.cur.fetchone()
+            game = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
             # If no game for user, Make game for user
-            if row is None:
+            if game is None:
                 print(f"User not found : {row}")
                 board = []
                 for x in range(0, 5):
@@ -127,7 +127,7 @@ class TestScripts:
 
             # Get user game
             self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ctx.message.author.id}'")
-            row = self.database.cur.fetchone()
+            game = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
             # if no column or row show game board and info about game... TO DO
@@ -140,13 +140,13 @@ class TestScripts:
                 return
 
             # Check
-            print(row)
-            id = row[0]
-            gamehash = row[1]
-            board = ast.literal_eval(str(row[2]).replace("<A>", "'").replace('<C>', ','))
-            score = row[3]
-            ship_row = row[4]
-            ship_col = row[5]
+            print(game)
+            id = game[0]
+            gamehash = game[1]
+            board = ast.literal_eval(str(game[2]).replace("<A>", "'").replace('<C>', ','))
+            score = game[3]
+            ship_row = game[4]
+            ship_col = game[5]
             print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}')
 
         # If anything goes wrong, Raise exeption
