@@ -162,11 +162,20 @@ class TestScripts:
 
             print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {user_row}\nUser col: {user_col}')
             if user_row == ship_row and user_col == ship_col:
+                self.database.cur.execute(f"delete from botzilla.battleship where ID = '{ctx.message.author.id}'")
+                self.database.cur.execute("ROLLBACK;")
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='hit',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            else:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='miss',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
         # If anything goes wrong, Raise exeption
         except Exception as e:
             print(e)
