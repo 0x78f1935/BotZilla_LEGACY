@@ -604,7 +604,7 @@ class Utils:
                         i = str(i).replace(', True', '')
                         i = ':white_check_mark: : {}'.format(i)
                     if 'False' in str(i):
-                        i = str(i).replace(', False', ':x:')
+                        i = str(i).replace(', False', '')
                         i = ':x: : {}'.format(i)
                     permissions.append(str(i))
                 perml = "\n".join(permissions)
