@@ -19,6 +19,8 @@ class TestScripts:
         self.bot = bot
         self.tmp_config = json.loads(str(open('./options/config.js').read()))
         self.battleship_emoji = json.loads(str(open('./options/battleship.js').read()))
+        self.battleship_emoji_text = self.battleship_emoji['text']
+        self.battleship_emoji_ascii = self.battleship_emoji['ascii']
         self.config = self.tmp_config['config']
         self.emojiUnicode = self.tmp_config['unicode']
         self.exchange = self.tmp_config['exchange']
@@ -101,7 +103,19 @@ class TestScripts:
         game test
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship <column> <row> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        pass
+        try:
+            print("User not found")
+            self.database.cur.execute(f"select {ctx.message.author.id} from botzilla.battleship")
+            row = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+        except Exception as e:
+            board = []
+            for x in range(0, 5):
+                board.append(self.battleship_emoji_text['ocean'] * 5)
+            score = 0
+            self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board}', {score});")
+            self.database.cur.execute("ROLLBACK;")
+            print("User created")
 
 
 

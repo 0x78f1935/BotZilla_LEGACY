@@ -19,6 +19,9 @@ class Games:
         self.exchange = self.tmp_config['exchange']
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
+        self.battleship_emoji = json.loads(str(open('./options/battleship.js').read()))
+        self.battleship_emoji_text = self.battleship_emoji['text']
+        self.battleship_emoji_ascii = self.battleship_emoji['ascii']
         try:
             self.database = Database(self.bot)
             self.database_file_found = True
