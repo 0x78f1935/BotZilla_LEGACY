@@ -4,6 +4,7 @@ import json
 import datetime
 import random
 import aiohttp
+import ast
 try:
     from plugin.database import Database
 except Exception as e:
@@ -133,7 +134,7 @@ class TestScripts:
             print(row)
             id = row[0]
             gamehash = row[1]
-            board = list(str(row[2]).replace("<A>", "'").replace('<C>', ','))
+            board = ast.literal_eval(str(row[2]).replace("<A>", "'").replace('<C>', ','))
             score = row[3]
             ship_row = row[4]
             ship_col = row[5]

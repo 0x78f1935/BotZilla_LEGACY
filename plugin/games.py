@@ -4,6 +4,7 @@ import json
 import random
 import discord
 import asyncio
+import ast
 try:
     from plugin.database import Database
 except Exception as e:
