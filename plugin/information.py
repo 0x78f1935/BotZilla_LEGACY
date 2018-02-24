@@ -600,9 +600,15 @@ class Utils:
                 per = member.server_permissions
                 permissions = []
                 for i in per:
+                    if 'True' in i:
+                        i = str(i).replace(', True', '')
+                        i = ':white_check_mark: : {}'.format(i)
+                    if 'False' in i:
+                        i = str(i).replace(', False', ':x:')
+                        i = ':x: : {}'.format(i)
                     permissions.append(str(i))
                 perml = "\n".join(permissions)
-                perm_pretty = perml.replace('(', '').replace(')', '').replace("'", "**").replace(', True', ':white_check_mark:').replace(', False', ':x:')
+                perm_pretty = perml.replace('(', '').replace(')', '').replace("'", "**")
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='The following permissions are valid for\n\n`{}`\n\n{}'.format(
