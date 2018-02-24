@@ -113,6 +113,7 @@ class TestScripts:
                 for x in range(0, 5):
                     board.append(self.battleship_emoji_text['ocean'] * 5)
                 score = 0
+                board = tuple(board)
                 self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board}', {score});")
                 self.database.cur.execute("ROLLBACK;")
                 print("User created")
