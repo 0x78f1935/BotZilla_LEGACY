@@ -5,7 +5,7 @@ import datetime
 
 try:
     from plugin.database import Database
-except:
+except Exception as e:
     pass
 
 
@@ -28,8 +28,8 @@ class Help:
         try:
             self.database = Database(self.bot)
             self.database_file_found = True
-        except:
-            print('Help: Database files not found')
+        except Exception as e:
+            print('Help: Database files not found - {}'.format(e.args))
             pass
 
     @commands.command(pass_context=True, hidden=True)

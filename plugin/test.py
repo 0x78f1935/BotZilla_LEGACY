@@ -4,6 +4,10 @@ import json
 import datetime
 import random
 import aiohttp
+try:
+    from plugin.database import Database
+except Exception as e:
+    pass
 
 tmp_config = json.loads(str(open('./options/config.js').read()))
 config = tmp_config['config']
@@ -19,6 +23,13 @@ class TestScripts:
         self.exchange = self.tmp_config['exchange']
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
+        try:
+            self.database = Database(self.bot)
+            self.database_file_found = True
+        except Exception as e:
+            print('Test: Database files not found - {}'.format(e.args))
+            pass
+
 
     @commands.group(pass_context=True, hidden=True)
     async def hello(self, ctx):

@@ -4,6 +4,10 @@ import json
 import random
 import discord
 import asyncio
+try:
+    from plugin.database import Database
+except Exception as e:
+    pass
 
 
 class Games:
@@ -15,6 +19,12 @@ class Games:
         self.exchange = self.tmp_config['exchange']
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
+        try:
+            self.database = Database(self.bot)
+            self.database_file_found = True
+        except Exception as e:
+            print('games: Database files not found - {}'.format(e.args))
+            pass
 
 
     @commands.command(pass_context=True, name='8ball')
