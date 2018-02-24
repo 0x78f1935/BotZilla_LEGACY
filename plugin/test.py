@@ -172,7 +172,7 @@ class TestScripts:
                 board[user_row][user_col] = "2"
                 board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
                 score += 1
-                self.database.cur.execute(f"UPDATE botzilla.battleship SET board = {board_db_insert}, score = {score} where ID = {id};")
+                self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}', score = {score} where ID = {id};")
                 self.database.cur.execute("ROLLBACK;")
             else:
                 if user_row not in range(5) or user_col not in range(5):
