@@ -8,7 +8,7 @@ CREATE TABLE botzilla.users(
 CREATE TABLE botzilla.help(
     name varchar(200) primary key,
     cog varchar(200),
-    info varchar(1500).
+    info varchar(1500)
 );
 
 CREATE TABLE botzilla.music(
