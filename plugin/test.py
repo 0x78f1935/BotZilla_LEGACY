@@ -170,11 +170,27 @@ class TestScripts:
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             else:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='miss',
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                if user_row not in range(5) or user_col not in range(5):
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Miss, Your shot was not even close to the ocean.\nUse **`{}help battleship`** for more information'.format(self.config['prefix']),
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                    return
+                elif board[user_row][user_col] == "X"
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='You already shot in that direction!',
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                    return
+                else:
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Miss, Your shot missed the ship!',
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                    return
 
         # If anything goes wrong, Raise exeption
         except Exception as e:
