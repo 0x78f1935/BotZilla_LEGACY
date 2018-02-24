@@ -119,7 +119,7 @@ class TestScripts:
                 ship_col = random.randint(0, len(board[0]) - 1)
                 board_db_insert = str(board).replace("'", "<S>") # make seperater for db
 
-                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board_db_insert}', {score}, {ship_row}, {ship_col});")
+                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board_db_insert}', '{score}', '{ship_row}', '{ship_col}');")
                 self.database.cur.execute("ROLLBACK;")
                 print("User created")
 
