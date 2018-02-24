@@ -150,8 +150,8 @@ class TestScripts:
 
             # make sure user input is a number
             try:
-                user_row = int(row)
-                user_col = int(column)
+                user_row = int(row) - 1
+                user_col = int(column) - 1
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Please make sure the column and row you provided are numbers',
@@ -161,19 +161,25 @@ class TestScripts:
                 return
 
             print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {user_row}\nUser col: {user_col}')
+
+            #if user wins
             if user_row == ship_row and user_col == ship_col:
-                self.database.cur.execute(f"delete from botzilla.battleship where ID = '{ctx.message.author.id}'")
-                self.database.cur.execute("ROLLBACK;")
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='hit',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 board[user_row][user_col] = "2"
+                win_board = board[:] # define board that will be seen by user
+                board = []
+                for x in range(0, 5):
+                    board.append(['O'] * 5)
                 board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
                 score += 1
-                self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}', score = {score} where ID = {id};")
+                self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}', score = {score} where ID = {id}, gamehash = {gamehash};")
                 self.database.cur.execute("ROLLBACK;")
+
+
             else:
                 if user_row not in range(5) or user_col not in range(5):
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -195,7 +201,7 @@ class TestScripts:
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                     board[user_row][user_col] = "1"
                     board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
-                    self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}' where ID = {id};")
+                    self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}' where ID = {id}, gamehash = {gamehash};")
                     self.database.cur.execute("ROLLBACK;")
 
         # If anything goes wrong, Raise exeption
