@@ -10,7 +10,7 @@
         "x" : ":x:",
         "fire" : ":fire:",
         "boats" : [":motorboat:", ":rowboat:", ":speedboat:", ":sailboat:"]
-    }
+    },
     "ascii" : {
         "one" : "1\u20e3",
         "two" : "2\u20e3",
