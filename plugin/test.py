@@ -147,6 +147,19 @@ class TestScripts:
             score = game[3]
             ship_row = game[4]
             ship_col = game[5]
+
+            # make sure user input is a number
+            try:
+                user_row = int(row)
+                user_col = int(column)
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Please make sure the column and row you provided are numbers',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
+
             print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}')
 
         # If anything goes wrong, Raise exeption
