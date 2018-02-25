@@ -337,12 +337,13 @@ class Games:
             self.database.cur.execute("ROLLBACK;")
 
             if last_message_id:
+                print(last_message_id[0][0])
                 try:
                     message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0][0])
                     await self.bot.delete_message(message_2_remove)
                 except Exception as e:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='To get ride of this warning make sure BotZilla do have the right permissions.\n**Error:**\n```\npy\n{}\n```'.format(e.args),
+                                          description='To get ride of this warning make sure BotZilla do have the right permissions.\n**Error:**\n```py\n{}\n```'.format(e.args),
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
