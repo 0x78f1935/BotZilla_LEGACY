@@ -160,7 +160,7 @@ class TestScripts:
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
 
-            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {user_row}\nUser col: {user_col}')
+            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {int(user_row) + 1}\nUser col: {int(user_col) + 1}')
 
             #if user wins
             if user_row == ship_row and user_col == ship_col:
