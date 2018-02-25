@@ -538,7 +538,7 @@ class Games:
                     embed.set_footer(text='PuffDip#5369 ©')
                     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/407238426417430539/417154157724827668/miss.jpg')
                     a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
                     board[user_row][user_col] = "1"
                     board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
