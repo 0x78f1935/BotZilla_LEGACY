@@ -150,8 +150,9 @@ class TestScripts:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}",
                                       colour=0xf20006)
+                embed.set_footer(text='GameHash: '.format(gamehash))
                 a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 return
 
             # make sure user input is a number when exist
