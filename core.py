@@ -487,6 +487,7 @@ async def on_command_error(error, ctx):
                               colour=0xf20006)
         last_message = await bot.send_message(ctx.message.channel, embed=embed)
         await bot.add_reaction(last_message, emojiUnicode['warning'])
+        return
 
 if __name__ == '__main__':
     bot.run(config['bot-key'])
