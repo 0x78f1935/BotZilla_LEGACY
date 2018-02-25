@@ -185,7 +185,7 @@ class TestScripts:
                 row_4 = str(" ".join(board[3])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
                 row_5 = str(" ".join(board[4])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=f"Direct **`HIT`**\nScore: **`{score}`**"
+                                      description=f"Direct **`HIT`**\nScore: **`{score}`**\n"
                                                   f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}"
                                                   f"\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                       colour=0xf20006)
@@ -210,7 +210,7 @@ class TestScripts:
                     row_4 = str(" ".join(board[3])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
                     row_5 = str(" ".join(board[4])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description=f"**`MISS`**\nScore: **`{score}`**"
+                                          description=f"**`MISS`**\nScore: **`{score}`**\n"
                                                       f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}"
                                                       f"\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
@@ -225,7 +225,7 @@ class TestScripts:
                     row_4 = str(" ".join(board[3])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
                     row_5 = str(" ".join(board[4])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description=f"**You already shot in that direction!**\nScore: **`{score}`**"
+                                          description=f"**You already shot in that direction!**\nScore: **`{score}`**\n"
                                                       f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}"
                                                       f"\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
@@ -240,7 +240,7 @@ class TestScripts:
                     row_4 = str(" ".join(board[3])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
                     row_5 = str(" ".join(board[4])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description=f"**`MISS`**\nScore: **`{score}`**"
+                                          description=f"**`MISS`**\nScore: **`{score}`**\n"
                                                       f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}"
                                                       f"\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
