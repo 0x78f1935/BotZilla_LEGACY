@@ -284,10 +284,10 @@ async def on_message_edit(before, message):
     elif str(message.author.id) in str(muted[0]):
         try:
             await bot.delete_message(message)
-            print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+            print(f'{datetime.date.today()} {datetime.datetime.now()} - {message.author} is muted, Message removed -- Channel: {message.channel.name} Guild: {message.server.name}')
             return
         except Exception as e:
-            print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message could not be removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+            print(f'{datetime.date.today()} {datetime.datetime.now()} - {message.author} is muted, Message could not be removed -- Channel: {message.channel.name} Guild: {message.server.name}')
             return
 
 
@@ -383,10 +383,10 @@ async def on_message(message):
     elif str(message.author.id) in str(muted[0]):
         try:
             await bot.delete_message(message)
-            print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+            print(f'{datetime.date.today()} {datetime.datetime.now()} - {message.author} is muted, Message removed -- Channel: {message.channel.name} Guild: {message.server.name}')
             return
         except Exception as e:
-            print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message could not be removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+            print(f'{datetime.date.today()} {datetime.datetime.now()} - {message.author} is muted, Message could not be removed -- Channel: {message.channel.name} Guild: {message.server.name}')
             return
 
     low_key_message = str(message.content).lower()
