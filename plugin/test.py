@@ -137,7 +137,7 @@ class TestScripts:
             gamehash_lenght = len(str(gamehash)) // 2
             gamehash_str = str(gamehash)
             gamehash_1 = gamehash_str[:gamehash_lenght]
-            gamehash_2 = gamehash_str[gamehash_lenght+1:]
+            gamehash_2 = gamehash_str[gamehash_lenght:]
             board = ast.literal_eval(str(game[2]).replace("<A>", "'").replace('<C>', ','))
             score = int(game[3])
             ship_row = int(game[4])
