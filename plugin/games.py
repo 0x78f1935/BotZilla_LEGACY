@@ -296,7 +296,7 @@ class Games:
                 await self.bot.add_reaction(a, '\U0001f480')
                 break
 
-
+    @commands.cooldown(rate=1, per=5, type=commands.BucketType.user)
     @commands.command(pass_context=True, aliases=["b"])
     async def battleship(self, ctx, row=None, *, column=None):
         """
