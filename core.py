@@ -8,6 +8,7 @@ import re
 import csv
 import asyncio
 import aiohttp
+import datetime
 import psycopg2
 
 try:
