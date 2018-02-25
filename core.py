@@ -278,7 +278,7 @@ async def on_message_edit(before, message):
             last_message = await bot.send_message(message.channel, embed=embed)
             await bot.add_reaction(last_message, emojiUnicode['warning'])
             return
-        elif str(message.author.id) in muted[0]:
+        elif str(message.author.id) in str(muted[0]):
             try:
                 await bot.delete_message(message)
                 print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
@@ -355,7 +355,6 @@ async def on_message(message):
     database.cur.execute("SELECT * FROM botzilla.mute;")
     muted = database.cur.fetchone()
     database.cur.execute("ROLLBACK;")
-    print(muted, muted[0], muted[0][0])
     if str(message.author.id) in row:
         if str(message.content).startswith('{}'.format(config['prefix'])):
             database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(message.author.id))
@@ -374,7 +373,7 @@ async def on_message(message):
             last_message = await bot.send_message(message.channel, embed=embed)
             await bot.add_reaction(last_message, emojiUnicode['warning'])
             return
-        elif str(message.author.id) in muted[0]:
+        elif str(message.author.id) in str(muted[0]):
             try:
                 await bot.delete_message(message)
                 print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
