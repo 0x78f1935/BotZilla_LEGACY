@@ -779,8 +779,10 @@ class Utils:
                 message = await self.bot.get_message(ctx.message.channel, POLL.id)
                 requester = await self.bot.get_user_info(ctx.message.author.id)
                 answers_user = {}
+                answer_count = []
                 for reaction in message.reactions:
                     answers_user[reaction.count] = reaction.emoji
+                    answer_count.append(answers_user[reaction.count])
 
                 winner = max(answers_user.keys())
                 await self.bot.delete_message(message)
@@ -793,8 +795,10 @@ class Utils:
 
                 # send poll results to requester
                 embed = discord.Embed(title='Results of poll:', description='\t', colour=0xf20006)
+                votes_from_users = 0
                 for key, value in answerpoll.items():
-                    embed.add_field(name=':gear: Answer:', value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
+                    embed.add_field(name=':gear: Answer:', value='{} : **`{}`**\nVotes: **`{}`**'.format(str(key).upper(), str(value), str(answer_count[votes_from_users])), inline=False)
+                    votes_from_users += 1
                 embed.add_field(name='----', value='The server choose answer : **{}**'.format(str(answers_user[winner]).upper()))
                 embed.set_footer(text='End date {} {}'.format(datetime.datetime.today(), datetime.datetime.now()))
                 result_message = await self.bot.send_message(requester, embed=embed)
@@ -810,9 +814,10 @@ class Utils:
                         embed = discord.Embed(title='Results of poll:',
                                               description='\t',
                                               colour=0xf20006)
+                        votes_from_users = 0
                         for key, value in answerpoll.items():
-                            embed.add_field(name=':gear: Answer:',
-                                            value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
+                            embed.add_field(name=':gear: Answer:', value='{} : **`{}`**\nVotes: **`{}`**'.format(str(key).upper(), str(value), str(answer_count[votes_from_users])), inline=False)
+                            votes_from_users += 1
                         embed.add_field(name='----', value='The server choose answer : **{}**'.format(str(answers_user[winner]).upper()))
                         embed.set_footer(text='End date {} {}'.format(datetime.datetime.today(), datetime.datetime.now()))
                         await self.bot.edit_message(b, embed=embed)
@@ -822,8 +827,10 @@ class Utils:
                         embed = discord.Embed(title='Results of poll:',
                                               description='\t',
                                               colour=0xf20006)
+                        votes_from_users = 0
                         for key, value in answerpoll.items():
-                            embed.add_field(name=':gear: Answer:', value='{} : **`{}`**'.format(str(key).upper(), str(value)), inline=False)
+                            embed.add_field(name=':gear: Answer:', value='{} : **`{}`**\nVotes: **`{}`**'.format(str(key).upper(), str(value), str(answer_count[votes_from_users])), inline=False)
+                            votes_from_users += 1
                         embed.add_field(name='----', value='The server choose answer : **{}**'.format(str(answers_user[winner]).upper()))
                         embed.set_footer(text='Next page in 10 seconds')
                         await self.bot.edit_message(b, embed=embed)
