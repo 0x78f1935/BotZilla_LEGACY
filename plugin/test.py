@@ -153,7 +153,7 @@ class TestScripts:
                 row_5 = str(" ".join(board[4])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x'])
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}"
-                                                  f"\nGameHash:\n**{gamehash_1}\n{gamehash_2}**",
+                                                  f"\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nUse **`{self.config['prefix']}help battleship`** if you are stuck",
                                       colour=0xf20006)
                 embed.set_footer(text='PuffDip ©')
                 a = await self.bot.say(embed=embed)
