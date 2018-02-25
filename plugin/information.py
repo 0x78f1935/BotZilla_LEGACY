@@ -1083,7 +1083,7 @@ class Utils:
 
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Try **`{}help copy`**'.format(self.config['prefix']),
+                                  description='Try **`{}help copy`**\nError:\n```py\n{}\n```'.format(self.config['prefix'], e.args),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
