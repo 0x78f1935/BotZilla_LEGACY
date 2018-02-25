@@ -255,22 +255,21 @@ async def on_message_edit(before, message):
 
     database.cur.execute("SELECT ID FROM botzilla.blacklist;")
     row = database.cur.fetchall()
-    row = str(row).replace('[(', '')
-    row = row.replace(',)]', '')
+    row = str(row).replace('[', '').replace('(', '').replace(']', '').replace(',', '').replace(')', '')
+    database.cur.execute("ROLLBACK;")
+    muted = database.cur.execute("SELECT * FROM botzilla.mute;")
     database.cur.execute("ROLLBACK;")
     if str(message.author.id) in row:
         if str(message.content).startswith('{}'.format(config['prefix'])):
             database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(message.author.id))
             reason = database.cur.fetchall()
             database.cur.execute("ROLLBACK;")
-            reason = str(reason).replace("[('", '')
-            reason = reason.replace("',)]", '')
+            reason = str(reason).replace("'", '').replace('[', '').replace('(', '').replace(',', '').replace(')', '').replace(']', '')
 
             database.cur.execute("SELECT total_votes FROM botzilla.blacklist where ID = {};".format(message.author.id))
             votes = database.cur.fetchall()
             database.cur.execute("ROLLBACK;")
-            votes = str(votes).replace('[(', '')
-            votes = votes.replace(',)]', '')
+            votes = str(votes).replace('(', '').replace('[', '').replace(',', '').replace(')', '').replace(']', '')
 
             embed = discord.Embed(title='{}:'.format(message.author.name),
                                   description='You have been blacklisted with **`{}`** votes,\n\nReason:\n```{}```'.format(votes, reason),
@@ -278,6 +277,12 @@ async def on_message_edit(before, message):
             last_message = await bot.send_message(message.channel, embed=embed)
             await bot.add_reaction(last_message, emojiUnicode['warning'])
             return
+        elif str(message.author.id) in muted:
+            try:
+                await bot.delete_message(message)
+                print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+            except Exception as e:
+                print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message could not be removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         else:
             return
 
@@ -346,6 +351,8 @@ async def on_message(message):
     row = database.cur.fetchall()
     row = str(row).replace('[', '').replace('(', '').replace(']', '').replace(',', '').replace(')', '')
     database.cur.execute("ROLLBACK;")
+    muted = database.cur.execute("SELECT * FROM botzilla.mute;")
+    database.cur.execute("ROLLBACK;")
     if str(message.author.id) in row:
         if str(message.content).startswith('{}'.format(config['prefix'])):
             database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(message.author.id))
@@ -364,6 +371,12 @@ async def on_message(message):
             last_message = await bot.send_message(message.channel, embed=embed)
             await bot.add_reaction(last_message, emojiUnicode['warning'])
             return
+        elif str(message.author.id) in muted:
+            try:
+                await bot.delete_message(message)
+                print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+            except Exception as e:
+                print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message could not be removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         else:
             return
 

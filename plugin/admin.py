@@ -374,5 +374,103 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
+    @commands.command(pass_context=True, hidden=True)
+    async def mute(self, ctx, *, user_id: str = None):
+        """
+        Mute user
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!mute <{user_id}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+
+        if user_id is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Enter a user to **`mute`**',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        try:
+            try:
+                username = user_id.replace('<@', '')
+                username = username.replace('>', '')
+                username = username.replace('!', '')
+                user = await self.bot.get_user_info(username)
+                self.database.cur.execute(f"INSERT INTO botzilla.mute (ID) VALUES ('{user}');")
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=f'**`{user.name}`** Muted',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+            except Exception as e:
+                user = await self.bot.get_user_info(user_id)
+                self.database.cur.execute(f"INSERT INTO botzilla.mute (ID) VALUES ('{user}');")
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=f'**`{user.name}`** Muted',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
+    @commands.command(pass_context=True, hidden=True)
+    async def unmute(self, ctx, *, user_id: str = None):
+        """
+        Unmute user
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!mute <{user_id}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+
+        if user_id is None:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Enter a user to **`mute`**',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        try:
+            try:
+                username = user_id.replace('<@', '')
+                username = username.replace('>', '')
+                username = username.replace('!', '')
+                user = await self.bot.get_user_info(username)
+                self.database.cur.execute(f"DELETE FROM botzilla.mute where ID = '{user}';")
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=f'**`{user.name}`** Muted',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+            except Exception as e:
+                user = await self.bot.get_user_info(user_id)
+                self.database.cur.execute(f"DELETE FROM botzilla.mute where ID = '{user}';")
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=f'**`{user.name}`** Muted',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description=f'**{type(e).__name__}:**\n```py\n{e}```',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
 def setup(bot):
     bot.add_cog(AdminCommands(bot))

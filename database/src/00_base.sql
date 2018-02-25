@@ -11,6 +11,10 @@ CREATE TABLE botzilla.help(
     info varchar(1500)
 );
 
+CREATE TABLE botzilla.mute(
+    id varchar(200) primary key
+);
+
 CREATE TABLE botzilla.music(
     ID bigserial primary key,
     channel_name varchar(508),
