@@ -483,10 +483,10 @@ async def on_server_remove(server):
 async def on_command_error(error, ctx):
     if isinstance(error, commands.CommandOnCooldown):
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description=f'{random.choice(CDMESSAGES)} - **`{int(error.retry_after)} remaining`**',
+                              description=f'{error}',
                               colour=0xf20006)
         last_message = await bot.say(embed=embed)
-        await bot.add_reaction(last_message, emojiUnicode['warning'])  # Done
+        await bot.add_reaction(last_message, emojiUnicode['warning'])
 
 if __name__ == '__main__':
     bot.run(config['bot-key'])
