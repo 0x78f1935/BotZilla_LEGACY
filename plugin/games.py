@@ -336,7 +336,6 @@ class Games:
         self.database.cur.execute("ROLLBACK;")
 
         # define fetch variables
-        id = int(game[0])
         gamehash = int(game[1])
         gamehash_lenght = len(str(gamehash)) // 2
         gamehash_str = str(gamehash)
@@ -378,7 +377,7 @@ class Games:
             return
 
         # debug print
-        # print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {int(user_row) + 1}\nUser col: {int(user_col) + 1}')
+        # print(f'ID : {ctx.message.author.id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {int(user_row) + 1}\nUser col: {int(user_col) + 1}')
 
         #if user wins
         if user_row == ship_row and user_col == ship_col:
@@ -402,7 +401,7 @@ class Games:
                 board.append(['O'] * 5)
             board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
             score += 1
-            self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}', score = {score} where ID = {id} and gamehash = '{gamehash}';")
+            self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}', score = {score} where ID = {ctx.message.author.id} and gamehash = '{gamehash}';")
             self.database.cur.execute("ROLLBACK;")
 
 
@@ -455,7 +454,7 @@ class Games:
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 board[user_row][user_col] = "1"
                 board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
-                self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}' where ID = {id} and gamehash = '{gamehash}';")
+                self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}' where ID = {ctx.message.author.id} and gamehash = '{gamehash}';")
                 self.database.cur.execute("ROLLBACK;")
 
         # If anything goes wrong, Raise exeption
