@@ -301,7 +301,7 @@ class Games:
     async def battleship(self, ctx, row=None, *, column=None):
         """
         Play Battleship the game!!
-        Progres will be saved.
+        Progress will be saved.
         alias = !!b
 
         Shows playground
