@@ -1054,14 +1054,18 @@ class Utils:
             data.append(f"{pre}{indented}")
         data.reverse()
 
+        await self.bot.send_typing(ctx.message.channel)
+
         async with aiohttp.ClientSession() as session:
             async with session.post("https://hastebin.com/documents", data="\n".join(data)) as response:
-                key = await response.json(encoding='utf8')
-                print(json.dumps(key, indent=2))
-                key = key["key"]
-
-
-        await self.bot.send_typing(ctx.message.channel)
+                if '503 Service Unavailable' in str(response):
+                    embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
+                                          description="Service unavailable, Try again later",
+                                          colour=0xf20006)
+                    last_message = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+                    return
+                key = (await response.json(encoding='utf8'))["key"]
 
         embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
                               description=f"https://hastebin.com/{key}.md",
