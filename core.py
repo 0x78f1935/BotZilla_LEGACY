@@ -1,5 +1,6 @@
 # These are the dependecies. The bot depends on these to function, hence the name. Please do not change these unless your adding to them, because they can break the bot.
 import discord
+from discord.ext import commands
 from discord.ext.commands import Bot
 import platform
 import json
@@ -478,6 +479,14 @@ async def on_server_remove(server):
         async with aiohttp.ClientSession() as aioclient:
             await aioclient.post(url=url, data=payload, headers=headers)
 
+@bot.event
+async def on_command_error(error, ctx):
+    if isinstance(error, commands.CommandOnCooldown):
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description=f'{random.choice(CDMESSAGES)} - **`{int(error.retry_after)} remaining`**',
+                              colour=0xf20006)
+        last_message = await bot.say(embed=embed)
+        await bot.add_reaction(last_message, emojiUnicode['warning'])  # Done
 
 if __name__ == '__main__':
     bot.run(config['bot-key'])
