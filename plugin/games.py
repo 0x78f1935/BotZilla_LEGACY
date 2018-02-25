@@ -342,7 +342,7 @@ class Games:
                     await self.bot.delete_message(message_2_remove)
                 except Exception as e:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='To get ride of this warning make sure BotZilla do have the right permissions.\n**Error:**\n```py\n{}\n```'.format(e.args),
+                                          description='Perhaps this warning has something to do with permissions\nMake sure BotZilla do have the right permissions.\n**Error:**\n```py\n{}\n```'.format(e.args),
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
