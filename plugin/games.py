@@ -311,7 +311,7 @@ class Games:
         Example
             -  !!battleship 4 2
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship <column> <row> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship <{row}> <{column}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
         exploded_boats = ['https://cdn.discordapp.com/attachments/407238426417430539/417154082776809472/-48348a4958b806f1.jpg',
                           'https://cdn.discordapp.com/attachments/407238426417430539/417154097452548111/boatfire-prmjpg-promo-image.jpg',
