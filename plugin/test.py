@@ -176,7 +176,7 @@ class TestScripts:
                     board.append(['O'] * 5)
                 board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
                 score += 1
-                self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}', score = {score} where ID = {id} and gamehash = {gamehash};")
+                self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}', score = {score} where ID = {id} and gamehash = '{gamehash}';")
                 self.database.cur.execute("ROLLBACK;")
 
 
@@ -201,7 +201,7 @@ class TestScripts:
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                     board[user_row][user_col] = "1"
                     board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
-                    self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}' where ID = {id} and gamehash = {gamehash};")
+                    self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}' where ID = {id} and gamehash = '{gamehash}';")
                     self.database.cur.execute("ROLLBACK;")
 
         # If anything goes wrong, Raise exeption
