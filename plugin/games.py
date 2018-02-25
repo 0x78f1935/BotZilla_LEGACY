@@ -311,13 +311,12 @@ class Games:
             -  !!battleship 4 2
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship <column> <row> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        # try:
-        self.database.cur.execute(f"select {ctx.message.author.id} from botzilla.battleship")
-        game = self.database.cur.fetchone()
-        self.database.cur.execute("ROLLBACK;")
-
+        try:
+            self.database.cur.execute(f"select {ctx.message.author.id} from botzilla.battleship")
+            game = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+        except Exception as e:
         # If no game for user, Make game for user
-        if game is None:
             board = []
             for x in range(0, 5):
                 board.append(['O'] * 5)
