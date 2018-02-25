@@ -341,11 +341,7 @@ class Games:
                     message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
                     await self.bot.delete_message(message_2_remove)
                 except Exception as e:
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description='Perhaps this warning has something to do with permissions\nMake sure BotZilla do have the right permissions.\n**Error:**\n```py\n{}\n```'.format(e.args),
-                                          colour=0xf20006)
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                    pass
 
             # If no game for user, Make game for user
             if game is None:
