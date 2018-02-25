@@ -395,7 +395,7 @@ class AdminCommands:
                 username = username.replace('>', '')
                 username = username.replace('!', '')
                 user = await self.bot.get_user_info(username)
-                self.database.cur.execute(f"INSERT INTO botzilla.mute (ID) VALUES ('{user}');")
+                self.database.cur.execute(f"INSERT INTO botzilla.mute (ID) VALUES ('{user.id}');")
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -406,7 +406,7 @@ class AdminCommands:
 
             except Exception as e:
                 user = await self.bot.get_user_info(user_id)
-                self.database.cur.execute(f"INSERT INTO botzilla.mute (ID) VALUES ('{user}');")
+                self.database.cur.execute(f"INSERT INTO botzilla.mute (ID) VALUES ('{user.id}');")
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -448,7 +448,7 @@ class AdminCommands:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=f'**`{user.name}`** Muted',
+                                      description=f'**`{user.name}`** Unmuted',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -459,7 +459,7 @@ class AdminCommands:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=f'**`{user.name}`** Muted',
+                                      description=f'**`{user.name}`** Unmuted',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
