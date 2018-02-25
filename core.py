@@ -486,7 +486,7 @@ async def on_command_error(error, ctx):
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description=f'{error}',
                               colour=0xf20006)
-        last_message = await bot.say(embed=embed)
+        last_message = await bot.send_message(ctx.message.channel, embed=embed)
         await bot.add_reaction(last_message, emojiUnicode['warning'])
 
 if __name__ == '__main__':
