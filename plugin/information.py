@@ -866,7 +866,7 @@ class Utils:
     async def blacklist(self, ctx, username=None, *, reason: str = None):
         """
         Starts a blacklist vote. Ban people from making use of BotZilla.
-        5 % of your server has to agree.
+        5 votes are needed.
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!blacklist <{username}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if username is None:
@@ -888,7 +888,6 @@ class Utils:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         else:
-            vote_policy = len(ctx.message.server.members) / 100 * 5
             username = username.replace('<@', '')
             username = username.replace('>', '')
             username = username.replace('!', '')
@@ -927,9 +926,9 @@ class Utils:
             total_yes = message.reactions[0].count - 1
             total_no = message.reactions[1].count - 1
             total = total_yes + total_no
-            yes_needed = vote_policy // 2
+            yes_needed = 5
 
-            if float(total) >= vote_policy:
+            if float(total) >= yes_needed:
                 if float(total_yes) >= yes_needed:
                     try:
                         reason = str(reason).replace(';', '')
