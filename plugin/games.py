@@ -322,6 +322,12 @@ class Games:
                           'https://media.discordapp.net/attachments/407238426417430539/417154276062789632/maxresdefault.jpg'
                           ]
 
+        unexploded_boats = ['https://cdn.discordapp.com/attachments/407238426417430539/417158056921530369/Thumb.png',
+                            'https://cdn.discordapp.com/attachments/407238426417430539/417157975652827151/csm_bavaria-mb-overview-sline_7b1037714c.png',
+                            'https://cdn.discordapp.com/attachments/407238426417430539/417157946926170116/4306597_20130315092133359_1_XLARGE.png',
+                            'https://media.discordapp.net/attachments/407238426417430539/417157916789833728/6544403_20171201080526644_1_LARGE.png',
+                            'https://cdn.discordapp.com/attachments/407238426417430539/417158374707429397/0186-LG.png']
+
         try:
             self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id};")
             game = self.database.cur.fetchone()
@@ -454,7 +460,7 @@ class Games:
                                                       f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
                     embed.set_footer(text='PuffDip ©')
-                    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/407238426417430539/417154157724827668/miss.jpg')
+                    embed.set_thumbnail(url=random.choice(unexploded_boats))
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 elif board[user_row][user_col] == '1':
@@ -475,7 +481,7 @@ class Games:
                                                       f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
                     embed.set_footer(text='PuffDip ©')
-                    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/407238426417430539/417154157724827668/miss.jpg')
+                    embed.set_thumbnail(url=random.choice(unexploded_boats))
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 else:
