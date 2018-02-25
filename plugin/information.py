@@ -346,6 +346,7 @@ class Information:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Maybe you should considering using **`{}help say`** instead'.format(self.config['prefix']),
                                   colour=0xf20006)
+            embed.set_footer(text='PuffDip#5369 ©')
             await self.bot.say(embed=embed)
         else:
             try:
@@ -355,6 +356,7 @@ class Information:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='{}'.format(str(message)),
                                   colour=0xf20006)
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
@@ -370,6 +372,7 @@ class Information:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Maybe you should look in **`{}help location`**. Its a secret spot :wink:'.format(self.config['prefix']),
                                   colour=0xf20006)
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
@@ -378,6 +381,7 @@ class Information:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=':alien:\n:shirt::shield:\n:jeans:',
                                   colour=0xf20006)
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\U0001f47d')
         else:
@@ -570,10 +574,12 @@ class Utils:
             embed.add_field(name='Online:', value='Email: {}\nUsername: {}\nPassword: {}'.format(data['results'][0]['email'], data['results'][0]['login']['username'], data['results'][0]['login']['password']), inline=False)
             embed.add_field(name='Misc:',   value='Phone: {}\nCellPhone: {}'.format(data['results'][0]['phone'], data['results'][0]['cell']), inline=False)
             embed.set_thumbnail(url=data['results'][0]['picture']['large'])
+            embed.set_footer(text='Data © randomuser contributors, randomuser.me')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name), description='Could not generate a user profile', colour=0xf20006)
+            embed.set_footer(text='Data © randomuser contributors, randomuser.me')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
@@ -603,6 +609,7 @@ class Utils:
                                   description='The following permissions are valid for\n\n`{}`\n\n{}'.format(
                                       ctx.message.author.name, perm_pretty),
                                   colour=0xf20006)
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         else:
@@ -629,12 +636,14 @@ class Utils:
                                       description='The following permissions are valid for\n\n`{}`\n\n{}'.format(
                                           user.name, perm_pretty),
                                       colour=0xf20006)
+                embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             except:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Invalid username',
                                       colour=0xf20006)
+                embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
@@ -655,6 +664,7 @@ class Utils:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='It\'s not a bad idea to read **`{}help poll`** first'.format(self.config['prefix']),
                                   colour=0xf20006)
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
@@ -685,6 +695,7 @@ class Utils:
                                       description='It\'s not a bad idea to read **`{}help poll`** first'.format(
                                           self.config['prefix']),
                                       colour=0xf20006)
+                embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
@@ -693,6 +704,7 @@ class Utils:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='It\'s not a bad idea to read **`{}help poll`** first'.format(self.config['prefix']),
                                   colour=0xf20006)
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
@@ -715,6 +727,7 @@ class Utils:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='You need atleast two answers',
                                       colour=0xf20006)
+                embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
@@ -722,6 +735,7 @@ class Utils:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='You have more than 20 answers',
                                       colour=0xf20006)
+                embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
                 return
@@ -740,6 +754,7 @@ class Utils:
             for key, c in choices:
                 embed.add_field(name='{} Answer:'.format(':gear:'), value='{} : {}\n'.format(key, c), inline=False)
                 answerpoll[key] = c
+            embed.set_footer(text='PuffDip#5369 ©')
             POLL = await self.bot.say(embed=embed)
 
             for emoji, _ in choices:
@@ -753,6 +768,7 @@ class Utils:
                                       description='To get rid of this warning, please provide Bot2illa `Manage Messages Permissions`, Error:\n```py\n{}\n```\nPoll continues..'.format(
                                           e.args),
                                       colour=0xf20006)
+                embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
@@ -826,6 +842,7 @@ class Utils:
                                       description='Could not calculate total votes, Error:\n```py\n{}\n```'.format(
                                           e.args),
                                       colour=0xf20006)
+                embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
@@ -833,6 +850,7 @@ class Utils:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Don\'t forget the question..\nQuestion: did you read the **`{}help poll`**?'.format(self.config['prefix']),
                                   colour=0xf20006)
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
@@ -849,6 +867,7 @@ class Utils:
                                   description='Read **`{}help blacklist`** that would help..'.format(
                                       self.config['prefix']),
                                   colour=0xf20006)
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
@@ -857,6 +876,7 @@ class Utils:
                                   description='You have to give up a reason..\nI recommend reading **`{}help blacklist`**'.format(
                                       self.config['prefix']),
                                   colour=0xf20006)
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
@@ -872,6 +892,7 @@ class Utils:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='*`{}` already on the blacklist*'.format(name),
                                           colour=0xf20006)
+                    embed.set_footer(text='PuffDip#5369 ©')
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, '\U0001f605')
                     return
@@ -879,6 +900,7 @@ class Utils:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Invalid username'.format(str(username)),
                                       colour=0xf20006)
+                embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
@@ -888,6 +910,7 @@ class Utils:
                                   description='Total votes are needed: **{}**\n**2** Minutes remaining..\n\nWould you like to blacklist:\n\n**`{}`**\n\nReason:\n\n**`{}`**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(
                                       vote_policy, name, str(reason)),
                                   colour=0xf20006)
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\u2705')
             await self.bot.add_reaction(a, '\U0001f1fd')
@@ -914,6 +937,7 @@ class Utils:
                         embed = discord.Embed(title='Blacklist vote approved:',
                                               description='Blacklist vote has been approved for **`{}`**'.format(name),
                                               colour=0xf20006)
+                        embed.set_footer(text='PuffDip#5369 ©')
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, '\U0001f44b')
                         await self.bot.delete_message(message)
@@ -921,6 +945,7 @@ class Utils:
                 embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
                                       description='Blacklist vote has been declined for **`{}`**'.format(name),
                                       colour=0xf20006)
+                embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, '\u2705')
                 await self.bot.delete_message(message)
@@ -941,6 +966,7 @@ class Utils:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='please read **`{}help report`** first..'.format(self.config['prefix']),
                                   colour=0xf20006)
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
@@ -948,6 +974,7 @@ class Utils:
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Report send.. Misbehavior may be punished!',
                               colour=0xf20006)
+        embed.set_footer(text='PuffDip#5369 ©')
         report_send = await self.bot.say(embed=embed)
         await self.bot.add_reaction(report_send, self.emojiUnicode['succes'])
 
