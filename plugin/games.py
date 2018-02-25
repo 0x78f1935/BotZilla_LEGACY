@@ -313,7 +313,7 @@ class Games:
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship <column> <row> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         try:
             self.database.cur.execute(f"select {ctx.message.author.id} from botzilla.battleship")
-            game = self.database.cur.fetchone()
+            self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
         except Exception as e:
         # If no game for user, Make game for user
@@ -333,7 +333,6 @@ class Games:
         # Get user game
         self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id};")
         game = self.database.cur.fetchone()
-        self.database.cur.execute("ROLLBACK;")
 
         # define fetch variables
         print(game)
