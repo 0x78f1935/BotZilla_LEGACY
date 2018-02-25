@@ -278,14 +278,17 @@ async def on_message_edit(before, message):
             last_message = await bot.send_message(message.channel, embed=embed)
             await bot.add_reaction(last_message, emojiUnicode['warning'])
             return
-        elif str(message.author.id) in str(muted[0]):
-            try:
-                await bot.delete_message(message)
-                print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-            except Exception as e:
-                print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message could not be removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         else:
             return
+    elif str(message.author.id) in str(muted[0]):
+        try:
+            await bot.delete_message(message)
+            print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+            return
+        except Exception as e:
+            print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message could not be removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+            return
+
 
     low_key_message = str(message.content).lower()
     if 'shit' in low_key_message:
@@ -373,13 +376,16 @@ async def on_message(message):
             last_message = await bot.send_message(message.channel, embed=embed)
             await bot.add_reaction(last_message, emojiUnicode['warning'])
             return
-        elif str(message.author.id) in str(muted[0]):
-            try:
-                await bot.delete_message(message)
-                print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-            except Exception as e:
-                print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message could not be removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         else:
+            return
+
+    elif str(message.author.id) in str(muted[0]):
+        try:
+            await bot.delete_message(message)
+            print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+            return
+        except Exception as e:
+            print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message could not be removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
             return
 
     low_key_message = str(message.content).lower()
