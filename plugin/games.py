@@ -327,7 +327,7 @@ class Games:
                 board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>") # make seperater for db, A for ' C for ,
 
                 # print(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board_db_insert}', {score}, {ship_row}, {ship_col});")
-                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board_db_insert}', {score}, {ship_row}, {ship_col});")
+                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col) VALUES ('{ctx.message.author.id}', '{random.getrandbits(128)}', '{board_db_insert}', {score}, {ship_row}, {ship_col});")
                 self.database.cur.execute("ROLLBACK;")
 
             # Get user game
@@ -461,7 +461,7 @@ class Games:
         # If anything goes wrong, Raise exeption
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Something went wrong, please notify me with **`{}report <How the error came up>`**\nError:\n**``{}``**'.format(self.config['prefix'], e),
+                                  description='Something went wrong, please notify me with **`{}report <How the error came up>`**\nError:\n**``{} : {}``**'.format(self.config['prefix'], type(e).__name__, e),
                                   colour=0xf20006)
             embed.set_footer(text='PuffDip ©')
             a = await self.bot.say(embed=embed)
