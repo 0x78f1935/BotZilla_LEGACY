@@ -482,6 +482,7 @@ async def on_server_remove(server):
 @bot.event
 async def on_command_error(error, ctx):
     if isinstance(error, commands.CommandOnCooldown):
+        print(error, 'test')
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description=f'{error}',
                               colour=0xf20006)
