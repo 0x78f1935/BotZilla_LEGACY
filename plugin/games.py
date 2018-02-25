@@ -357,6 +357,8 @@ class Games:
             score = int(game[3])
             ship_row = int(game[4])
             ship_col = int(game[5])
+            if ctx.message.author.id in self.owner_list:
+                print(f'ANSWER : {ship_row} : {ship_col}')
 
             # if no column or row show game board and info about game... TO DO
             if column is None or row is None:
