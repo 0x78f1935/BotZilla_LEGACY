@@ -443,6 +443,7 @@ class AdminCommands:
                 username = user_id.replace('<@', '')
                 username = username.replace('>', '')
                 username = username.replace('!', '')
+                username = int(username)
                 user = await self.bot.get_user_info(username)
                 self.database.cur.execute(f"DELETE FROM botzilla.mute where ID = '{user}';")
                 self.database.conn.commit()
