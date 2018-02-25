@@ -385,7 +385,7 @@ class Games:
                                                   f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
                                                   f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                       colour=0xf20006)
-                embed.set_footer(text='PuffDip ©')
+                embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 return
@@ -425,7 +425,7 @@ class Games:
                                                   f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
                                                   f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                       colour=0xf20006)
-                embed.set_footer(text='PuffDip ©')
+                embed.set_footer(text='PuffDip#5369 ©')
                 embed.set_thumbnail(url=random.choice(exploded_boats))
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -459,7 +459,7 @@ class Games:
                                                       f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
                                                       f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
-                    embed.set_footer(text='PuffDip ©')
+                    embed.set_footer(text='PuffDip#5369 ©')
                     embed.set_thumbnail(url=random.choice(unexploded_boats))
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -480,7 +480,7 @@ class Games:
                                                       f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
                                                       f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
-                    embed.set_footer(text='PuffDip ©')
+                    embed.set_footer(text='PuffDip#5369 ©')
                     embed.set_thumbnail(url=random.choice(unexploded_boats))
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -502,7 +502,7 @@ class Games:
                                                       f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
                                                       f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
-                    embed.set_footer(text='PuffDip ©')
+                    embed.set_footer(text='PuffDip#5369 ©')
                     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/407238426417430539/417154157724827668/miss.jpg')
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -517,7 +517,7 @@ class Games:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Something went wrong, please notify me with **`{}report <How the error came up>`**\nError:\n**``{} : {}``**'.format(self.config['prefix'], type(e).__name__, e),
                                   colour=0xf20006)
-            embed.set_footer(text='PuffDip ©')
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 

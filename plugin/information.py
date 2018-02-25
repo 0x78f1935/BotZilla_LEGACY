@@ -62,6 +62,7 @@ class Information:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='try to "search" for **`{}help g`**'.format(self.config['prefix']),
                                   colour=0xf20006)
+            embed.set_footer(text='Data © google contributors, google.com')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
@@ -83,6 +84,7 @@ class Information:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Google has failed to respond. :cry:',
                                           colour=0xf20006)
+                    embed.set_footer(text='Data © google contributors, google.com')
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                     return
@@ -102,6 +104,7 @@ class Information:
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description=f'Top hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}\n\nSearch result **`2`**\n{entries[1][0]}\n{entries[1][1]}\n\nSearch result **`3`**\n{entries[2][0]}\n{entries[2][1]}',
                                               colour=0xf20006)
+                        embed.set_footer(text='Data © google contributors, google.com')
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                     except Exception as e:
@@ -109,6 +112,7 @@ class Information:
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                                   description=f'Top hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}\n\nSearch result **`2`**\n{entries[1][0]}\n{entries[1][1]}',
                                                   colour=0xf20006)
+                            embed.set_footer(text='Data © google contributors, google.com')
                             a = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                         except Exception as e:
@@ -116,6 +120,7 @@ class Information:
                                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                                       description=f'Top hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}',
                                                       colour=0xf20006)
+                                embed.set_footer(text='Data © google contributors, google.com')
                                 a = await self.bot.say(embed=embed)
                                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                             except Exception as e:
@@ -192,6 +197,7 @@ class Information:
                               description='Use the following url to add BotZilla V2 to your guild!\n**{}**\nDon\'t forget to upvote! :)'.format(
                                   'https://discordbots.org/bot/397149515192205324'),
                               colour=0xf20006)
+        embed.set_footer(text='PuffDip#5369 ©')
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
@@ -211,6 +217,7 @@ class Information:
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Pong :ping_pong: **{0:.0f}ms**'.format(ping_result),
                               colour=0xf20006)
+        embed.set_footer(text='PuffDip#5369 ©')
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
@@ -245,7 +252,8 @@ class Information:
                                       str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users, sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline), uptime),
                                   url='https://discordapp.com/oauth2/authorize?client_id=397149515192205324&permissions=1261448256&scope=bot',
                                   color=0xf20006)
-            embed.set_thumbnail(url='https://raw.githubusercontent.com/Annihilator708/DiscordBot-BotZilla/master/icon.png')
+            embed.set_thumbnail(url='https://images.discordapp.net/avatars/397149515192205324/ced0f56a29af0b9bfecdb336d04544a3.png?size=512')
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             self.total_online_users = 0
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -255,7 +263,8 @@ class Information:
                                       str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline)),
                                   url='https://discordapp.com/oauth2/authorize?client_id=397149515192205324&permissions=1261448256&scope=bot',
                                   color=0xf20006)
-            embed.set_thumbnail(url='https://raw.githubusercontent.com/Annihilator708/DiscordBot-BotZilla/master/icon.png')
+            embed.set_thumbnail(url='https://images.discordapp.net/avatars/397149515192205324/ced0f56a29af0b9bfecdb336d04544a3.png?size=512')
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             self.total_online_users = 0
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -320,7 +329,7 @@ class Information:
             embed.add_field(name='WTF', value=str(wtf).replace('[(', '**').replace(',)]', '**'))
             embed.add_field(name='Fag', value=str(fag).replace('[(', '**').replace(',)]', '**'))
             embed.add_field(name='Gay', value=str(gay).replace('[(', '**').replace(',)]', '**'))
-
+            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
