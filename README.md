@@ -23,4 +23,3 @@ I take no responsibility for cloned BotZilla versions in any shape, way or form.
 - ```https://discord.gg/GWdhBSp```
 
 Use `!!help` for a detailed list of functions and commands
-![image](https://pasteboard.co/H9lmwP4.png)
