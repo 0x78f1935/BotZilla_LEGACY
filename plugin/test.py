@@ -130,16 +130,7 @@ class TestScripts:
             game = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
-            # if no column or row show game board and info about game... TO DO
-            if column is None or row is None:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='profile here',
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-                return
-
-            # Check
+            # define fetch variables
             print(game)
             id = int(game[0])
             gamehash = int(game[1])
@@ -148,7 +139,21 @@ class TestScripts:
             ship_row = int(game[4])
             ship_col = int(game[5])
 
-            # make sure user input is a number
+            # if no column or row show game board and info about game... TO DO
+            if column is None or row is None:
+                row_1 = str(" ".join(board[0][0])).replace('0', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x'])
+                row_2 = str(" ".join(board[0][1])).replace('0', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x'])
+                row_3 = str(" ".join(board[0][2])).replace('0', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x'])
+                row_4 = str(" ".join(board[0][3])).replace('0', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x'])
+                row_5 = str(" ".join(board[0][4])).replace('0', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x'])
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=f'{row_1}\n{row_2}\n{row_3}\n{row_4}\n{row_5}',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
+
+            # make sure user input is a number when exist
             try:
                 user_row = int(row) - 1
                 user_col = int(column) - 1
@@ -160,6 +165,7 @@ class TestScripts:
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
 
+            # debug print
             print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {int(user_row) + 1}\nUser col: {int(user_col) + 1}')
 
             #if user wins
