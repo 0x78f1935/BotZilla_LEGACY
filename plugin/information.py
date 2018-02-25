@@ -52,7 +52,7 @@ class Information:
     # ========================
     #   Bot related commands
 
-    @commands.command(pass_context=True, allias=["g"])
+    @commands.command(pass_context=True, aliases=["g"])
     async def google(self, ctx, *, search_term: str = None):
         """
         Make a google search
@@ -178,8 +178,8 @@ class Information:
             return
 
 
-    @commands.command(pass_context=True, aliases=["oauth", "invite"])
-    async def inv(self, ctx):
+    @commands.command(pass_context=True, aliases=["oauth"])
+    async def invite(self, ctx):
         """
         Invite BotZilla to your server!
         Gives BotZilla OAuth url. Use this to add him to your server!
