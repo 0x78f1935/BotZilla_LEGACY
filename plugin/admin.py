@@ -445,7 +445,7 @@ class AdminCommands:
                 username = username.replace('!', '')
                 username = int(username)
                 user = await self.bot.get_user_info(username)
-                self.database.cur.execute(f"DELETE FROM botzilla.mute where ID = '{user}';")
+                self.database.cur.execute(f"DELETE FROM botzilla.mute where ID = '{user.id}';")
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -456,7 +456,7 @@ class AdminCommands:
 
             except Exception as e:
                 user = await self.bot.get_user_info(user_id)
-                self.database.cur.execute(f"DELETE FROM botzilla.mute where ID = '{user}';")
+                self.database.cur.execute(f"DELETE FROM botzilla.mute where ID = '{user.id}';")
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
