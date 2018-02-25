@@ -21,7 +21,7 @@ CREATE TABLE botzilla.music(
 CREATE TABLE botzilla.battleship(
     ID bigserial primary key,
     gamehash varchar(508),
-    board varchar(508),
+    board varchar(1024),
     score varchar(508),
     ship_row varchar(508),
     ship_col varchar(508)
