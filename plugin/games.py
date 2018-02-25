@@ -461,7 +461,7 @@ class Games:
         # If anything goes wrong, Raise exeption
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Something went wrong, please notify me with **`{}report <How the error came up>`**'.format(self.config['prefix']),
+                                  description='Something went wrong, please notify me with **`{}report <How the error came up>`**\nError:\n**``{}``**'.format(self.config['prefix'], e),
                                   colour=0xf20006)
             embed.set_footer(text='PuffDip ©')
             a = await self.bot.say(embed=embed)
