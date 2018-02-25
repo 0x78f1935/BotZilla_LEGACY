@@ -1056,7 +1056,7 @@ class Utils:
 
         async with aiohttp.ClientSession() as session:
             async with session.post("https://hastebin.com/documents", data="\n".join(data)) as response:
-                key = (await response.json())["key"]
+                key = (await response.json(encoding='utf8'))["key"]
 
         await self.bot.send_typing(ctx.message.channel)
 
