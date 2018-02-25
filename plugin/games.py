@@ -297,11 +297,12 @@ class Games:
                 break
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=["b"])
     async def battleship(self, ctx, row=None, *, column=None):
         """
         Play Battleship the game!!
         Progres will be saved.
+        alias = !!b
 
         Shows playground
             -  !!battleship
