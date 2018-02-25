@@ -355,6 +355,7 @@ async def on_message(message):
     database.cur.execute("SELECT * FROM botzilla.mute;")
     muted = database.cur.fetchone()
     database.cur.execute("ROLLBACK;")
+    print(muted, muted[0], muted[0][0])
     if str(message.author.id) in row:
         if str(message.content).startswith('{}'.format(config['prefix'])):
             database.cur.execute("SELECT reason FROM botzilla.blacklist where ID = {};".format(message.author.id))
