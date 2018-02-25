@@ -405,7 +405,7 @@ class Games:
                 ship_col = random.randint(0, len(board[0]) - 1)
                 board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
                 score += 1
-                self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}', score = {score}, ship_row = {ship_row},,ship_col = {ship_col} where ID = {id} and gamehash = '{gamehash}';")
+                self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}', score = {score}, ship_row = {ship_row},ship_col = {ship_col} where ID = {id} and gamehash = '{gamehash}';")
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
 
