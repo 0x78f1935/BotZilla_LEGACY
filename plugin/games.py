@@ -332,6 +332,9 @@ class Games:
             self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id};")
             game = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute(f"select last_message from botzilla.battleship where ID = {ctx.message.author.id};")
+            last_message_id = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
 
             # If no game for user, Make game for user
             if game == None:
@@ -388,6 +391,9 @@ class Games:
                 embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                self.database.cur.execute(f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = {id} and gamehash = '{gamehash}';")
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
                 return
 
             # make sure user input is a number when exist
@@ -400,6 +406,9 @@ class Games:
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                self.database.cur.execute(f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = {id} and gamehash = '{gamehash}';")
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
                 return
 
             # debug print
@@ -429,6 +438,11 @@ class Games:
                 embed.set_thumbnail(url=random.choice(exploded_boats))
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+                self.database.cur.execute(f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = {id} and gamehash = '{gamehash}';")
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+
                 board = []
                 for x in range(0, 10):
                     board.append(['O'] * 10)
@@ -463,6 +477,12 @@ class Games:
                     embed.set_thumbnail(url=random.choice(unexploded_boats))
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
+                    self.database.cur.execute(
+                        f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = {id} and gamehash = '{gamehash}';")
+                    self.database.conn.commit()
+                    self.database.cur.execute("ROLLBACK;")
+
                 elif board[user_row][user_col] == '1':
                     header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
                     row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
@@ -484,6 +504,12 @@ class Games:
                     embed.set_thumbnail(url=random.choice(unexploded_boats))
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
+                    self.database.cur.execute(
+                        f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = {id} and gamehash = '{gamehash}';")
+                    self.database.conn.commit()
+                    self.database.cur.execute("ROLLBACK;")
+
                 else:
                     board[user_row][user_col] = "3"
                     header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
@@ -506,9 +532,10 @@ class Games:
                     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/407238426417430539/417154157724827668/miss.jpg')
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
                     board[user_row][user_col] = "1"
                     board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
-                    self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}' where ID = {id} and gamehash = '{gamehash}';")
+                    self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}', last_message = '{a.id}' where ID = {id} and gamehash = '{gamehash}';")
                     self.database.conn.commit()
                     self.database.cur.execute("ROLLBACK;")
 
