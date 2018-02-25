@@ -782,7 +782,7 @@ class Utils:
                 answer_count = []
                 for reaction in message.reactions:
                     answers_user[reaction.count] = reaction.emoji
-                    answer_count.append(answers_user[reaction.emoji])
+                    answer_count.append(reaction.count)
 
                 winner = max(answers_user.keys())
                 await self.bot.delete_message(message)
