@@ -331,7 +331,7 @@ class Games:
             self.database.cur.execute("ROLLBACK;")
 
         # Get user game
-        self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ctx.message.author.id}'")
+        self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id}")
         game = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
 
