@@ -381,6 +381,14 @@ class AdminCommands:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!mute <{user_id}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Only the owner of this bot can use this command',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
         if user_id is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Enter a user to **`mute`**',
@@ -429,6 +437,14 @@ class AdminCommands:
         Unmute user
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!mute <{user_id}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Only the owner of this bot can use this command',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
 
         if user_id is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
