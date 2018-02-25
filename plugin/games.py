@@ -330,12 +330,14 @@ class Games:
             self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board_db_insert}', {score}, {ship_row}, {ship_col});")
             self.database.cur.execute("ROLLBACK;")
 
+
         # Get user game
         self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id}")
         game = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
 
         # define fetch variables
+        print(game)
         gamehash = game[1]
         gamehash_lenght = len(str(gamehash)) // 2
         gamehash_str = str(gamehash)
