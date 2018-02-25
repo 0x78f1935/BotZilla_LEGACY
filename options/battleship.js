@@ -34,23 +34,3 @@
         "boats" : ["\\U0001f6e5", "\\U0001f6a3", "\\U0001f6a4", "\\u26f5"]
     }
 }
-
-!!exec
-em = discord.Embed(title=f'{ctx.message.author.name}', description="""Score: 0
-:speedboat: :one: :two: :three: :four: :five: :six: :seven: :eight: :nine: :keycap_ten:
-:one: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean:
-:two: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean:
-:three: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean:
-:four: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean:
-:five: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean:
-:six: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean:
-:seven: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean:
-:eight: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean:
-:nine: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean:
-:keycap_ten: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean: :ocean:
-GameHash:
-27084269535026566901
-87914038177605278889
-If you are stuck
-use !!help battleship""")
-await bot.say(embed=em)
