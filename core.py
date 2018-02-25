@@ -257,7 +257,8 @@ async def on_message_edit(before, message):
     row = database.cur.fetchall()
     row = str(row).replace('[', '').replace('(', '').replace(']', '').replace(',', '').replace(')', '')
     database.cur.execute("ROLLBACK;")
-    muted = database.cur.execute("SELECT * FROM botzilla.mute;")
+    database.cur.execute("SELECT * FROM botzilla.mute;")
+    muted = database.cur.fetchone()
     database.cur.execute("ROLLBACK;")
     if str(message.author.id) in row:
         if str(message.content).startswith('{}'.format(config['prefix'])):
@@ -277,7 +278,7 @@ async def on_message_edit(before, message):
             last_message = await bot.send_message(message.channel, embed=embed)
             await bot.add_reaction(last_message, emojiUnicode['warning'])
             return
-        elif str(message.author.id) in muted:
+        elif str(message.author.id) in muted[0]:
             try:
                 await bot.delete_message(message)
                 print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
@@ -351,7 +352,8 @@ async def on_message(message):
     row = database.cur.fetchall()
     row = str(row).replace('[', '').replace('(', '').replace(']', '').replace(',', '').replace(')', '')
     database.cur.execute("ROLLBACK;")
-    muted = database.cur.execute("SELECT * FROM botzilla.mute;")
+    database.cur.execute("SELECT * FROM botzilla.mute;")
+    muted = database.cur.fetchone()
     database.cur.execute("ROLLBACK;")
     if str(message.author.id) in row:
         if str(message.content).startswith('{}'.format(config['prefix'])):
@@ -371,7 +373,7 @@ async def on_message(message):
             last_message = await bot.send_message(message.channel, embed=embed)
             await bot.add_reaction(last_message, emojiUnicode['warning'])
             return
-        elif str(message.author.id) in muted:
+        elif str(message.author.id) in muted[0]:
             try:
                 await bot.delete_message(message)
                 print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} is muted, Message removed -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
