@@ -317,7 +317,7 @@ class Games:
             self.database.cur.execute("ROLLBACK;")
 
             # If no game for user, Make game for user
-            if game is None:
+            if game == None:
                 board = []
                 for x in range(0, 5):
                     board.append(['O'] * 5)
