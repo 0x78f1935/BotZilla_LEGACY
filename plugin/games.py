@@ -336,7 +336,7 @@ class Games:
         self.database.cur.execute("ROLLBACK;")
 
         # define fetch variables
-        gamehash = int(game[1])
+        gamehash = game[1]
         gamehash_lenght = len(str(gamehash)) // 2
         gamehash_str = str(gamehash)
         gamehash_1 = gamehash_str[:gamehash_lenght]
