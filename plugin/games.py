@@ -297,6 +297,177 @@ class Games:
                 break
 
 
+    @commands.command(pass_context=True)
+    async def battleship(self, ctx, row=None, *, column=None):
+        """
+        Play Battleship the game!!
+        Progres will be saved.
+
+        Shows playground
+            -  !!battleship
+        Shoot
+            -  !!battleship <row> <column>
+        Example
+            -  !!battleship 4 2
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship <column> <row> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        try:
+            self.database.cur.execute(f"select {ctx.message.author.id} from botzilla.battleship")
+            game = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
+            # If no game for user, Make game for user
+            if game is None:
+                board = []
+                for x in range(0, 5):
+                    board.append(['O'] * 5)
+                score = 0
+                ship_row = random.randint(0, len(board) - 1)
+                ship_col = random.randint(0, len(board[0]) - 1)
+                board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>") # make seperater for db, A for ' C for ,
+
+                # print(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board_db_insert}', {score}, {ship_row}, {ship_col});")
+                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col) VALUES ({ctx.message.author.id}, {random.getrandbits(128)}, '{board_db_insert}', {score}, {ship_row}, {ship_col});")
+                self.database.cur.execute("ROLLBACK;")
+
+            # Get user game
+            self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ctx.message.author.id}'")
+            game = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
+            # define fetch variables
+            id = int(game[0])
+            gamehash = int(game[1])
+            gamehash_lenght = len(str(gamehash)) // 2
+            gamehash_str = str(gamehash)
+            gamehash_1 = gamehash_str[:gamehash_lenght]
+            gamehash_2 = gamehash_str[gamehash_lenght:]
+            board = ast.literal_eval(str(game[2]).replace("<A>", "'").replace('<C>', ','))
+            score = int(game[3])
+            ship_row = int(game[4])
+            ship_col = int(game[5])
+
+            # if no column or row show game board and info about game... TO DO
+            if column is None or row is None:
+                header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} "
+                row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                row_4 = str(" ".join(board[3])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                row_5 = str(" ".join(board[4])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=f"Score: **`{score}`**\n\n"
+                                                  f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}"
+                                                  f"\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
+                                      colour=0xf20006)
+                embed.set_footer(text='PuffDip ©')
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                return
+
+            # make sure user input is a number when exist
+            try:
+                user_row = int(row) - 1
+                user_col = int(column) - 1
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Please make sure the column and row you provided are numbers',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                return
+
+            # debug print
+            # print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {int(user_row) + 1}\nUser col: {int(user_col) + 1}')
+
+            #if user wins
+            if user_row == ship_row and user_col == ship_col:
+                board[user_row][user_col] = "2"
+                header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} "
+                row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                row_4 = str(" ".join(board[3])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                row_5 = str(" ".join(board[4])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=f"**`DIRECT HIT`**\nScore: **`{score}`**\n\n"
+                                                  f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}"
+                                                  f"\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
+                                      colour=0xf20006)
+                embed.set_footer(text='PuffDip ©')
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                board = []
+                for x in range(0, 5):
+                    board.append(['O'] * 5)
+                board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
+                score += 1
+                self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}', score = {score} where ID = {id} and gamehash = '{gamehash}';")
+                self.database.cur.execute("ROLLBACK;")
+
+
+            else:
+                if user_row not in range(5) or user_col not in range(5):
+                    header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} "
+                    row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                    row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                    row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                    row_4 = str(" ".join(board[3])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                    row_5 = str(" ".join(board[4])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description=f"**`Out of range`**\nScore: **`{score}`**\n"
+                                                      f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}"
+                                                      f"\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
+                                          colour=0xf20006)
+                    embed.set_footer(text='PuffDip ©')
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                elif board[user_row][user_col] == '1':
+                    header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} "
+                    row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                    row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                    row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                    row_4 = str(" ".join(board[3])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                    row_5 = str(" ".join(board[4])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire'])
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description=f"**You already shot in that direction!**\nScore: **`{score}`**\n\n"
+                                                      f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}"
+                                                      f"\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
+                                          colour=0xf20006)
+                    embed.set_footer(text='PuffDip ©')
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                else:
+                    board[user_row][user_col] = "3"
+                    header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} "
+                    row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
+                    row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
+                    row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
+                    row_4 = str(" ".join(board[3])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
+                    row_5 = str(" ".join(board[4])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description=f"**`MISS`**\nScore: **`{score}`**\n\n"
+                                                      f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}"
+                                                      f"\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
+                                          colour=0xf20006)
+                    embed.set_footer(text='PuffDip ©')
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                    board[user_row][user_col] = "1"
+                    board_db_insert = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for ,
+                    self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board_db_insert}' where ID = {id} and gamehash = '{gamehash}';")
+                    self.database.cur.execute("ROLLBACK;")
+
+        # If anything goes wrong, Raise exeption
+        except Exception as e:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Something went wrong, please notify me with **`{}report <How the error came up>`**'.format(self.config['prefix']),
+                                  colour=0xf20006)
+            embed.set_footer(text='PuffDip ©')
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['error'])
+
+
 def setup(bot):
     m = Games(bot)
     bot.add_cog(m)
