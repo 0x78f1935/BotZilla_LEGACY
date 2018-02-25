@@ -1057,9 +1057,10 @@ class Utils:
         await self.bot.send_typing(ctx.message.channel)
 
         async with aiohttp.ClientSession() as session:
+            await self.bot.send_typing(ctx.message.channel)
             async with session.post("https://hastebin.com/documents", data="\n".join(data)) as response:
                 if '503 Service Unavailable' in str(response):
-                    embed = discord.Embed(title='{} log request:'.format(ctx.message.author.name),
+                    embed = discord.Embed(title='{} copy request:'.format(ctx.message.author.name),
                                           description="Service unavailable, Try again later",
                                           colour=0xf20006)
                     last_message = await self.bot.say(embed=embed)
