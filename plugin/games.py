@@ -311,6 +311,16 @@ class Games:
             -  !!battleship 4 2
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship <column> <row> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+
+        exploded_boats = ['https://cdn.discordapp.com/attachments/407238426417430539/417154082776809472/-48348a4958b806f1.jpg',
+                          'https://cdn.discordapp.com/attachments/407238426417430539/417154097452548111/boatfire-prmjpg-promo-image.jpg',
+                          'https://cdn.discordapp.com/attachments/407238426417430539/417154106549862400/C6aG4CDXEAAtfOI.jpg',
+                          'https://cdn.discordapp.com/attachments/407238426417430539/417154116385767425/ce87dba2-f920-11e7-8693-80d4e18fb3a2_1280x720_195814.jpg',
+                          'https://cdn.discordapp.com/attachments/407238426417430539/417154124472123392/Freightergoesboom.jpg',
+                          'https://cdn.discordapp.com/attachments/407238426417430539/417154131690782732/images.jpg',
+                          'https://media.discordapp.net/attachments/407238426417430539/417154276062789632/maxresdefault.jpg'
+                          ]
+
         try:
             self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id};")
             game = self.database.cur.fetchone()
@@ -407,6 +417,7 @@ class Games:
                                                   f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                       colour=0xf20006)
                 embed.set_footer(text='PuffDip ©')
+                embed.set_thumbnail(url=random.choice(exploded_boats))
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 board = []
@@ -440,6 +451,7 @@ class Games:
                                                       f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
                     embed.set_footer(text='PuffDip ©')
+                    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/407238426417430539/417154157724827668/miss.jpg')
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 elif board[user_row][user_col] == '1':
@@ -460,6 +472,7 @@ class Games:
                                                       f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
                     embed.set_footer(text='PuffDip ©')
+                    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/407238426417430539/417154157724827668/miss.jpg')
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 else:
@@ -481,6 +494,7 @@ class Games:
                                                       f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
                     embed.set_footer(text='PuffDip ©')
+                    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/407238426417430539/417154157724827668/miss.jpg')
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                     board[user_row][user_col] = "1"
