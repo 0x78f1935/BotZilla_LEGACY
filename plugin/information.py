@@ -782,7 +782,7 @@ class Utils:
                 answer_count = []
                 for reaction in message.reactions:
                     answers_user[reaction.count] = reaction.emoji
-                    answer_count.append(answers_user[reaction.count])
+                    answer_count.append(answers_user[reaction.emoji])
 
                 winner = max(answers_user.keys())
                 await self.bot.delete_message(message)
@@ -816,7 +816,7 @@ class Utils:
                                               colour=0xf20006)
                         votes_from_users = 0
                         for key, value in answerpoll.items():
-                            embed.add_field(name=':gear: Answer:', value='{} : **`{}`**\nVotes: **`{}`**'.format(str(key).upper(), str(value), str(answer_count[votes_from_users])), inline=False)
+                            embed.add_field(name=':gear: Answer:', value='{} : **`{}`**\nVotes: **{}**'.format(str(key).upper(), str(value), str(answer_count[votes_from_users])), inline=False)
                             votes_from_users += 1
                         embed.add_field(name='----', value='The server choose answer : **{}**'.format(str(answers_user[winner]).upper()))
                         embed.set_footer(text='End date {} {}'.format(datetime.datetime.today(), datetime.datetime.now()))
@@ -829,7 +829,7 @@ class Utils:
                                               colour=0xf20006)
                         votes_from_users = 0
                         for key, value in answerpoll.items():
-                            embed.add_field(name=':gear: Answer:', value='{} : **`{}`**\nVotes: **`{}`**'.format(str(key).upper(), str(value), str(answer_count[votes_from_users])), inline=False)
+                            embed.add_field(name=':gear: Answer:', value='{} : **`{}`**\nVotes: **{}**'.format(str(key).upper(), str(value), str(answer_count[votes_from_users])), inline=False)
                             votes_from_users += 1
                         embed.add_field(name='----', value='The server choose answer : **{}**'.format(str(answers_user[winner]).upper()))
                         embed.set_footer(text='Next page in 10 seconds')
