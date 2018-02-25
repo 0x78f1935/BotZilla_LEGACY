@@ -337,6 +337,8 @@ class Games:
             for i in range(10):
                 await self.bot.send_typing(ctx.message.channel)
                 await asyncio.sleep(1)
+                self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id};")
+                game = self.database.cur.fetchone()
                 if game:
                     break
 
