@@ -258,7 +258,7 @@ async def on_message_edit(before, message):
     row = str(row).replace('[', '').replace('(', '').replace(']', '').replace(',', '').replace(')', '')
     database.cur.execute("ROLLBACK;")
     database.cur.execute("SELECT * FROM botzilla.mute;")
-    muted = database.cur.fetchone()
+    muted = database.cur.fetchall()
     database.cur.execute("ROLLBACK;")
     if str(message.author.id) in row:
         if str(message.content).startswith('{}'.format(config['prefix'])):
@@ -352,8 +352,8 @@ async def on_message(message):
     row = database.cur.fetchall()
     row = str(row).replace('[', '').replace('(', '').replace(']', '').replace(',', '').replace(')', '')
     database.cur.execute("ROLLBACK;")
-    database.cur.execute("SELECT * FROM botzilla.mute;")
-    muted = database.cur.fetchone()
+    database.cur.execute(f"SELECT * FROM botzilla.mute;")
+    muted = database.cur.fetchall()
     database.cur.execute("ROLLBACK;")
     if str(message.author.id) in row:
         if str(message.content).startswith('{}'.format(config['prefix'])):
