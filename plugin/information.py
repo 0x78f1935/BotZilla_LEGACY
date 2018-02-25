@@ -52,8 +52,8 @@ class Information:
     # ========================
     #   Bot related commands
 
-    @commands.command(pass_context=True)
-    async def g(self, ctx, *, search_term: str = None):
+    @commands.command(pass_context=True, allias=["g"])
+    async def google(self, ctx, *, search_term: str = None):
         """
         Make a google search
         """
