@@ -11,7 +11,7 @@
         "nine" : ":nine:",
         "ten" : ":keycap_ten:",
         "ocean" : ":ocean:",
-        "bomb" : ":bomb:",
+        "bomb" : ":boom:",
         "x" : ":x:",
         "fire" : ":fire:",
         "boats" : [":motorboat:", ":rowboat:", ":speedboat:", ":sailboat:"]
@@ -28,7 +28,7 @@
         "nine" : "9\u20e3",
         "ten" : "\\U0001f51f",
         "ocean" : "\\U0001f30a",
-        "bomb" : "\\U0001f4a3",
+        "bomb" : "\\U0001f4a5",
         "x" : "\\u274c",
         "fire" : "\\U0001f525",
         "boats" : ["\\U0001f6e5", "\\U0001f6a3", "\\U0001f6a4", "\\u26f5"]
