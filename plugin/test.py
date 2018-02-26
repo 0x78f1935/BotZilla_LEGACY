@@ -131,14 +131,14 @@ class TestScripts:
 
         def check_if_board_empty(board):
             total = 0
-            for i in check_board(board):
+            current_board = check_board(board)
+            for i in current_board:
                 if 'O' in i:
                     total += 1
-            chk_board = len(total)
-            if int(chk_board) == int(100):
+            if int(total) == int(100):
                 return True
             else:
-                print(chk_board)
+                print(total)
                 return False
 
 
