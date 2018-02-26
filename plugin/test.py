@@ -124,10 +124,14 @@ class TestScripts:
 
         def check_board(board):
             tmp = []
+            total = 0
             for i in board:
                 tmp.append(str(i))
             current_board = "\n".join(tmp)
-            return current_board
+            for i in current_board:
+                if 'O' in i:
+                    total += 1
+            return total
 
         def check_if_board_empty(board):
             chk_board = len(check_board(board))
