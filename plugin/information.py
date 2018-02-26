@@ -559,6 +559,7 @@ class Utils:
         Get a list of the global current time in timezones
         Alias: !!clock
         """
+        await self.bot.send_typing(ctx.message.channel)
         zones = pytz.all_timezones
         timezone_list = {}
         for zone in zones:
@@ -581,6 +582,7 @@ class Utils:
         embed.add_field(name='**`UTC -`**',
                         value=f'**`UTC-12`**\n{timezone_list["GMT-12"]}\n**`UTC-11`**\n{timezone_list["GMT-11"]}\n**`UTC-10`**\n{timezone_list["GMT-10"]}\n**`UTC-9`**\n{timezone_list["GMT-9"]}\n**`UTC-8`**\n{timezone_list["GMT-8"]}\n**`UTC-7`**\n{timezone_list["GMT-7"]}\n**`UTC-6`**\n{timezone_list["GMT-6"]}\n**`UTC-5`**\n{timezone_list["GMT-5"]}\n**`UTC-4`**\n{timezone_list["GMT-4"]}\n**`UTC-3`**\n{timezone_list["GMT-3"]}\n**`UTC-2`**\n{timezone_list["GMT-2"]}\n**`UTC-1`**\n{timezone_list["GMT-1"]}',
                         inline=True)
+        embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/417703639658921994/clock-png-clock-png-image-1478.png')
         embed.set_image(url='https://media.discordapp.net/attachments/407238426417430539/417703230680727552/Standard_World_Time_Zones.png?width=1276&height=677')
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
