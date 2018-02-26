@@ -5,6 +5,8 @@ import datetime
 import random
 import aiohttp
 import ast
+import os
+import sys
 try:
     from plugin.database import Database
 except Exception as e:
@@ -121,6 +123,11 @@ class TestScripts:
         #     last_message varchar(508),
         #     online VARCHAR(508),
         #     enemy VARCHAR(508)
+        def print_exception():
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            error = f'{exc_type} : {fname} : {exc_tb.tb_lineno}'
+            return error
 
         def check_board(board):
             # Returns board as str
@@ -167,7 +174,8 @@ class TestScripts:
             self.database.cur.execute(f"select board from botzilla.battleship where ID = '{ID}';")
             boardgame = self.database.conn.fetchone()
             self.database.cur.execute("ROLLBACK;")
-            return ast.literal_eval(str(boardgame[0]).replace("<A>", "'").replace('<C>', ','))
+            board = ast.literal_eval(str(boardgame[0]).replace("<A>", "'").replace('<C>', ','))
+            return board
 
 
         if multiplayer:
@@ -186,8 +194,9 @@ class TestScripts:
                                       description=f'Could not find {multiplayer}. Use **`{self.config["prefix"]}help battleship`** for more information\n{e}',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
+                print(print_exception())
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-                return
+
 
 
         #
