@@ -101,7 +101,7 @@ class Information:
 
                     try:
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                              description=f'Top hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}\n\nSearch result **`2`**\n{entries[1][0]}\n{entries[1][1]}\n\nSearch result **`3`**\n{entries[2][0]}\n{entries[2][1]}',
+                                              description=f'Top hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n[{entries[0][1]}]({entries[0][0]})\n\nSearch result **`2`**\n[{entries[1][1]}]({entries[1][0]})\n\nSearch result **`3`**\n[{entries[2][1]}]({entries[2][0]})',
                                               colour=0xf20006)
                         embed.set_footer(text='Data © google contributors, google.com')
                         a = await self.bot.say(embed=embed)
@@ -109,7 +109,7 @@ class Information:
                     except Exception as e:
                         try:
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                                  description=f'Top hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}\n\nSearch result **`2`**\n{entries[1][0]}\n{entries[1][1]}',
+                                                  description=f'Top hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n[{entries[0][1]}]({entries[0][0]})\n\nSearch result **`2`**\n[{entries[1][1]}]({entries[1][0]})',
                                                   colour=0xf20006)
                             embed.set_footer(text='Data © google contributors, google.com')
                             a = await self.bot.say(embed=embed)
@@ -117,7 +117,7 @@ class Information:
                         except Exception as e:
                             try:
                                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                                      description=f'Top hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n{entries[0][0]}\n{entries[0][1]}',
+                                                      description=f'Top hits: **`{len(search_results)}`**\n\nSearch result **`1`**\n[{entries[0][1]}]({entries[0][0]})',
                                                       colour=0xf20006)
                                 embed.set_footer(text='Data © google contributors, google.com')
                                 a = await self.bot.say(embed=embed)
