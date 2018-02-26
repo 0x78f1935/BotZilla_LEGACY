@@ -559,6 +559,7 @@ class Utils:
         Get a list of the global time in most timezones
         Alias: !!clock
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!worldclock in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         await self.bot.send_typing(ctx.message.channel)
         zones = pytz.all_timezones
         timezone_list = {}
@@ -584,6 +585,7 @@ class Utils:
                         inline=True)
         embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/417703639658921994/clock-png-clock-png-image-1478.png')
         embed.set_image(url='https://media.discordapp.net/attachments/407238426417430539/417703230680727552/Standard_World_Time_Zones.png?width=1276&height=677')
+        embed.set_footer(text=f'Server time : {datetime.date.today()} {datetime.datetime.now()}')
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
@@ -595,6 +597,7 @@ class Utils:
         The information provided is all fake.
         This could be used to make a user profiles for role play goals.
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!profile in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         try:
             url = 'https://randomuser.me/api/'
             await self.bot.send_typing(ctx.message.channel)
