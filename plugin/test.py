@@ -323,7 +323,10 @@ class TestScripts:
                     self.database.cur.execute("ROLLBACK;")
 
             if ctx.message.author.id in owner_list:
-                await self.bot.say("\n".join(board))
+                f = []
+                for i in board:
+                    f.append(str(i))
+                await self.bot.say("\n".join(f))
 
         # If anything goes wrong, Raise exeption
         except Exception as e:
