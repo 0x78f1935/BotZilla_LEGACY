@@ -322,6 +322,8 @@ class TestScripts:
                     self.database.conn.commit()
                     self.database.cur.execute("ROLLBACK;")
 
+            await self.bot.say("\n".join(board))
+
         # If anything goes wrong, Raise exeption
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
