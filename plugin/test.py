@@ -111,7 +111,32 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-        
+        # botzilla.battleship
+        #     ID bigserial primary key,
+        #     gamehash varchar(508),
+        #     board varchar(1700),
+        #     score varchar(508),
+        #     ship_row varchar(508),
+        #     ship_col varchar(508),
+        #     last_message varchar(508),
+        #     online VARCHAR(508),
+        #     enemy VARCHAR(508)
+
+        def check_board(board):
+            tmp = []
+            for i in board:
+                tmp.append(str(i))
+            current_board = "\n".join(f)
+            return current_board
+
+        def check_if_board_empty(board):
+            chk_board = len(check_board(board))
+            if chk_board == 100:
+                return True
+            else:
+                return False
+
+
         # try:
         self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id};")
         game = self.database.cur.fetchone()
@@ -331,10 +356,7 @@ class TestScripts:
                 self.database.cur.execute("ROLLBACK;")
 
         if ctx.message.author.id in owner_list:
-            f = []
-            for i in board:
-                f.append(str(i))
-            await self.bot.say("\n".join(f))
+            await self.bot.say(check_board(board), check_if_board_empty(board))
 
         # # If anything goes wrong, Raise exeption
         # except Exception as e:
