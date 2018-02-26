@@ -164,7 +164,7 @@ class TestScripts:
 
         if multiplayer:
             try:
-                if check_game(multiplayer.id):
+                if check_game(self, multiplayer.id):
                     print('player found')
 
             except Exception as e:
