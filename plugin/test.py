@@ -126,7 +126,7 @@ class TestScripts:
             tmp = []
             for i in board:
                 tmp.append(str(i))
-            current_board = "\n".join(f)
+            current_board = "\n".join(tmp)
             return current_board
 
         def check_if_board_empty(board):
