@@ -29,7 +29,9 @@ CREATE TABLE botzilla.battleship(
     score varchar(508),
     ship_row varchar(508),
     ship_col varchar(508),
-    last_message varchar(508)
+    last_message varchar(508),
+    online VARCHAR(508),
+    enemy VARCHAR(508)
 );
 
 CREATE TABLE botzilla.blacklist(
