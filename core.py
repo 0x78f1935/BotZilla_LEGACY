@@ -158,7 +158,7 @@ async def get_new_server_users(server):
 
     for member in server.members:
         try:
-            username = str(member.name).replace("'", '').replace(';', '')
+            username = str(member.name).replace("'", '').replace(';', '').replace('"', '')
             database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ('{}', '{}');".format(member.id, username))
             database.cur.execute("ROLLBACK;")
 
