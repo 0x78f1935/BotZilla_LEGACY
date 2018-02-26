@@ -556,7 +556,7 @@ class Utils:
     @commands.command(pass_context=True, aliases=["clock"])
     async def worldclock(self, ctx):
         """
-        Get a list of the global current time in timezones
+        Get a list of the global time in most timezones
         Alias: !!clock
         """
         await self.bot.send_typing(ctx.message.channel)
