@@ -14,8 +14,7 @@ import textwrap
 from lxml import etree
 from functools import partial
 import datetime
-
-
+import pytz
 
 try:
     from plugin.database import Database
@@ -553,6 +552,39 @@ class Utils:
 
     # ========================
     #   Bot related commands
+
+    @commands.command(pass_context=True, aliases=["clock"])
+    async def worldclock(self, ctx):
+        """
+        Get a list of the global current time in timezones
+        Alias: !!clock
+        """
+        zones = pytz.all_timezones
+        timezone_list = {}
+        for zone in zones:
+            zone = zone.split('/')
+            if len(zone) >= 3:
+                pass
+            else:
+                if 'etc' in str(zone).lower():
+                    country = pytz.timezone(f'{zone[0]}/{zone[1]}')
+                    current_time = datetime.datetime.now(country)
+                    strf_time = current_time.strftime('%Y-%m-%d %H:%M:%S')
+                    timezone_list[zone[1]] = strf_time
+
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description=f'**`UTC`** : {" "* (42-len(timezone_list["Greenwich"]))}{timezone_list["GMT0"]}\n**`Greenwich`** : {" "* (28-len(timezone_list["Greenwich"]))}{timezone_list["Greenwich"]}\n**`Universal`** : {" "* (28-len(timezone_list["Greenwich"]))}{timezone_list["Universal"]}\n**`Zulu`** : {" "* (39-len(timezone_list["Greenwich"]))}{timezone_list["Zulu"]}\n\n**`Overview of all timezones:`**',
+                              color=0xf20006)
+        embed.add_field(name='**`UTC +`**',
+                        value=f'**`UTC+12`**\n{timezone_list["GMT+12"]}\n**`UTC+11`**\n{timezone_list["GMT+11"]}\n**`UTC+10`**\n{timezone_list["GMT+10"]}\n**`UTC+9`**\n{timezone_list["GMT+9"]}\n**`UTC+8`**\n{timezone_list["GMT+8"]}\n**`UTC+7`**\n{timezone_list["GMT+7"]}\n**`UTC+6`**\n{timezone_list["GMT+6"]}\n**`UTC+5`**\n{timezone_list["GMT+5"]}\n**`UTC+4`**\n{timezone_list["GMT+4"]}\n**`UTC+3`**\n{timezone_list["GMT+3"]}\n**`UTC+2`**\n{timezone_list["GMT+2"]}\n**`UTC+1`**\n{timezone_list["GMT+1"]}',
+                        inline=True)
+        embed.add_field(name='**`UTC -`**',
+                        value=f'**`UTC-12`**\n{timezone_list["GMT-12"]}\n**`UTC-11`**\n{timezone_list["GMT-11"]}\n**`UTC-10`**\n{timezone_list["GMT-10"]}\n**`UTC-9`**\n{timezone_list["GMT-9"]}\n**`UTC-8`**\n{timezone_list["GMT-8"]}\n**`UTC-7`**\n{timezone_list["GMT-7"]}\n**`UTC-6`**\n{timezone_list["GMT-6"]}\n**`UTC-5`**\n{timezone_list["GMT-5"]}\n**`UTC-4`**\n{timezone_list["GMT-4"]}\n**`UTC-3`**\n{timezone_list["GMT-3"]}\n**`UTC-2`**\n{timezone_list["GMT-2"]}\n**`UTC-1`**\n{timezone_list["GMT-1"]}',
+                        inline=True)
+        embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/417699433371795496/astonishing-world-clock-desk-wallpaper-wallpaper-gallery-time-zone-wallpaper_world-clock-map.png')
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 
     @commands.command(pass_context=True)
     async def profile(self, ctx):
