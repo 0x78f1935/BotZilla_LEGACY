@@ -149,11 +149,12 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
             return
 
+
         def check_game(self, ID):
             # Check if game exist, needs user ID
             try:
                 print('Looking for user')
-                self.database.cur.execute(f"select * from botzilla.battleship where ID = {ID}")
+                self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ID}'")
                 self.database.cur.fetchone()
                 self.database.cur.execute("ROLLBACK;")
                 return True
@@ -162,10 +163,23 @@ class TestScripts:
                 return False
 
 
+        def get_board(self, ID):
+            self.database.cur.execute(f"select board from botzilla.battleship where ID = '{ID}';")
+            boardgame = self.database.conn.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            return ast.literal_eval(str(boardgame[0]).replace("<A>", "'").replace('<C>', ','))
+
+
         if multiplayer:
             try:
                 if check_game(self, multiplayer.id):
                     print('player found')
+                    board = get_board(self, multiplayer.id)
+                    if check_if_board_empty(board):
+                        print('board is empty')
+                    else:
+                        print('board is not empty')
+
 
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
