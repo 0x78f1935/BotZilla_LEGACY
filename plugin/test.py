@@ -131,9 +131,10 @@ class TestScripts:
 
         def check_if_board_empty(board):
             chk_board = len(check_board(board))
-            if chk_board == 100:
+            if int(chk_board) == int(100):
                 return True
             else:
+                print(chk_board)
                 return False
 
 
