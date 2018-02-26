@@ -164,9 +164,7 @@ class TestScripts:
 
         if multiplayer:
             try:
-                multiplayer_vs_player = await self.bot.get_user_info(int(multiplayer))
-
-                if check_game(multiplayer_vs_player.id):
+                if check_game(multiplayer.id):
                     print('player found')
 
             except Exception as e:
