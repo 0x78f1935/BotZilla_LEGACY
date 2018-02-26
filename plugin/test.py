@@ -166,7 +166,8 @@ class TestScripts:
             try:
                 try:
                     username = str(multiplayer).replace('<@', '').replace('>', '')
-                    multiplayer_vs_player = await self.bot.get_user_info(username)
+                    print(username)
+                    multiplayer_vs_player = await self.bot.get_user_info(int(username))
 
                     if check_game(multiplayer_vs_player.id):
                         print('player found')
@@ -179,7 +180,7 @@ class TestScripts:
 
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=f'Could not find the player id. Use **`{self.config["prefix"]}help battleship`** for more information',
+                                      description=f'Could not find {multiplayer}. Use **`{self.config["prefix"]}help battleship`** for more information\n{e}',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
