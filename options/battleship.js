@@ -29,7 +29,24 @@
         "s" : ":regional_indicator_s:",
         "p" : ":regional_indicator_p:",
         "bb" : ":b:",
-        "boats" : [":motorboat:", ":rowboat:", ":speedboat:", ":sailboat:"]
+        "boats_emoji" : [":motorboat:", ":rowboat:", ":speedboat:", ":sailboat:"],
+        "exploded_boats" : [
+            "https://cdn.discordapp.com/attachments/407238426417430539/417154082776809472/-48348a4958b806f1.jpg",
+            "https://cdn.discordapp.com/attachments/407238426417430539/417154097452548111/boatfire-prmjpg-promo-image.jpg",
+            "https://cdn.discordapp.com/attachments/407238426417430539/417154106549862400/C6aG4CDXEAAtfOI.jpg", 
+            "https://cdn.discordapp.com/attachments/407238426417430539/417154116385767425/ce87dba2-f920-11e7-8693-80d4e18fb3a2_1280x720_195814.jpg",
+            "https://cdn.discordapp.com/attachments/407238426417430539/417154124472123392/Freightergoesboom.jpg",
+            "https://cdn.discordapp.com/attachments/407238426417430539/417154131690782732/images.jpg",
+            "https://media.discordapp.net/attachments/407238426417430539/417154276062789632/maxresdefault.jpg"
+            ],
+        "unexploded_boats" : [
+            "https://cdn.discordapp.com/attachments/407238426417430539/417158056921530369/Thumb.png",
+            "https://cdn.discordapp.com/attachments/407238426417430539/417157975652827151/csm_bavaria-mb-overview-sline_7b1037714c.png",
+            "https://cdn.discordapp.com/attachments/407238426417430539/417157946926170116/4306597_20130315092133359_1_XLARGE.png",
+            "https://media.discordapp.net/attachments/407238426417430539/417157916789833728/6544403_20171201080526644_1_LARGE.png",
+            "https://cdn.discordapp.com/attachments/407238426417430539/417158374707429397/0186-LG.png"
+            ],
+        "boat_miss" : "https://cdn.discordapp.com/attachments/407238426417430539/417154157724827668/miss.jpg"
     },
     "ascii" : {
         "one" : "1\u20e3",

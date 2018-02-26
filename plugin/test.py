@@ -104,21 +104,6 @@ class TestScripts:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship <{row}> <{column}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
-        exploded_boats = ['https://cdn.discordapp.com/attachments/407238426417430539/417154082776809472/-48348a4958b806f1.jpg',
-                          'https://cdn.discordapp.com/attachments/407238426417430539/417154097452548111/boatfire-prmjpg-promo-image.jpg',
-                          'https://cdn.discordapp.com/attachments/407238426417430539/417154106549862400/C6aG4CDXEAAtfOI.jpg',
-                          'https://cdn.discordapp.com/attachments/407238426417430539/417154116385767425/ce87dba2-f920-11e7-8693-80d4e18fb3a2_1280x720_195814.jpg',
-                          'https://cdn.discordapp.com/attachments/407238426417430539/417154124472123392/Freightergoesboom.jpg',
-                          'https://cdn.discordapp.com/attachments/407238426417430539/417154131690782732/images.jpg',
-                          'https://media.discordapp.net/attachments/407238426417430539/417154276062789632/maxresdefault.jpg'
-                          ]
-
-        unexploded_boats = ['https://cdn.discordapp.com/attachments/407238426417430539/417158056921530369/Thumb.png',
-                            'https://cdn.discordapp.com/attachments/407238426417430539/417157975652827151/csm_bavaria-mb-overview-sline_7b1037714c.png',
-                            'https://cdn.discordapp.com/attachments/407238426417430539/417157946926170116/4306597_20130315092133359_1_XLARGE.png',
-                            'https://media.discordapp.net/attachments/407238426417430539/417157916789833728/6544403_20171201080526644_1_LARGE.png',
-                            'https://cdn.discordapp.com/attachments/407238426417430539/417158374707429397/0186-LG.png']
-
         try:
             self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id};")
             game = self.database.cur.fetchone()
@@ -170,7 +155,7 @@ class TestScripts:
 
             # if no column or row show game board and info about game... TO DO
             if column is None or row is None:
-                header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
+                header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
                 row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                 row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                 row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
@@ -215,7 +200,7 @@ class TestScripts:
             #if user wins
             if user_row == ship_row and user_col == ship_col:
                 board[user_row][user_col] = "2"
-                header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
+                header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
                 row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                 row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                 row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
@@ -255,7 +240,7 @@ class TestScripts:
 
             else:
                 if user_row not in range(10) or user_col not in range(10):
-                    header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
+                    header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
                     row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
@@ -282,7 +267,7 @@ class TestScripts:
                     self.database.cur.execute("ROLLBACK;")
 
                 elif board[user_row][user_col] == '1':
-                    header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
+                    header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
                     row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
@@ -310,7 +295,7 @@ class TestScripts:
 
                 else:
                     board[user_row][user_col] = "3"
-                    header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
+                    header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
                     row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
@@ -327,7 +312,7 @@ class TestScripts:
                                                       f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
                     embed.set_footer(text='PuffDip#5369 ©')
-                    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/407238426417430539/417154157724827668/miss.jpg')
+                    embed.set_thumbnail(url=self.battleship_emoji_text['boat_miss'])
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
