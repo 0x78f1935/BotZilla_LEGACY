@@ -27,7 +27,7 @@
         "t" : ":regional_indicator_t:",
         "l" : ":regional_indicator_l:",
         "s" : ":regional_indicator_s:",
-        "p" : "regional_indicator_p",
+        "p" : ":regional_indicator_p:",
         "bb" : ":b:",
         "boats" : [":motorboat:", ":rowboat:", ":speedboat:", ":sailboat:"]
     },
