@@ -218,7 +218,7 @@ class TestScripts:
                                                   f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                       colour=0xf20006)
                 embed.set_footer(text='PuffDip#5369 ©')
-                embed.set_thumbnail(url=random.choice(exploded_boats))
+                embed.set_thumbnail(url=random.choice(self.battleship_emoji_text['exploded_boats']))
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
