@@ -165,9 +165,7 @@ class TestScripts:
         if multiplayer:
             try:
                 try:
-                    username = multiplayer.replace('<@', '')
-                    username = username.replace('>', '')
-                    username = username.replace('!', '')
+                    username = str(multiplayer).replace('<@', '').replace('>', '')
                     multiplayer_vs_player = await self.bot.get_user_info(username)
 
                     if check_game(multiplayer_vs_player.id):
