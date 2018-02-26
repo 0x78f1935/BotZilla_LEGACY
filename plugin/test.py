@@ -98,7 +98,7 @@ class TestScripts:
 #######################################################################################################################
 
     @commands.command(pass_context=True, aliases=["b2"])
-    async def battleship2(self, ctx, column=None, row=None, multiplayer=None):
+    async def battleship2(self, ctx, column=None, row=None, multiplayer : discord.Member = None):
         """
         dev version
         """
@@ -164,19 +164,10 @@ class TestScripts:
 
         if multiplayer:
             try:
-                try:
-                    username = str(multiplayer).replace('<@', '').replace('>', '')
-                    print(username)
-                    multiplayer_vs_player = await self.bot.get_user_info(int(username))
+                multiplayer_vs_player = await self.bot.get_user_info(int(multiplayer))
 
-                    if check_game(multiplayer_vs_player.id):
-                        print('player found')
-
-                except Exception as e:
-                    multiplayer_vs_player = await self.bot.get_user_info(multiplayer)
-                    if check_game(multiplayer_vs_player.id):
-                        print('player found')
-
+                if check_game(multiplayer_vs_player.id):
+                    print('player found')
 
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
