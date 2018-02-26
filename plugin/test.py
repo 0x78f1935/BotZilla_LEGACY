@@ -98,11 +98,11 @@ class TestScripts:
 #######################################################################################################################
 
     @commands.command(pass_context=True, aliases=["b2"])
-    async def battleship2(self, ctx, column=None, row=None, *, multiplayer=None):
+    async def battleship2(self, ctx, column=None, row=None, multiplayer=None):
         """
         dev version
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{row}> <{column}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{row}> <{column}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Only the owner of this bot can use this command',
