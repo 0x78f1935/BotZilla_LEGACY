@@ -102,7 +102,7 @@ class TestScripts:
         """
         dev version
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship <{row}> <{column}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{row}> <{column}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Only the owner of this bot can use this command',
@@ -356,7 +356,7 @@ class TestScripts:
                 self.database.cur.execute("ROLLBACK;")
 
         if ctx.message.author.id in owner_list:
-            await self.bot.say(check_board(board), check_if_board_empty(board))
+            await self.bot.say(f'{check_board(board)}\n\n{check_if_board_empty(board)}')
 
         # # If anything goes wrong, Raise exeption
         # except Exception as e:
