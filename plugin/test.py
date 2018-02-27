@@ -376,7 +376,7 @@ class TestScripts:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 return
-            
+
             print(user_col, user_row)
 
 def setup(bot):
