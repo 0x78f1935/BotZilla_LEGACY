@@ -114,10 +114,19 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
+        # We need to make sure the user always give COOR as argument unless user want to see their profile
         if COOR:
             columns = {"a" : 1, "b" : 2, "c" : 3, "d" : 4, "e" : 5, "f" : 6, "g" : 7, "h" : 8, "i" : 9, "j" : 10}
             COOR = re.findall(r'[A-Za-z]|-?\d+\.\d+|\d+', str(COOR))
-            if COOR[1] > 10 or str(COOR[0]).lower() not in columns.keys():
+            try:
+                if int(COOR[1]) > 10 or str(COOR[0]).lower() not in columns.keys():
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description=f'To become a pirate, men have to read the map: **`{self.config["prefix"]}help battleship`**',
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                    return
+            except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=f'To become a pirate, men have to read the map: **`{self.config["prefix"]}help battleship`**',
                                       colour=0xf20006)
@@ -125,6 +134,7 @@ class TestScripts:
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
                 return
 
+            # define the COOR
             row = COOR[1]
             column = columns[str(COOR[0]).lower()]
             print(COOR, row, column)
