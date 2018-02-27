@@ -297,9 +297,8 @@ class TestScripts:
                                               description=f'Error requesting user **`{multiplayer}`**\n```py\n{print_exception()}\n{e.args}\n```',
                                               colour=0xf20006)
                         a = await self.bot.say(embed=embed)
-                        await self.bot.add_reaction(a, self.emojiUnicode['error'])
-                        a = self.bot.get_message(ctx.message.channel, a)
                         update_last_message(self, ctx, a)
+                        await self.bot.add_reaction(a, self.emojiUnicode['error'])
                         return
 
                     if check_if_board_empty(board):
@@ -324,10 +323,9 @@ class TestScripts:
                                                   colour=0xf20006)
                             embed.set_footer(text='PuffDip#5369 ©')
                             a = await self.bot.say(embed=embed)
+                            update_last_message(self, ctx, a)
                             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                             print(f'{multiplayer} had already a multiplayer game going on')
-                            a = self.bot.get_message(ctx.message.channel, a)
-                            update_last_message(self, ctx, a)
                             return
                     else:
                         # To do - notify user who already has a game that another user wants to play.
@@ -337,10 +335,9 @@ class TestScripts:
                                               description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
                                               colour=0xf20006)
                         a = self.bot.say(embed=embed)
+                        update_last_message(self, ctx, a)
                         self.bot.add_reaction(a, self.emojiUnicode['warning'])
                         print(f'board of {multiplayer} is not empty')
-                        a = self.bot.get_message(ctx.message.channel, a)
-                        update_last_message(self, ctx, a)
                         return
                 else:
                     # If player is not yet found, create brand new player
@@ -365,9 +362,8 @@ class TestScripts:
                                       description=f'Error requesting user **`{multiplayer}`**"\n```py\n{print_exception()}\n{e.args}\n```',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['error'])
-                a = self.bot.get_message(ctx.message.channel, a)
                 update_last_message(self, ctx, a)
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
                 return
 
 
