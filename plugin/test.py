@@ -105,7 +105,7 @@ class TestScripts:
         """
         dev version
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{row}> <{column}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Only the owner of this bot can use this command',
@@ -114,6 +114,11 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
+        COOR = re.findall(r'[A-Za-z]|-?\d+\.\d+|\d+', str(COOR))
+        row = COOR[1]
+        column = COOR[0]
+        print(COOR, row, column)
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{row}> <{column}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         # botzilla.battleship
         #     ID bigserial primary key,
         #     gamehash varchar(508),
@@ -177,8 +182,6 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
             board = ast.literal_eval(str(boardgame[2]).replace("<A>", "'").replace('<C>', ','))
             return board
-
-        COOR = re.findall(r'[A-Za-z]|-?\d+\.\d+|\d+', str(COOR))
 
 
         if multiplayer:
