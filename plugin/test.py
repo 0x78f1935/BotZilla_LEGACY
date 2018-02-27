@@ -358,19 +358,14 @@ class TestScripts:
 
         # await update_enemy(self, ctx.message.author.id, 'None', False) # Verplaatsen zodat player states offline wordt gezet nadat speler gewonnen heeft
 
-        #  Check if game exist
-        self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id};")
-        game = self.database.cur.fetchone()
-        self.database.cur.execute("ROLLBACK;")
-
         # If no game for user, Make game for user
-        if not game:
+        if not check_game(self, ctx.message.author.id):
             await create_game(self, ctx.message.author.id)
 
             # make sure user input is a number when exist
             user_row = int(row) - 1
             user_col = int(column) - 1
-            update_COOR(self, ctx.message.author.id, user_col, user_row)
+            await update_COOR(self, ctx.message.author.id, user_col, user_row)
             print('COOR updated')
 
 
