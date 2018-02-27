@@ -427,7 +427,7 @@ class TestScripts:
                 return
 
             # debug print
-            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship: {COOR}\n###\nUser row: {int(self.brow) + 1}\nUser col: {int(self.bcolumn) + 1}')
+            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\ncoor: {COOR}\nrow: {self.brow}\ncol: {self.bcolumn}###\nUser row: {int(self.brow) + 1}\nUser col: {int(self.bcolumn) + 1}')
 
             #if user wins
             if self.brow == ship_row and self.bcolumn == ship_col:
