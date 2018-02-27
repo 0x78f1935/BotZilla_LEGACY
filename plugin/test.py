@@ -101,7 +101,7 @@ class TestScripts:
 #######################################################################################################################
 
     @commands.command(pass_context=True, aliases=["b2"])
-    async def battleship2(self, ctx, *, COOR = None, multiplayer : discord.Member = None):
+    async def battleship2(self, ctx, COOR = None, multiplayer : discord.Member = None):
         """
         dev version
         """
