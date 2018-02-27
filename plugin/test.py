@@ -244,8 +244,8 @@ class TestScripts:
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")
 
-        def update_last_message(self, ID, last_message):
-            a = self.bot.get_message(last_message)
+        def update_last_message(self, ctx, ID, last_message):
+            a = self.bot.get_message(ctx.message.channel, last_message)
             self.database.cur.execute(f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = '{ID}';")
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")
@@ -296,7 +296,7 @@ class TestScripts:
                                               description=f'Error requesting user **`{multiplayer}`**\n```py\n{print_exception()}\n{e.args}\n```',
                                               colour=0xf20006)
                         a = await self.bot.say(embed=embed)
-                        update_last_message(self, ctx.message.author.id, a)
+                        update_last_message(self, ctx, ctx.message.author.id, a)
                         await self.bot.add_reaction(a, self.emojiUnicode['error'])
                         return
 
@@ -320,7 +320,7 @@ class TestScripts:
                                                   colour=0xf20006)
                             embed.set_footer(text='PuffDip#5369 ©')
                             a = await self.bot.say(embed=embed)
-                            update_last_message(self, ctx.message.author.id, a)
+                            update_last_message(self, ctx, ctx.message.author.id, a)
                             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                             print(f'{multiplayer} had already a multiplayer game going on')
                             return
@@ -331,7 +331,7 @@ class TestScripts:
                                               description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
                                               colour=0xf20006)
                         a = self.bot.say(embed=embed)
-                        update_last_message(self, ctx.message.author.id, a)
+                        update_last_message(self, ctx, ctx.message.author.id, a)
                         self.bot.add_reaction(a, self.emojiUnicode['warning'])
                         print(f'board of {multiplayer} is not empty')
                         return
@@ -356,7 +356,7 @@ class TestScripts:
                                       description=f'Error requesting user **`{multiplayer}`**"\n```py\n{print_exception()}\n{e.args}\n```',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
-                update_last_message(self, ctx.message.author.id, a)
+                update_last_message(self, ctx, ctx.message.author.id, a)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
                 return
 
