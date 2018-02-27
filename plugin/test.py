@@ -282,15 +282,16 @@ class TestScripts:
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                                   description=f'Started a match against **`{multiplayer}`**',
                                                   colour=0xf20006)
-                            a = self.bot.send_message(ctx.message.channel, embed=embed)
+                            a = self.bot.say(embed=embed)
                             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                             return
                         else:
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                                  description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
+                                                  description='User **`{}`** has already a battle going.\nTry again later..'.format(multiplayer),
                                                   colour=0xf20006)
-                            a = self.bot.send_message(ctx.message.channel, embed=embed)
-                            self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                            embed.set_footer(text='PuffDip#5369 ©')
+                            a = await self.bot.say(embed=embed)
+                            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                             print(f'{multiplayer} had already a multiplayer game going on')
                             return
                     else:
