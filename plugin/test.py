@@ -114,10 +114,13 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-        COOR = re.findall(r'[A-Za-z]|-?\d+\.\d+|\d+', str(COOR))
-        row = COOR[1]
-        column = COOR[0]
-        print(COOR, row, column)
+        if COOR:
+            columns = {"a" : 1, "b" : 2, "c" : 3, "d" : 4, "e" : 5, "f" : 6, "g" : 7, "h" : 8, "i" : 9, "j" : 10}
+            COOR = re.findall(r'[A-Za-z]|-?\d+\.\d+|\d+', str(COOR))
+            row = COOR[1]
+            column = columns[(COOR[0]).lower()]
+            print(COOR, row, column)
+
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{row}> <{column}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         # botzilla.battleship
         #     ID bigserial primary key,
