@@ -277,8 +277,8 @@ class TestScripts:
             # Remove last message in mp
             last_message_id = get_last_message(self, ctx.message.author.id)
             try:
-                message_2_remove = self.bot.get_message(ctx.message.channel, last_message_id[0])
-                self.bot.delete_message(message_2_remove)
+                message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
+                await self.bot.delete_message(message_2_remove)
             except Exception as e:
                 print(print_exception())
 
@@ -370,9 +370,8 @@ class TestScripts:
         # Remove leftovers
         last_message_id = get_last_message(self, ctx.message.author.id)
         try:
-            print(last_message_id, last_message_id[0], last_message_id[0][0])
-            message_2_remove = self.bot.get_message(ctx.message.channel, last_message_id[0][0])
-            self.bot.delete_message(message_2_remove)
+            message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
+            await self.bot.delete_message(message_2_remove)
         except Exception as e:
             print(print_exception())
         #
