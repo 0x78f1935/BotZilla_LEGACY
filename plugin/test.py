@@ -470,7 +470,7 @@ class TestScripts:
 
                 if online != 'False' and int(enemy) != 0:
                     enemy_player = await self.bot.get_user_info(int(enemy))
-                    score = f'{score + 1} | {enemy_player.name} ship sank'
+                    score = f'{score} + 1 | {enemy_player.name} ship sank'
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=f"{self.battleship_emoji_text['bb']}{self.battleship_emoji_text['a']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['l']}{self.battleship_emoji_text['e']}{self.battleship_emoji_text['s']}{self.battleship_emoji_text['h']}{self.battleship_emoji_text['i']}{self.battleship_emoji_text['p']}*V1.0*\n\n**`DIRECT HIT`**\n\nScore: **`{score}`**\n\n"
@@ -490,7 +490,7 @@ class TestScripts:
                 for x in range(0, 10):
                     board.append(['O'] * 10)
                 board_str = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for
-                score_int = score + 1
+                score_int = int(score) + 1
                 if online != 'False' and enemy != '0':
                     score_int += 2
                 row_str = random.randint(0, len(board) - 1)
