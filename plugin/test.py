@@ -359,8 +359,8 @@ class TestScripts:
 
         # If no game for user, Make game for user
         if not check_game(self, ctx.message.author.id):
-            update_enemy(self, ctx.message.author.id, 'None', False)
-            create_game(self, ctx.message.author.id)
+            await update_enemy(self, ctx.message.author.id, 'None', False)
+            await create_game(self, ctx.message.author.id)
 
             # Get user game
             self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id};")
