@@ -501,6 +501,9 @@ class Games:
                                                   colour=0xf20006)
                             a = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                            send_dm_invite = await self.bot.get_user_info(multiplayer.id)
+                            dm = await self.bot.send_message(send_dm_invite, embed=embed)
+                            await self.bot.add_reaction(dm, self.emojiUnicode['succes'])
                             return
                         else:
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -534,6 +537,9 @@ class Games:
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                    send_dm_invite = await self.bot.get_user_info(multiplayer.id)
+                    dm = await self.bot.send_message(send_dm_invite, embed=embed)
+                    await self.bot.add_reaction(dm, self.emojiUnicode['succes'])
                     return
 
             # Error message if anything breaks
