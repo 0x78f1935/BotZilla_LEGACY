@@ -399,7 +399,7 @@ class TestScripts:
             enemy = str(game[7])
             if ctx.message.author.id in self.owner_list:
                 p = ['A','B','C','D','E','F', 'G', 'H', 'I', 'J']
-                print(f'ANSWER : {p[int(ship_col) + 1]} : {int(ship_row) + 1} ')
+                print(f'ANSWER : {p[int(ship_col)]} : {int(ship_row) + 1} ')
 
             # if no column or row show game board and info about game... TO DO
             if self.bcolumn is None or self.brow is None:
