@@ -287,12 +287,8 @@ async def on_message_edit(before, message):
         if str(message.author.id) in str(muted[0]):
             try:
                 await bot.delete_message(message)
-                print(
-                    f'{datetime.date.today()} {datetime.datetime.now()} - {message.author} is muted, Message removed -- Channel: {message.channel.name} Guild: {message.server.name}')
                 return
             except Exception as e:
-                print(
-                    f'{datetime.date.today()} {datetime.datetime.now()} - {message.author} is muted, Message could not be removed -- Channel: {message.channel.name} Guild: {message.server.name}')
                 return
     except Exception as e:
         pass
@@ -382,10 +378,8 @@ async def on_message(message):
         if str(message.author.id) in str(muted[0]):
             try:
                 await bot.delete_message(message)
-                print(f'{datetime.date.today()} {datetime.datetime.now()} - {message.author} is muted, Message removed -- Channel: {message.channel.name} Guild: {message.server.name}')
                 return
             except Exception as e:
-                print(f'{datetime.date.today()} {datetime.datetime.now()} - {message.author} is muted, Message could not be removed -- Channel: {message.channel.name} Guild: {message.server.name}')
                 return
     except Exception as e:
         pass
