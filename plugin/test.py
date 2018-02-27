@@ -278,9 +278,9 @@ class TestScripts:
                         print(f'board {multiplayer.id} is empty')
                         if 'False' in str(get_online(self, multiplayer.id)):
                             print(f'{multiplayer} not yet in a online game')
-                            await update_COOR(self, multiplayer.id, self.bcolumn, self.brow)
+                            update_COOR(self, multiplayer.id, self.bcolumn, self.brow)
                             print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
-                            await update_enemy(self, multiplayer.id, ctx.message.author.id, True)
+                            update_enemy(self, multiplayer.id, ctx.message.author.id, True)
                             print(f'{ctx.message.author.name} started a match against {multiplayer}')
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                                   description=f'Started a match against **`{multiplayer}`**',
