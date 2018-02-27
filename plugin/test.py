@@ -30,6 +30,8 @@ class TestScripts:
         self.exchange = self.tmp_config['exchange']
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
+        self.bcolumn = None
+        self.brow = None
         try:
             self.database = Database(self.bot)
             self.database_file_found = True
