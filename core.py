@@ -28,7 +28,7 @@ exchange = tmp_config['exchange']
 botzillaChannels = tmp_config['channels']
 # The help command is currently set to be Direct Messaged.
 # If you would like to change that, change "pm_help = True" to "pm_help = False" on line 9.
-bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip\nUserdata may be stored for better experience.\n\nUpvote would be appreciated:\nhttps://discordbots.org/bot/397149515192205324", command_prefix=config['prefix'])
+bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip\nUserdata may be stored for better experience.\n\nUpvote would be appreciated:\nhttps://discordbots.org/bot/397149515192205324", command_prefix=config['prefix'], pm_help=False)
 dbl = False
 try:
     dbltoken = config['discordbotlist_api']
@@ -349,8 +349,6 @@ async def on_message_edit(before, message):
             await bot.delete_message(message)
             ads = bot.get_channel('406922367093309443')
             await bot.send_message(ads, str(message.content).replace('@', ''))
-
-    if not str(message.content).startswith(config['prefix']): return
 
     await bot.process_commands(message)
 
