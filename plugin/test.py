@@ -220,6 +220,12 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
             return online
 
+        def get_last_message(self, ID):
+            self.database.cur.execute(f"select last_message from botzilla.battleship where ID = '{ID}';")
+            last_message = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            return last_message
+
         def update_gamehash(self, ID):
             gamehash = random.getrandbits(128)
             self.database.cur.execute(f"UPDATE botzilla.battleship SET gamehash = '{gamehash}' where ID = '{ID}';")
@@ -338,12 +344,12 @@ class TestScripts:
         # last_message_id = self.database.cur.fetchone()
         # self.database.cur.execute("ROLLBACK;")
         #
-        # if last_message_id:
-        #     try:
-        #         message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
-        #         await self.bot.delete_message(message_2_remove)
-        #     except Exception as e:
-        #         pass
+        last_message_id = get_last_message(self, ctx.message.author.id)
+        try:
+            message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
+            await self.bot.delete_message(message_2_remove)
+        except Exception as e:
+            pass
         #
         # If no game for user, Make game for user
         # if game is None:
