@@ -171,7 +171,7 @@ class TestScripts:
 
 
         def get_board(self, ID):
-            self.database.cur.execute(f"select board from botzilla.battleship where ID = {ID};")
+            self.database.cur.execute(f"select board from botzilla.battleship where ID = '{ID}';")
             boardgame = self.database.conn.fetchone()
             self.database.cur.execute("ROLLBACK;")
             board = ast.literal_eval(str(boardgame[0]).replace("<A>", "'").replace('<C>', ','))
@@ -182,7 +182,7 @@ class TestScripts:
             try:
                 if check_game(self, multiplayer.id):
                     print('player found')
-                    board = get_board(self, multiplayer.id)
+                    board = get_board(self, int(multiplayer.id))
                     if check_if_board_empty(board):
                         print('board is empty')
                     else:
