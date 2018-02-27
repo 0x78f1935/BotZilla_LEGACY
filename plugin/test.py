@@ -356,26 +356,15 @@ class TestScripts:
         except Exception as e:
             pass
 
+        # await update_enemy(self, ctx.message.author.id, 'None', False) # Verplaatsen zodat player states offline wordt gezet nadat speler gewonnen heeft
 
         # If no game for user, Make game for user
         if not check_game(self, ctx.message.author.id):
-            await update_enemy(self, ctx.message.author.id, 'None', False)
             await create_game(self, ctx.message.author.id)
 
             # make sure user input is a number when exist
-            try:
-                user_row = int(row) - 1
-                user_col = int(column) - 1
-            except Exception as e:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Please make sure the column and row you provided are numbers',
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['error'])
-                self.database.cur.execute(f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = {id} and gamehash = '{gamehash}';")
-                self.database.conn.commit()
-                self.database.cur.execute("ROLLBACK;")
-                return
+            user_row = int(row) - 1
+            user_col = int(column) - 1
 
             print(user_col, user_row)
 
