@@ -350,8 +350,6 @@ class TestScripts:
         except Exception as e:
             pass
 
-            # await update_enemy(self, ctx.message.author.id, 'None', False) # Verplaatsen zodat player states offline wordt gezet nadat speler gewonnen heeft
-
         try:
             self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id};")
             game = self.database.cur.fetchone()
