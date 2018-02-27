@@ -187,14 +187,23 @@ class TestScripts:
                         print('board is empty')
                     else:
                         print('board is not empty')
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                              description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
+                                              colour=0xf20006)
+                        a = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                        return
 
+                    # To do - notify user who already has a game that another user wants to play.
+                    # Give them the option to quit the current game they are in.
 
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=f'Could not find {multiplayer}. Use **`{self.config["prefix"]}help battleship`** for more information\n{print_exception()}',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                return
 
 
 
