@@ -286,6 +286,12 @@ class TestScripts:
                             print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
                             update_enemy(self, multiplayer.id, ctx.message.author.id, True)
                             print(f'{ctx.message.author.name} started a match against {multiplayer}')
+                            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                                  description=f'Started a match against **`{multiplayer}`**',
+                                                  colour=0xf20006)
+                            a = await self.bot.say(embed=embed)
+                            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                            return
                         else:
                             print(f'{multiplayer} had already a multiplayer game going on')
                             player_in_battle(self, ctx)
@@ -299,7 +305,17 @@ class TestScripts:
                 else:
                     # If player is not yet found, create brand new player
                     create_game(self, multiplayer.id)
-                    pass
+                    print(f'{multiplayer} not yet in a online game')
+                    update_COOR(self, multiplayer.id, column, row)
+                    print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
+                    update_enemy(self, multiplayer.id, ctx.message.author.id, True)
+                    print(f'{ctx.message.author.name} started a match against {multiplayer}')
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description=f'Started a match against **`{multiplayer}`**',
+                                          colour=0xf20006)
+                    a = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                    return
 
             # Error message if anything breaks
             except Exception as e:
