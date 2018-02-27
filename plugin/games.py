@@ -572,6 +572,8 @@ class Games:
         except Exception as e:
             pass
 
+        await self.bot.send_typing(ctx.message.channel)
+
         try:
             self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id};")
             game = self.database.cur.fetchone()
