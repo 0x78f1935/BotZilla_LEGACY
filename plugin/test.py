@@ -265,7 +265,7 @@ class TestScripts:
                         board = get_board(self, int(multiplayer.id))
                     except Exception as e:
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                              description=f'Error requesting user **`{multiplayer}`**"\n```py\n{print_exception()}\n{e.args}\n```',
+                                              description=f'Error requesting user **`{multiplayer}`**\n```py\n{print_exception()}\n{e.args}\n```',
                                               colour=0xf20006)
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, self.emojiUnicode['error'])
@@ -282,14 +282,14 @@ class TestScripts:
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                                   description=f'Started a match against **`{multiplayer}`**',
                                                   colour=0xf20006)
-                            a = await self.bot.say(embed=embed)
+                            a = self.bot.send_message(ctx.message.channel, embed=embed)
                             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                             return
                         else:
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                                   description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
                                                   colour=0xf20006)
-                            a = self.bot.say(embed=embed)
+                            a = self.bot.send_message(ctx.message.channel, embed=embed)
                             self.bot.add_reaction(a, self.emojiUnicode['warning'])
                             print(f'{multiplayer} had already a multiplayer game going on')
                             return
