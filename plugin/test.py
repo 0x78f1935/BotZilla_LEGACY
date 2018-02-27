@@ -209,7 +209,10 @@ class TestScripts:
             self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ID}';")
             online = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
-            return online
+            if online is None:
+                return None
+            else:
+                return online
 
         def get_last_message(self, ID):
             self.database.cur.execute(f"select last_message from botzilla.battleship where ID = '{ID}';")
@@ -272,7 +275,7 @@ class TestScripts:
                 if check_game(self, multiplayer.id):
                     print(f'player {multiplayer} found')
                     try:
-                        board = get_board(self, int(multiplayer.id))
+                        board = await get_board(self, int(multiplayer.id))
                     except Exception as e:
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description=f'Error requesting user **`{multiplayer}`**\n```py\n{print_exception()}\n{e.args}\n```',
@@ -288,9 +291,9 @@ class TestScripts:
                         print(f'board {multiplayer.id} is empty')
                         if 'False' in str(get_online(self, multiplayer.id)):
                             print(f'{multiplayer} not yet in a online game')
-                            update_COOR(self, multiplayer.id, column, row)
+                            await update_COOR(self, multiplayer.id, column, row)
                             print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
-                            update_enemy(self, multiplayer.id, ctx.message.author.id, True)
+                            await update_enemy(self, multiplayer.id, ctx.message.author.id, True)
                             print(f'{ctx.message.author.name} started a match against {multiplayer}')
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                                   description=f'Started a match against **`{multiplayer}`**',
@@ -345,7 +348,7 @@ class TestScripts:
                 return
 
         # Remove leftovers
-        last_message_id = get_last_message(self, ctx.message.author.id)
+        last_message_id = await get_last_message(self, ctx.message.author.id)
         try:
             message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
             await self.bot.delete_message(message_2_remove)
@@ -359,7 +362,7 @@ class TestScripts:
         # await update_enemy(self, ctx.message.author.id, 'None', False) # Verplaatsen zodat player states offline wordt gezet nadat speler gewonnen heeft
 
         # If no game for user, Make game for user
-        if not check_game(self, ctx.message.author.id):
+        if check_game(self, ctx.message.author.id) is None:
             await create_game(self, ctx.message.author.id)
 
             # make sure user input is a number when exist
