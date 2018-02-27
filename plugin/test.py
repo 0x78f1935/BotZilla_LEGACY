@@ -244,12 +244,6 @@ class TestScripts:
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")
 
-        def update_last_message(self, ctx, ID, last_message):
-            a = self.bot.get_message(ctx.message.channel, last_message)
-            self.database.cur.execute(f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = '{ID}';")
-            self.database.conn.commit()
-            self.database.cur.execute("ROLLBACK;")
-
         def update_COOR(self, ID, col, row):
             print(ID, col, row)
             self.database.cur.execute(f"UPDATE botzilla.battleship SET ship_row = '{row}', ship_col = '{col}' where ID = '{ID}';")
@@ -310,7 +304,7 @@ class TestScripts:
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                                   description=f'Started a match against **`{multiplayer}`**',
                                                   colour=0xf20006)
-                            a = self.bot.say(embed=embed)
+                            a = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                             return
                         else:
@@ -328,8 +322,8 @@ class TestScripts:
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
                                               colour=0xf20006)
-                        a = self.bot.say(embed=embed)
-                        self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                        a = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                         print(f'board of {multiplayer} is not empty')
                         return
                 else:
