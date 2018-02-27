@@ -189,9 +189,12 @@ class TestScripts:
             try:
                 print('Looking for user')
                 self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ID}'")
-                self.database.cur.fetchone()
+                game = self.database.cur.fetchone()
                 self.database.cur.execute("ROLLBACK;")
-                return True
+                if game is None:
+                    return False
+                else:
+                    return True
             except Exception as e:
                 print('User not found')
                 return False
@@ -209,7 +212,18 @@ class TestScripts:
             try:
                 if check_game(self, multiplayer.id):
                     print('player found')
-                    board = get_board(self, int(multiplayer.id))
+
+                    #
+                    try:
+                        board = get_board(self, int(multiplayer.id))
+                    except Exception as e:
+                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                              description=f'Error requesting user **`{multiplayer}`**"\n```py\n{print_exception()}\n{e.args}\n```',
+                                              colour=0xf20006)
+                        a = await self.bot.say(embed=embed)
+                        await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                        return
+
                     if check_if_board_empty(board):
                         print('board is empty')
                     else:
