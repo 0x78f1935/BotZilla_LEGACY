@@ -245,8 +245,8 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
 
         def update_last_message(self, ID, last_message):
-
-            self.database.cur.execute(f"UPDATE botzilla.battleship SET last_message = '{last_message.id}' where ID = '{ID}';")
+            a = self.bot.get_message(last_message)
+            self.database.cur.execute(f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = '{ID}';")
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")
 
