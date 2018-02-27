@@ -236,6 +236,7 @@ class TestScripts:
 
 
         if multiplayer:
+            print('multiplayer request found')
             # Uncomment for anti-cheat
             # if multiplayer.id == ctx.message.author.id: return
 
@@ -330,6 +331,7 @@ class TestScripts:
 
 
         # Remove leftovers
+        print('singleplayer request found')
         last_message_id = await get_last_message(self, ctx.message.author.id)
         try:
             message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
