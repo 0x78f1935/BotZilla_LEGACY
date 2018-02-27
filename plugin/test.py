@@ -298,7 +298,7 @@ class TestScripts:
                         return
                 else:
                     # If player is not yet found, create brand new player
-                    create_game(self, multiplayer.id, score_int = 0, last_message_id = None, online_bool = False, enemy_id = None)
+                    create_game(self, multiplayer.id)
                     pass
 
             # Error message if anything breaks
