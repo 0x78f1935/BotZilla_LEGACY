@@ -402,7 +402,7 @@ class TestScripts:
 
             # if no column or row show game board and info about game... TO DO
             if self.bcolumn is None or self.brow is None:
-                header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
+                header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['a']} {self.battleship_emoji_text['b']} {self.battleship_emoji_text['c']} {self.battleship_emoji_text['d']} {self.battleship_emoji_text['e']} {self.battleship_emoji_text['f']} {self.battleship_emoji_text['g']} {self.battleship_emoji_text['h']} {self.battleship_emoji_text['i']} {self.battleship_emoji_text['j']}"
                 row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                 row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                 row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
@@ -432,7 +432,7 @@ class TestScripts:
             #if user wins
             if self.brow == ship_row and self.bcolumn == ship_col:
                 board[self.brow][self.bcolumn] = "2"
-                header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
+                header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['a']} {self.battleship_emoji_text['b']} {self.battleship_emoji_text['c']} {self.battleship_emoji_text['d']} {self.battleship_emoji_text['e']} {self.battleship_emoji_text['f']} {self.battleship_emoji_text['g']} {self.battleship_emoji_text['h']} {self.battleship_emoji_text['i']} {self.battleship_emoji_text['j']}"
                 row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                 row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                 row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
@@ -474,7 +474,7 @@ class TestScripts:
 
             else:
                 if self.brow not in range(10) or self.bcolumn not in range(10):
-                    header = f"{random.choice(self.battleship_emoji_text['boats'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
+                    header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['a']} {self.battleship_emoji_text['b']} {self.battleship_emoji_text['c']} {self.battleship_emoji_text['d']} {self.battleship_emoji_text['e']} {self.battleship_emoji_text['f']} {self.battleship_emoji_text['g']} {self.battleship_emoji_text['h']} {self.battleship_emoji_text['i']} {self.battleship_emoji_text['j']}"
                     row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
@@ -501,7 +501,7 @@ class TestScripts:
                     self.database.cur.execute("ROLLBACK;")
 
                 elif board[self.brow][self.bcolumn] == '1':
-                    header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
+                    header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['a']} {self.battleship_emoji_text['b']} {self.battleship_emoji_text['c']} {self.battleship_emoji_text['d']} {self.battleship_emoji_text['e']} {self.battleship_emoji_text['f']} {self.battleship_emoji_text['g']} {self.battleship_emoji_text['h']} {self.battleship_emoji_text['i']} {self.battleship_emoji_text['j']}"
                     row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
@@ -529,7 +529,7 @@ class TestScripts:
 
                 else:
                     board[self.brow][self.bcolumn] = "3"
-                    header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['one']} {self.battleship_emoji_text['two']} {self.battleship_emoji_text['three']} {self.battleship_emoji_text['four']} {self.battleship_emoji_text['five']} {self.battleship_emoji_text['six']} {self.battleship_emoji_text['seven']} {self.battleship_emoji_text['eight']} {self.battleship_emoji_text['nine']} {self.battleship_emoji_text['ten']} "
+                    header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['a']} {self.battleship_emoji_text['b']} {self.battleship_emoji_text['c']} {self.battleship_emoji_text['d']} {self.battleship_emoji_text['e']} {self.battleship_emoji_text['f']} {self.battleship_emoji_text['g']} {self.battleship_emoji_text['h']} {self.battleship_emoji_text['i']} {self.battleship_emoji_text['j']}"
                     row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
