@@ -265,6 +265,7 @@ class TestScripts:
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                print(f'Cannot play a multiplayer with yourself {multiplayer} vs {ctx.message.author}')
                 return
 
             # Remove leftovers
