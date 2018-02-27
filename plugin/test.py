@@ -427,7 +427,7 @@ class TestScripts:
                 return
 
             # debug print
-            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {int(user_row) + 1}\nUser col: {int(user_col) + 1}')
+            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {int(self.brow) + 1}\nUser col: {int(self.bcolumn) + 1}')
 
             #if user wins
             if self.brow == ship_row and self.bcolumn == ship_col:
@@ -559,7 +559,7 @@ class TestScripts:
         # If anything goes wrong, Raise exeption
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Something went wrong, please notify me with **`{}report <error below>`**\nError:\n**```{} : {}\n\n{}```**'.format(self.config['prefix'], type(e).__name__, e, print_exception()),
+                                  description='Something went wrong, please notify me with **`{}report <error below>`**\n**```{} : {}\n\n{}```**'.format(self.config['prefix'], type(e).__name__, e, print_exception()),
                                   colour=0xf20006)
             embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
