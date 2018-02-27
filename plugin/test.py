@@ -275,7 +275,7 @@ class TestScripts:
                 if check_game(self, multiplayer.id):
                     print(f'player {multiplayer} found')
                     try:
-                        board = await get_board(self, int(multiplayer.id))
+                        board = get_board(self, int(multiplayer.id))
                     except Exception as e:
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description=f'Error requesting user **`{multiplayer}`**\n```py\n{print_exception()}\n{e.args}\n```',
@@ -362,7 +362,9 @@ class TestScripts:
         # await update_enemy(self, ctx.message.author.id, 'None', False) # Verplaatsen zodat player states offline wordt gezet nadat speler gewonnen heeft
 
         # If no game for user, Make game for user
-        if check_game(self, ctx.message.author.id) is None:
+        if check_game(self, ctx.message.author.id):
+            print('Game already exist')
+        else:
             await create_game(self, ctx.message.author.id)
 
             # make sure user input is a number when exist
