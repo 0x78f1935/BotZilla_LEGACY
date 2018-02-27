@@ -260,6 +260,7 @@ class TestScripts:
         #     enemy VARCHAR(508)
 
         if multiplayer:
+            if multiplayer.id == ctx.message.author.id: return
             try:
                 if check_game(self, multiplayer.id):
                     print(f'player {multiplayer} found')
