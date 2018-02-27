@@ -470,7 +470,9 @@ class TestScripts:
 
                 if online != 'False' and int(enemy) != 0:
                     enemy_player = await self.bot.get_user_info(int(enemy))
-                    say_score = f'{score} + 1 | {enemy_player.name} ship sank'
+                    say_score = f'{score} + 3 | {enemy_player.name} ship sank'
+                else:
+                    say_score = f'{score} + 1 | AI ship sank'
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=f"{self.battleship_emoji_text['bb']}{self.battleship_emoji_text['a']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['l']}{self.battleship_emoji_text['e']}{self.battleship_emoji_text['s']}{self.battleship_emoji_text['h']}{self.battleship_emoji_text['i']}{self.battleship_emoji_text['p']}*V1.0*\n\n**`DIRECT HIT`**\n\nScore: **`{say_score}`**\n\n"
