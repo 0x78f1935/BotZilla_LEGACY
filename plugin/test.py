@@ -117,7 +117,7 @@ class TestScripts:
         Example
             -  !!battleship G3
         Multiplayer
-            - !!battleship <COORDS for enemy player> <[player ping] | [name] | [ID]>
+            - !!battleship <COORDS> <[player ping] | [name] | [ID]>
         Example Multiplayer
             - !!battleship G3 @puffdip#5369
             - !!battleship G3 puffdip
@@ -300,7 +300,7 @@ class TestScripts:
                             update_enemy(self, multiplayer.id, ctx.message.author.id, True)
                             print(f'{ctx.message.author.name} started a match against {multiplayer}')
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                                  description=f'Started a match against **`{multiplayer}`**',
+                                                  description=f'Coords has been set\nStarted a match against **`{multiplayer}`**\n\n**`{multiplayer}`** *VS* **`{ctx.message.author.mention}`**',
                                                   colour=0xf20006)
                             a = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
