@@ -137,9 +137,8 @@ class TestScripts:
             # define the COOR
             row = COOR[1]
             column = columns[str(COOR[0]).lower()]
-            print(COOR, row, column)
 
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{row}> <{column}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{column}> <{row}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
         def print_exception():
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -167,10 +166,14 @@ class TestScripts:
             else:
                 return False
 
-        def create_game(self, ID, board_str, score_int, col_int, row_str, last_message_id, online_bool, enemy_id):
+        def create_game(self, ID = None, score_int = 0, last_message_id = None, online_bool = False, enemy_id = None):
             gamehash = random.getrandbits(128)
-            online_bool = 'False'
-            enemy_id = 'False'
+            board = []
+            for x in range(0, 10):
+                board.append(['O'] * 10)
+            row_str = random.randint(0, len(board) - 1)
+            col_int = random.randint(0, len(board[0]) - 1)
+            board_str = str(board).replace("'", "<A>").replace(",", "<C>") # make seperater for db, A for ' C for
             self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col) VALUES ('{ID}', '{gamehash}', '{board_str}', '{score_int}', '{row_str}', '{col_int}', {last_message_id}, {online_bool}, {enemy_id});")
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")
@@ -180,7 +183,6 @@ class TestScripts:
         def check_game(self, ID):
             # Check if game exist, needs user ID
             try:
-                print('Looking for user')
                 self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ID}'")
                 game = self.database.cur.fetchone()
                 self.database.cur.execute("ROLLBACK;")
@@ -189,7 +191,6 @@ class TestScripts:
                 else:
                     return True
             except Exception as e:
-                print('User not found')
                 return False
 
 
@@ -260,7 +261,8 @@ class TestScripts:
         #     enemy VARCHAR(508)
 
         if multiplayer:
-            if multiplayer.id == ctx.message.author.id: return
+            # Uncomment for anti-cheat
+            # if multiplayer.id == ctx.message.author.id: return
             try:
                 if check_game(self, multiplayer.id):
                     print(f'player {multiplayer} found')
@@ -286,15 +288,15 @@ class TestScripts:
                             print(f'{multiplayer} had already a multiplayer game going on')
                             player_in_battle(self, ctx)
                             return
-
                     else:
                         # To do - notify user who already has a game that another user wants to play.
                         # Give them the option to quit the current game they are in.
-                        print('board is not empty')
+                        print(f'board of {multiplayer} is not empty')
                         player_in_battle(self, ctx)
                         return
                 else:
                     # If player is not yet found, create brand new player
+                    create_game(self, multiplayer.id, score_int = 0, last_message_id = None, online_bool = False, enemy_id = None)
                     pass
 
             # Error message if anything breaks
