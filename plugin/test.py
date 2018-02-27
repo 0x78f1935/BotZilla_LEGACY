@@ -400,6 +400,7 @@ class TestScripts:
             ship_col = int(game[5])
             online = str(game[6])
             enemy = str(game[7])
+            print(online, enemy)
             if ctx.message.author.id in self.owner_list:
                 p = ['A','B','C','D','E','F', 'G', 'H', 'I', 'J']
                 print(int(ship_col))
@@ -560,7 +561,7 @@ class TestScripts:
                                                       f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
                                                       f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
-                    if 'False' not in str(online) and int(enemy) != 0:
+                    if 'False' not in str(online) and enemy != 0:
                         enemy_player = await self.bot.get_user_info(int(enemy))
                         embed.add_field(name='You are fighting against a player!', value=f'**`{enemy_player.name}`**')
                     embed.set_footer(text='PuffDip#5369 ©')
