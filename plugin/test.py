@@ -268,7 +268,7 @@ class TestScripts:
 
                     if check_if_board_empty(board):
                         print('board is empty')
-                        if 'False' in str(get_online()):
+                        if 'False' in str(get_online(self, multiplayer.id)):
                             print('player not yet in a online game')
                             update_COOR(self, multiplayer.id, column, row)
 
