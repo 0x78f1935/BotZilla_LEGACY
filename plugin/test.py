@@ -260,6 +260,21 @@ class TestScripts:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
 
+        def remove_command(self, ctx):
+            self.bot.delete_message(ctx.message)
+
+        def remove_leftovers(self, ctx):
+            last_message_id = get_last_message(self, ctx.message.author.id)
+            try:
+                message_2_remove = self.bot.get_message(ctx.message.channel, last_message_id[0])
+                self.bot.delete_message(message_2_remove)
+            except Exception as e:
+                pass
+            try:
+                remove_command(self, ctx)
+            except Exception as e:
+                pass
+
 
         if multiplayer:
             # Uncomment for anti-cheat
@@ -270,6 +285,7 @@ class TestScripts:
                     try:
                         board = get_board(self, int(multiplayer.id))
                     except Exception as e:
+                        remove_leftovers(self, ctx)
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description=f'Error requesting user **`{multiplayer}`**\n```py\n{print_exception()}\n{e.args}\n```',
                                               colour=0xf20006)
@@ -280,6 +296,7 @@ class TestScripts:
                     if check_if_board_empty(board):
                         print(f'board {multiplayer.id} is empty')
                         if 'False' in str(get_online(self, multiplayer.id)):
+                            remove_leftovers(self, ctx)
                             print(f'{multiplayer} not yet in a online game')
                             update_COOR(self, multiplayer.id, column, row)
                             print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
@@ -292,6 +309,7 @@ class TestScripts:
                             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                             return
                         else:
+                            remove_leftovers(self, ctx)
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                                   description='User **`{}`** has already a battle going.\nTry again later..'.format(multiplayer),
                                                   colour=0xf20006)
@@ -303,6 +321,7 @@ class TestScripts:
                     else:
                         # To do - notify user who already has a game that another user wants to play.
                         # Give them the option to quit the current game they are in.
+                        remove_leftovers(self, ctx)
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
                                               colour=0xf20006)
@@ -312,6 +331,7 @@ class TestScripts:
                         return
                 else:
                     # If player is not yet found, create brand new player
+                    remove_leftovers(self, ctx)
                     create_game(self, multiplayer.id)
                     print(f'{multiplayer} not yet in a online game')
                     update_COOR(self, multiplayer.id, column, row)
@@ -327,6 +347,7 @@ class TestScripts:
 
             # Error message if anything breaks
             except Exception as e:
+                remove_leftovers(self, ctx)
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=f'Error requesting user **`{multiplayer}`**"\n```py\n{print_exception()}\n{e.args}\n```',
                                       colour=0xf20006)
@@ -344,12 +365,9 @@ class TestScripts:
         # last_message_id = self.database.cur.fetchone()
         # self.database.cur.execute("ROLLBACK;")
         #
-        last_message_id = get_last_message(self, ctx.message.author.id)
-        try:
-            message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
-            await self.bot.delete_message(message_2_remove)
-        except Exception as e:
-            pass
+
+        # Remove leftovers
+        remove_leftovers(self, ctx)
         #
         # If no game for user, Make game for user
         # if game is None:
