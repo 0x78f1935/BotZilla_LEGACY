@@ -485,38 +485,7 @@ class TestScripts:
                 self.database.cur.execute("ROLLBACK;")
 
             else:
-                if self.brow not in range(10) or self.bcolumn not in range(10):
-                    header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['a']} {self.battleship_emoji_text['b']} {self.battleship_emoji_text['c']} {self.battleship_emoji_text['d']} {self.battleship_emoji_text['e']} {self.battleship_emoji_text['f']} {self.battleship_emoji_text['g']} {self.battleship_emoji_text['h']} {self.battleship_emoji_text['i']} {self.battleship_emoji_text['j']}"
-                    row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
-                    row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
-                    row_3 = str(" ".join(board[2])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
-                    row_4 = str(" ".join(board[3])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
-                    row_5 = str(" ".join(board[4])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
-                    row_6 = str(" ".join(board[5])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
-                    row_7 = str(" ".join(board[6])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
-                    row_8 = str(" ".join(board[7])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
-                    row_9 = str(" ".join(board[8])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
-                    row_10 = str(" ".join(board[9])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                          description=f"**`Out of range`**\nScore: **`{score}`**\n"
-                                                      f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
-                                                      f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
-                                          colour=0xf20006)
-                    if online != 'False' and int(enemy) != 0:
-                        enemy_player = await self.bot.get_user_info(int(enemy))
-                        embed.add_field(name='You are fighting against a player!', value=f'**`{enemy_player.name}`**')
-
-                    embed.set_footer(text='PuffDip#5369 ©')
-                    embed.set_thumbnail(url=random.choice(self.battleship_emoji_text['unexploded_boats']))
-                    a = await self.bot.say(embed=embed)
-                    await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-
-                    self.database.cur.execute(
-                        f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = {id} and gamehash = '{gamehash}';")
-                    self.database.conn.commit()
-                    self.database.cur.execute("ROLLBACK;")
-
-                elif board[self.brow][self.bcolumn] == '1':
+                if board[self.brow][self.bcolumn] == '1':
                     header = f"{random.choice(self.battleship_emoji_text['boats_emoji'])} {self.battleship_emoji_text['a']} {self.battleship_emoji_text['b']} {self.battleship_emoji_text['c']} {self.battleship_emoji_text['d']} {self.battleship_emoji_text['e']} {self.battleship_emoji_text['f']} {self.battleship_emoji_text['g']} {self.battleship_emoji_text['h']} {self.battleship_emoji_text['i']} {self.battleship_emoji_text['j']}"
                     row_1 = str(" ".join(board[0])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                     row_2 = str(" ".join(board[1])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
