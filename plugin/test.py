@@ -267,7 +267,8 @@ class TestScripts:
                 self.database.cur.execute("ROLLBACK;")
 
         def remove_command(self, ctx):
-            self.bot.delete_message(ctx.message)
+            m = self.bot.get_message(ctx.message.channel, ctx.message.id)
+            self.bot.delete_message(m)
 
         def remove_leftovers(self, ctx):
             last_message_id = get_last_message(self, ctx.message.author.id)
