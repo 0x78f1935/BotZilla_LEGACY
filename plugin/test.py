@@ -286,24 +286,22 @@ class TestScripts:
                             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                             return
                         else:
-                            print(f'{multiplayer} had already a multiplayer game going on')
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                                   description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
                                                   colour=0xf20006)
-                            print(f'{multiplayer} had already a multiplayer game going on')
                             a = self.bot.say(embed=embed)
-                            print(f'{multiplayer} had already a multiplayer game going on')
                             self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                            print(f'{multiplayer} had already a multiplayer game going on')
                             return
                     else:
                         # To do - notify user who already has a game that another user wants to play.
                         # Give them the option to quit the current game they are in.
-                        print(f'board of {multiplayer} is not empty')
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
                                               colour=0xf20006)
                         a = self.bot.say(embed=embed)
                         self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                        print(f'board of {multiplayer} is not empty')
                         return
                 else:
                     # If player is not yet found, create brand new player
