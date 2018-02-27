@@ -172,9 +172,9 @@ class TestScripts:
 
         def get_board(self, ID):
             self.database.cur.execute(f"select board from botzilla.battleship where ID = '{ID}';")
-            boardgame = self.database.conn.fetchone()
+            boardgame = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
-            board = ast.literal_eval(str(boardgame[0]).replace("<A>", "'").replace('<C>', ','))
+            board = ast.literal_eval(str(boardgame[0][0]).replace("<A>", "'").replace('<C>', ','))
             return board
 
 
