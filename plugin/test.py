@@ -375,7 +375,7 @@ class TestScripts:
                 last_message_id = 0
                 online_bool = 'False'
                 enemy_id = 0
-                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col, last_message, online, enemy) VALUES ('{ID}', '{gamehash}', '{board_str}', '{score_int}', '{row_str}', '{col_int}', {last_message_id}, {online_bool}, {enemy_id});")
+                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col, last_message, online, enemy) VALUES ('{ctx.message.author.id}', '{gamehash}', '{board_str}', '{score_int}', '{row_str}', '{col_int}', {last_message_id}, {online_bool}, {enemy_id});")
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
 
@@ -559,7 +559,7 @@ class TestScripts:
         # If anything goes wrong, Raise exeption
         except Exception as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Something went wrong, please notify me with **`{}report <How the error came up>`**\nError:\n**``{} : {}``**'.format(self.config['prefix'], type(e).__name__, e),
+                                  description='Something went wrong, please notify me with **`{}report <error below>`**\nError:\n**```{} : {}\n\n{}```**'.format(self.config['prefix'], type(e).__name__, e, print_exception()),
                                   colour=0xf20006)
             embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
