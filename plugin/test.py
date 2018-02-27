@@ -266,9 +266,6 @@ class TestScripts:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
 
-        def remove_command(self, ctx):
-            self.bot.delete_message(ctx.message)
-
 
         if multiplayer:
             # Uncomment for anti-cheat
