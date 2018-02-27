@@ -230,8 +230,8 @@ async def on_ready():
         async with aiohttp.ClientSession() as aioclient:
             await aioclient.post(url=url, data=payload, headers=headers)
 
-    await dbimport()
-    await total_online_user_tracker()
+    bot.loop.create_task(dbimport())
+    bot.loop.create_task(total_online_user_tracker())
 
 
 @bot.event
@@ -345,6 +345,7 @@ async def on_message_edit(before, message):
 
 @bot.event
 async def on_message(message):
+    # If bot, ignore message
     if message.author.bot: return
     database.cur.execute("SELECT ID FROM botzilla.blacklist;")
     row = database.cur.fetchall()
