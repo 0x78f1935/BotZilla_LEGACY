@@ -274,11 +274,15 @@ class TestScripts:
             # Uncomment for anti-cheat
             # if multiplayer.id == ctx.message.author.id: return
 
-            # Remove last message in mp
+            # Remove leftovers
             last_message_id = get_last_message(self, ctx.message.author.id)
             try:
                 message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
                 await self.bot.delete_message(message_2_remove)
+            except Exception as e:
+                print(print_exception())
+            try:
+                await self.bot.delete_message(ctx.message)
             except Exception as e:
                 print(print_exception())
 
@@ -372,6 +376,10 @@ class TestScripts:
         try:
             message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
             await self.bot.delete_message(message_2_remove)
+        except Exception as e:
+            print(print_exception())
+        try:
+            await self.bot.delete_message(ctx.message)
         except Exception as e:
             print(print_exception())
         #
