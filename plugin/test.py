@@ -174,7 +174,7 @@ class TestScripts:
             row_str = random.randint(0, len(board) - 1)
             col_int = random.randint(0, len(board[0]) - 1)
             board_str = str(board).replace("'", "<A>").replace(",", "<C>") # make seperater for db, A for ' C for
-            self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col) VALUES ('{ID}', '{gamehash}', '{board_str}', '{score_int}', '{row_str}', '{col_int}', {last_message_id}, {online_bool}, {enemy_id});")
+            self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col, last_message, online, enemy) VALUES ('{ID}', '{gamehash}', '{board_str}', '{score_int}', '{row_str}', '{col_int}', {last_message_id}, {online_bool}, {enemy_id});")
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")
             return
