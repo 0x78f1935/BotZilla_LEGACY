@@ -138,7 +138,7 @@ class TestScripts:
             self.brow = int(COOR[1]) - 1
             self.bcolumn = int(columns[str(COOR[0]).lower()]) - 1
 
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{self.bcolumn + 1}> <{self.brow + 1}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{COOR}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
         def print_exception():
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -427,7 +427,7 @@ class TestScripts:
                 return
 
             # debug print
-            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {int(self.brow) + 1}\nUser col: {int(self.bcolumn) + 1}')
+            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship: {COOR}\n###\nUser row: {int(self.brow) + 1}\nUser col: {int(self.bcolumn) + 1}')
 
             #if user wins
             if self.brow == ship_row and self.bcolumn == ship_col:
