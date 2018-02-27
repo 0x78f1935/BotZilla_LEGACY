@@ -275,11 +275,11 @@ class TestScripts:
                 message_2_remove = self.bot.get_message(ctx.message.channel, last_message_id[0])
                 self.bot.delete_message(message_2_remove)
             except Exception as e:
-                pass
+                print(print_exception())
             try:
                 remove_command(self, ctx)
             except Exception as e:
-                pass
+                print(print_exception())
 
 
         if multiplayer:
