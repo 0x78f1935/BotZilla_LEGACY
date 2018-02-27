@@ -171,7 +171,7 @@ class TestScripts:
 
 
         def get_board(self, ID):
-            self.database.cur.execute(f"select board from botzilla.battleship where ID = '{ID}';")
+            self.database.cur.execute(f"select board from botzilla.battleship where ID = {ID};")
             boardgame = self.database.conn.fetchone()
             self.database.cur.execute("ROLLBACK;")
             board = ast.literal_eval(str(boardgame[0]).replace("<A>", "'").replace('<C>', ','))
@@ -191,10 +191,9 @@ class TestScripts:
 
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=f'Could not find {multiplayer}. Use **`{self.config["prefix"]}help battleship`** for more information\n{e}',
+                                      description=f'Could not find {multiplayer}. Use **`{self.config["prefix"]}help battleship`** for more information\n{print_exception()}',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
-                print(print_exception())
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
