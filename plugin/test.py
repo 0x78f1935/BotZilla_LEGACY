@@ -255,6 +255,18 @@ class TestScripts:
                 self.database.cur.execute("ROLLBACK;")
 
 
+        # If no game for user, Make game for user
+        self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ID}';")
+        game = self.database.cur.fetchone()
+        self.database.cur.execute("ROLLBACK;")
+        if game is None:
+            create_game(self, ctx.message.author.id)
+            print(f'{multiplayer} not yet in a game')
+            update_COOR(self, multiplayer.id, self.bcolumn, self.brow)
+            print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
+            print(f'Game created for {ctx.message.author.name}')
+
+
         if multiplayer:
             # Uncomment for anti-cheat
             # if multiplayer.id == ctx.message.author.id: return
@@ -362,18 +374,6 @@ class TestScripts:
 
             # await update_enemy(self, ctx.message.author.id, 'None', False) # Verplaatsen zodat player states offline wordt gezet nadat speler gewonnen heeft
 
-            # If no game for user, Make game for user
-            self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ID}';")
-            game = self.database.cur.fetchone()
-            self.database.cur.execute("ROLLBACK;")
-            if game is None:
-                create_game(self, ctx.message.author.id)
-                print(f'{multiplayer} not yet in a game')
-                update_COOR(self, multiplayer.id, self.bcolumn, self.brow)
-                print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
-                print(f'Game created for {ctx.message.author.name}')
-            else:
-                print('Game already exist')
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
