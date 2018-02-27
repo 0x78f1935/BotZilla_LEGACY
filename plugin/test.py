@@ -140,16 +140,7 @@ class TestScripts:
             print(COOR, row, column)
 
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{row}> <{column}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        # botzilla.battleship
-        #     ID bigserial primary key,
-        #     gamehash varchar(508),
-        #     board varchar(1700),
-        #     score varchar(508),
-        #     ship_row varchar(508),
-        #     ship_col varchar(508),
-        #     last_message varchar(508),
-        #     online VARCHAR(508),
-        #     enemy VARCHAR(508)
+
         def print_exception():
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
@@ -207,6 +198,50 @@ class TestScripts:
             board = ast.literal_eval(str(boardgame[2]).replace("<A>", "'").replace('<C>', ','))
             return board
 
+        def update_gamehash(self, ID):
+            gamehash = random.getrandbits(128)
+            self.database.cur.execute(f"UPDATE botzilla.battleship SET gamehash = '{gamehash}' where ID = '{ID}';")
+            self.database.conn.commit()
+            self.database.cur.execute("ROLLBACK;")
+
+        def update_board(self, ID, board):
+
+            self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board}' where ID = '{ID}';")
+            self.database.conn.commit()
+            self.database.cur.execute("ROLLBACK;")
+
+        def update_score(self, ID, score):
+
+            self.database.cur.execute(f"UPDATE botzilla.battleship SET score = '{score}' where ID = '{ID}';")
+            self.database.conn.commit()
+            self.database.cur.execute("ROLLBACK;")
+
+        def update_COOR(self, ID, col, row):
+
+            self.database.cur.execute(f"UPDATE botzilla.battleship SET ship_row = '{row}', ship_col = '{col}' where ID = '{ID}';")
+            self.database.conn.commit()
+            self.database.cur.execute("ROLLBACK;")
+
+        def update_enemy(self, ID, enemy, online):
+            if online:
+                self.database.cur.execute(f"UPDATE botzilla.battleship SET enemy = '{enemy}', online = 'True' where ID = '{ID}';")
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+            else:
+                self.database.cur.execute(f"UPDATE botzilla.battleship SET enemy = '{enemy}', online = 'False' where ID = '{ID}';")
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+
+        # botzilla.battleship
+        #     ID bigserial primary key,
+        #     gamehash varchar(508),
+        #     board varchar(1700),
+        #     score varchar(508),
+        #     ship_row varchar(508),
+        #     ship_col varchar(508),
+        #     last_message varchar(508),
+        #     online VARCHAR(508),
+        #     enemy VARCHAR(508)
 
         if multiplayer:
             try:
@@ -226,7 +261,12 @@ class TestScripts:
 
                     if check_if_board_empty(board):
                         print('board is empty')
+
+
+
                     else:
+                        # To do - notify user who already has a game that another user wants to play.
+                        # Give them the option to quit the current game they are in.
                         print('board is not empty')
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                               description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
@@ -234,10 +274,11 @@ class TestScripts:
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                         return
+                else:
+                    # If player is not yet found, create brand new player
+                    pass
 
-                    # To do - notify user who already has a game that another user wants to play.
-                    # Give them the option to quit the current game they are in.
-
+            # Error message if anything breaks
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=f'Error requesting user **`{multiplayer}`**"\n```py\n{print_exception()}\n{e.args}\n```',
