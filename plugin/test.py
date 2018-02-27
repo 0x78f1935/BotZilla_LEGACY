@@ -169,6 +169,8 @@ class TestScripts:
 
         def create_game(self, ID, board_str, score_int, col_int, row_str, last_message_id, online_bool, enemy_id):
             gamehash = random.getrandbits(128)
+            online_bool = 'False'
+            enemy_id = 'False'
             self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col) VALUES ('{ID}', '{gamehash}', '{board_str}', '{score_int}', '{row_str}', '{col_int}', {last_message_id}, {online_bool}, {enemy_id});")
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")
@@ -197,6 +199,12 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
             board = ast.literal_eval(str(boardgame[2]).replace("<A>", "'").replace('<C>', ','))
             return board
+
+        def get_online(self, ID):
+            self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ID}';")
+            online = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            return online
 
         def update_gamehash(self, ID):
             gamehash = random.getrandbits(128)
@@ -232,6 +240,7 @@ class TestScripts:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
 
+
         # botzilla.battleship
         #     ID bigserial primary key,
         #     gamehash varchar(508),
@@ -247,8 +256,6 @@ class TestScripts:
             try:
                 if check_game(self, multiplayer.id):
                     print('player found')
-
-                    #
                     try:
                         board = get_board(self, int(multiplayer.id))
                     except Exception as e:
@@ -261,6 +268,10 @@ class TestScripts:
 
                     if check_if_board_empty(board):
                         print('board is empty')
+                        if 'False' in str(get_online()):
+                            print('player not yet in a online game')
+                            update_COOR(self, multiplayer.id, column, row)
+
 
 
 
