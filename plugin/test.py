@@ -135,8 +135,8 @@ class TestScripts:
                 return
 
             # define the COOR
-            self.brow = int(COOR[1])
-            self.bcolumn = columns[str(COOR[0]).lower()]
+            self.brow = int(COOR[1]) - 1
+            self.bcolumn = int(columns[str(COOR[0]).lower()]) - 1
 
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{self.bcolumn}> <{self.brow}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
