@@ -300,7 +300,7 @@ class TestScripts:
                             update_enemy(self, multiplayer.id, ctx.message.author.id, True)
                             print(f'{ctx.message.author.name} started a match against {multiplayer}')
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                                  description=f'Coords has been set\nStarted a match against **`{multiplayer}`**\n\n**`{multiplayer}`** *VS* **`{ctx.message.author}`**',
+                                                  description=f'Coords has been set\nStarted a match against **`{multiplayer}`**\n\n**`{multiplayer}`** :vs: **`{ctx.message.author}`**',
                                                   colour=0xf20006)
                             a = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
