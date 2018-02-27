@@ -290,7 +290,9 @@ class TestScripts:
                             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                                   description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
                                                   colour=0xf20006)
+                            print(f'{multiplayer} had already a multiplayer game going on')
                             a = self.bot.say(embed=embed)
+                            print(f'{multiplayer} had already a multiplayer game going on')
                             self.bot.add_reaction(a, self.emojiUnicode['warning'])
                             return
                     else:
