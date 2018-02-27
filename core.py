@@ -349,6 +349,7 @@ async def on_message_edit(before, message):
 
 @bot.event
 async def on_message(message):
+    print(message.content)
     if message.author.bot: return
 
     database.cur.execute("SELECT ID FROM botzilla.blacklist;")
@@ -436,6 +437,7 @@ async def on_message(message):
         total = str(message.content).lower().count('gay')
         database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'gay', total = (total+{}) where swearword = 'gay';".format(total))
         database.cur.execute("ROLLBACK;")
+
 
     await bot.process_commands(message)
 
