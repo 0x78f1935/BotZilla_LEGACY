@@ -30,8 +30,7 @@ class TestScripts:
         self.exchange = self.tmp_config['exchange']
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
-        self.bcolumn = None
-        self.brow = None
+
         try:
             self.database = Database(self.bot)
             self.database_file_found = True
@@ -135,10 +134,14 @@ class TestScripts:
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
                 return
-
             # define the COOR
             self.brow = int(COOR[1]) - 1
             self.bcolumn = int(columns[str(COOR[0]).lower()]) - 1
+        else:
+            self.bcolumn = None
+            self.brow = None
+
+
 
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{COOR}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
