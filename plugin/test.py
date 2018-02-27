@@ -277,11 +277,11 @@ class TestScripts:
                 message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
                 await self.bot.delete_message(message_2_remove)
             except Exception as e:
-                print(print_exception())
+                pass
             try:
                 await self.bot.delete_message(ctx.message)
             except Exception as e:
-                print(print_exception())
+                pass
 
             try:
                 if check_game(self, multiplayer.id):
@@ -322,7 +322,7 @@ class TestScripts:
                             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                             print(f'{multiplayer} had already a multiplayer game going on')
                             return
-                    else:
+                    elif not check_if_board_empty(board):
                         # To do - notify user who already has a game that another user wants to play.
                         # Give them the option to quit the current game they are in.
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -376,11 +376,11 @@ class TestScripts:
             message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
             await self.bot.delete_message(message_2_remove)
         except Exception as e:
-            print(print_exception())
+            pass
         try:
             await self.bot.delete_message(ctx.message)
         except Exception as e:
-            print(print_exception())
+            pass
         #
         # If no game for user, Make game for user
         # if game is None:
