@@ -407,19 +407,19 @@ class TestScripts:
                 return
 
             # make sure user input is a number when exist
-            try:
-                user_row = int(row) - 1
-                user_col = int(column) - 1
-            except Exception as e:
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Please make sure the column and row you provided are numbers',
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['error'])
-                self.database.cur.execute(f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = {id} and gamehash = '{gamehash}';")
-                self.database.conn.commit()
-                self.database.cur.execute("ROLLBACK;")
-                return
+            # try:
+            user_row = int(row) - 1
+            user_col = int(column) - 1
+            # except Exception as e:
+            #     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+            #                           description='Please make sure the column and row you provided are numbers',
+            #                           colour=0xf20006)
+            #     a = await self.bot.say(embed=embed)
+            #     await self.bot.add_reaction(a, self.emojiUnicode['error'])
+            #     self.database.cur.execute(f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = {id} and gamehash = '{gamehash}';")
+            #     self.database.conn.commit()
+            #     self.database.cur.execute("ROLLBACK;")
+            #     return
 
             # debug print
             print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {int(user_row) + 1}\nUser col: {int(user_col) + 1}')
