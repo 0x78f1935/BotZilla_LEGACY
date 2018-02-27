@@ -101,7 +101,7 @@ class TestScripts:
 #######################################################################################################################
 
     @commands.command(pass_context=True, aliases=["b2"])
-    async def battleship2(self, ctx, COOR = None, *, multiplayer : discord.Member = None):
+    async def battleship2(self, ctx, *, COOR = None, multiplayer : discord.Member = None):
         """
         dev version
         """
@@ -183,7 +183,6 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
             return
 
-
         def check_game(self, ID):
             # Check if game exist, needs user ID
             try:
@@ -196,7 +195,6 @@ class TestScripts:
                     return True
             except Exception as e:
                 return False
-
 
         def get_board(self, ID):
             self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ID}';")
@@ -220,24 +218,6 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
             return last_message
 
-        def update_gamehash(self, ID):
-            gamehash = random.getrandbits(128)
-            self.database.cur.execute(f"UPDATE botzilla.battleship SET gamehash = '{gamehash}' where ID = '{ID}';")
-            self.database.conn.commit()
-            self.database.cur.execute("ROLLBACK;")
-
-        def update_board(self, ID, board):
-
-            self.database.cur.execute(f"UPDATE botzilla.battleship SET board = '{board}' where ID = '{ID}';")
-            self.database.conn.commit()
-            self.database.cur.execute("ROLLBACK;")
-
-        def update_score(self, ID, score):
-
-            self.database.cur.execute(f"UPDATE botzilla.battleship SET score = '{score}' where ID = '{ID}';")
-            self.database.conn.commit()
-            self.database.cur.execute("ROLLBACK;")
-
         def update_COOR(self, ID, col, row):
             print(ID, col, row)
             self.database.cur.execute(f"UPDATE botzilla.battleship SET ship_row = '{row}', ship_col = '{col}' where ID = '{ID}';")
@@ -253,7 +233,6 @@ class TestScripts:
                 self.database.cur.execute(f"UPDATE botzilla.battleship SET enemy = '{enemy}', online = 'False' where ID = '{ID}';")
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
-
 
         # If no game for user, Make game for user
         self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ID}';")
