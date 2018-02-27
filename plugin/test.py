@@ -358,8 +358,11 @@ class TestScripts:
 
         # await update_enemy(self, ctx.message.author.id, 'None', False) # Verplaatsen zodat player states offline wordt gezet nadat speler gewonnen heeft
 
+        #  Check if game exist
+        game = check_game(self, ctx.message.author.id)
+
         # If no game for user, Make game for user
-        if not check_game(self, ctx.message.author.id):
+        if not game:
             await create_game(self, ctx.message.author.id)
 
             # make sure user input is a number when exist
