@@ -332,7 +332,9 @@ class TestScripts:
 
         # Remove leftovers
         print('singleplayer request found')
-        last_message_id = await get_last_message(self, ctx.message.author.id)
+        self.database.cur.execute(f"select last_message from botzilla.battleship where ID = {ctx.message.author.id};")
+        last_message_id = self.database.cur.fetchone()
+        self.database.cur.execute("ROLLBACK;")
         try:
             message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
             await self.bot.delete_message(message_2_remove)
