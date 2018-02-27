@@ -445,12 +445,6 @@ async def on_message(message):
         database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'gay', total = (total+{}) where swearword = 'gay';".format(total))
         database.cur.execute("ROLLBACK;")
 
-    if '406908371246252052' in message.server.id:
-        if re.search(r'(https?://)?(www.)?discord(app.com/(invite|oauth2)|.gg|.io)/[\w\d_\-?=&/]+', message.content):
-            await bot.delete_message(message)
-            ads = bot.get_channel('406922367093309443')
-            await bot.send_message(ads, str(message.content).replace('@', ''))
-
     if not str(message.content).startswith(config['prefix']): return
 
     await bot.process_commands(message)
