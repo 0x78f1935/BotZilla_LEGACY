@@ -350,7 +350,6 @@ async def on_message_edit(before, message):
 @bot.event
 async def on_message(message):
     if message.author.bot: return
-    print(message.content)
     database.cur.execute("SELECT ID FROM botzilla.blacklist;")
     row = database.cur.fetchall()
     row = str(row).replace('[', '').replace('(', '').replace(']', '').replace(',', '').replace(')', '')
@@ -378,7 +377,7 @@ async def on_message(message):
             return
         else:
             return
-
+    print(message.content)
     try:
         if str(message.author.id) in str(muted[0]):
             try:
@@ -390,7 +389,7 @@ async def on_message(message):
                 return
     except Exception as e:
         pass
-
+    print(message.content)
     low_key_message = str(message.content).lower()
     if 'shit' in low_key_message:
         total = str(message.content).lower().count('shit')
@@ -437,7 +436,7 @@ async def on_message(message):
         database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'gay', total = (total+{}) where swearword = 'gay';".format(total))
         database.cur.execute("ROLLBACK;")
 
-
+    print(message.content)
     await bot.process_commands(message)
 
 
