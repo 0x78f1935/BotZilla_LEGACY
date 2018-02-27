@@ -117,8 +117,16 @@ class TestScripts:
         if COOR:
             columns = {"a" : 1, "b" : 2, "c" : 3, "d" : 4, "e" : 5, "f" : 6, "g" : 7, "h" : 8, "i" : 9, "j" : 10}
             COOR = re.findall(r'[A-Za-z]|-?\d+\.\d+|\d+', str(COOR))
+            if COOR[1] > 10 or str(COOR[0]).lower() not in columns.keys():
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=f'To become a pirate, men have to read the map: **`{self.config["prefix"]}help battleship`**',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                return
+
             row = COOR[1]
-            column = columns[(COOR[0]).lower()]
+            column = columns[str(COOR[0]).lower()]
             print(COOR, row, column)
 
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{row}> <{column}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
