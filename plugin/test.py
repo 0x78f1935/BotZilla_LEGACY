@@ -199,7 +199,7 @@ class TestScripts:
 
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=f'Could not find {multiplayer}. Use **`{self.config["prefix"]}help battleship`** for more information\n{print_exception()}',
+                                      description=f'Error requesting user **`{multiplayer}`**"\n```py\n{print_exception()}\n{e.args}\n```',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
