@@ -7,6 +7,7 @@ import aiohttp
 import ast
 import os
 import sys
+import re
 try:
     from plugin.database import Database
 except Exception as e:
@@ -100,7 +101,7 @@ class TestScripts:
 #######################################################################################################################
 
     @commands.command(pass_context=True, aliases=["b2"])
-    async def battleship2(self, ctx, column=None, row=None, multiplayer : discord.Member = None):
+    async def battleship2(self, ctx, COOR : str = None, multiplayer : discord.Member = None):
         """
         dev version
         """
@@ -178,6 +179,8 @@ class TestScripts:
             return board
 
 
+
+
         if multiplayer:
             try:
                 if check_game(self, multiplayer.id):
@@ -205,6 +208,7 @@ class TestScripts:
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
                 return
 
+        print(COOR)
 
 
         #
