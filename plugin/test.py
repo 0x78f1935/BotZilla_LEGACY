@@ -241,7 +241,6 @@ class TestScripts:
             return last_message
 
         def update_COOR(self, ID, col, row):
-            print(ID, col, row)
             self.database.cur.execute(f"UPDATE botzilla.battleship SET ship_row = '{row}', ship_col = '{col}' where ID = '{ID}';")
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")
@@ -260,7 +259,13 @@ class TestScripts:
         if multiplayer:
             print('multiplayer request found')
             # Uncomment for anti-cheat
-            # if multiplayer.id == ctx.message.author.id: return
+            if multiplayer.id == ctx.message.author.id:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='You cannot play a multiplayer game with yourself :smirk:',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                return
 
             # Remove leftovers
             last_message_id = get_last_message(self, ctx.message.author.id)
