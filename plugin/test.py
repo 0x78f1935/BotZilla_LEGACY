@@ -138,7 +138,7 @@ class TestScripts:
             self.brow = int(COOR[1]) - 1
             self.bcolumn = int(columns[str(COOR[0]).lower()]) - 1
 
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{self.bcolumn}> <{self.brow}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{self.bcolumn + 1}> <{self.brow + 1}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
         def print_exception():
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -266,6 +266,7 @@ class TestScripts:
             print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
             print(f'Game created for {ctx.message.author.name}')
 
+        print(multiplayer, game)
 
         if multiplayer:
             # Uncomment for anti-cheat
