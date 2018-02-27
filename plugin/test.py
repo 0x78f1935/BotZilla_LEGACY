@@ -298,7 +298,7 @@ class TestScripts:
                                               colour=0xf20006)
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, self.emojiUnicode['error'])
-                        update_last_message(self, ctx)
+                        update_last_message(self, ctx, a.id)
                         return
 
                     if check_if_board_empty(board):
@@ -325,7 +325,7 @@ class TestScripts:
                             a = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                             print(f'{multiplayer} had already a multiplayer game going on')
-                            update_last_message(self, ctx)
+                            update_last_message(self, ctx, a.id)
                             return
                     else:
                         # To do - notify user who already has a game that another user wants to play.
@@ -337,7 +337,7 @@ class TestScripts:
                         a = self.bot.say(embed=embed)
                         self.bot.add_reaction(a, self.emojiUnicode['warning'])
                         print(f'board of {multiplayer} is not empty')
-                        update_last_message(self, ctx)
+                        update_last_message(self, ctx, a.id)
                         return
                 else:
                     # If player is not yet found, create brand new player
@@ -363,7 +363,7 @@ class TestScripts:
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
-                update_last_message(self, ctx)
+                update_last_message(self, ctx, a.id)
                 return
 
 
