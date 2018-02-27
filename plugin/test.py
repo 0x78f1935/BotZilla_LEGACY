@@ -101,7 +101,7 @@ class TestScripts:
 #######################################################################################################################
 
     @commands.command(pass_context=True, aliases=["b2"])
-    async def battleship2(self, ctx, COOR : str = None, multiplayer : discord.Member = None):
+    async def battleship2(self, ctx, COOR = None, multiplayer : discord.Member = None):
         """
         dev version
         """
@@ -178,7 +178,7 @@ class TestScripts:
             board = ast.literal_eval(str(boardgame[2]).replace("<A>", "'").replace('<C>', ','))
             return board
 
-
+        COOR = re.findall(r'[A-Za-z]|-?\d+\.\d+|\d+', str(COOR))
 
 
         if multiplayer:
@@ -208,7 +208,6 @@ class TestScripts:
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
                 return
 
-        print(COOR)
 
 
         #
