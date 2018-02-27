@@ -471,7 +471,7 @@ class TestScripts:
                 col_int = random.randint(0, len(board[0]) - 1)
                 online_bool = 'False'
                 enemy_id = 0
-                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, board, score, ship_row, ship_col, online, enemy) VALUES ('{ID}', '{board_str}', '{score_int}', '{row_str}', '{col_int}', {online_bool}, {enemy_id});")
+                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, board, score, ship_row, ship_col, online, enemy) VALUES ('{ctx.message.author.id}', '{board_str}', '{score_int}', '{row_str}', '{col_int}', {online_bool}, {enemy_id});")
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
 
