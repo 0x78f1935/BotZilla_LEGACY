@@ -135,7 +135,7 @@ class TestScripts:
                 return
 
             # define the COOR
-            row = COOR[1]
+            row = int(COOR[1])
             column = columns[str(COOR[0]).lower()]
 
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{column}> <{row}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
@@ -365,16 +365,11 @@ class TestScripts:
         if check_game(self, ctx.message.author.id):
             print('Game already exist')
         else:
-            await create_game(self, ctx.message.author.id)
-
-            # make sure user input is a number when exist
-            user_row = int(row) - 1
-            user_col = int(column) - 1
-            await update_COOR(self, ctx.message.author.id, user_col, user_row)
-            print('COOR updated')
-
-
-            print(user_col, user_row)
+            create_game(self, ctx.message.author.id)
+            print(f'{multiplayer} not yet in a game')
+            update_COOR(self, multiplayer.id, column, row)
+            print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
+            print(f'Game created for {ctx.message.author.name}')
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
