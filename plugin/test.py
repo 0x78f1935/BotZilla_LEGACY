@@ -346,33 +346,33 @@ class TestScripts:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 return
-
-        # Remove leftovers
-        last_message_id = await get_last_message(self, ctx.message.author.id)
-        try:
-            message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
-            await self.bot.delete_message(message_2_remove)
-        except Exception as e:
-            pass
-        try:
-            await self.bot.delete_message(ctx.message)
-        except Exception as e:
-            pass
-
-        # await update_enemy(self, ctx.message.author.id, 'None', False) # Verplaatsen zodat player states offline wordt gezet nadat speler gewonnen heeft
-
-        # If no game for user, Make game for user
-        self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ID}';")
-        game = self.database.cur.fetchone()
-        self.database.cur.execute("ROLLBACK;")
-        if game is None:
-            create_game(self, ctx.message.author.id)
-            print(f'{multiplayer} not yet in a game')
-            update_COOR(self, multiplayer.id, column, row)
-            print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
-            print(f'Game created for {ctx.message.author.name}')
         else:
-            print('Game already exist')
+            # Remove leftovers
+            last_message_id = await get_last_message(self, ctx.message.author.id)
+            try:
+                message_2_remove = await self.bot.get_message(ctx.message.channel, last_message_id[0])
+                await self.bot.delete_message(message_2_remove)
+            except Exception as e:
+                pass
+            try:
+                await self.bot.delete_message(ctx.message)
+            except Exception as e:
+                pass
+    
+            # await update_enemy(self, ctx.message.author.id, 'None', False) # Verplaatsen zodat player states offline wordt gezet nadat speler gewonnen heeft
+
+            # If no game for user, Make game for user
+            self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ID}';")
+            game = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            if game is None:
+                create_game(self, ctx.message.author.id)
+                print(f'{multiplayer} not yet in a game')
+                update_COOR(self, multiplayer.id, column, row)
+                print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
+                print(f'Game created for {ctx.message.author.name}')
+            else:
+                print('Game already exist')
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
