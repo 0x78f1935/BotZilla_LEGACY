@@ -298,6 +298,7 @@ class TestScripts:
                                               colour=0xf20006)
                         a = await self.bot.say(embed=embed)
                         await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                        a = self.bot.get_message(ctx.message.channel, a)
                         update_last_message(self, ctx, a)
                         return
 
@@ -325,6 +326,7 @@ class TestScripts:
                             a = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                             print(f'{multiplayer} had already a multiplayer game going on')
+                            a = self.bot.get_message(ctx.message.channel, a)
                             update_last_message(self, ctx, a)
                             return
                     else:
@@ -337,6 +339,7 @@ class TestScripts:
                         a = self.bot.say(embed=embed)
                         self.bot.add_reaction(a, self.emojiUnicode['warning'])
                         print(f'board of {multiplayer} is not empty')
+                        a = self.bot.get_message(ctx.message.channel, a)
                         update_last_message(self, ctx, a)
                         return
                 else:
@@ -363,6 +366,7 @@ class TestScripts:
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
+                a = self.bot.get_message(ctx.message.channel, a)
                 update_last_message(self, ctx, a)
                 return
 
