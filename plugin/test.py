@@ -240,6 +240,13 @@ class TestScripts:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
 
+        def player_in_battle(self, ctx):
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
+                                  colour=0xf20006)
+            a = self.bot.say(embed=embed)
+            self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
 
         # botzilla.battleship
         #     ID bigserial primary key,
@@ -255,7 +262,7 @@ class TestScripts:
         if multiplayer:
             try:
                 if check_game(self, multiplayer.id):
-                    print('player found')
+                    print(f'player {multiplayer} found')
                     try:
                         board = get_board(self, int(multiplayer.id))
                     except Exception as e:
@@ -267,23 +274,23 @@ class TestScripts:
                         return
 
                     if check_if_board_empty(board):
-                        print('board is empty')
+                        print(f'board {multiplayer.id} is empty')
                         if 'False' in str(get_online(self, multiplayer.id)):
-                            print('player not yet in a online game')
+                            print(f'{multiplayer} not yet in a online game')
                             update_COOR(self, multiplayer.id, column, row)
-
-
-
+                            print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
+                            update_enemy(self, multiplayer.id, ctx.message.author.id, True)
+                            print(f'{ctx.message.author.name} started a match against {multiplayer}')
+                        else:
+                            print(f'{multiplayer} had already a multiplayer game going on')
+                            player_in_battle(self, ctx)
+                            return
 
                     else:
                         # To do - notify user who already has a game that another user wants to play.
                         # Give them the option to quit the current game they are in.
                         print('board is not empty')
-                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                              description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
-                                              colour=0xf20006)
-                        a = await self.bot.say(embed=embed)
-                        await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                        player_in_battle(self, ctx)
                         return
                 else:
                     # If player is not yet found, create brand new player
