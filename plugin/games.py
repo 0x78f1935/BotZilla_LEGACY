@@ -323,14 +323,6 @@ class Games:
             - !!battleship G3 343549587853803531
         """
 
-        if ctx.message.author.id not in self.owner_list:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Only the owner of this bot can use this command',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-
         # We need to make sure the user always give COOR as argument unless user want to see their profile
         if COOR:
             columns = {"a" : 1, "b" : 2, "c" : 3, "d" : 4, "e" : 5, "f" : 6, "g" : 7, "h" : 8, "i" : 9, "j" : 10}
