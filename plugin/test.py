@@ -398,7 +398,8 @@ class TestScripts:
             online = str(game[6])
             enemy = str(game[7])
             if ctx.message.author.id in self.owner_list:
-                print(f'ANSWER : {int(ship_row) + 1} : {int(ship_col) + 1}')
+                p = ['A','B','C','D','E','F', 'G', 'H', 'I', 'J']
+                print(f'ANSWER : {p[int(ship_col) + 1]} : {int(ship_row) + 1} ')
 
             # if no column or row show game board and info about game... TO DO
             if self.bcolumn is None or self.brow is None:
@@ -425,9 +426,6 @@ class TestScripts:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 return
-
-            # debug print
-            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\ncoor: {COOR}\nrow: {self.brow}\ncol: {self.bcolumn}###\nUser row: {int(self.brow) + 1}\nUser col: {int(self.bcolumn) + 1}')
 
             #if user wins
             if self.brow == ship_row and self.bcolumn == ship_col:
@@ -462,7 +460,7 @@ class TestScripts:
                 for x in range(0, 10):
                     board.append(['O'] * 10)
                 board_str = str(board).replace("'", "<A>").replace(",", "<C>")  # make seperater for db, A for ' C for
-                score_int += 1
+                score_int = score + 1
                 row_str = random.randint(0, len(board) - 1)
                 col_int = random.randint(0, len(board[0]) - 1)
                 online_bool = 'False'
