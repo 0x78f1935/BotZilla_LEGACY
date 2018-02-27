@@ -417,10 +417,8 @@ class TestScripts:
             ship_col = int(game[5])
             online = str(game[7])
             enemy = game[8]
-            print(online, enemy)
             if ctx.message.author.id in self.owner_list:
                 p = ['A','B','C','D','E','F', 'G', 'H', 'I', 'J']
-                print(int(ship_col))
                 print(f'ANSWER : {p[int(ship_col)]} : {int(ship_row) + 1} ')
 
             # if no column or row show game board and info about game... TO DO
