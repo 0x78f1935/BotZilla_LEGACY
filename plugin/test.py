@@ -254,9 +254,9 @@ class TestScripts:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
 
-        def player_in_battle(self, ctx):
+        def player_in_battle(self, ctx, multiplayer_VS_player):
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=f'User **`{multiplayer}`** has already a battle going.\nTry again later..',
+                                  description=f'User **`{multiplayer_VS_player}`** has already a battle going.\nTry again later..',
                                   colour=0xf20006)
             a = self.bot.say(embed=embed)
             self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -294,13 +294,13 @@ class TestScripts:
                             return
                         else:
                             print(f'{multiplayer} had already a multiplayer game going on')
-                            player_in_battle(self, ctx)
+                            player_in_battle(self, ctx, multiplayer)
                             return
                     else:
                         # To do - notify user who already has a game that another user wants to play.
                         # Give them the option to quit the current game they are in.
                         print(f'board of {multiplayer} is not empty')
-                        player_in_battle(self, ctx)
+                        player_in_battle(self, ctx, multiplayer)
                         return
                 else:
                     # If player is not yet found, create brand new player
