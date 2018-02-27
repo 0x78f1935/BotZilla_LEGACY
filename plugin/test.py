@@ -135,10 +135,10 @@ class TestScripts:
                 return
 
             # define the COOR
-            row = int(COOR[1])
-            column = columns[str(COOR[0]).lower()]
+            self.brow = int(COOR[1])
+            self.bcolumn = columns[str(COOR[0]).lower()]
 
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{column}> <{row}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!battleship2 <{self.bcolumn}> <{self.brow}> <{multiplayer}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
         def print_exception():
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -275,6 +275,7 @@ class TestScripts:
                 if check_game(self, multiplayer.id):
                     print(f'player {multiplayer} found')
                     try:
+                        await self.bot.get_user_info(multiplayer.id)
                         board = get_board(self, int(multiplayer.id))
                     except Exception as e:
                         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -291,7 +292,7 @@ class TestScripts:
                         print(f'board {multiplayer.id} is empty')
                         if 'False' in str(get_online(self, multiplayer.id)):
                             print(f'{multiplayer} not yet in a online game')
-                            await update_COOR(self, multiplayer.id, column, row)
+                            await update_COOR(self, multiplayer.id, self.bcolumn, self.brow)
                             print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
                             await update_enemy(self, multiplayer.id, ctx.message.author.id, True)
                             print(f'{ctx.message.author.name} started a match against {multiplayer}')
@@ -324,7 +325,7 @@ class TestScripts:
                     # If player is not yet found, create brand new player
                     create_game(self, multiplayer.id)
                     print(f'{multiplayer} not yet in a online game')
-                    update_COOR(self, multiplayer.id, column, row)
+                    update_COOR(self, multiplayer.id, self.bcolumn, self.brow)
                     print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
                     update_enemy(self, multiplayer.id, ctx.message.author.id, True)
                     print(f'{ctx.message.author.name} started a match against {multiplayer}')
@@ -358,7 +359,7 @@ class TestScripts:
                 await self.bot.delete_message(ctx.message)
             except Exception as e:
                 pass
-    
+
             # await update_enemy(self, ctx.message.author.id, 'None', False) # Verplaatsen zodat player states offline wordt gezet nadat speler gewonnen heeft
 
             # If no game for user, Make game for user
@@ -368,7 +369,7 @@ class TestScripts:
             if game is None:
                 create_game(self, ctx.message.author.id)
                 print(f'{multiplayer} not yet in a game')
-                update_COOR(self, multiplayer.id, column, row)
+                update_COOR(self, multiplayer.id, self.bcolumn, self.brow)
                 print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
                 print(f'Game created for {ctx.message.author.name}')
             else:
