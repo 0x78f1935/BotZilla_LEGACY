@@ -349,9 +349,8 @@ async def on_message_edit(before, message):
 
 @bot.event
 async def on_message(message):
-    print(message.content)
     if message.author.bot: return
-
+    print(message.content)
     database.cur.execute("SELECT ID FROM botzilla.blacklist;")
     row = database.cur.fetchall()
     row = str(row).replace('[', '').replace('(', '').replace(']', '').replace(',', '').replace(')', '')
