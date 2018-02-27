@@ -299,7 +299,7 @@ class TestScripts:
                             print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
                             update_enemy(self, multiplayer.id, ctx.message.author.id, True)
                             print(f'Coords has been set\nStarted a match against **`{multiplayer}`**\n\n**`{multiplayer}`** :vs: **`{ctx.message.author}`**')
-                            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                            embed = discord.Embed(title='\t',
                                                   description=f'Coords has been set\nStarted a match against **{multiplayer.mention}**\n\n**`{multiplayer}`** :vs: **`{ctx.message.author}`**\n\nIf you are stuck\nuse **`{self.config["prefix"]}help battleship`**',
                                                   colour=0xf20006)
                             a = await self.bot.say(embed=embed)
@@ -332,7 +332,7 @@ class TestScripts:
                     print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
                     update_enemy(self, multiplayer.id, ctx.message.author.id, True)
                     print(f'{ctx.message.author.name} started a match against {multiplayer}')
-                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                    embed = discord.Embed(title='\t',
                                           description=f'Coords has been set\nStarted a match against **{multiplayer.mention}**\n\n**`{multiplayer}`** :vs: **`{ctx.message.author}`**\n\nIf you are stuck\nuse **`{self.config["prefix"]}help battleship`**',
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
