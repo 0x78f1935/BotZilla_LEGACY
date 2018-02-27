@@ -344,17 +344,6 @@ class TestScripts:
                 self.database.cur.execute("ROLLBACK;")
                 return
 
-
-
-        #
-        # self.database.cur.execute(f"select * from botzilla.battleship where ID = {ctx.message.author.id};")
-        # game = self.database.cur.fetchone()
-        # self.database.cur.execute("ROLLBACK;")
-        # self.database.cur.execute(f"select last_message from botzilla.battleship where ID = {ctx.message.author.id};")
-        # last_message_id = self.database.cur.fetchone()
-        # self.database.cur.execute("ROLLBACK;")
-        #
-
         # Remove leftovers
         last_message_id = get_last_message(self, ctx.message.author.id)
         try:
@@ -389,8 +378,7 @@ class TestScripts:
             score = int(game[3])
             ship_row = int(game[4])
             ship_col = int(game[5])
-            if ctx.message.author.id in self.owner_list:
-                print(f'ANSWER : {int(ship_row) + 1} : {int(ship_col) + 1}')
+            print(f'ANSWER {ctx.message.author.name}: {int(ship_row) + 1} : {int(ship_col) + 1}')
 
             # if no column or row show game board and info about game... TO DO
             if column is None or row is None:
@@ -434,7 +422,7 @@ class TestScripts:
                 return
 
             # debug print
-            # print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {int(user_row) + 1}\nUser col: {int(user_col) + 1}')
+            print(f'ID : {id}\nGameHash : {gamehash}\nBoard : {board}\nScore : {score}\nSHIP\nship row: {ship_row}\nship_col: {ship_col}\n###\nUser row: {int(user_row) + 1}\nUser col: {int(user_col) + 1}')
 
             #if user wins
             if user_row == ship_row and user_col == ship_col:
