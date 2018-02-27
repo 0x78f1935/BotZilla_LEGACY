@@ -496,8 +496,9 @@ class Games:
                             print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
                             update_enemy(self, multiplayer.id, ctx.message.author.id, True)
                             print(f'Coords has been set\nStarted a match against **`{multiplayer}`**\n\n**`{multiplayer}`** :vs: **`{ctx.message.author}`**')
+                            header = f"{self.battleship_emoji_text['bb']}{self.battleship_emoji_text['a']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['l']}{self.battleship_emoji_text['e']}{self.battleship_emoji_text['s']}{self.battleship_emoji_text['h']}{self.battleship_emoji_text['i']}{self.battleship_emoji_text['p']}*V2.0*\n\n"
                             embed = discord.Embed(title='\t',
-                                                  description=f'Coords has been set\nStarted a match against **{multiplayer.mention}**\n\n**`{multiplayer}`** :vs: **`{ctx.message.author}`**\n\nIf you are stuck\nuse **`{self.config["prefix"]}help battleship`**',
+                                                  description=f'{header}\n\nCoords has been set\nStarted a match against **{multiplayer.mention}**\n\n**`{multiplayer}`** :vs: **`{ctx.message.author}`**\n\nIf you are stuck\nuse **`{self.config["prefix"]}help battleship`**',
                                                   colour=0xf20006)
                             a = await self.bot.say(embed=embed)
                             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -532,8 +533,9 @@ class Games:
                     print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
                     update_enemy(self, multiplayer.id, ctx.message.author.id, True)
                     print(f'{ctx.message.author.name} started a match against {multiplayer}')
+                    header = f"{self.battleship_emoji_text['bb']}{self.battleship_emoji_text['a']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['l']}{self.battleship_emoji_text['e']}{self.battleship_emoji_text['s']}{self.battleship_emoji_text['h']}{self.battleship_emoji_text['i']}{self.battleship_emoji_text['p']}*V2.0*\n\n"
                     embed = discord.Embed(title='\t',
-                                          description=f'Coords has been set\nStarted a match against **{multiplayer.mention}**\n\n**`{multiplayer}`** :vs: **`{ctx.message.author}`**\n\nIf you are stuck\nuse **`{self.config["prefix"]}help battleship`**',
+                                          description=f'{header}\n\nCoords has been set\nStarted a match against **{multiplayer.mention}**\n\n**`{multiplayer}`** :vs: **`{ctx.message.author}`**\n\nIf you are stuck\nuse **`{self.config["prefix"]}help battleship`**',
                                           colour=0xf20006)
                     a = await self.bot.say(embed=embed)
                     await self.bot.add_reaction(a, self.emojiUnicode['succes'])
