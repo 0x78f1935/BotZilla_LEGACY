@@ -234,18 +234,6 @@ class TestScripts:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
 
-        # If no game for user, Make game for user
-        self.database.cur.execute(f"select * from botzilla.battleship where ID = '{ID}';")
-        game = self.database.cur.fetchone()
-        self.database.cur.execute("ROLLBACK;")
-        if game is None:
-            create_game(self, ctx.message.author.id)
-            print(f'{ctx.message.author.name} not yet in a game')
-            update_COOR(self, multiplayer.id, self.bcolumn, self.brow)
-            print(f'COOR have been updated by enemy player, {ctx.message.author.name}')
-            print(f'Game created for {ctx.message.author.name}')
-
-        print(multiplayer, game)
 
         if multiplayer:
             # Uncomment for anti-cheat
