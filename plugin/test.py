@@ -166,19 +166,32 @@ class TestScripts:
             else:
                 return False
 
-        def create_game(self, ID = None, score_int = 0, last_message_id = None, online_bool = False, enemy_id = None):
+        def create_game(self, ID):
             gamehash = random.getrandbits(128)
             board = []
             for x in range(0, 10):
                 board.append(['O'] * 10)
+            board_str = str(board).replace("'", "<A>").replace(",", "<C>") # make seperater for db, A for ' C for
+            score_int = 0
             row_str = random.randint(0, len(board) - 1)
             col_int = random.randint(0, len(board[0]) - 1)
-            board_str = str(board).replace("'", "<A>").replace(",", "<C>") # make seperater for db, A for ' C for
+            last_message_id = 0
+            online_bool = 'False'
+            enemy_id = 0
             self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, gamehash, board, score, ship_row, ship_col, last_message, online, enemy) VALUES ('{ID}', '{gamehash}', '{board_str}', '{score_int}', '{row_str}', '{col_int}', {last_message_id}, {online_bool}, {enemy_id});")
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")
             return
-
+        # botzilla.battleship
+        #     ID bigserial primary key,
+        #     gamehash varchar(508),
+        #     board varchar(1700),
+        #     score varchar(508),
+        #     ship_row varchar(508),
+        #     ship_col varchar(508),
+        #     last_message varchar(508),
+        #     online VARCHAR(508),
+        #     enemy VARCHAR(508)
 
         def check_game(self, ID):
             # Check if game exist, needs user ID
@@ -248,17 +261,6 @@ class TestScripts:
             a = self.bot.say(embed=embed)
             self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
-
-        # botzilla.battleship
-        #     ID bigserial primary key,
-        #     gamehash varchar(508),
-        #     board varchar(1700),
-        #     score varchar(508),
-        #     ship_row varchar(508),
-        #     ship_col varchar(508),
-        #     last_message varchar(508),
-        #     online VARCHAR(508),
-        #     enemy VARCHAR(508)
 
         if multiplayer:
             # Uncomment for anti-cheat
