@@ -458,10 +458,6 @@ class TestScripts:
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-                self.database.cur.execute(f"UPDATE botzilla.battleship SET last_message = '{a.id}' where ID = {id} and gamehash = '{gamehash}';")
-                self.database.conn.commit()
-                self.database.cur.execute("ROLLBACK;")
-
                 board = []
                 for x in range(0, 10):
                     board.append(['O'] * 10)
@@ -471,10 +467,10 @@ class TestScripts:
                 col_int = random.randint(0, len(board[0]) - 1)
                 online_bool = 'False'
                 enemy_id = 0
-                self.database.cur.execute(f"INSERT INTO botzilla.battleship (ID, board, score, ship_row, ship_col, online, enemy) VALUES ('{ctx.message.author.id}', '{board_str}', '{score_int}', '{row_str}', '{col_int}', {online_bool}, {enemy_id});")
+
+                self.database.cur.execute(f"UPDATE botzilla.battleship SET last_message = '{a.id}', score = '{score_int}', board = '{board_str}', online = '{online_bool}', enemy = '{enemy_id}', ship_row = '{row_str}', ship_col = '{col_int}' where ID = {id} and gamehash = '{gamehash}';")
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
-
 
             else:
                 if self.brow not in range(10) or self.bcolumn not in range(10):
