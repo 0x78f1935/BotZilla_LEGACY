@@ -468,17 +468,18 @@ class TestScripts:
                 row_9 = str(" ".join(board[8])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
                 row_10 = str(" ".join(board[9])).replace('O', self.battleship_emoji_text['ocean']).replace('1', self.battleship_emoji_text['x']).replace('2', self.battleship_emoji_text['fire']).replace('3', self.battleship_emoji_text['bomb'])
 
+                if online != 'False' and int(enemy) != 0:
+                    enemy_player = await self.bot.get_user_info(int(enemy))
+                    score = f'{score + 1} | {enemy_player.name} ship sank'
+
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=f"{self.battleship_emoji_text['bb']}{self.battleship_emoji_text['a']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['l']}{self.battleship_emoji_text['e']}{self.battleship_emoji_text['s']}{self.battleship_emoji_text['h']}{self.battleship_emoji_text['i']}{self.battleship_emoji_text['p']}*V1.0*\n\n**`DIRECT HIT`**\n\nScore: **`{score}`**\n\n"
                                                   f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
                                                   f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                       colour=0xf20006)
-                try:
+                if online != 'False' and int(enemy) != 0:
                     enemy_player = await self.bot.get_user_info(int(enemy))
                     embed.add_field(name='A player ship sank in perfect clear water..', value=f'**`{enemy_player.name}`** lost his ship')
-                except Exception as e:
-                    print(f'{e} {print_exception()}')
-
 
                 embed.set_footer(text='PuffDip#5369 ©')
                 embed.set_thumbnail(url=random.choice(self.battleship_emoji_text['exploded_boats']))
