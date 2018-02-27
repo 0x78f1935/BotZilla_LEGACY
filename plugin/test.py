@@ -225,7 +225,7 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
 
         def update_COOR(self, ID, col, row):
-
+            print(ID, col, row)
             self.database.cur.execute(f"UPDATE botzilla.battleship SET ship_row = '{row}', ship_col = '{col}' where ID = '{ID}';")
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")
