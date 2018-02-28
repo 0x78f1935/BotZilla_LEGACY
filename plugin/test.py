@@ -132,12 +132,12 @@ class TestScripts:
             await asyncio.sleep(10)
             if int(jail_number) >= int(item[0][8]):
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                      description=f'**`{str(item[0][6])}`**',
+                                      description=f'**```{str(item[0][6])}```**',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
             else:
                 embed = discord.Embed(title='{}:'.format(str(item[0][2])),
-                                      description=f'**`{str(item[0][7])}`**',
+                                      description=f'**```{str(item[0][7])}```**',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
 
