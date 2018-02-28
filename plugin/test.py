@@ -80,6 +80,7 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
 
         print(player_profile)
+        print(player_profile[0], player_profile[1], player_profile[2], player_profile[3], player_profile[4], player_profile[5], player_profile[6], player_profile[7], player_profile[8], player_profile[9])
         requested_user = await self.bot.get_user_info(player_profile[0])
         embed = discord.Embed(title='Criminal Record of {} [CR]'.format(requested_user.name),
                               description=f'CR ID: **`{player_profile[0]}`**\nLevel: **`{player_profile[1]}`**\t\t\tExperience: **`{player_profile[2]}`**\nHighscore: **`{player_profile[3]}`**',
