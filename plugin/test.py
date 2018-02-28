@@ -86,7 +86,7 @@ class TestScripts:
                               colour=0xf20006)
         if player:
             embed.add_field(name='Location', value='*`Unknown`*')
-        else:
+        if player is None:
             embed.add_field(name='Location', value=f'*`{requested_user[5]}`*')
 
         embed.set_thumbnail(url=f'{requested_user.avatar_url}')
