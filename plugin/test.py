@@ -121,19 +121,9 @@ class TestScripts:
         if user_choice in str(item):
             jail_number = random.randint(0, 100)
             print(item)
-            print(item[0])
-            print(item[1])
-            print(item[2])
-            print(item[3])
-            print(item[4])
-            print(item[5])
-            print(item[6])
-            print(item[7])
-            print(item[8])
-            print(item[9])
-            
-            embed = discord.Embed(title='{}:'.format(str(item[2])),
-                                  description=f'*Objective :*\n**`{str(item[3])}`**',
+
+            embed = discord.Embed(title='{}:'.format(str(item[0][2])),
+                                  description=f'*Objective :*\n**`{str(item[0][3])}`**',
                                   colour=0xf20006)
             embed.set_footer(text='Next page in 10 seconds')
             a = await self.bot.say(embed=embed)
@@ -141,13 +131,13 @@ class TestScripts:
 
             await asyncio.sleep(10)
             if jail_number >= int(item[8]):
-                embed = discord.Embed(title='{}:'.format(item[2]),
-                                      description=f'**`{str(item[6])}`**',
+                embed = discord.Embed(title='{}:'.format(item[0][2]),
+                                      description=f'**`{str(item[0][6])}`**',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
             else:
-                embed = discord.Embed(title='{}:'.format(str(item[2])),
-                                      description=f'**`{str(item[7])}`**',
+                embed = discord.Embed(title='{}:'.format(str(item[0][2])),
+                                      description=f'**`{str(item[0][7])}`**',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
 
