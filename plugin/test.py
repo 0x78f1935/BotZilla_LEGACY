@@ -155,19 +155,18 @@ class TestScripts:
         self.database.cur.execute("ROLLBACK;")
         self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ctx.message.author.id}';")
         game = self.database.cur.fetchone()
-        if game[6] and str(game[7]) != '0':
-            #player in jail
-            if jail_time(self, str(game[7])):
-                embed = discord.Embed(title='{}:'.format(str(item[0][2])),
-                                      description=f'*You are in jail. You are free in : **```{jail_time(self, str(game[7]))}```**',
-                                      colour=0xf20006)
-                embed.set_footer(text='Next page in 10 seconds')
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-                
-
-
         self.database.cur.execute("ROLLBACK;")
+        if game[6] and str(game[7]) != '0':
+            print('player in jail')
+            jt = jail_time(self, str(game[7]))
+            print(jt)
+            embed = discord.Embed(title='{}:'.format(str(item[0][2])),
+                                  description=f'*You are in jail. You are free in : **```{jt}```**',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            return
+
         if user_choice in str(item):
             jail_number = random.randint(0, 100)
 
