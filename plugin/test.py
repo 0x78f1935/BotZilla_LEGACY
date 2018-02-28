@@ -145,6 +145,7 @@ class TestScripts:
             now = datetime.datetime.now()
             print(now)
             if now >= future:
+                print(now >= future)
                 return False
             else:
                 jail = str(future - now).replace('.', ' ')
