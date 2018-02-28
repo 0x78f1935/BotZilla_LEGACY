@@ -142,14 +142,13 @@ class TestScripts:
             false if not in jail
             """
             print(future)
-            now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            now = datetime.datetime.now()
             future = datetime.datetime.strptime(future, '%Y-%m-%d %H:%M:%S')
             print(now)
-            if now >= str(future):
+            if now >= future:
                 return False
             else:
-                jail = str(future - now).replace('.', ' ')
-                return jail[:8]
+                return True
 
         check_profile(self, ctx.message.author.id)
         user_choice = str(item).lower()
