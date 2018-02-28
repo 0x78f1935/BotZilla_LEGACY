@@ -110,6 +110,7 @@ venv.bak/
 *.js
 *.json
 /options/config.js
+/options/item_c.js
 /options/battleship.js
 /export/*
 /import/*
