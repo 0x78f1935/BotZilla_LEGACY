@@ -65,9 +65,10 @@ async def dbimport():
             try:
                 insert_query = 'insert into botzilla.users (ID, name) values %s'
                 psycopg2.extras.execute_values(
-                    database.cur, insert_query, import_to_db, template=None, page_size=100
+                    database.cur, insert_query, import_to_db, template=None, page_size=1000000000
                 )
                 database.cur.execute("ROLLBACK;")
+                print(import_to_db)
             except Exception as e:
                 if 'duplicate key' in str(e.args):
                     pass
