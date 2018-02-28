@@ -75,7 +75,8 @@ class TestScripts:
         else:
             # player found
             print('player found')
-            not_exist = check_profile(self, player.id)
+            not_exist = check_profile(self, ctx.message.author.id)
+
             if not_exist:
                 # create profile
                 print('No profile found')
