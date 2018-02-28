@@ -41,7 +41,7 @@ class TestScripts:
     async def criminals(self, ctx, player : discord.Member = None):
         """
         Shows your criminal record. No worry...
-        It's just a discord game. Look into !!help for more information
+        It is just a discord game. Look into !!help for more information
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!cr <{player}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         def check_profile(self, ID):
@@ -114,13 +114,18 @@ class TestScripts:
 
 
         user_choice = str(item).lower()
-        self.database.cur.execute(f"select name_item from botzilla.c_steal;")
+        self.database.cur.execute(f"select * from botzilla.c_steal where name_item = '{user_choice}';")
         item = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
         if user_choice in str(item):
             print(item)
         else:
-            print(f'{user_choice} not found')
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='You could find nothing to steal..\nYou decide to take a walk and observe the erea.',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, '\U0001f6b6')
+            return
 
 
 
