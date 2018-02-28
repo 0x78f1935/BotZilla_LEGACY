@@ -189,14 +189,22 @@ class TestScripts:
             if int(jail_number) >= int(item[0][9]):
                 # win
                 experience = int(game[2]) + int(item[0][5])
+                print(f'xp: {experience}')
                 level = int(game[1])
+                print(f'lvl: {level}')
                 if int(experience) >= 100:
                     experience = 0
                     level = int(game[1]) + 1
+                print(f'xp: {experience}')
+                print(f'lvl: {level}')
                 money = int(game[4]) + int(item[0][4])
+                print(f'money: {money}')
                 jail = 'FALSE'
+                print(f'jail: {jail}')
                 jail_date = '0'
+                print(f'jail_date: {jail_date}')
                 score = int(game[3]) + int(item[0][6])
+                print(f'score: {score}')
                 query = "UPDATE botzilla.c_user SET XP = {}, score = {}, LVL {}, money = {}, jail = {}, jail_date = {} WHERE ID = '{}'".format(experience, score, level, money, jail, jail_date, ctx.message.author.id)
                 self.database.cur.execute(query)
                 self.database.conn.commit()
