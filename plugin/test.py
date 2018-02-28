@@ -67,11 +67,18 @@ class TestScripts:
             # mpplayer found
             print('multiplayer found')
             check_profile(self, player.id)
-
+            self.database.cur.execute(f"select * from botzilla.c_user where ID = '{player.id}';")
+            player_profile = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
         else:
             # player found
             print('singleplayer found')
             check_profile(self, ctx.message.author.id)
+            self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ctx.message.author.id}';")
+            player_profile = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
+        print(player_profile)
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
