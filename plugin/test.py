@@ -58,11 +58,20 @@ class TestScripts:
                 return False
 
         if player:
-            has_profile = await check_profile(self, player.id)
-            print(has_profile)
+            # If player doesnt exist
+            if check_profile(self, player.id):
+                # create profile
+                print('No profile found')
+            else:
+                #profile found
+                print('profile found')
         else:
-            has_profile = await check_profile(self, ctx.message.author.id)
-            print(has_profile)
+            if check_profile(self, player.id):
+                # create profile
+                print('No profile found')
+            else:
+                #profile found
+                print('profile found')
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
