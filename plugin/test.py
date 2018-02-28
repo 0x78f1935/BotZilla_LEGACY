@@ -214,7 +214,7 @@ class TestScripts:
                 await self.bot.edit_message(a, embed=embed)
             else:
                 # lose
-                jt = datetime.datetime.now() + datetime.timedelta(0, item[0][9])
+                jt = datetime.datetime.now() + datetime.timedelta(0, int(item[0][9]))
                 jt = str(jt.strftime('%Y-%m-%d %H:%M:%S'))
                 jail = 'TRUE'
                 query = f"UPDATE botzilla.c_user SET jail = {jail}, jail_date = '{jt}' WHERE ID = '{ctx.message.author.id}';"
