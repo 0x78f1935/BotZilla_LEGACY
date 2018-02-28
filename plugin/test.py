@@ -70,6 +70,7 @@ class TestScripts:
             self.database.cur.execute(f"select * from botzilla.c_user where ID = '{player.id}';")
             player_profile = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
+
         else:
             # player found
             print('singleplayer found')
@@ -79,6 +80,12 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
 
         print(player_profile)
+        requested_user = await self.bot.get_user_info(player_profile[0])
+        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                              description=f'The profile you requested was the profile of\n**`{requested_user.name}`**',
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
