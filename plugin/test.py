@@ -82,9 +82,12 @@ class TestScripts:
         print(player_profile)
         requested_user = await self.bot.get_user_info(player_profile[0])
         embed = discord.Embed(title='Criminal Record of {} [CR]'.format(requested_user.name),
-                              description=f'CR ID: **`{player_profile[0]}`**\nLevel: **`{player_profile[1]}`**\t\t\tExperience: **`{player_profile[2]}`**\nHighscore: **`{player_profile[3]}`**',
+                              description=f'CR ID: **`{player_profile[0]}`**',
                               colour=0xf20006)
 
+        embed.add_field(name='Level', value='*`{}`*'.format(player_profile[1]), inline=True)
+        embed.add_field(name='Experience', value='*`${},-`*'.format(player_profile[2]), inline=True)
+        embed.add_field(name='Highscore', value='*`{}`*'.format(player_profile[3]), inline=True)
         embed.add_field(name='Location', value='*`{}`*'.format(player_profile[5]), inline=True)
         embed.add_field(name='Money', value='*`${},-`*'.format(player_profile[4]), inline=True)
         embed.add_field(name='Protected', value='*`{}`*'.format(player_profile[8]), inline=True)
