@@ -59,7 +59,8 @@ async def dbimport():
             reader = csv.reader(file, delimiter=',')
             for row in reader:
                 try:
-                    row = tuple(row[0])
+                    row = str(row[0]).replace('(', '').replace(')', '')
+                    row = row.split(',')
                     print(row[0])
                     print(row[1])
                     ID = row[0]
