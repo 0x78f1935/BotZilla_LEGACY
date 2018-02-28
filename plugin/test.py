@@ -53,16 +53,15 @@ class TestScripts:
             self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ID}';")
             profile = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
-            print('query executed')
             if profile is None:
                 print('profile not found')
-                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, jail, jail_date, protected) VALUES({ctx.message.author.id}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'FALSE', '{datetime.datetime.now()}', 'TRUE')"
+                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, jail, jail_date, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'FALSE', '{int(0)}', 'TRUE')"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 print('profile created')
             else:
-                print('profile found')
+                print('profile already exist')
 
         if player:
             # mpplayer found
