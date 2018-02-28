@@ -38,8 +38,8 @@ class TestScripts:
 
 
     @commands.command(pass_context=True)
-    async def cp(self, ctx, player : discord.Member = None):
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!cprofile <{player}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+    async def cr(self, ctx, player : discord.Member = None):
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!cr <{player}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Only the owner of this bot can use this command',
@@ -81,9 +81,10 @@ class TestScripts:
 
         print(player_profile)
         requested_user = await self.bot.get_user_info(player_profile[0])
-        embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+        embed = discord.Embed(title='Criminal Record of {} [CR]'.format(requested_user.name),
                               description=f'The profile you requested was the profile of\n**`{requested_user.name}`**',
                               colour=0xf20006)
+        embed.set_footer(text=f'ID Number : {requested_user.id}')
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
