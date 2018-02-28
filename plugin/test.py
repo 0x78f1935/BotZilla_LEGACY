@@ -197,7 +197,7 @@ class TestScripts:
                 jail = 'FALSE'
                 jail_date = '0'
                 score = int(game[3]) + int(item[0][6])
-                query = f"INSERT INTO botzilla.c_user(XP, score, LVL, money, jail, jail_date) VALUES({}, {}, {}, {}, {}, {})".format(experience, score, level, money, jail, jail_date)
+                query = "INSERT INTO botzilla.c_user(XP, score, LVL, money, jail, jail_date) VALUES({}, {}, {}, {}, {}, {})".format(experience, score, level, money, jail, jail_date)
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
