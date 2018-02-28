@@ -11,6 +11,7 @@ import asyncio
 import aiohttp
 import datetime
 import psycopg2
+import psycopg2.extras
 
 try:
     from plugin.database import Database
@@ -57,22 +58,22 @@ async def dbimport():
     try:
         with open(database.database_import_location_users, 'r') as file:
             reader = csv.reader(file, delimiter=',')
+            import_to_db = []
             for row in reader:
-                try:
-                    row = str(row[0]).replace('(', '').replace(')', '')
-                    row = row.split(',')
-                    print(row[0])
-                    print(row[1])
-                    ID = row[0]
-                    Name = str(row[1]).replace("'", "").replace('"', '').replace(";", "").replace(",", "")
-                    name = Name[:1000]
-                    database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ({}, '{}'".format(ID, name))
-                    database.cur.execute("ROLLBACK;")
-                except Exception as e:
-                    if 'duplicate key' in str(e.args):
-                        pass
-                    else:
-                        print(f'{type(e).__name__} : {e}')
+                import_to_db.append(row[0])
+
+            try:
+                insert_query = 'insert into botzilla.users (ID, name) values %s'
+                psycopg2.extras.execute_values(
+                    database.cur, insert_query, import_to_db, template=None, page_size=100
+                )
+                database.cur.execute("ROLLBACK;")
+            except Exception as e:
+                if 'duplicate key' in str(e.args):
+                    pass
+                else:
+                    print(f'{type(e).__name__} : {e}')
+
     except Exception as e:
         if 'duplicate key' in str(e.args):
             pass
