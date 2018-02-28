@@ -65,7 +65,8 @@ class TestScripts:
             # mpplayer found
             print('mpplayer found')
             # If player doesnt exist
-            if check_profile(self, player.id):
+            not_exist = check_profile(self, player.id)
+            if not_exist:
                 # create profile
                 print('No profile found')
             else:
@@ -74,7 +75,8 @@ class TestScripts:
         else:
             # player found
             print('player found')
-            if check_profile(self, player.id):
+            not_exist = check_profile(self, player.id)
+            if not_exist:
                 # create profile
                 print('No profile found')
             else:
