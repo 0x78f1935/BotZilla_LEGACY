@@ -59,11 +59,11 @@ async def dbimport():
             reader = csv.reader(file, delimiter=',')
             for row in reader:
                 try:
+                    row = tuple(row[0])
                     print(row[0])
                     print(row[1])
-                    print(row[2])
-                    ID = row[1]
-                    Name = str(row[2]).replace("'", "").replace('"', '').replace(";", "").replace(",", "")
+                    ID = row[0]
+                    Name = str(row[1]).replace("'", "").replace('"', '').replace(";", "").replace(",", "")
                     name = Name[:1000]
                     database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ({}, '{}'".format(ID, name))
                     database.cur.execute("ROLLBACK;")
