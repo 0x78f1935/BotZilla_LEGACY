@@ -141,7 +141,9 @@ class TestScripts:
             true if in jail and returns remaining time
             false if not in jail
             """
+            print(future)
             now = datetime.datetime.now()
+            print(now)
             if now >= future:
                 return False
             else:
@@ -157,7 +159,7 @@ class TestScripts:
         game = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
         if game[6] and str(game[7]) != '0':
-            print('player in jail')
+            print('player in jail', str(game[7]))
             jt = jail_time(self, str(game[7]))
             print(jt)
             embed = discord.Embed(title='{}:'.format(str(item[0][2])),
