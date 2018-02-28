@@ -163,6 +163,20 @@ class TestScripts:
             print(item[0][7])
             print(item[0][8])
             print(item[0][9])
+            print(item[0][10])
+
+            print(game)
+            print(game[0])
+            print(game[1])
+            print(game[2])
+            print(game[3])
+            print(game[4])
+            print(game[5])
+            print(game[6])
+            print(game[7])
+            print(game[8])
+
+
 
 
 
