@@ -80,7 +80,6 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
 
         print(player_profile)
-        print(player_profile[0], player_profile[1], player_profile[2], player_profile[3], player_profile[4], player_profile[5], player_profile[6], player_profile[7], player_profile[8], player_profile[9])
         requested_user = await self.bot.get_user_info(player_profile[0])
         embed = discord.Embed(title='Criminal Record of {} [CR]'.format(requested_user.name),
                               description=f'CR ID: **`{player_profile[0]}`**\nLevel: **`{player_profile[1]}`**\t\t\tExperience: **`{player_profile[2]}`**\nHighscore: **`{player_profile[3]}`**',
@@ -88,7 +87,7 @@ class TestScripts:
 
         embed.add_field(name='Location', value='*`{}`*'.format(player_profile[5]), inline=True)
         embed.add_field(name='Money', value='*`${},-`*'.format(player_profile[4]), inline=True)
-        embed.add_field(name='Protected', value='*`{}`*'.format(player_profile[9]), inline=True)
+        embed.add_field(name='Protected', value='*`{}`*'.format(player_profile[8]), inline=True)
 
         embed.set_thumbnail(url=f'{requested_user.avatar_url}')
         embed.set_footer(text=f'ID Number : {requested_user.id}')
