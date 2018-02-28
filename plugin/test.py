@@ -205,27 +205,27 @@ class TestScripts:
                 print(f'jail_date: {jail_date}')
                 score = int(game[3]) + int(item[0][6])
                 print(f'score: {score}')
-                query = "UPDATE botzilla.c_user SET XP = {}, score = {}, LVL = {}, money = {}, jail = {}, jail_date = {} WHERE ID = '{}'".format(experience, score, level, money, jail, jail_date, ctx.message.author.id)
+                query = "UPDATE botzilla.c_user SET XP = {}, score = {}, LVL = {}, money = {}, jail = {}, jail_date = '{}' WHERE ID = '{}'".format(experience, score, level, money, jail, jail_date, ctx.message.author.id)
                 print(query)
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 print('query done')
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                      description=f'**```{str(item[0][6])}```**',
+                                      description=f'**```{str(item[0][7])}```**',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
             else:
                 # lose
                 jail = 'TRUE'
                 jail_date = f'{datetime.datetime.now()}'
-                query = f"INSERT INTO botzilla.c_user(jail, jail_date) VALUES({jail}, {jail_date})"
+                query = f"UPDATE botzilla.c_user SET jail = {jail}, jail_date = '{jail_date}' WHERE ID = '{ctx.message.author.id}'"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 t = time_to_wait(self, datetime.datetime.now())
                 embed = discord.Embed(title='{}:'.format(str(item[0][2])),
-                                      description=f'**```{str(item[0][7])}```**\nTime to wait {t}',
+                                      description=f'**```{str(item[0][8])}```**\nTime to wait {t}',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
 
