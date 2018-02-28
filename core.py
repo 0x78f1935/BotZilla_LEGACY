@@ -60,10 +60,10 @@ async def dbimport():
             for row in reader:
                 try:
                     print(row[0])
-                    print(row[0][0])
-                    print(row[0][1])
-                    ID = row[0][0]
-                    Name = str(row[0][1]).replace("'", "").replace('"', '').replace(";", "").replace(",", "")
+                    print(row[1])
+                    print(row[2])
+                    ID = row[1]
+                    Name = str(row[2]).replace("'", "").replace('"', '').replace(";", "").replace(",", "")
                     name = Name[:1000]
                     database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ({}, '{}'".format(ID, name))
                     database.cur.execute("ROLLBACK;")
