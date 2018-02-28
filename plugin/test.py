@@ -59,7 +59,7 @@ class TestScripts:
             return False
 
     @commands.command(pass_context=True)
-    async def profile(self, ctx, player : discord.Member = None):
+    async def crimeprofile(self, ctx, player : discord.Member = None):
 
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
