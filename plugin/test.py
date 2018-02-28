@@ -68,7 +68,7 @@ class TestScripts:
             not_exist = check_profile(self, player.id)
             if not_exist:
                 # create profile
-                print('No profile found')
+                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, jail, protected) VALUES({ctx.message.author.id}, {int(0)}, {int(0)}, {int(0)}, {int(0)}, 'New York', {False}, {False}) "
             else:
                 #profile found
                 print('profile found')
