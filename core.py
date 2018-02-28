@@ -59,6 +59,7 @@ async def dbimport():
             reader = csv.reader(file, delimiter=',')
             for row in reader:
                 try:
+                    print(row)
                     row = str(row).replace('"', '').replace('[', '').replace(']', '').replace("'", '').replace('(', '').replace(')', '')
                     row = row.split(',')
                     database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ({}, '{}');".format(row[0], row[1]))
