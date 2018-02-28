@@ -135,12 +135,18 @@ class TestScripts:
             else:
                 print('profile already exist')
 
-        def time_to_wait(self, start_time):
-            b = datetime.datetime.now()
-            c = b - start_time
-            # returns hour[0] minute[1]
-            # if time > jail, example
-            return divmod(c.days * 86400 + c.seconds, 60)
+        def jail_time(self, future):
+            """
+            need time from database to calculate if user is in jail
+            true if in jail and returns remaining time
+            false if not in jail
+            """
+            now = datetime.datetime.now()
+            if now >= future:
+                return False
+            else:
+                jail = str(future - now).replace('.', ' ')
+                return jail[:8]
 
         check_profile(self, ctx.message.author.id)
         user_choice = str(item).lower()
@@ -149,6 +155,18 @@ class TestScripts:
         self.database.cur.execute("ROLLBACK;")
         self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ctx.message.author.id}';")
         game = self.database.cur.fetchone()
+        if game[6] and str(game[7]) != '0':
+            #player in jail
+            if jail_time(self, str(game[7])):
+                embed = discord.Embed(title='{}:'.format(str(item[0][2])),
+                                      description=f'*You are in jail. You are free in : **```{jail_time(self, str(game[7]))}```**',
+                                      colour=0xf20006)
+                embed.set_footer(text='Next page in 10 seconds')
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                
+
+
         self.database.cur.execute("ROLLBACK;")
         if user_choice in str(item):
             jail_number = random.randint(0, 100)
@@ -178,7 +196,7 @@ class TestScripts:
             print(game[8])
 
             embed = discord.Embed(title='{}:'.format(str(item[0][2])),
-                                  description=f'*Objective :*\n**```{str(item[0][3])}```**',
+                                  description=f'**Objective :**\n**```{str(item[0][3])}```**',
                                   colour=0xf20006)
             embed.set_footer(text='Next page in 10 seconds')
             a = await self.bot.say(embed=embed)
@@ -224,7 +242,7 @@ class TestScripts:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 jail_time = datetime.datetime.now() + datetime.timedelta(0, item[0][9])
-                t = time_to_wait(self, jail_time)
+                t = jail_time(self, jail_time)
                 embed = discord.Embed(title='{}:'.format(str(item[0][2])),
                                       description=f'**```{str(item[0][8])}```**\nTime to wait {t}',
                                       colour=0xf20006)
