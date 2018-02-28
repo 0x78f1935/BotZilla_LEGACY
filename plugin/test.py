@@ -48,16 +48,22 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
+        print('load function')
         def check_profile(self, ID):
             self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ID}';")
             profile = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
+            print('query executed')
             if profile is None:
+                print('profile not found')
                 return True
             else:
+                print('profile found')
                 return False
 
         if player:
+            # mpplayer found
+            print('mpplayer found')
             # If player doesnt exist
             if check_profile(self, player.id):
                 # create profile
@@ -66,6 +72,8 @@ class TestScripts:
                 #profile found
                 print('profile found')
         else:
+            # player found
+            print('player found')
             if check_profile(self, player.id):
                 # create profile
                 print('No profile found')
