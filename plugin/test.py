@@ -84,6 +84,11 @@ class TestScripts:
         embed = discord.Embed(title='Criminal Record of {} [CR]'.format(requested_user.name),
                               description=f'CR ID: **`{player_profile[0]}`**\nLevel: **`{player_profile[1]}`**\t\t\tExperience: **`{player_profile[2]}`**\nHighscore: **`{player_profile[3]}`**',
                               colour=0xf20006)
+        if player:
+            embed.add_field(name='Location', value='*`Unknown`*')
+        else:
+            embed.add_field(name='Location', value=f'*`{requested_user[5]}`*')
+
         embed.set_thumbnail(url=f'{requested_user.avatar_url}')
         embed.set_footer(text=f'ID Number : {requested_user.id}')
         a = await self.bot.say(embed=embed)
