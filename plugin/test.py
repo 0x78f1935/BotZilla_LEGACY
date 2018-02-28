@@ -103,6 +103,7 @@ class TestScripts:
         """
         Steal something,..
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!cr <{player}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Only the owner of this bot can use this command',
@@ -112,14 +113,14 @@ class TestScripts:
             return
 
 
-        item = str(item).lower()
-        self.database.cur.execute(f"select name_item from botzilla.c_user where ID = '{item}';")
+        user_choice = str(item).lower()
+        self.database.cur.execute(f"select name_item from botzilla.c_steal;")
         item = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
-        if item is None:
-            print('Nothing to steal')
-        if item:
+        if user_choice in str(item):
             print(item)
+        else:
+            print(f'{user_choice} not found')
 
 
 
