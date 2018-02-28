@@ -145,8 +145,7 @@ class TestScripts:
             now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             future = datetime.datetime.strptime(future, '%Y-%m-%d %H:%M:%S')
             print(now)
-            if now >= future:
-                print(now >= future)
+            if now >= str(future):
                 return False
             else:
                 jail = str(future - now).replace('.', ' ')
