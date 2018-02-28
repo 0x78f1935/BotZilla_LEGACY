@@ -123,14 +123,14 @@ class TestScripts:
             print(item)
 
             embed = discord.Embed(title='{}:'.format(str(item[0][2])),
-                                  description=f'*Objective :*\n**`{str(item[0][3])}`**',
+                                  description=f'*Objective :*\n**```{str(item[0][3])}```**',
                                   colour=0xf20006)
             embed.set_footer(text='Next page in 10 seconds')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
             await asyncio.sleep(10)
-            if jail_number >= int(item[8]):
+            if int(jail_number) >= int(item[0][8]):
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
                                       description=f'**`{str(item[0][6])}`**',
                                       colour=0xf20006)
