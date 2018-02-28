@@ -36,27 +36,6 @@ class TestScripts:
             print('Test: Database files not found - {}'.format(e.args))
             pass
 
-    # checks
-    async def protected(self, ID):
-        self.database.cur.execute(f"select protected from botzilla.c_user where ID = {ID};")
-        pro = self.database.cur.fetchone()
-        self.database.cur.execute("ROLLBACK;")
-
-    async def time_to_wait(self, start_time):
-        b = datetime.datetime.now()
-        c = b - start_time
-        # returns hour[0] minute[1]
-        # if time > jail, example
-        return divmod(c.days * 86400 + c.seconds, 60)
-
-    async def check_profile(self, ID):
-        self.database.cur.execute(f"select * from botzilla.c_user where ID = {ID};")
-        profile = self.database.cur.fetchone()
-        self.database.cur.execute("ROLLBACK;")
-        if profile is None:
-            return True
-        else:
-            return False
 
     @commands.command(pass_context=True)
     async def crimeprofile(self, ctx, player : discord.Member = None):
@@ -68,6 +47,15 @@ class TestScripts:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
+
+        def check_profile(self, ID):
+            self.database.cur.execute(f"select * from botzilla.c_user where ID = {ID};")
+            profile = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            if profile is None:
+                return True
+            else:
+                return False
 
         if player:
             has_profile = await check_profile(self, player.id)
