@@ -37,18 +37,13 @@ class TestScripts:
             pass
 
 
-    @commands.command(pass_context=True)
-    async def cr(self, ctx, player : discord.Member = None):
+    @commands.command(pass_context=True, aliases=["cr"])
+    async def criminals(self, ctx, player : discord.Member = None):
+        """
+        Shows your criminal record. No worry...
+        It's just a discord game. Look into !!help for more information
+        """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!cr <{player}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        if ctx.message.author.id not in self.owner_list:
-            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='Only the owner of this bot can use this command',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-
-        print('load function')
         def check_profile(self, ID):
             self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ID}';")
             profile = self.database.cur.fetchone()
@@ -65,7 +60,6 @@ class TestScripts:
 
         if player:
             # mpplayer found
-            print('multiplayer found')
             check_profile(self, player.id)
             self.database.cur.execute(f"select * from botzilla.c_user where ID = '{player.id}';")
             player_profile = self.database.cur.fetchone()
@@ -73,13 +67,11 @@ class TestScripts:
 
         else:
             # player found
-            print('singleplayer found')
             check_profile(self, ctx.message.author.id)
             self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ctx.message.author.id}';")
             player_profile = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
-        print(player_profile)
         requested_user = await self.bot.get_user_info(player_profile[0])
         embed = discord.Embed(title='Criminal Record of {} [CR]'.format(requested_user.name),
                               description=f'CR ID: **`{player_profile[0]}`**',
