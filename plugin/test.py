@@ -84,6 +84,7 @@ class TestScripts:
         embed = discord.Embed(title='Criminal Record of {} [CR]'.format(requested_user.name),
                               description=f'The profile you requested was the profile of\n**`{requested_user.name}`**',
                               colour=0xf20006)
+        embed.set_thumbnail(url=f'{requested_user.avatar_url}')
         embed.set_footer(text=f'ID Number : {requested_user.id}')
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
