@@ -110,7 +110,7 @@ venv.bak/
 *.js
 *.json
 /options/config.js
-/options/item_c.js
+/database/src/99_custom/86_c_data.sql
 /options/battleship.js
 /export/*
 /import/*
