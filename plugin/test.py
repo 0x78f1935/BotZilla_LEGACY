@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import json
 import datetime
+import asyncio
 import random
 import aiohttp
 import ast
@@ -22,9 +23,6 @@ class TestScripts:
     def __init__(self, bot):
         self.bot = bot
         self.tmp_config = json.loads(str(open('./options/config.js').read()))
-        self.battleship_emoji = json.loads(str(open('./options/battleship.js').read()))
-        self.battleship_emoji_text = self.battleship_emoji['text']
-        self.battleship_emoji_ascii = self.battleship_emoji['ascii']
         self.config = self.tmp_config['config']
         self.emojiUnicode = self.tmp_config['unicode']
         self.exchange = self.tmp_config['exchange']
@@ -38,7 +36,45 @@ class TestScripts:
             print('Test: Database files not found - {}'.format(e.args))
             pass
 
+    # checks
+    async def protected(self, ID):
+        self.database.cur.execute(f"select protected from botzilla.c_user where ID = {ID};")
+        pro = self.database.cur.fetchone()
+        self.database.cur.execute("ROLLBACK;")
 
+    async def time_to_wait(self, start_time):
+        b = datetime.datetime.now()
+        c = b - start_time
+        # returns hour[0] minute[1]
+        # if time > jail, example
+        return divmod(c.days * 86400 + c.seconds, 60)
+
+    async def check_profile(self, ID):
+        self.database.cur.execute(f"select * from botzilla.c_user where ID = {ID};")
+        profile = self.database.cur.fetchone()
+        self.database.cur.execute("ROLLBACK;")
+        if profile is None:
+            return True
+        else:
+            return False
+
+    @commands.command(pass_context=True)
+    async def profile(self, ctx, player : discord.Member = None):
+
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Only the owner of this bot can use this command',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        if player:
+            has_profile = await check_profile(self, player.id)
+            print(has_profile)
+        else:
+            has_profile = await check_profile(self, ctx.message.author.id)
+            print(has_profile)
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
