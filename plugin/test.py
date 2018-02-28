@@ -97,5 +97,31 @@ class TestScripts:
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
+
+    @commands.command(pass_context=True)
+    async def steal(self, ctx, item):
+        """
+        Steal something,..
+        """
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Only the owner of this bot can use this command',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+
+        item = str(item).lower()
+        self.database.cur.execute(f"select name_item from botzilla.c_user where ID = '{item}';")
+        item = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
+        if item is None:
+            print('Nothing to steal')
+        if item:
+            print(item)
+
+
+
 def setup(bot):
     bot.add_cog(TestScripts(bot))
