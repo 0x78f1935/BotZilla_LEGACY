@@ -39,7 +39,7 @@ class TestScripts:
 
     @commands.command(pass_context=True)
     async def cp(self, ctx, player : discord.Member = None):
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!cprofile <{player}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Only the owner of this bot can use this command',
@@ -49,7 +49,7 @@ class TestScripts:
             return
 
         def check_profile(self, ID):
-            self.database.cur.execute(f"select * from botzilla.c_user where ID = {ID};")
+            self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ID}';")
             profile = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             if profile is None:
