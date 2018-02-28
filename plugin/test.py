@@ -142,7 +142,7 @@ class TestScripts:
             false if not in jail
             """
             print(future)
-            now = datetime.datetime.now()
+            now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             future = datetime.datetime.strptime(future, '%Y-%m-%d %H:%M:%S')
             print(now)
             if now >= future:
@@ -215,9 +215,9 @@ class TestScripts:
             else:
                 # lose
                 jt = datetime.datetime.now() + datetime.timedelta(0, item[0][9])
-                jt = jt.strftime('%Y-%m-%d %H:%M:%S')
+                jt = str(jt.strftime('%Y-%m-%d %H:%M:%S'))
                 jail = 'TRUE'
-                query = f"UPDATE botzilla.c_user SET jail = {jail}, jail_date = '{jt}' WHERE ID = '{ctx.message.author.id}'"
+                query = f"UPDATE botzilla.c_user SET jail = {jail}, jail_date = '{jt}' WHERE ID = '{ctx.message.author.id}';"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
