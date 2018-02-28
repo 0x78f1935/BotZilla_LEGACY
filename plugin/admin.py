@@ -489,5 +489,21 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
 
+    @commands.command(pass_context=True)
+    async def sebisauce(self, ctx):
+        """
+        Sebisauce, api
+        """
+        url = 'https://sebisauce.herokuapp.com/api/random'
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                data = await response.json(encoding='utf8')
+
+        im = data['file']
+        embed = discord.Embed(title='\t', description='\t', color=0xf20006)
+        embed.set_image(url=im)
+        embed.set_footer(text="Data © Sebi\'s Bot Tutorial contributors, discord.gg/GWdhBSp")
+        await self.bot.say(embed=embed)
+
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
