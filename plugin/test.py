@@ -85,12 +85,20 @@ class TestScripts:
                               description=f'CR ID: **`{player_profile[0]}`**',
                               colour=0xf20006)
 
-        embed.add_field(name='Level', value='*`{}`*'.format(player_profile[1]), inline=True)
-        embed.add_field(name='Experience', value='*`${},-`*'.format(player_profile[2]), inline=True)
-        embed.add_field(name='Highscore', value='*`{}`*'.format(player_profile[3]), inline=True)
-        embed.add_field(name='Location', value='*`{}`*'.format(player_profile[5]), inline=True)
-        embed.add_field(name='Money', value='*`${},-`*'.format(player_profile[4]), inline=True)
-        embed.add_field(name='Protected', value='*`{}`*'.format(player_profile[8]), inline=True)
+        if player:
+            embed.add_field(name='Level', value='**`{}`**'.format(player_profile[1]), inline=True)
+            embed.add_field(name='Experience', value='**`{}`**'.format(player_profile[2]), inline=True)
+            embed.add_field(name='Highscore', value='**`{}`**'.format(player_profile[3]), inline=True)
+            embed.add_field(name='Location', value='*`Unknown`*', inline=True)
+            embed.add_field(name='Money', value='*`Unknown`*', inline=True)
+            embed.add_field(name='Protected', value='*`Unknown`*', inline=True)
+        else:
+            embed.add_field(name='Level', value='**`{}`**'.format(player_profile[1]), inline=True)
+            embed.add_field(name='Experience', value='**`{}`**'.format(player_profile[2]), inline=True)
+            embed.add_field(name='Highscore', value='**`{}`**'.format(player_profile[3]), inline=True)
+            embed.add_field(name='Location', value='**`{}`**'.format(player_profile[5]), inline=True)
+            embed.add_field(name='Money', value='**`${},-`**'.format(player_profile[4]), inline=True)
+            embed.add_field(name='Protected', value='**`{}`**'.format(player_profile[8]), inline=True)
 
         embed.set_thumbnail(url=f'{requested_user.avatar_url}')
         embed.set_footer(text=f'ID Number : {requested_user.id}')
