@@ -44,6 +44,14 @@ class TestScripts:
         It is just a discord game. Look into !!help for more information
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!cr <{player}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Only the owner of this bot can use this command',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+        
         await self.bot.send_typing(ctx.message.channel)
         def check_profile(self, ID):
             self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ID}';")
