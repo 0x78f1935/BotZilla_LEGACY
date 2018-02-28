@@ -51,7 +51,7 @@ class TestScripts:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
-        
+
         await self.bot.send_typing(ctx.message.channel)
         def check_profile(self, ID):
             self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ID}';")
@@ -121,10 +121,34 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
+        def check_profile(self, ID):
+            self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ID}';")
+            profile = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            if profile is None:
+                print('profile not found')
+                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, jail, jail_date, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'FALSE', '{int(0)}', 'TRUE')"
+                self.database.cur.execute(query)
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+                print('profile created')
+            else:
+                print('profile already exist')
 
+        def time_to_wait(self, start_time):
+            b = datetime.datetime.now()
+            c = b - start_time
+            # returns hour[0] minute[1]
+            # if time > jail, example
+            return divmod(c.days * 86400 + c.seconds, 60)
+
+        check_profile(self, ctx.message.author.id)
         user_choice = str(item).lower()
         self.database.cur.execute(f"select * from botzilla.c_steal where name_item = '{user_choice}';")
         item = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
+        self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ctx.message.author.id}';")
+        game = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
         if user_choice in str(item):
             jail_number = random.randint(0, 100)
@@ -138,14 +162,36 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
             await asyncio.sleep(10)
-            if int(jail_number) >= int(item[0][8]):
+            if int(jail_number) >= int(item[0][9]):
+                # win
+                experience = int(game[2]) + int(item[0][8])
+                level = int(game[1])
+                if int(experience) >= 100:
+                    experience = 0
+                    level = int(game[1]) + 1
+                money = int(game[4]) + int(item[0][4])
+                jail = 'FALSE'
+                jail_date = '0'
+                score = int(game[3]) + int(item[0][6])
+                query = f"INSERT INTO botzilla.c_user(XP, score, LVL, money, jail, jail_date) VALUES({experience}, {score}, {level}, {money}, {jail}, {jail_date})"
+                self.database.cur.execute(query)
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
                                       description=f'**```{str(item[0][6])}```**',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
             else:
+                # lose
+                jail = 'TRUE'
+                jail_date = f'{datetime.datetime.now()}'
+                query = f"INSERT INTO botzilla.c_user(jail, jail_date) VALUES({jail}, {jail_date})"
+                self.database.cur.execute(query)
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+                t = time_to_wait(self, datetime.datetime.now())
                 embed = discord.Embed(title='{}:'.format(str(item[0][2])),
-                                      description=f'**```{str(item[0][7])}```**',
+                                      description=f'**```{str(item[0][7])}```**\nTime to wait {t}',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
 
