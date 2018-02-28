@@ -152,6 +152,7 @@ class TestScripts:
         self.database.cur.execute("ROLLBACK;")
         if user_choice in str(item):
             jail_number = random.randint(0, 100)
+
             print(item)
             print(item[0][0])
             print(item[0][1])
@@ -176,10 +177,6 @@ class TestScripts:
             print(game[7])
             print(game[8])
 
-
-
-
-
             embed = discord.Embed(title='{}:'.format(str(item[0][2])),
                                   description=f'*Objective :*\n**```{str(item[0][3])}```**',
                                   colour=0xf20006)
@@ -188,9 +185,10 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
             await asyncio.sleep(10)
+
             if int(jail_number) >= int(item[0][9]):
                 # win
-                experience = int(game[2]) + int(item[0][8])
+                experience = int(game[2]) + int(item[0][5])
                 level = int(game[1])
                 if int(experience) >= 100:
                     experience = 0
