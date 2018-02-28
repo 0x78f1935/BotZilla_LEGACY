@@ -153,6 +153,18 @@ class TestScripts:
         if user_choice in str(item):
             jail_number = random.randint(0, 100)
             print(item)
+            print(item[0][0])
+            print(item[0][1])
+            print(item[0][2])
+            print(item[0][3])
+            print(item[0][4])
+            print(item[0][5])
+            print(item[0][6])
+            print(item[0][7])
+            print(item[0][8])
+            print(item[0][9])
+
+
 
             embed = discord.Embed(title='{}:'.format(str(item[0][2])),
                                   description=f'*Objective :*\n**```{str(item[0][3])}```**',
