@@ -62,7 +62,7 @@ async def dbimport():
                     print(row[0])
                     ID = row[0][0]
                     Name = str(row[0][1]).replace("'", "").replace('"', '').replace(";", "").replace(",", "")
-                    name = Name[:500]
+                    name = Name[500:]
                     database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ({}, '{}'".format(ID, name))
                     database.cur.execute("ROLLBACK;")
                 except Exception as e:
