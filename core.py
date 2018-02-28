@@ -60,7 +60,7 @@ async def dbimport():
             reader = csv.reader(file, delimiter=',')
             import_to_db = []
             for row in reader:
-                row = str(row).replace('(', '').replace(')', '')
+                row = str(row[0]).replace('(', '').replace(')', '')
                 row = row.split(',')
                 pattern = re.compile('[\W_]+')
                 name = pattern.sub('', row[1])
