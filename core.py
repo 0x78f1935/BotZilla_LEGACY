@@ -60,7 +60,12 @@ async def dbimport():
             reader = csv.reader(file, delimiter=',')
             import_to_db = []
             for row in reader:
-                import_to_db.append(row[0])
+                row = str(row).replace('(', '').replace(')', '')
+                row = row.split(',')
+                pattern = re.compile('[\W_]+')
+                name = pattern.sub('', row[1])
+                row = (row[0], '{}'.format(name))
+                import_to_db.append(row)
 
             try:
                 insert_query = 'insert into botzilla.users (ID, name) values %s'
