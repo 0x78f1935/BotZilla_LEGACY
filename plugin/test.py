@@ -56,33 +56,23 @@ class TestScripts:
             print('query executed')
             if profile is None:
                 print('profile not found')
-                return True
+                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, jail, jail_date, protected) VALUES({ctx.message.author.id}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'FALSE', {datetime.datetime.now()}, 'TRUE')"
+                self.database.cur.execute(query)
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+                print('profile created')
             else:
                 print('profile found')
-                return False
 
         if player:
             # mpplayer found
             print('mpplayer found')
-            # If player doesnt exist
-            not_exist = check_profile(self, player.id)
-            if not_exist:
-                # create profile
-                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, jail, protected) VALUES({ctx.message.author.id}, {int(0)}, {int(0)}, {int(0)}, {int(0)}, 'New York', {False}, {False}) "
-            else:
-                #profile found
-                print('profile found')
+            check_profile(self, player.id)
+
         else:
             # player found
             print('player found')
-            not_exist = check_profile(self, ctx.message.author.id)
-
-            if not_exist:
-                # create profile
-                print('No profile found')
-            else:
-                #profile found
-                print('profile found')
+            check_profile(self, ctx.message.author.id)
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
