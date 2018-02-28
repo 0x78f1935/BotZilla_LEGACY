@@ -223,7 +223,8 @@ class TestScripts:
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
-                t = time_to_wait(self, datetime.datetime.now())
+                jail_time = datetime.datetime.now() + datetime.timedelta(0, item[0][9])
+                t = time_to_wait(self, jail_time)
                 embed = discord.Embed(title='{}:'.format(str(item[0][2])),
                                       description=f'**```{str(item[0][8])}```**\nTime to wait {t}',
                                       colour=0xf20006)
