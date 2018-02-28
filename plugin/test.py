@@ -205,10 +205,12 @@ class TestScripts:
                 print(f'jail_date: {jail_date}')
                 score = int(game[3]) + int(item[0][6])
                 print(f'score: {score}')
-                query = "UPDATE botzilla.c_user SET XP = {}, score = {}, LVL {}, money = {}, jail = {}, jail_date = {} WHERE ID = '{}'".format(experience, score, level, money, jail, jail_date, ctx.message.author.id)
+                query = "UPDATE botzilla.c_user SET XP = {}, score = {}, LVL = {}, money = {}, jail = {}, jail_date = {} WHERE ID = '{}'".format(experience, score, level, money, jail, jail_date, ctx.message.author.id)
+                print(query)
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
+                print('query done')
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
                                       description=f'**```{str(item[0][6])}```**',
                                       colour=0xf20006)
