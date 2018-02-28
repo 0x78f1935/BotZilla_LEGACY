@@ -82,7 +82,7 @@ class TestScripts:
         print(player_profile)
         requested_user = await self.bot.get_user_info(player_profile[0])
         embed = discord.Embed(title='Criminal Record of {} [CR]'.format(requested_user.name),
-                              description=f'CR ID: **`{player_profile[0]}`**\nLevel: **`{player_profile[1]}`**\tExperience: **`{player_profile[2]}`**\nHighscore: **`{player_profile[3]}`**',
+                              description=f'CR ID: **`{player_profile[0]}`**\nLevel: **`{player_profile[1]}`**\t\tExperience: **`{player_profile[2]}`**\nHighscore: **`{player_profile[3]}`**',
                               colour=0xf20006)
         embed.set_thumbnail(url=f'{requested_user.avatar_url}')
         embed.set_footer(text=f'ID Number : {requested_user.id}')
