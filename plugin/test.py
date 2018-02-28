@@ -56,7 +56,7 @@ class TestScripts:
             print('query executed')
             if profile is None:
                 print('profile not found')
-                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, jail, jail_date, protected) VALUES({ctx.message.author.id}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'FALSE', {datetime.datetime.now()}, 'TRUE')"
+                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, jail, jail_date, protected) VALUES({ctx.message.author.id}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'FALSE', '{datetime.datetime.now()}', 'TRUE')"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
@@ -66,12 +66,12 @@ class TestScripts:
 
         if player:
             # mpplayer found
-            print('mpplayer found')
+            print('multiplayer found')
             check_profile(self, player.id)
 
         else:
             # player found
-            print('player found')
+            print('singleplayer found')
             check_profile(self, ctx.message.author.id)
 
 def setup(bot):
