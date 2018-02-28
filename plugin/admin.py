@@ -494,6 +494,7 @@ class AdminCommands:
         """
         Sebisauce, api
         """
+        await self.bot.send_typing(ctx.message.channel)
         url = 'https://sebisauce.herokuapp.com/api/random'
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:

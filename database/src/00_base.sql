@@ -1,7 +1,7 @@
 CREATE SCHEMA botzilla;
 CREATE TABLE botzilla.users(
     ID bigserial primary key,
-    name varchar(508)
+    name varchar(1024)
 );
 -- INSERT INTO botzilla.users (ID, name) VALUES (456164513, 'test15');
 
