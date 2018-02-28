@@ -143,6 +143,7 @@ class TestScripts:
             """
             print(future)
             now = datetime.datetime.now()
+            future = datetime.datetime.strptime(future, '%Y-%m-%d %H:%M:%S')
             print(now)
             if now >= future:
                 print(now >= future)
@@ -172,30 +173,6 @@ class TestScripts:
 
         if user_choice in str(item):
             jail_number = random.randint(0, 100)
-
-            print(item)
-            print(item[0][0])
-            print(item[0][1])
-            print(item[0][2])
-            print(item[0][3])
-            print(item[0][4])
-            print(item[0][5])
-            print(item[0][6])
-            print(item[0][7])
-            print(item[0][8])
-            print(item[0][9])
-            print(item[0][10])
-
-            print(game)
-            print(game[0])
-            print(game[1])
-            print(game[2])
-            print(game[3])
-            print(game[4])
-            print(game[5])
-            print(game[6])
-            print(game[7])
-            print(game[8])
 
             embed = discord.Embed(title='{}:'.format(str(item[0][2])),
                                   description=f'**Objective :**\n**```{str(item[0][3])}```**',
@@ -237,16 +214,16 @@ class TestScripts:
                 await self.bot.edit_message(a, embed=embed)
             else:
                 # lose
+                jt = datetime.datetime.now() + datetime.timedelta(0, item[0][9])
+                jt = jt.strftime('%Y-%m-%d %H:%M:%S')
                 jail = 'TRUE'
-                jail_date = f'{datetime.datetime.now()}'
-                query = f"UPDATE botzilla.c_user SET jail = {jail}, jail_date = '{jail_date}' WHERE ID = '{ctx.message.author.id}'"
+                query = f"UPDATE botzilla.c_user SET jail = {jail}, jail_date = '{jt}' WHERE ID = '{ctx.message.author.id}'"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
-                jail_time = datetime.datetime.now() + datetime.timedelta(0, item[0][9])
-                t = jail_time(self, jail_time)
+
                 embed = discord.Embed(title='{}:'.format(str(item[0][2])),
-                                      description=f'**```{str(item[0][8])}```**\nTime to wait {t}',
+                                      description=f'**```{str(item[0][8])}```**\nTime to wait {jt}',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
 
