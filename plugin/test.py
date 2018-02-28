@@ -44,6 +44,7 @@ class TestScripts:
         It is just a discord game. Look into !!help for more information
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!cr <{player}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        await self.bot.send_typing(ctx.message.channel)
         def check_profile(self, ID):
             self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ID}';")
             profile = self.database.cur.fetchone()
@@ -118,7 +119,28 @@ class TestScripts:
         item = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
         if user_choice in str(item):
+            jail_number = random.randint(0, 100)
             print(item)
+            embed = discord.Embed(title='{}:'.format(item[2]),
+                                  description=f'*Objective :*\n**`{item[3]}`**',
+                                  colour=0xf20006)
+            embed.set_footer(text='Next page in 10 seconds')
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+            await asyncio.sleep(10)
+            if jail_number >= int(item[8]):
+                embed = discord.Embed(title='{}:'.format(item[2]),
+                                      description=f'**`{item[6]}`**',
+                                      colour=0xf20006)
+                await self.bot.edit_message(a, embed=embed)
+            else:
+                embed = discord.Embed(title='{}:'.format(item[2]),
+                                      description=f'**`{item[7]}`**',
+                                      colour=0xf20006)
+                await self.bot.edit_message(a, embed=embed)
+
+            
         else:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You could find nothing to steal..\nYou decide to take a walk and observe the erea.',
