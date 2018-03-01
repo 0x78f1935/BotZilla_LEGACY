@@ -381,7 +381,7 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
 
             try:
-                self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
+                self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city[1]}';")
                 steal = self.database.cur.fetchall()
                 self.database.cur.execute("ROLLBACK;")
                 can_steal = True
