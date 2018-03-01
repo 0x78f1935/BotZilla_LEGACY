@@ -479,7 +479,7 @@ async def on_command_error(error, ctx):
         return
 
 
-def never_offline(bot):
+async def never_offline(bot):
     while True:
         try:
             bot.run(config['bot-key'])
