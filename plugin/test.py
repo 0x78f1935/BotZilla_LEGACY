@@ -323,7 +323,7 @@ class TestScripts:
             user = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             city = user[5]
-            self.database.cur.execute(f"select name_item from cr.c_user where city = {city};")
+            self.database.cur.execute(f"select name_item from cr.c_steal where city = {city};")
             steal = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             things_to_steal = []
