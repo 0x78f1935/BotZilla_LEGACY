@@ -349,10 +349,13 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
 
             if can_steal:
-                things_to_steal = []
-                for i in steal:
-                    things_to_steal.append(f'- **`{i[0]}`**')
-                steal_list = '\n'.join(things_to_steal)
+                try:
+                    things_to_steal = []
+                    for i in steal:
+                        things_to_steal.append(f'- **`{i[0]}`**')
+                    steal_list = '\n'.join(things_to_steal)
+                except Exception as e:
+                    steal_list = '- **`None`**'
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```**\n\nThis city offers the following:\n\n',
@@ -386,20 +389,18 @@ class TestScripts:
                 self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city[1]}';")
                 steal = self.database.cur.fetchall()
                 self.database.cur.execute("ROLLBACK;")
-                if steal is None:
-                    can_steal = False
-                else:
-                    can_steal = True
+                can_steal = True
             except Exception as e:
                 can_steal = False
 
             if can_steal:
-                things_to_steal = []
-                for i in steal:
-                    things_to_steal.append(f'- **`{i[0]}`**')
-                steal_list = '\n'.join(things_to_steal)
-            elif not can_steal:
-                steal_list = '- **`None`**'
+                try:
+                    things_to_steal = []
+                    for i in steal:
+                        things_to_steal.append(f'- **`{i[0]}`**')
+                    steal_list = '\n'.join(things_to_steal)
+                except Exception as e:
+                    steal_list = '- **`None`**'
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```**\n\nThis city offers the following:\n\n',
