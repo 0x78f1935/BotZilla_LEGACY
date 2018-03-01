@@ -170,7 +170,7 @@ class TestScripts:
             now = datetime.datetime.now()
             future = datetime.datetime.strptime(jail[1], '%Y-%m-%d %H:%M:%S')
             time_to_wait = future - now
-            time_to_wait = datetime.datetime.strptime(time_to_wait, '%Y-%m-%d %H:%M:%S')
+            time_to_wait = datetime.datetime.strptime(str(time_to_wait), '%Y-%m-%d %H:%M:%S')
             if jt:
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
                                       description=f'You are in **jail**. You are **free** at : **`{jail[1]}`**\nThere for you need to **wait** another : **`{time_to_wait}`**',
