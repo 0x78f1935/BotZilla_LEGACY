@@ -439,6 +439,12 @@ class TestScripts:
 
     @commands.command(pass_context=True)
     async def travel(self, ctx, *, city : str = None):
+        """
+        Travel to another city. Time is expressed in [hh:mm:ss]
+        Use !!travel for information about any flight to any city.
+        If you found a flight that sounds interesting, for example Amsterdam.
+        Use [!!travel amsterdam] to travel to Amsterdam!
+        """
 
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!travel <{city}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
