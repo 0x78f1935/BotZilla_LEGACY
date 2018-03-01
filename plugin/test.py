@@ -590,9 +590,17 @@ class TestScripts:
             user = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
+            if city[1] == user[5]:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=f'If you know you absolutely cannot travel to the same location as where you are.\nYou are currently in **`{city[1]}`**\nIf you are lost, use **`{self.config["prefix"]}help city`** for more information',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
+
             if int(city[5]) >= int(user[4]):
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=f'Unfortunately **`{city[1]}`** is to expensive for you\nMake sure your belance is enough for the plane ticket\n\nCurrent balance: $$**`{user[4]}`**',
+                                      description=f'Unfortunately **`{city[1]}`** is to expensive for you\nMake sure your belance is enough for the plane ticket\n\nCurrent balance: $**`{user[4]}`**',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
