@@ -291,7 +291,15 @@ class TestScripts:
     @commands.command(pass_context=True)
     async def city(self, ctx, city=None):
         """
-        Steal something,..
+        Shows information about a city.
+        Default city is the city you are located in
+        Citys currently in game:
+        <New York>, <Amsterdam>
+
+        Usage:
+            - !!city
+        Or:
+            - !!city Amsterdam
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!city <{city}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
@@ -323,9 +331,11 @@ class TestScripts:
             user = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             city = user[0]
-            print(city)
             self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
             steal = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
+            city = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             print(steal)
             things_to_steal = []
@@ -335,8 +345,9 @@ class TestScripts:
             steal_list = '\n'.join(things_to_steal)
             print(steal_list)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=f'The current city you are in is **`{city}`**\nThis city offers the following:\n\n**Items to steal**\n{steal_list}',
+                                  description=f'The current city you are in is **`{city[1]}`**\n\n{city[2]}This city offers the following:\n\n**Items to steal**\n{steal_list}',
                                   colour=0xf20006)
+            embed.set_thumbnail(url=city[3])
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
