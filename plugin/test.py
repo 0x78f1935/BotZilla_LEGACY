@@ -183,6 +183,7 @@ class TestScripts:
         else:
             pass
 
+        # Game itself
         if user_choice in str(item):
             jail_number = random.randint(0, 100)
 
@@ -194,7 +195,7 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
             await asyncio.sleep(10)
-
+            print(int(jail_number), int(item[0][9]))
             if int(jail_number) >= int(item[0][9]):
                 # win
                 experience = int(user[2]) + int(item[0][5])
