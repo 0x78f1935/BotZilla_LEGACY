@@ -385,7 +385,7 @@ class TestScripts:
                 steal_list = '\n'.join(things_to_steal)
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```*\n\nThis city offers the following:\n\n',
+                                  description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```**\n\nThis city offers the following:\n\n',
                                   colour=0xf20006)
             if can_steal:
                 embed.add_field(name='Items to steal', value=steal_list)
