@@ -99,7 +99,7 @@ class TestScripts:
             embed.add_field(name='Highscore', value='**`{}`**'.format(player_profile[3]), inline=True)
             embed.add_field(name='Location', value='**`{}`**'.format(player_profile[5]), inline=True)
             embed.add_field(name='Money', value='**`${},-`**'.format(player_profile[4]), inline=True)
-            embed.add_field(name='Protected', value='**`{}`**'.format(player_profile[8]), inline=True)
+            embed.add_field(name='Protected', value='**`{}`**'.format(player_profile[6]), inline=True)
 
         embed.set_thumbnail(url=f'{requested_user.avatar_url}')
         embed.set_footer(text=f'ID Number : {requested_user.id}')
@@ -151,24 +151,28 @@ class TestScripts:
                 return True
 
         check_profile(self, ctx.message.author.id)
+
         user_choice = str(item).lower()
         self.database.cur.execute(f"select * from cr.c_steal where name_item = '{user_choice}';")
         item = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
+
         self.database.cur.execute(f"select * from cr.c_user where ID = '{ctx.message.author.id}';")
-        game = self.database.cur.fetchone()
+        user = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
+
         self.database.cur.execute(f"select * from cr.c_jail WHERE ID = '{ctx.message.author.id}';")
         jail = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
+
         if jail:
             print(jail)
             print(jail[0])
             print(jail[1])
-            print('player in jail', str(game[7]))
+            print('player in jail', jail)
             jt = jail_time(self, jail[1])
             print(jt)
-            embed = discord.Embed(title='{}:'.format(str(item[0][2])),
+            embed = discord.Embed(title='{}:'.format(item[0][2]),
                                   description=f'*You are in jail. You are free in : **```{jt}```**',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
@@ -178,7 +182,7 @@ class TestScripts:
         if user_choice in str(item):
             jail_number = random.randint(0, 100)
 
-            embed = discord.Embed(title='{}:'.format(str(item[0][2])),
+            embed = discord.Embed(title='{}:'.format(item[0][2]),
                                   description=f'**Objective :**\n**```{str(item[0][3])}```**',
                                   colour=0xf20006)
             embed.set_footer(text='Next page in 10 seconds')
@@ -189,19 +193,19 @@ class TestScripts:
 
             if int(jail_number) >= int(item[0][9]):
                 # win
-                experience = int(game[2]) + int(item[0][5])
+                experience = int(user[2]) + int(item[0][5])
                 print(f'xp: {experience}')
-                level = int(game[1])
+                level = int(user[1])
                 print(f'lvl: {level}')
                 if int(experience) >= 100:
                     experience = 0
-                    level = int(game[1]) + 1
+                    level = int(user[1]) + 1
                 print(f'xp: {experience}')
                 print(f'lvl: {level}')
-                money = int(game[4]) + int(item[0][4])
+                money = int(user[4]) + int(item[0][4])
                 print(f'money: {money}')
 
-                score = int(game[3]) + int(item[0][6])
+                score = int(user[3]) + int(item[0][6])
                 print(f'score: {score}')
                 query = "UPDATE cr.c_user SET XP = {}, score = {}, LVL = {}, money = {} WHERE ID = '{}'".format(experience, score, level, money, ctx.message.author.id)
                 print(query)
@@ -210,7 +214,7 @@ class TestScripts:
                 self.database.cur.execute("ROLLBACK;")
                 print('query done')
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                      description=f'**```{str(item[0][7])}```**',
+                                      description=f'**```{item[0][7]}```**',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
             else:
@@ -230,12 +234,8 @@ class TestScripts:
                     else:
                         print(f'{type(e).__name__} : {e}')
 
-                self.database.cur.execute(query)
-                self.database.conn.commit()
-                self.database.cur.execute("ROLLBACK;")
-
-                embed = discord.Embed(title='{}:'.format(str(item[0][2])),
-                                      description=f'**```{str(item[0][8])}```**\nTime to wait {jt}',
+                embed = discord.Embed(title='{}:'.format(item[0][2]),
+                                      description=f'**```{item[0][8]}```**\nTime to wait {jt}',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
 
