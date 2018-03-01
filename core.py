@@ -479,7 +479,7 @@ async def on_command_error(error, ctx):
         return
 
 
-async def never_offline(bot):
+def never_offline(bot):
     while True:
         try:
             bot.run(config['bot-key'])
@@ -497,4 +497,4 @@ async def never_offline(bot):
             await asyncio.sleep(10)
 
 if __name__ == '__main__':
-    bot.loop.create_task(never_offline(bot))
+    never_offline(bot)
