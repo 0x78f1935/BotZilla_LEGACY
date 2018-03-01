@@ -208,7 +208,7 @@ class TestScripts:
                 b.append(d)
             c = "\n".join(b)
             embed = discord.Embed(title='Unable to move',
-                                  description=f'Your current location is: **`{user[5]}`**\nThe following things are your point of interest\n**Steal**\n{c}',
+                                  description=f'Your current location is: **`{user[5]}`**\nThe following things are your point of interest\n**Steal**\n\n{c}',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
