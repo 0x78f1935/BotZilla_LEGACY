@@ -292,7 +292,7 @@ class TestScripts:
 
 
     @commands.command(pass_context=True)
-    async def city(self, ctx, city=None):
+    async def city(self, ctx, *, city=None):
         """
         Shows information about a city.
         Default city is the city you are located in
