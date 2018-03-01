@@ -275,7 +275,7 @@ class TestScripts:
                 time_to_wait = jail_time_calc(self)
 
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                      description=f'**Objective :**\n**```{str(item[0][3])}```**\n:police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car:\n**```{item[0][8]}```**\nTime in jail: **`{time_to_wait}`**',
+                                      description=f'**Objective :**\n**```{str(item[0][3])}```**\n:police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car:\n**```{item[0][8]}```**\nTime in jail: **`{time_to_wait}`**',
                                       colour=0xf20006)
                 embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
                 await self.bot.edit_message(a, embed=embed)
