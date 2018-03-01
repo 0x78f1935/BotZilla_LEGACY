@@ -243,7 +243,7 @@ class CriminalWars:
             if jail_time(self, travel[1], 'c_travel'):
                 time_to_wait = time_calc(self, 'c_travel')
                 embed = discord.Embed(title='Unable to move',
-                                      description=f'You are on a roadtrip to **`{travel[2]}`**.\nYou took a look at your planning schedule.\nAriving date:**```py\n{travel[1]}\n```**\nYou will arive in **`{time_to_wait}`**\nTry again in that time.',
+                                      description=f'You are on a plane to **`{travel[2]}`**.\nYou took a look at your planning schedule.\nAriving date:**```py\n{travel[1]}\n```**\nYou will arive in **`{time_to_wait}`**\nTry again in that time.',
                                       colour=0xf20006)
                 embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418839121348526091/surprising-airplane-facts-plane-crashes.png')
                 a = await self.bot.say(embed=embed)
@@ -554,7 +554,7 @@ class CriminalWars:
             if jail_time(self, travel[1], 'c_travel'):
                 time_to_wait = time_calc(self, 'c_travel')
                 embed = discord.Embed(title='Unable to move',
-                                      description=f'You are on a roadtrip to **`{travel[2]}`**.\nYou took a look at your planning schedule.\nAriving date:**```py\n{travel[1]}\n```**\nYou will arive in **`{time_to_wait}`**\nTry again in that time.',
+                                      description=f'You are on a plane to **`{travel[2]}`**.\nYou took a look at your planning schedule.\nAriving date:**```py\n{travel[1]}\n```**\nYou will arive in **`{time_to_wait}`**\nTry again in that time.',
                                       colour=0xf20006)
                 embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418839121348526091/surprising-airplane-facts-plane-crashes.png')
                 a = await self.bot.say(embed=embed)
