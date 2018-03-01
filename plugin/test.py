@@ -54,12 +54,12 @@ class TestScripts:
 
         await self.bot.send_typing(ctx.message.channel)
         def check_profile(self, ID):
-            self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ID}';")
+            self.database.cur.execute(f"select * from cr.c_user where ID = '{ID}';")
             profile = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             if profile is None:
                 print('profile not found')
-                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
+                query = f"INSERT INTO cr.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
@@ -70,14 +70,14 @@ class TestScripts:
         if player:
             # mpplayer found
             check_profile(self, player.id)
-            self.database.cur.execute(f"select * from botzilla.c_user where ID = '{player.id}';")
+            self.database.cur.execute(f"select * from cr.c_user where ID = '{player.id}';")
             player_profile = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
         else:
             # player found
             check_profile(self, ctx.message.author.id)
-            self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ctx.message.author.id}';")
+            self.database.cur.execute(f"select * from cr.c_user where ID = '{ctx.message.author.id}';")
             player_profile = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
@@ -122,12 +122,12 @@ class TestScripts:
             return
 
         def check_profile(self, ID):
-            self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ID}';")
+            self.database.cur.execute(f"select * from cr.c_user where ID = '{ID}';")
             profile = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             if profile is None:
                 print('profile not found')
-                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
+                query = f"INSERT INTO cr.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
@@ -152,13 +152,13 @@ class TestScripts:
 
         check_profile(self, ctx.message.author.id)
         user_choice = str(item).lower()
-        self.database.cur.execute(f"select * from botzilla.c_steal where name_item = '{user_choice}';")
+        self.database.cur.execute(f"select * from cr.c_steal where name_item = '{user_choice}';")
         item = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
-        self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ctx.message.author.id}';")
+        self.database.cur.execute(f"select * from cr.c_user where ID = '{ctx.message.author.id}';")
         game = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
-        self.database.cur.execute(f"select * from botzilla.c_jail WHERE ID = '{ctx.message.author.id}';")
+        self.database.cur.execute(f"select * from cr.c_jail WHERE ID = '{ctx.message.author.id}';")
         jail = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
         if jail:
@@ -203,7 +203,7 @@ class TestScripts:
 
                 score = int(game[3]) + int(item[0][6])
                 print(f'score: {score}')
-                query = "UPDATE botzilla.c_user SET XP = {}, score = {}, LVL = {}, money = {} WHERE ID = '{}'".format(experience, score, level, money, ctx.message.author.id)
+                query = "UPDATE cr.c_user SET XP = {}, score = {}, LVL = {}, money = {} WHERE ID = '{}'".format(experience, score, level, money, ctx.message.author.id)
                 print(query)
                 self.database.cur.execute(query)
                 self.database.conn.commit()
@@ -219,7 +219,7 @@ class TestScripts:
                 jt = str(jt.strftime('%Y-%m-%d %H:%M:%S'))
 
                 try:
-                    query = f"INSERT INTO botzilla.c_jail(ID, jail_date) VALUES({ctx.message.author.id}, '{jt}');"
+                    query = f"INSERT INTO cr.c_jail(ID, jail_date) VALUES({ctx.message.author.id}, '{jt}');"
                     self.database.cur.execute(query)
                     self.database.conn.commit()
                     self.database.cur.execute("ROLLBACK;")
@@ -242,7 +242,7 @@ class TestScripts:
 
         else:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You could find nothing to steal..\nYou decide to take a walk and observe the erea.',
+                                  description='You could find nothing to steal..\nYou decide to take a walk and observe the area.',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\U0001f6b6')
