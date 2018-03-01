@@ -167,9 +167,11 @@ class TestScripts:
 
         if jail:
             jt = jail_time(self, jail[1])
+            now = datetime.datetime.now()
+            future = datetime.datetime.strptime(jail[1], '%Y-%m-%d %H:%M:%S')
             if jt:
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                      description=f'**You are in jail. You are free at** : **`{jail[1]}`**\nThere for you need to wait another : **`{(jail[1] - datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))}`**',
+                                      description=f'**You are in jail. You are free at** : **`{jail[1]}`**\nThere for you need to wait another : **`{now - future}`**',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
