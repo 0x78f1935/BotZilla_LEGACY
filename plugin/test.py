@@ -59,7 +59,7 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
             if profile is None:
                 print('profile not found')
-                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, jail, jail_date, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'FALSE', '{int(0)}', 'TRUE')"
+                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
@@ -127,7 +127,7 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
             if profile is None:
                 print('profile not found')
-                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, jail, jail_date, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'FALSE', '{int(0)}', 'TRUE')"
+                query = f"INSERT INTO botzilla.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
@@ -158,9 +158,15 @@ class TestScripts:
         self.database.cur.execute(f"select * from botzilla.c_user where ID = '{ctx.message.author.id}';")
         game = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
-        if game[6] and str(game[7]) != '0':
+        self.database.cur.execute(f"select * from botzilla.c_jail WHERE ID = '{ctx.message.author.id}';")
+        jail = self.database.cur.fetchone()
+        self.database.cur.execute("ROLLBACK;")
+        if jail:
+            print(jail)
+            print(jail[0])
+            print(jail[1])
             print('player in jail', str(game[7]))
-            jt = jail_time(self, str(game[7]))
+            jt = jail_time(self, jail[1])
             print(jt)
             embed = discord.Embed(title='{}:'.format(str(item[0][2])),
                                   description=f'*You are in jail. You are free in : **```{jt}```**',
@@ -194,13 +200,10 @@ class TestScripts:
                 print(f'lvl: {level}')
                 money = int(game[4]) + int(item[0][4])
                 print(f'money: {money}')
-                jail = 'FALSE'
-                print(f'jail: {jail}')
-                jail_date = '0'
-                print(f'jail_date: {jail_date}')
+
                 score = int(game[3]) + int(item[0][6])
                 print(f'score: {score}')
-                query = "UPDATE botzilla.c_user SET XP = {}, score = {}, LVL = {}, money = {}, jail = {}, jail_date = '{}' WHERE ID = '{}'".format(experience, score, level, money, jail, jail_date, ctx.message.author.id)
+                query = "UPDATE botzilla.c_user SET XP = {}, score = {}, LVL = {}, money = {} WHERE ID = '{}'".format(experience, score, level, money, ctx.message.author.id)
                 print(query)
                 self.database.cur.execute(query)
                 self.database.conn.commit()
@@ -214,8 +217,19 @@ class TestScripts:
                 # lose
                 jt = datetime.datetime.now() + datetime.timedelta(0, int(item[0][9]))
                 jt = str(jt.strftime('%Y-%m-%d %H:%M:%S'))
-                jail = 'TRUE'
-                query = f"UPDATE botzilla.c_user SET jail = {jail}, jail_date = '{jt}' WHERE ID = '{ctx.message.author.id}';"
+
+                try:
+                    query = f"INSERT INTO botzilla.c_jail SET ID = {ctx.message.author.id}, jail_date = '{jt}';"
+                    self.database.cur.execute(query)
+                    self.database.conn.commit()
+                    self.database.cur.execute("ROLLBACK;")
+
+                except Exception as e:
+                    if 'duplicate key' in str(e.args):
+                        pass
+                    else:
+                        print(f'{type(e).__name__} : {e}')
+
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
