@@ -260,6 +260,8 @@ class TestScripts:
                 print(f'xp: {experience}')
                 print(f'lvl: {level}')
                 money = int(user[4]) + int(item[0][4])
+                # debug
+                money = 1000
                 print(f'money: {money}')
 
                 score = int(user[3]) + int(item[0][6])
