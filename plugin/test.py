@@ -336,30 +336,63 @@ class TestScripts:
             user = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             city = user[0]
-            self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
-            steal = self.database.cur.fetchall()
-            self.database.cur.execute("ROLLBACK;")
+            try:
+                self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
+                steal = self.database.cur.fetchall()
+                self.database.cur.execute("ROLLBACK;")
+                can_steal = True
+            except Exception as e:
+                can_steal = False
+
             self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
             city = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
-            things_to_steal = []
-            for i in steal:
-                things_to_steal.append(f'- **`{i[0]}`**')
-            steal_list = '\n'.join(things_to_steal)
-            print(city)
-            print(city[1])
-            print(city[2])
-            print(city[3])
+
+            if can_steal:
+                things_to_steal = []
+                for i in steal:
+                    things_to_steal.append(f'- **`{i[0]}`**')
+                steal_list = '\n'.join(things_to_steal)
+
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=f'The current city you are in is **`{city[1]}`**\n\n{city[2]}This city offers the following:\n\n**Items to steal**\n{steal_list}',
+                                  description=f'The current city you are in is **`{city[1]}`**\n\n{city[2]}This city offers the following:\n\n',
                                   colour=0xf20006)
+            if can_steal:
+                embed.add_field(name='Items to steal', value=steal_list)
+
             embed.set_thumbnail(url=city[3])
             a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
         else:
             # search info about other city
-            pass
+            try:
+                self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
+                steal = self.database.cur.fetchall()
+                self.database.cur.execute("ROLLBACK;")
+                can_steal = True
+            except Exception as e:
+                can_steal = False
+
+            self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
+            city = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
+            if can_steal:
+                things_to_steal = []
+                for i in steal:
+                    things_to_steal.append(f'- **`{i[0]}`**')
+                steal_list = '\n'.join(things_to_steal)
+
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description=f'The current city you are in is **`{city[1]}`**\n\n{city[2]}This city offers the following:\n\n',
+                                  colour=0xf20006)
+            if can_steal:
+                embed.add_field(name='Items to steal', value=steal_list)
+
+            embed.set_thumbnail(url=city[3])
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
 def setup(bot):
