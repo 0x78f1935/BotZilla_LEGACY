@@ -152,6 +152,16 @@ class TestScripts:
             else:
                 return True
 
+        def jail_time_calc(self):
+            self.database.cur.execute(f"select * from cr.c_jail WHERE ID = '{ctx.message.author.id}';")
+            jail = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            now = datetime.datetime.now()
+            future = datetime.datetime.strptime(jail[1], '%Y-%m-%d %H:%M:%S')
+            time_to_wait = future - now
+            time_to_wait = str(time_to_wait)[:8].replace('.', '')
+            return time_to_wait
+
         check_profile(self, ctx.message.author.id)
 
         user_choice = str(item).lower()
@@ -169,10 +179,7 @@ class TestScripts:
 
         if jail:
             if jail_time(self, jail[1]):
-                now = datetime.datetime.now()
-                future = datetime.datetime.strptime(jail[1], '%Y-%m-%d %H:%M:%S')
-                time_to_wait = future - now
-                time_to_wait = str(time_to_wait)[:8].replace('.', '')
+                time_to_wait = jail_time_calc(self)
                 embed = discord.Embed(title='Unable to move',
                                       description=f'You are unable to **{item[0][2]}**\nThis is because you are in **jail**.\nThe judge decided to lock you up until:\n**```py\n{jail[1]}\n```**\nIn **`{time_to_wait}`** you will be released.\nTry again in that time.',
                                       colour=0xf20006)
@@ -190,7 +197,7 @@ class TestScripts:
             embed = discord.Embed(title='{}:'.format(item[0][2]),
                                   description=f'**Objective :**\n**```{str(item[0][3])}```**',
                                   colour=0xf20006)
-            embed.set_footer(text='Next page in 10 seconds')
+            embed.set_footer(text='Crime in 10 seconds')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
@@ -219,14 +226,13 @@ class TestScripts:
                 self.database.cur.execute("ROLLBACK;")
                 print('query done')
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                      description=f'**```{item[0][7]}```**',
+                                      description=f'**Objective :**\n**```{str(item[0][3])}```**\n\n**```{item[0][7]}```**',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
             else:
                 # lose
                 jt = datetime.datetime.now() + datetime.timedelta(0, int(item[0][9]))
                 jt = str(jt.strftime('%Y-%m-%d %H:%M:%S'))
-
                 try:
                     query = f"INSERT INTO cr.c_jail(ID, jail_date) VALUES({ctx.message.author.id}, '{jt}');"
                     self.database.cur.execute(query)
@@ -239,8 +245,10 @@ class TestScripts:
                     else:
                         print(f'{type(e).__name__} : {e}')
 
+                time_to_wait = jail_time_calc(self)
+
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                      description=f'**```{item[0][8]}```**\nTime to wait {jt}',
+                                      description=f'**Objective :**\n**```{str(item[0][3])}```**\n\n**```{item[0][8]}```**\nTime to wait {time_to_wait}',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
 
