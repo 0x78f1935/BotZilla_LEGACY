@@ -41,7 +41,17 @@ class TestScripts:
     async def criminals(self, ctx, player : discord.Member = None):
         """
         Shows your criminal record. No worry...
-        It is just a discord game. Look into !!help for more information
+        It is just a discord game. Look into !!help for more information.
+
+        Alias = !!cr
+        Usage:
+            - !!criminals
+                *Shows information about you*
+            - !!criminals <discord player>
+                *Shows information about a person*
+        Example:
+            - !!cr puffdip
+                *Shows information about puffdip*
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!cr <{player}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
@@ -111,7 +121,21 @@ class TestScripts:
     @commands.command(pass_context=True)
     async def steal(self, ctx, item = None):
         """
-        Steal something,..
+        Steal something,.. Really depends on the city.
+        Lets say you are in Amsterdam and you really need a bike.
+        [!!steal bike], would solve your problem
+        To get a more compact overview of things you can steal..
+        Use [!!steal]. This will bring up a list with more detailed
+        information about the different crimes. Choose one and do not get caught.
+
+        Usage:
+            - !!steal
+                *List of items you can steal*
+            - !!steal <item>
+                *steal the prefered item*
+        Example:
+            - !!steal candy
+                *steals candy in New York*
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!steal <{item}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
@@ -357,8 +381,12 @@ class TestScripts:
 
         Usage:
             - !!city
-        Or:
+                *Shows current city info*
+            - !!city <city>
+                *shows info about a city*
+        Example:
             - !!city Amsterdam
+                *Shows city info Amsterdam*
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!city <{city}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
@@ -483,6 +511,15 @@ class TestScripts:
         Use !!travel for information about any flight to any city.
         If you found a flight that sounds interesting, for example Amsterdam.
         Use [!!travel amsterdam] to travel to Amsterdam!
+
+        Usage:
+            - !!travel
+                *Shows information about locations even as prices*
+            - !!travel <location>
+                *Travel to the destination*
+        Example:
+            - !!travel Amsterdam
+                *Travels to Amsterdam*
         """
 
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!travel <{city}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
