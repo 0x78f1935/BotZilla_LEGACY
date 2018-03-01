@@ -259,7 +259,7 @@ class TestScripts:
         test_level = level(self, int(item[0][0]))
 
         if test_level:
-            self.database.cur.execute(f"select * from cr.c_steal WHERE ID = {ID};")
+            self.database.cur.execute(f"select * from cr.c_steal WHERE ID = {int(item[0][0])};")
             item = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             desc = f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{user[1]}`**\nRequired for **`{item[1]}`** LVL: **`{item[10]}`**'
