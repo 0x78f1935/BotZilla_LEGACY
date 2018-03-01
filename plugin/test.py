@@ -366,6 +366,15 @@ class TestScripts:
 
         else:
             # search info about other city
+            if ' ' in city:
+                a = city.split(' ')
+                c = []
+                for i in a:
+                    c.append(i.lower().capitalize())
+                city = ' '.join(c)
+            else:
+                city = str(city).lower().capitalize()
+
             self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
             city = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
@@ -384,7 +393,7 @@ class TestScripts:
                     things_to_steal.append(f'- **`{i[0]}`**')
                 steal_list = '\n'.join(things_to_steal)
             else:
-                steal_list = 'None'
+                steal_list = '- **`None`**'
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```**\n\nThis city offers the following:\n\n',
