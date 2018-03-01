@@ -385,8 +385,9 @@ class TestScripts:
             self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
             steal = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
+            empty = []
             print(f'\n\ncity{city}\n\nSteal: {steal}\n\n')
-            if steal == None:
+            if steal == empty:
                 steal_list = '- **`None`**'
                 can_steal = False
             else:
