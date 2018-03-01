@@ -188,7 +188,7 @@ class TestScripts:
 
             item_level = int(item[10])
             user_level = int(user_level[1])
-
+            print(item_level, user_level)
             if user_level >= item_level:
                 return None
             else:
