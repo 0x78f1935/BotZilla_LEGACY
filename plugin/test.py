@@ -38,7 +38,7 @@ class TestScripts:
 
 
     @commands.command(pass_context=True, aliases=["cr"])
-    async def criminals(self, ctx, player : discord.Member = None):
+    async def criminal(self, ctx, player : discord.Member = None):
         """
         Shows your criminal record. No worry...
         It is just a discord game. Look into !!help for more information.
