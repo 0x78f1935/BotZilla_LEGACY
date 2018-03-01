@@ -732,7 +732,7 @@ class Games:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description=f"**You already shot in that direction!**\nScore: **`{score}`**\n\n"
                                                       f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
-                                                      f"\n\nCannonballs are expensive,.. Luckly you are smart enough to shoot in the same direction\n\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
+                                                      f"\n\n**`Cannonballs are expensive,..\nLuckly you are smart enough to shoot in the same direction`**\n\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
                     if online != 'False' and int(enemy) != 0:
                         enemy_player = await self.bot.get_user_info(int(enemy))
@@ -764,7 +764,7 @@ class Games:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description=f"**`MISS`**\nScore: **`{score}`**\n\n"
                                                       f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
-                                                      f"\n\n**`Your shot was way off, Try again... And this time a hit captain!`**\n\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
+                                                      f"\n\n**`Your shot was way off, Try again...\nAnd this time a hit captain!`**\n\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
                     if online != 'False' and int(enemy) != 0:
                         enemy_player = await self.bot.get_user_info(int(enemy))
