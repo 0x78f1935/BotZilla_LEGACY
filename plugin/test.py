@@ -371,19 +371,18 @@ class TestScripts:
                 city = ' '.join(c)
             else:
                 city = str(city).lower().capitalize()
-            empty = []
-            self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
-            cityq = self.database.cur.fetchone()
+
+
+
+            self.database.cur.execute(f"select city from cr.c_city;")
+            city_check = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
 
-            if cityq == empty:
-                self.database.cur.execute(f"select city from cr.c_city where city = '{city}';")
-                avalaible_citys = self.database.cur.fetchall()
-                self.database.cur.execute("ROLLBACK;")
-                things_to_steal = []
-                for i in avalaible_citys:
-                    things_to_steal.append(f'- **`{i[0]}`**')
-                avalaible_citys = '\n'.join(things_to_steal)
+            if str(city) not in str(city_check):
+                city_names = []
+                for i in city_check:
+                    city_names.append(f'- **`{i[0]}`**')
+                avalaible_citys = '\n'.join(city_names)
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=f'Unfortunately **`{city}`** is not a location in the game.\n\nThe following locations are accesable:\n\n{avalaible_citys}',
                                       colour=0xf20006)
@@ -391,10 +390,15 @@ class TestScripts:
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
 
+            self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
+            cityq = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
             self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
             steal = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
 
+            empty = []
             if steal == empty:
                 steal_list = '- **`None`**'
             else:
