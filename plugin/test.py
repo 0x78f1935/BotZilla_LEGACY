@@ -258,6 +258,7 @@ class TestScripts:
             pass
 
         test_level = level(self, int(item[0][0]))
+        print(test_level)
         if test_level:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=test_level,
