@@ -13,8 +13,6 @@ import datetime
 import psycopg2
 import psycopg2.extras
 import socket
-import os
-import sys
 
 try:
     from plugin.database import Database
@@ -480,33 +478,5 @@ async def on_command_error(error, ctx):
         await bot.add_reaction(last_message, emojiUnicode['warning'])
         return
 
-
-async def never_offline(bot):
-    def print_exception():
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        error = f'{exc_type} : {fname} : {exc_tb.tb_lineno}'
-        return error
-
-    try:
-        bot.run(config['bot-key'])
-    except Exception as e:
-        while True:
-            print(f'CRITICAL - OFFLINE - {datetime.date.today()} {datetime.datetime.now()} - Ping to discord.gg')
-            try:
-                socket.create_connection(("www.discord.gg", 80))
-                try:
-                    socket.create_connection(("www.google.com", 80))
-                    await never_offline(bot)
-                    break
-                except OSError:
-                    print('Not connected google.com')
-                    print(print_exception())
-            except OSError:
-                print('Not connected discord.gg')
-                print(print_exception())
-
-            await asyncio.sleep(10)
-
 if __name__ == '__main__':
-    bot.loop.run_until_complete(never_offline(bot))
+    bot.run(config['bot-key'])
