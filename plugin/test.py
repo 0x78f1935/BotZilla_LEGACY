@@ -424,8 +424,12 @@ class TestScripts:
                     things_to_steal.append(f'- **`{i[1]}`** : **`{i[11]}`** % fail rate')
                 steal_list = '\n'.join(things_to_steal)
 
+            seconds = int(cityq[4])
+            m, s = divmod(seconds, 60)
+            h, m = divmod(m, 60)
+            average = f"{h}:{m}:{s}"
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=f'The current city you are in is **`{cityq[1]}`**\n\n**```{cityq[2]}```**\n\n',
+                                  description=f'The city you selected is **`{cityq[1]}`**\nTravel time is average: {average} \n\n**```{cityq[2]}```**\n\n',
                                   colour=0xf20006)
             embed.add_field(name='This city offers the following:', value='-------------------------------', inline=False)
             embed.add_field(name='Items to steal', value=steal_list)
