@@ -166,18 +166,14 @@ class TestScripts:
         self.database.cur.execute("ROLLBACK;")
 
         if jail:
-            print(jail)
-            print(jail[0])
-            print(jail[1])
-            print('player in jail', jail)
             jt = jail_time(self, jail[1])
-            print(jt)
-            embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                  description=f'*You are in jail. You are free in : **```{jt}```**',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-            return
+            if jt:
+                embed = discord.Embed(title='{}:'.format(item[0][2]),
+                                      description=f'*You are in jail. You are free at : **```{jail[1]}```**',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
 
         if user_choice in str(item):
             jail_number = random.randint(0, 100)
