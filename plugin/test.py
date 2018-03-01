@@ -383,12 +383,13 @@ class TestScripts:
                 for i in steal:
                     things_to_steal.append(f'- **`{i[0]}`**')
                 steal_list = '\n'.join(things_to_steal)
+            else:
+                steal_list = 'None'
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```**\n\nThis city offers the following:\n\n',
                                   colour=0xf20006)
-            if can_steal:
-                embed.add_field(name='Items to steal', value=steal_list)
+            embed.add_field(name='Items to steal', value=steal_list)
 
             embed.set_thumbnail(url=city[3])
             a = await self.bot.say(embed=embed)
