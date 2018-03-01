@@ -537,8 +537,10 @@ class CriminalWars:
         self.database.cur.execute("ROLLBACK;")
 
         if jail:
+            print(jail)
             if jail_time(self, jail[1], 'c_jail'):
                 time_to_wait = time_calc(self, 'c_jail')
+                print(time_to_wait)
                 embed = discord.Embed(title='Unable to move',
                                       description=f'You are unable to travel\nThis is because you are in **jail**.\nThe judge decided to lock you up until:\n**```py\n{jail[1]}\n```**\nIn **`{time_to_wait}`** you will be released.\nTry again in that time.',
                                       colour=0xf20006)
