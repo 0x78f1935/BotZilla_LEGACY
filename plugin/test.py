@@ -541,16 +541,23 @@ class TestScripts:
             city_check = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
 
+            self.database.cur.execute(f"select * from cr.c_user WHERE ID = {ctx.message.author.id};")
+            user = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
             city_names = []
             for i in city_check:
                 seconds = int(i[4])
                 m, s = divmod(seconds, 60)
                 h, m = divmod(m, 60)
                 average = f"{h}:{m}:{s}"
-                city_names.append(f'- $**`{i[5]}`**,- : **`{i[1]}`**\n  *Travel time average: `{average}`*\n')
+                if user[5] == i[1]:
+                    pass
+                else:
+                    city_names.append(f'- $**`{i[5]}`**,- : **`{i[1]}`**\n  *Travel time average: `{average}`*\n')
             avalaible_citys = '\n'.join(city_names)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=f'You can travel to the following locations in game:\n\n{avalaible_citys}\n\nIf you are stuck use **`{self.config["prefix"]}help travel`** for more information',
+                                  description=f'Currently you are in: **`{user[5]}`**\nYou can travel to the following locations in game:\n\n{avalaible_citys}\n\nIf you are stuck use **`{self.config["prefix"]}help travel`** for more information',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
