@@ -380,6 +380,8 @@ class TestScripts:
             city = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
+            print(city)
+            print(city[1])
             try:
                 self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city[1]}';")
                 steal = self.database.cur.fetchall()
