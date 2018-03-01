@@ -250,6 +250,7 @@ class TestScripts:
                 return
 
             if int(item[0][10]) >= int(user[1]):
+                print(int(item[0][10]), int(user[1]))
                 embed = discord.Embed(title='Level to low',
                                       description=f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{user[1]}`**\nRequired for **`{item[0][1]}`** LVL: **`{item[0][10]}`**',
                                       colour=0xf20006)
