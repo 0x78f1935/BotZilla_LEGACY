@@ -279,8 +279,6 @@ class TestScripts:
                                       colour=0xf20006)
                 embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
                 await self.bot.edit_message(a, embed=embed)
-
-
         else:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You could find nothing to steal..\nYou decide to take a walk and observe the area.\nUse **`{}help steal`** if you are stuck',
@@ -289,6 +287,58 @@ class TestScripts:
             await self.bot.add_reaction(a, '\U0001f6b6')
             return
 
+
+    @commands.command(pass_context=True)
+    async def city(self, ctx, city=None):
+        """
+        Steal something,..
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!city <{city}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Only the owner of this bot can use this command',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        def check_profile(self, ID):
+            self.database.cur.execute(f"select * from cr.c_user where ID = '{ID}';")
+            profile = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            if profile is None:
+                print('profile not found')
+                query = f"INSERT INTO cr.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
+                self.database.cur.execute(query)
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+                print('profile created')
+            else:
+                print('profile already exist')
+
+        check_profile(self, ctx.message.author.id)
+
+        if city is None:
+            self.database.cur.execute(f"select * from cr.c_user where ID = {ctx.message.author.id};")
+            user = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            city = user[5]
+            self.database.cur.execute(f"select name_item from cr.c_user where city = {city};")
+            steal = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            things_to_steal = []
+            for i in steal:
+                things_to_steal.append(f'- **`{i[0]}`**')
+            steal_list = '\n'.join(things_to_steal)
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description=f'The current city you are in is **`{city}`**\nThis city offers the following:\n\n**Items to steal**\n{steal_list}',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+
+        else:
+            # search info about other city
+            pass
 
 
 def setup(bot):
