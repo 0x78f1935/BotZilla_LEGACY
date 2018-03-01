@@ -155,8 +155,8 @@ class TestScripts:
             else:
                 return True
 
-        def jail_time_calc(self):
-            self.database.cur.execute(f"select * from cr.c_jail WHERE ID = {ctx.message.author.id};")
+        def time_calc(self, what):
+            self.database.cur.execute(f"select * from cr.{what} WHERE ID = {ctx.message.author.id};")
             jail = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             now = datetime.datetime.now()
@@ -193,11 +193,28 @@ class TestScripts:
         jail = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
 
+        self.database.cur.execute(f"select * from cr.c_travel WHERE ID = {ctx.message.author.id};")
+        travel = self.database.cur.fetchone()
+        self.database.cur.execute("ROLLBACK;")
+
         if jail:
             if jail_time(self, jail[1]):
-                time_to_wait = jail_time_calc(self)
+                time_to_wait = time_calc(self, 'c_jail')
                 embed = discord.Embed(title='Unable to move',
                                       description=f'You are unable to **{item[0][2]}**\nThis is because you are in **jail**.\nThe judge decided to lock you up until:\n**```py\n{jail[1]}\n```**\nIn **`{time_to_wait}`** you will be released.\nTry again in that time.',
+                                      colour=0xf20006)
+                embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
+        else:
+            pass
+
+        if travel:
+            if jail_time(self, travel[1]):
+                time_to_wait = time_calc(self, 'c_travel')
+                embed = discord.Embed(title='Unable to move',
+                                      description=f'You are on a roadtrip to **`{travel[2]}`**.\nYou took a look at your planning schedule.\nAriving date:**```py\n{travel[1]}\n```**\nYou will arive in **`{time_to_wait}`**\nTry again in that time.',
                                       colour=0xf20006)
                 embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
                 a = await self.bot.say(embed=embed)
@@ -275,7 +292,7 @@ class TestScripts:
                     else:
                         print(f'{type(e).__name__} : {e}')
 
-                time_to_wait = jail_time_calc(self)
+                time_to_wait = time_calc(self, 'c_jail')
 
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
                                       description=f'**Objective :**\n**```{str(item[0][3])}```**\n:police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car:\n**```{item[0][8]}```**\nTime in jail: **`{time_to_wait}`**',
