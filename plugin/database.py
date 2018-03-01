@@ -167,9 +167,9 @@ class Database:
         for server in self.bot.servers:
             for member in server.members:
                 try:
-                    username = str(member.name).replace("'", '').replace(';', '')
-                    self.cur.execute(
-                        "INSERT INTO botzilla.users (ID, name) VALUES ('{}', '{}');".format(member.id, username))
+                    pattern = re.compile('[\W_]+')
+                    name = pattern.sub('', str(member.name))
+                    self.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ({}, '{}');".format(member.id, name))
                     self.cur.execute("ROLLBACK;")
 
                 except Exception as e:
@@ -358,9 +358,7 @@ class Database:
                 reader = csv.reader(file, delimiter=',')
                 for row in reader:
                     try:
-                        row = str(row).replace('["', '')
-                        row = str(row).replace('"]', '')
-                        self.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{}".format(row))
+                        self.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES{}".format(row[0]))
                         self.cur.execute("ROLLBACK;")
                     except:
                         pass

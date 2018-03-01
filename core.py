@@ -66,14 +66,12 @@ async def dbimport():
                 name = pattern.sub('', row[1])
                 row = (row[0], '{}'.format(name))
                 import_to_db.append(row)
-
             try:
                 insert_query = 'insert into botzilla.users (ID, name) values %s'
                 psycopg2.extras.execute_values(
                     database.cur, insert_query, import_to_db, template=None, page_size=1000000000
                 )
                 database.cur.execute("ROLLBACK;")
-                print(import_to_db)
             except Exception as e:
                 if 'duplicate key' in str(e.args):
                     pass
@@ -150,8 +148,9 @@ async def get_users():
     for server in bot.servers:
         for member in server.members:
             try:
-                username = str(member.name).replace("'", '').replace(';', '')
-                database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ('{}', '{}');".format(member.id, username))
+                pattern = re.compile('[\W_]+')
+                name = pattern.sub('', str(member.name))
+                database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ({}, '{}');".format(member.id, name))
                 database.cur.execute("ROLLBACK;")
 
             except Exception as e:
@@ -170,8 +169,9 @@ async def get_new_server_users(server):
 
     for member in server.members:
         try:
-            username = str(member.name).replace("'", '').replace(';', '').replace('"', '')
-            database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ('{}', '{}');".format(member.id, username))
+            pattern = re.compile('[\W_]+')
+            name = pattern.sub('', str(member.name))
+            database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ({}, '{}');".format(member.id, name))
             database.cur.execute("ROLLBACK;")
 
         except Exception as e:
@@ -250,9 +250,9 @@ async def on_ready():
 async def on_member_join(member):
     print('MEMBER JOINED {} | {} Joined: {}'.format(member.name, member.id, member.server))
     try:
-        m = str(member.name).format(';', '').format("'", "")
-        database.cur.execute('INSERT INTO botzilla.users (ID, name) VALUES ({}, \'{}\');'.format(
-            member.id, m))
+        pattern = re.compile('[\W_]+')
+        name = pattern.sub('', str(member.name))
+        database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ({}, '{}');".format(member.id, name))
         database.cur.execute("ROLLBACK;")
         print('DATABASE ADD {} | {} has been added to the database'.format(member.name, member.id))
     except Exception as e:
