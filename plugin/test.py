@@ -215,12 +215,12 @@ class TestScripts:
         self.database.cur.execute("ROLLBACK;")
 
         if arg_check is None:
-            self.database.cur.execute(f"select name_item from cr.c_steal WHERE city = '{user[5]}';")
+            self.database.cur.execute(f"select * from cr.c_steal WHERE city = '{user[5]}';")
             actions = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             b = []
             for i in actions:
-                d = f'- **`Lvl.{i[10]}`** : **`{i[0]}`**'
+                d = f'- **`Lvl.{i[10]}`** : **`{i[1]}`**'
                 b.append(d)
             c = "\n".join(b)
             embed = discord.Embed(title='Unable to move',
