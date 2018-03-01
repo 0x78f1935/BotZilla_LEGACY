@@ -173,7 +173,7 @@ class TestScripts:
                 future = datetime.datetime.strptime(jail[1], '%Y-%m-%d %H:%M:%S')
                 time_to_wait = future - now
                 time_to_wait = str(time_to_wait)[:8].replace('.', '')
-                embed = discord.Embed(title='{}:'.format(item[0][2]),
+                embed = discord.Embed(title='Unable to move',
                                       description=f'You are unable to **{item[0][2]}**\nThis is because you are in **jail**.\nThe judge decided to lock you up until:\n**```py\n{jail[1]}\n```**\nIn **`{time_to_wait}`** you will be released.\nTry again in that time.',
                                       colour=0xf20006)
                 embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
