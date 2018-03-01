@@ -53,6 +53,7 @@ class TestScripts:
             return
 
         await self.bot.send_typing(ctx.message.channel)
+
         def check_profile(self, ID):
             self.database.cur.execute(f"select * from cr.c_user where ID = '{ID}';")
             profile = self.database.cur.fetchone()
@@ -120,6 +121,8 @@ class TestScripts:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
+
+        await self.bot.send_typing(ctx.message.channel)
 
         def check_profile(self, ID):
             self.database.cur.execute(f"select * from cr.c_user where ID = '{ID}';")
@@ -309,6 +312,8 @@ class TestScripts:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
+
+        await self.bot.send_typing(ctx.message.channel)
 
         def check_profile(self, ID):
             self.database.cur.execute(f"select * from cr.c_user where ID = '{ID}';")
