@@ -379,13 +379,13 @@ class TestScripts:
                 city = str(city).lower().capitalize()
 
             self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
-            city = self.database.cur.fetchone()
+            cityq = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
-            self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city[1]}';")
+            self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
             steal = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
-            print(city, steal)
+            print(f'\n\ncity{city}\n\nSteal: {steal}\n\n')
             if steal is None:
                 steal_list = '- **`None`**'
                 can_steal = False
@@ -396,7 +396,7 @@ class TestScripts:
                 steal_list = '\n'.join(things_to_steal)
                 can_steal = True
 
-            print(can_steal, steal_list)
+            print(f'\n\ncan_steal{can_steal}\n\nsteal_list: {steal_list}\n\n')
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```**\n\nThis city offers the following:\n\n',
                                   colour=0xf20006)
