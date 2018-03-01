@@ -319,11 +319,12 @@ class TestScripts:
         check_profile(self, ctx.message.author.id)
 
         if city is None:
-            self.database.cur.execute(f"select * from cr.c_user where ID = {ctx.message.author.id};")
+            self.database.cur.execute(f"select city from cr.c_user where ID = {ctx.message.author.id};")
             user = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
-            city = user[5]
-            self.database.cur.execute(f"select name_item from cr.c_steal where city = {city};")
+            city = user[0]
+            print(city)
+            self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
             steal = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             print(steal)
