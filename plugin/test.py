@@ -366,6 +366,10 @@ class TestScripts:
 
         else:
             # search info about other city
+            self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
+            city = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
             try:
                 self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
                 steal = self.database.cur.fetchall()
@@ -373,10 +377,6 @@ class TestScripts:
                 can_steal = True
             except Exception as e:
                 can_steal = False
-
-            self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
-            city = self.database.cur.fetchone()
-            self.database.cur.execute("ROLLBACK;")
 
             if can_steal:
                 things_to_steal = []
