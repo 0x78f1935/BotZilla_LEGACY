@@ -153,7 +153,7 @@ class TestScripts:
                 return True
 
         def jail_time_calc(self):
-            self.database.cur.execute(f"select * from cr.c_jail WHERE ID = '{ctx.message.author.id}';")
+            self.database.cur.execute(f"select * from cr.c_jail WHERE ID = {ctx.message.author.id};")
             jail = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             now = datetime.datetime.now()
@@ -162,6 +162,19 @@ class TestScripts:
             time_to_wait = str(time_to_wait)[:8].replace('.', '')
             return time_to_wait
 
+        def right_city(self, item_id):
+            # if not in same city return true
+            self.database.cur.execute(f"select city from cr.c_user WHERE ID = {ctx.message.author.id};")
+            user = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute(f"select city from cr.c_steal WHERE ID = {item_id};")
+            item = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            if str(item) == str(user):
+                return False
+            else:
+                return True
+
         check_profile(self, ctx.message.author.id)
 
         user_choice = str(item).lower()
@@ -169,11 +182,11 @@ class TestScripts:
         item = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
 
-        self.database.cur.execute(f"select * from cr.c_user where ID = '{ctx.message.author.id}';")
+        self.database.cur.execute(f"select * from cr.c_user where ID = {ctx.message.author.id};")
         user = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
 
-        self.database.cur.execute(f"select * from cr.c_jail WHERE ID = '{ctx.message.author.id}';")
+        self.database.cur.execute(f"select * from cr.c_jail WHERE ID = {ctx.message.author.id};")
         jail = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
 
@@ -189,6 +202,13 @@ class TestScripts:
                 return
         else:
             pass
+
+        if right_city(self, item[0][0]):
+            embed = discord.Embed(title='{}:'.format(item[0][2]),
+                                  description=f'You are not in the right city\nTravel to **`{item[0][12]}`** to **`{item[0][2]}`**',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
         # Game itself
         if user_choice in str(item):
