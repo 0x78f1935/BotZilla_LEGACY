@@ -497,4 +497,4 @@ async def never_offline(bot):
             await asyncio.sleep(10)
 
 if __name__ == '__main__':
-    bot.loop.create_task(never_offline(bot))
+    bot.loop.run_until_complete(never_offline(bot))
