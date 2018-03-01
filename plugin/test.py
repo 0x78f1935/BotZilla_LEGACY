@@ -218,6 +218,7 @@ class TestScripts:
             embed = discord.Embed(title='{}:'.format(item[0][2]),
                                   description=f'**Objective :**\n**```{str(item[0][3])}```**',
                                   colour=0xf20006)
+            embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418769190762315786/burglar-thief-costume-em3190--3119-pekm299x464ekm.jpg.png')
             embed.set_footer(text='Crime in 10 seconds')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -253,6 +254,7 @@ class TestScripts:
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
                                       description=f'**Objective :**\n**```{item[0][3]}```**\n{up} XP *`({user[2]})`* ***+*** **{item[0][5]}**\n{print_level}\n:moneybag: $$$ *`({user[4]})`* ***+*** *`{item[0][4]}`*\n{up} SCORE *`({user[3]})`* ***+*** *`{item[0][6]}`* **```{item[0][7]}```**',
                                       colour=0xf20006)
+                embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/407238426417430539/418770188045910026/18568092-successful-thief-Stock-Vector.png')
                 await self.bot.edit_message(a, embed=embed)
             else:
                 # lose
@@ -282,6 +284,7 @@ class TestScripts:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='You could find nothing to steal..\nYou decide to take a walk and observe the area.',
                                   colour=0xf20006)
+            embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\U0001f6b6')
             return
