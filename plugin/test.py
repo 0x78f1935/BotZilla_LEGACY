@@ -339,30 +339,21 @@ class TestScripts:
             self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
             steal = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
-            if steal is None:
-                can_steal = False
+            empty = []
+            print(f'\n\ncity{city}\n\nSteal: {steal}\n\n')
+            if steal == empty:
+                steal_list = '- **`None`**'
             else:
-                can_steal = True
-
-            self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
-            city = self.database.cur.fetchone()
-            self.database.cur.execute("ROLLBACK;")
-
-            if can_steal:
-                try:
-                    things_to_steal = []
-                    for i in steal:
-                        things_to_steal.append(f'- **`{i[0]}`**')
-                    steal_list = '\n'.join(things_to_steal)
-                except Exception as e:
-                    steal_list = '- **`None`**'
+                things_to_steal = []
+                for i in steal:
+                    things_to_steal.append(f'- **`{i[0]}`**')
+                steal_list = '\n'.join(things_to_steal)
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```**\n\n',
                                   colour=0xf20006)
             embed.add_field(name='This city offers the following:', value='\t')
-            if can_steal:
-                embed.add_field(name='Items to steal', value=steal_list)
+            embed.add_field(name='Items to steal', value=steal_list)
 
             embed.set_thumbnail(url=city[3])
             a = await self.bot.say(embed=embed)
@@ -390,21 +381,17 @@ class TestScripts:
             print(f'\n\ncity{city}\n\nSteal: {steal}\n\n')
             if steal == empty:
                 steal_list = '- **`None`**'
-                can_steal = False
             else:
                 things_to_steal = []
                 for i in steal:
                     things_to_steal.append(f'- **`{i[0]}`**')
                 steal_list = '\n'.join(things_to_steal)
-                can_steal = True
 
-            print(f'\n\ncan_steal{can_steal}\n\nsteal_list: {steal_list}\n\n')
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{cityq[1]}`**\n\n**```{cityq[2]}```**\n\n',
                                   colour=0xf20006)
             embed.add_field(name='This city offers the following:', value='\t')
-            if can_steal:
-                embed.add_field(name='Items to steal', value=steal_list)
+            embed.add_field(name='Items to steal', value=steal_list)
 
             embed.set_thumbnail(url=cityq[3])
             a = await self.bot.say(embed=embed)
