@@ -292,7 +292,7 @@ class TestScripts:
 
 
     @commands.command(pass_context=True)
-    async def city(self, ctx, *, city=None):
+    async def city(self, ctx, *, city : str = None):
         """
         Shows information about a city.
         Default city is the city you are located in
@@ -393,7 +393,7 @@ class TestScripts:
                 for i in steal:
                     things_to_steal.append(f'- **`{i[0]}`**')
                 steal_list = '\n'.join(things_to_steal)
-            else:
+            elif not can_steal:
                 steal_list = '- **`None`**'
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
