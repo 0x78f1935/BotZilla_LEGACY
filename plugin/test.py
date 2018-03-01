@@ -169,7 +169,7 @@ class TestScripts:
             jt = jail_time(self, jail[1])
             if jt:
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                      description=f'*You are in jail. You are free at : **```{jail[1]}```**',
+                                      description=f'**You are in jail. You are free at** : **`{jail[1]}`**\nThere for you need to wait another : **`{(jail[1] - datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))}`**',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
