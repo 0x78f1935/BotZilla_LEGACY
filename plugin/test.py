@@ -219,7 +219,7 @@ class TestScripts:
                 jt = str(jt.strftime('%Y-%m-%d %H:%M:%S'))
 
                 try:
-                    query = f"INSERT INTO botzilla.c_jail SET ID = {ctx.message.author.id}, jail_date = '{jt}';"
+                    query = f"INSERT INTO botzilla.c_jail(ID, jail_date) VALUES({ctx.message.author.id}, '{jt}');"
                     self.database.cur.execute(query)
                     self.database.conn.commit()
                     self.database.cur.execute("ROLLBACK;")
