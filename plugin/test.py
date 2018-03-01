@@ -337,13 +337,14 @@ class TestScripts:
             self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
             city = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
-            print(steal)
             things_to_steal = []
             for i in steal:
                 things_to_steal.append(f'- **`{i[0]}`**')
-            print(things_to_steal)
             steal_list = '\n'.join(things_to_steal)
-            print(steal_list)
+            print(city)
+            print(city[1])
+            print(city[2])
+            print(city[3])
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{city[1]}`**\n\n{city[2]}This city offers the following:\n\n**Items to steal**\n{steal_list}',
                                   colour=0xf20006)
