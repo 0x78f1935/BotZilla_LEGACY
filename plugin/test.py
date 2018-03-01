@@ -1,13 +1,15 @@
+import json
 import discord
 from discord.ext import commands
-import json
-import datetime
 import asyncio
 import random
 
+import datetime
+
+
 try:
     from plugin.database import Database
-except Exception as e:
+except:
     pass
 
 class TestScripts:

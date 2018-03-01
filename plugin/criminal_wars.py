@@ -1,9 +1,16 @@
+import json
 import discord
 from discord.ext import commands
-import json
-import datetime
 import asyncio
 import random
+
+import datetime
+
+
+try:
+    from plugin.database import Database
+except:
+    pass
 
 class CriminalWars:
     def __init__(self, bot):
