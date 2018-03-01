@@ -429,7 +429,7 @@ class TestScripts:
             h, m = divmod(m, 60)
             average = f"{h}:{m}:{s}"
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=f'The city you selected is **`{cityq[1]}`**\nTravel time is average: {average} \n\n**```{cityq[2]}```**\n\n',
+                                  description=f'The city you selected is **`{cityq[1]}`**\nTravel time is average: **`{average}`** \n\n**```{cityq[2]}```**\n\n',
                                   colour=0xf20006)
             embed.add_field(name='This city offers the following:', value='-------------------------------', inline=False)
             embed.add_field(name='Items to steal', value=steal_list)
