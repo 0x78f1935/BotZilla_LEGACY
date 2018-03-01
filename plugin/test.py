@@ -336,13 +336,13 @@ class TestScripts:
             user = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             city = user[0]
-            try:
-                self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
-                steal = self.database.cur.fetchall()
-                self.database.cur.execute("ROLLBACK;")
-                can_steal = True
-            except Exception as e:
+            self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
+            steal = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            if steal is None:
                 can_steal = False
+            else:
+                can_steal = True
 
             self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
             city = self.database.cur.fetchone()
@@ -383,15 +383,13 @@ class TestScripts:
             city = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
-            print(city)
-            print(city[1])
-            try:
-                self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city[1]}';")
-                steal = self.database.cur.fetchall()
-                self.database.cur.execute("ROLLBACK;")
-                can_steal = True
-            except Exception as e:
+            self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city[1]}';")
+            steal = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            if steal is None:
                 can_steal = False
+            else:
+                can_steal = True
 
             if can_steal:
                 try:
