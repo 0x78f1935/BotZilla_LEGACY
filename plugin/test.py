@@ -343,7 +343,6 @@ class TestScripts:
             city = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             empty = []
-            print(f'\n\ncity{city}\n\nSteal: {steal}\n\n')
             if steal == empty:
                 steal_list = '- **`None`**'
             else:
@@ -355,7 +354,7 @@ class TestScripts:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```**\n\n',
                                   colour=0xf20006)
-            embed.add_field(name='-------------------------------', value='This city offers the following:', inline=False)
+            embed.add_field(name='This city offers the following:', value='-------------------------------', inline=False)
             embed.add_field(name='Items to steal', value=steal_list)
 
             embed.set_thumbnail(url=city[3])
@@ -381,7 +380,6 @@ class TestScripts:
             steal = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             empty = []
-            print(f'\n\ncity{city}\n\nSteal: {steal}\n\n')
             if steal == empty:
                 steal_list = '- **`None`**'
             else:
@@ -393,7 +391,7 @@ class TestScripts:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{cityq[1]}`**\n\n**```{cityq[2]}```**\n\n',
                                   colour=0xf20006)
-            embed.add_field(name='-------------------------------', value='This city offers the following:', inline=False)
+            embed.add_field(name='This city offers the following:', value='-------------------------------', inline=False)
             embed.add_field(name='Items to steal', value=steal_list)
 
             embed.set_thumbnail(url=cityq[3])
