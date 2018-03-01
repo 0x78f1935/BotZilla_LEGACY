@@ -336,7 +336,7 @@ class TestScripts:
             user = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             city = user[0]
-            self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
+            self.database.cur.execute(f"select * from cr.c_steal where city = '{city}';")
             steal = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
@@ -349,7 +349,7 @@ class TestScripts:
                 things_to_steal = []
                 for i in steal:
                     change = int(i[12]) - 100
-                    things_to_steal.append(f'- **`{i[0]}`** Succes change: **`{change}%`**')
+                    things_to_steal.append(f'- **`{i[1]}`** Succes change: **`{change}%`**')
                 steal_list = '\n'.join(things_to_steal)
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -395,7 +395,7 @@ class TestScripts:
             cityq = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
-            self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city}';")
+            self.database.cur.execute(f"select * from cr.c_steal where city = '{city}';")
             steal = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
 
@@ -406,7 +406,7 @@ class TestScripts:
                 things_to_steal = []
                 for i in steal:
                     change = int(i[12]) - 100
-                    things_to_steal.append(f'- **`{i[0]}`** Succes change: **`{change}%`**')
+                    things_to_steal.append(f'- **`{i[1]}`** Succes change: **`{change}%`**')
                 steal_list = '\n'.join(things_to_steal)
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
