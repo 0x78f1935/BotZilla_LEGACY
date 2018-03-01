@@ -371,7 +371,8 @@ class TestScripts:
                 c = []
                 for i in a:
                     c.append(i.lower().capitalize())
-                city = str(' '.join(c))
+                city = ' '.join(c)
+                print(city)
             else:
                 city = str(city).lower().capitalize()
 
