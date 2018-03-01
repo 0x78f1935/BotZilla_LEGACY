@@ -348,7 +348,8 @@ class TestScripts:
             else:
                 things_to_steal = []
                 for i in steal:
-                    things_to_steal.append(f'- **`{i[0]}`**')
+                    change = int(i[12]) - 100
+                    things_to_steal.append(f'- **`{i[0]}`** Succes change: **`{change}%`**')
                 steal_list = '\n'.join(things_to_steal)
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -404,7 +405,8 @@ class TestScripts:
             else:
                 things_to_steal = []
                 for i in steal:
-                    things_to_steal.append(f'- **`{i[0]}`**')
+                    change = int(i[12]) - 100
+                    things_to_steal.append(f'- **`{i[0]}`** Succes change: **`{change}%`**')
                 steal_list = '\n'.join(things_to_steal)
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
