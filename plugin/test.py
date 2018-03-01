@@ -192,8 +192,7 @@ class TestScripts:
             if user_level >= item_level:
                 return False
             else:
-                desc = f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{item_level[1]}`**\nRequired for **`{item[1]}`** LVL: **`{item[10]}`**'
-                return desc
+                return True
 
         check_profile(self, ctx.message.author.id)
 
@@ -258,10 +257,14 @@ class TestScripts:
             pass
 
         test_level = level(self, int(item[0][0]))
-        print(test_level)
+
         if test_level:
+            self.database.cur.execute(f"select * from cr.c_steal WHERE ID = {ID};")
+            item = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            desc = f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{user[1]}`**\nRequired for **`{item[1]}`** LVL: **`{item[10]}`**'
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=test_level,
+                                  description=desc,
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
