@@ -138,7 +138,7 @@ class TestScripts:
             else:
                 print('profile already exist')
 
-        def jail_time(self, future):
+        def jail_time(self, future, where):
             """
             need time from database to calculate if user is in jail
             true if in jail and returns remaining time
@@ -149,7 +149,7 @@ class TestScripts:
             future = datetime.datetime.strptime(future, '%Y-%m-%d %H:%M:%S')
             print(now)
             if now >= future:
-                self.database.cur.execute(f"delete from cr.c_jail where ID = {ctx.message.author.id};")
+                self.database.cur.execute(f"delete from cr.{where} where ID = {ctx.message.author.id};")
                 self.database.cur.execute("ROLLBACK;")
                 return False
             else:
@@ -198,7 +198,7 @@ class TestScripts:
         self.database.cur.execute("ROLLBACK;")
 
         if jail:
-            if jail_time(self, jail[1]):
+            if jail_time(self, jail[1], 'c_jail'):
                 time_to_wait = time_calc(self, 'c_jail')
                 embed = discord.Embed(title='Unable to move',
                                       description=f'You are unable to **{item[0][2]}**\nThis is because you are in **jail**.\nThe judge decided to lock you up until:\n**```py\n{jail[1]}\n```**\nIn **`{time_to_wait}`** you will be released.\nTry again in that time.',
@@ -211,7 +211,7 @@ class TestScripts:
             pass
 
         if travel:
-            if jail_time(self, travel[1]):
+            if jail_time(self, travel[1], 'c_travel'):
                 time_to_wait = time_calc(self, 'c_travel')
                 embed = discord.Embed(title='Unable to move',
                                       description=f'You are on a roadtrip to **`{travel[2]}`**.\nYou took a look at your planning schedule.\nAriving date:**```py\n{travel[1]}\n```**\nYou will arive in **`{time_to_wait}`**\nTry again in that time.',
