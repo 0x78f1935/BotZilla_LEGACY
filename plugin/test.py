@@ -244,34 +244,23 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
             await asyncio.sleep(10)
-            print(int(jail_number), int(item[0][11]))
             if int(jail_number) >= int(item[0][11]):
                 # win
                 up = ':arrow_up_small:'
                 experience = int(user[2]) + int(item[0][5])
-                print(f'xp: {experience}')
                 level = int(user[1])
                 print_level = f':ok: LVL *`({level})`* ***-***'
-                print(f'lvl: {level}')
                 if int(experience) >= 100:
                     experience = 0
                     level = int(user[1]) + 1
                     print_level = f'{up} LVL *`({user[1]})`* ***+*** **1**'
-                print(f'xp: {experience}')
-                print(f'lvl: {level}')
-                money = int(user[4]) + int(item[0][4])
-                # debug
-                money = 1000
-                print(f'money: {money}')
 
+                money = int(user[4]) + int(item[0][4])
                 score = int(user[3]) + int(item[0][6])
-                print(f'score: {score}')
                 query = "UPDATE cr.c_user SET XP = {}, score = {}, LVL = {}, money = {} WHERE ID = '{}'".format(experience, score, level, money, ctx.message.author.id)
-                print(query)
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
-                print('query done')
 
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
                                       description=f'**Objective :**\n**```{item[0][3]}```**\n{up} XP *`({user[2]})`* ***+*** **{item[0][5]}**\n{print_level}\n:moneybag: $$$ *`({user[4]})`* ***+*** *`{item[0][4]}`*\n{up} SCORE *`({user[3]})`* ***+*** *`{item[0][6]}`* **```{item[0][7]}```**',
@@ -632,14 +621,12 @@ class TestScripts:
                     print(f'{type(e).__name__} : {e}')
 
             self.database.cur.execute(f"select * from cr.c_user where ID = {ctx.message.author.id};")
-            user = self.database.cur.fetchone()
+            user_n = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
-
-            print(user)
             time_to_wait = time_calc(self, 'c_travel')
 
             embed = discord.Embed(title='Flying to: '.format(city[1]),
-                                  description=f'You took the airplane to **`{city[1]}`**\n:moneybag: $$ **`{user[4]}`**( ***-*** **`{city[5]}`**)\nTime in plane: **`{time_to_wait}`**',
+                                  description=f'You took the airplane to **`{city[1]}`**\n:moneybag: $$ **`{user_n[4]}`** = **`{user[4]}`**( ***-*** **`{city[5]}`**)\nTime in plane: **`{time_to_wait}`**',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
