@@ -389,8 +389,6 @@ class TestScripts:
             else:
                 city = str(city).lower().capitalize()
 
-
-
             self.database.cur.execute(f"select city from cr.c_city;")
             city_check = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
@@ -437,6 +435,189 @@ class TestScripts:
             embed.set_thumbnail(url=cityq[3])
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
+    @commands.command(pass_context=True)
+    async def travel(self, ctx, *, city : str = None):
+
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!steal <{item}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Only the owner of this bot can use this command',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        await self.bot.send_typing(ctx.message.channel)
+
+        def check_profile(self, ID):
+            self.database.cur.execute(f"select * from cr.c_user where ID = '{ID}';")
+            profile = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            if profile is None:
+                print('profile not found')
+                query = f"INSERT INTO cr.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
+                self.database.cur.execute(query)
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+                print('profile created')
+            else:
+                print('profile already exist')
+
+        def jail_time(self, future, where):
+            """
+            need time from database to calculate if user is in jail
+            true if in jail and returns remaining time
+            false if not in jail
+            """
+            print(future)
+            now = datetime.datetime.now()
+            future = datetime.datetime.strptime(future, '%Y-%m-%d %H:%M:%S')
+            print(now)
+            if now >= future:
+                self.database.cur.execute(f"delete from cr.{where} where ID = {ctx.message.author.id};")
+                self.database.cur.execute("ROLLBACK;")
+                return False
+            else:
+                return True
+
+        def time_calc(self, what):
+            self.database.cur.execute(f"select * from cr.{what} WHERE ID = {ctx.message.author.id};")
+            jail = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            now = datetime.datetime.now()
+            future = datetime.datetime.strptime(jail[1], '%Y-%m-%d %H:%M:%S')
+            time_to_wait = future - now
+            time_to_wait = str(time_to_wait)[:8].replace('.', '')
+            return time_to_wait
+
+        check_profile(self, ctx.message.author.id)
+
+        self.database.cur.execute(f"select * from cr.c_jail WHERE ID = {ctx.message.author.id};")
+        jail = self.database.cur.fetchone()
+        self.database.cur.execute("ROLLBACK;")
+
+        self.database.cur.execute(f"select * from cr.c_travel WHERE ID = {ctx.message.author.id};")
+        travel = self.database.cur.fetchone()
+        self.database.cur.execute("ROLLBACK;")
+
+        if jail:
+            if jail_time(self, jail[1], 'c_jail'):
+                time_to_wait = time_calc(self, 'c_jail')
+                embed = discord.Embed(title='Unable to move',
+                                      description=f'Destination **{item[0][2]}** unreachable\nThis is because you are in **jail**.\nThe judge decided to lock you up until:\n**```py\n{jail[1]}\n```**\nIn **`{time_to_wait}`** you will be released.\nTry again in that time.',
+                                      colour=0xf20006)
+                embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
+        else:
+            pass
+
+        if travel:
+            if jail_time(self, travel[1], 'c_travel'):
+                time_to_wait = time_calc(self, 'c_travel')
+                embed = discord.Embed(title='Unable to move',
+                                      description=f'You are on a roadtrip to **`{travel[2]}`**.\nYou took a look at your planning schedule.\nAriving date:**```py\n{travel[1]}\n```**\nYou will arive in **`{time_to_wait}`**\nTry again in that time.',
+                                      colour=0xf20006)
+                embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
+        else:
+            pass
+
+        if city is None:
+            self.database.cur.execute(f"select city from cr.c_city;")
+            city_check = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+
+            city_names = []
+            for i in city_check:
+                city_names.append(f'- **`{i[0]}`**')
+            avalaible_citys = '\n'.join(city_names)
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description=f'You can travel to the following locations in game:\n\n{avalaible_citys}\n\nIf you are stuck use **`{self.config["prefix"]}help travel`** for more information',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            return
+        else:
+            # search info about other city
+            if ' ' in str(city):
+                a = str(city).split(' ')
+                c = []
+                for i in a:
+                    c.append(i.lower().capitalize())
+                city = ' '.join(c)
+            else:
+                city = str(city).lower().capitalize()
+
+            self.database.cur.execute(f"select city from cr.c_city;")
+            city_check = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+
+            if str(city) not in str(city_check):
+                city_names = []
+                for i in city_check:
+                    city_names.append(f'- **`{i[0]}`**')
+                avalaible_citys = '\n'.join(city_names)
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=f'Unfortunately **`{city}`** is not a location in the game.\n\nThe following locations are accesable:\n\n{avalaible_citys}',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
+
+            self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
+            city = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
+            self.database.cur.execute(f"select * from cr.c_user where ID = {ctx.message.author.id};")
+            user = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
+            if int(city[5]) >= int(user[4]):
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=f'Unfortunately **`{city[1]}`** is to expensive for you\nMake sure your belance is enough for the plane ticket\n\nCurrent balance: $$**`{user[4]}`**',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
+
+            jt = datetime.datetime.now() + datetime.timedelta(0, int(city[4]))
+            jt = str(jt.strftime('%Y-%m-%d %H:%M:%S'))
+            try:
+                query = f"INSERT INTO cr.c_travel(ID, travel_date, travel) VALUES({ctx.message.author.id}, '{jt}', '{city[1]}');"
+                self.database.cur.execute(query)
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+                money = int(user[4]) - int(city[5])
+                query = f"UPDATE cr.c_user SET city = '{city[1]}', money = {money} WHERE ID = {ctx.message.author.id};"
+                self.database.cur.execute(query)
+                self.database.conn.commit()
+                self.database.cur.execute("ROLLBACK;")
+            except Exception as e:
+                if 'duplicate key' in str(e.args):
+                    pass
+                else:
+                    print(f'{type(e).__name__} : {e}')
+
+            self.database.cur.execute(f"select * from cr.c_user where ID = {ctx.message.author.id};")
+            user = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
+            time_to_wait = time_calc(self, 'c_travel')
+
+            embed = discord.Embed(title='Flying to: '.format(city[1]),
+                                  description=f'You took the airplane to **`{city[1]}`**\n:moneybag: $$ **`{user[4]}`**( ***-*** **`{city[5]}`**)\nTime in plane: **`{time_to_wait}`**',
+                                  colour=0xf20006)
+            embed.set_thumbnail(
+                url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
+            await self.bot.edit_message(a, embed=embed)
+
+
 
 
 def setup(bot):
