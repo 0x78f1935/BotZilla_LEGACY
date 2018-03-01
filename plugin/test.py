@@ -195,8 +195,8 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
             await asyncio.sleep(10)
-            print(int(jail_number), int(item[0][9]))
-            if int(jail_number) >= int(item[0][9]):
+            print(int(jail_number), int(item[0][11]))
+            if int(jail_number) >= int(item[0][11]):
                 # win
                 experience = int(user[2]) + int(item[0][5])
                 print(f'xp: {experience}')
