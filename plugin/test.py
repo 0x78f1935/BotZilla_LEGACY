@@ -223,6 +223,14 @@ class TestScripts:
         else:
             pass
 
+        if user[1] >= item[0][10]:
+            embed = discord.Embed(title='Level to low',
+                                  description=f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{user[1]}`**\nRequired for **`{item[0][1]}`** LVL: **`{item[0][10]}`**',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
         # Game itself
         if user_choice in str(item):
             if right_city(self, item[0][0]):
