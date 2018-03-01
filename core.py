@@ -497,7 +497,7 @@ async def never_offline(bot):
                 socket.create_connection(("www.discord.gg", 80))
                 try:
                     socket.create_connection(("www.google.com", 80))
-                    never_offline(bot)
+                    await never_offline(bot)
                     break
                 except OSError:
                     print('Not connected google.com')
