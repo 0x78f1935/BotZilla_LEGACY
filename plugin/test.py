@@ -355,7 +355,7 @@ class TestScripts:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```**\n\n',
                                   colour=0xf20006)
-            embed.add_field(name='.', value='This city offers the following:')
+            embed.add_field(name='This city offers the following:', value='\t', inline=False)
             embed.add_field(name='Items to steal', value=steal_list)
 
             embed.set_thumbnail(url=city[3])
@@ -393,7 +393,7 @@ class TestScripts:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{cityq[1]}`**\n\n**```{cityq[2]}```**\n\n',
                                   colour=0xf20006)
-            embed.add_field(name='\t', value='This city offers the following:')
+            embed.add_field(name='This city offers the following:', value='\t', inline=False)
             embed.add_field(name='Items to steal', value=steal_list)
 
             embed.set_thumbnail(url=cityq[3])
