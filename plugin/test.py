@@ -257,7 +257,7 @@ class TestScripts:
         else:
             pass
 
-        test_level = level(self, item[0])
+        test_level = level(self, int(item[0]))
         if test_level is None:
             pass
         else:
