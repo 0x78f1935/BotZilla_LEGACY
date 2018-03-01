@@ -651,7 +651,7 @@ class Games:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=f"{self.battleship_emoji_text['bb']}{self.battleship_emoji_text['a']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['l']}{self.battleship_emoji_text['e']}{self.battleship_emoji_text['s']}{self.battleship_emoji_text['h']}{self.battleship_emoji_text['i']}{self.battleship_emoji_text['p']}*V2.0*\n\nScore: **`{score}`**\n\n"
                                                   f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
-                                                  f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nThis is a map overview of your playground\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
+                                                  f"\n\nThis is a map overview of your playground\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                       colour=0xf20006)
                 if online != 'False' and int(enemy) != 0:
                     enemy_player = await self.bot.get_user_info(int(enemy))
@@ -689,7 +689,7 @@ class Games:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description=f"{self.battleship_emoji_text['bb']}{self.battleship_emoji_text['a']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['t']}{self.battleship_emoji_text['l']}{self.battleship_emoji_text['e']}{self.battleship_emoji_text['s']}{self.battleship_emoji_text['h']}{self.battleship_emoji_text['i']}{self.battleship_emoji_text['p']}*V2.0*\n\n**`DIRECT HIT`**\n\nScore: **`{say_score}`**\n\n"
                                                   f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
-                                                  f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
+                                                  f"\n\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                       colour=0xf20006)
                 if online != 'False' and int(enemy) != 0:
                     enemy_player = await self.bot.get_user_info(int(enemy))
@@ -732,7 +732,7 @@ class Games:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description=f"**You already shot in that direction!**\nScore: **`{score}`**\n\n"
                                                       f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
-                                                      f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
+                                                      f"\n\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
                     if online != 'False' and int(enemy) != 0:
                         enemy_player = await self.bot.get_user_info(int(enemy))
@@ -764,7 +764,7 @@ class Games:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description=f"**`MISS`**\nScore: **`{score}`**\n\n"
                                                       f"{header}\n{self.battleship_emoji_text['one']} {row_1}\n{self.battleship_emoji_text['two']} {row_2}\n{self.battleship_emoji_text['three']} {row_3}\n{self.battleship_emoji_text['four']} {row_4}\n{self.battleship_emoji_text['five']} {row_5}\n{self.battleship_emoji_text['six']} {row_6}\n{self.battleship_emoji_text['seven']} {row_7}\n{self.battleship_emoji_text['eight']} {row_8}\n{self.battleship_emoji_text['nine']} {row_9}\n{self.battleship_emoji_text['ten']} {row_10}"
-                                                      f"\n\nGameHash:\n**{gamehash_1}\n{gamehash_2}**\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
+                                                      f"\n\nIf you are stuck\nuse **`{self.config['prefix']}help battleship`**",
                                           colour=0xf20006)
                     if online != 'False' and int(enemy) != 0:
                         enemy_player = await self.bot.get_user_info(int(enemy))
