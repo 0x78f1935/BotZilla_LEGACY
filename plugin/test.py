@@ -348,8 +348,7 @@ class TestScripts:
             else:
                 things_to_steal = []
                 for i in steal:
-                    change = int(i[11]) - 100
-                    things_to_steal.append(f'- **`{i[1]}`** **`{change} %`** fail rate')
+                    things_to_steal.append(f'- **`{i[1]}`** : **`{i[11]}`** % fail rate')
                 steal_list = '\n'.join(things_to_steal)
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -405,8 +404,7 @@ class TestScripts:
             else:
                 things_to_steal = []
                 for i in steal:
-                    change = int(i[11]) - 100
-                    things_to_steal.append(f'- **`{i[1]}`** **`{change} %`** fail rate')
+                    things_to_steal.append(f'- **`{i[1]}`** : **`{i[11]}`** % fail rate')
                 steal_list = '\n'.join(things_to_steal)
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
