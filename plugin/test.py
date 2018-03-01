@@ -199,7 +199,7 @@ class TestScripts:
         self.database.cur.execute("ROLLBACK;")
 
         if arg_check is None:
-            self.database.cur.execute(f"select name from cr.c_steal WHERE city = '{user[5]}';")
+            self.database.cur.execute(f"select name_item from cr.c_steal WHERE city = '{user[5]}';")
             actions = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             b = []
