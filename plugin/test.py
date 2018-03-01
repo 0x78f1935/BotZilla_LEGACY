@@ -146,6 +146,8 @@ class TestScripts:
             future = datetime.datetime.strptime(future, '%Y-%m-%d %H:%M:%S')
             print(now)
             if now >= future:
+                self.database.cur.execute(f"delete from cr.c_jail WHERE ID = '{ctx.message.author.id}';")
+                self.database.cur.execute("ROLLBACK;")
                 return False
             else:
                 return True
