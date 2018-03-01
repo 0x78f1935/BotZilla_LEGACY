@@ -147,7 +147,6 @@ class TestScripts:
             print(now)
             if now >= future:
                 self.database.cur.execute(f"delete from cr.c_jail where ID = {ctx.message.author.id};")
-                self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 return False
             else:
@@ -169,18 +168,18 @@ class TestScripts:
         self.database.cur.execute("ROLLBACK;")
 
         if jail:
-            jt = jail_time(self, jail[1])
-            now = datetime.datetime.now()
-            future = datetime.datetime.strptime(jail[1], '%Y-%m-%d %H:%M:%S')
-            time_to_wait = datetime.datetime.strptime(str(future), '%Y-%m-%d %H:%M:%S') - datetime.datetime.strptime(str(now), '%Y-%m-%d %H:%M:%S')
-            
-            if jt:
+            if jail_time(self, jail[1]):
+                now = datetime.datetime.now()
+                future = datetime.datetime.strptime(jail[1], '%Y-%m-%d %H:%M:%S')
+                time_to_wait = future - now
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
                                       description=f'You are in **jail**. You are **free** at : **`{jail[1]}`**\nThere for you need to **wait** another : **`{time_to_wait}`**',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
+        else:
+            pass
 
         if user_choice in str(item):
             jail_number = random.randint(0, 100)
