@@ -178,6 +178,23 @@ class TestScripts:
             else:
                 return True
 
+        def level(self, ID):
+            self.database.cur.execute(f"select * from cr.c_user WHERE ID = {ctx.message.author.id};")
+            user_level = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute(f"select * from cr.c_steal WHERE ID = {ID};")
+            item = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
+            item_level = int(item[10])
+            user_level = int(user_level[1])
+
+            if user_level >= item_level:
+                return None
+            else:
+                desc = f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{item_level[1]}`**\nRequired for **`{item[1]}`** LVL: **`{item[10]}`**'
+                return desc
+
         check_profile(self, ctx.message.author.id)
 
         arg_check = item
@@ -240,9 +257,12 @@ class TestScripts:
         else:
             pass
 
-        if int(user[1]) >= int(item[0][10]):
-            embed = discord.Embed(title='Level to low',
-                                  description=f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{user[1]}`**\nRequired for **`{item[0][1]}`** LVL: **`{item[0][10]}`**',
+        test_level = level(self, item[0])
+        if test_level is None:
+            pass
+        else:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description=test_level,
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
