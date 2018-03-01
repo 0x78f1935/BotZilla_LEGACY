@@ -537,7 +537,11 @@ class TestScripts:
 
             city_names = []
             for i in city_check:
-                city_names.append(f'- $**`{i[5]}`**,- : **`{i[1]}`**\n  *Travel Time: `{i[4]}`*')
+                seconds = int(i[4])
+                m, s = divmod(seconds, 60)
+                h, m = divmod(m, 60)
+                average = f"{h}:{m}:{s}"
+                city_names.append(f'- $**`{i[5]}`**,- : **`{i[1]}`**\n  *Travel time average: `{average}`*\n')
             avalaible_citys = '\n'.join(city_names)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'You can travel to the following locations in game:\n\n{avalaible_citys}\n\nIf you are stuck use **`{self.config["prefix"]}help travel`** for more information',
