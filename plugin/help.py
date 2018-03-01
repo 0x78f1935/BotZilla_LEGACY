@@ -122,7 +122,7 @@ class Help:
         Images_commands.append('**------**')
         Images_name = "\n".join(Images_commands)
 
-        self.database.cur.execute("select name from botzilla.help where cog = 'Exchange';")
+        self.database.cur.execute("select name from botzilla.help where cog = 'CriminalWars';")
         Exchange_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
         Exchange_commands = []
