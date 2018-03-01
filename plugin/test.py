@@ -591,7 +591,7 @@ class TestScripts:
             jt = datetime.datetime.now() + datetime.timedelta(0, int(city[4]))
             jt = str(jt.strftime('%Y-%m-%d %H:%M:%S'))
             try:
-                query = f"INSERT INTO cr.c_travel(ID, travel_date, travel) VALUES({ctx.message.author.id}, '{jt}', '{city[1]}');"
+                query = f"INSERT INTO cr.c_travel(ID, travel_date, travel) VALUES({ctx.message.author.id}, {jt}, '{city[1]}');"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
