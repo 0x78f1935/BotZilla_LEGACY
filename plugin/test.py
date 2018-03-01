@@ -348,6 +348,7 @@ class TestScripts:
             else:
                 things_to_steal = []
                 for i in steal:
+                    print(i)
                     change = int(i[12]) - 100
                     things_to_steal.append(f'- **`{i[1]}`** Succes change: **`{change}%`**')
                 steal_list = '\n'.join(things_to_steal)
@@ -405,6 +406,7 @@ class TestScripts:
             else:
                 things_to_steal = []
                 for i in steal:
+                    print(i)
                     change = int(i[12]) - 100
                     things_to_steal.append(f'- **`{i[1]}`** Succes change: **`{change}%`**')
                 steal_list = '\n'.join(things_to_steal)
