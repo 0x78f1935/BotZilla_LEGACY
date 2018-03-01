@@ -190,7 +190,7 @@ class TestScripts:
             user_level = int(user_level[1])
             print(item_level, user_level)
             if user_level >= item_level:
-                return None
+                return False
             else:
                 desc = f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{item_level[1]}`**\nRequired for **`{item[1]}`** LVL: **`{item[10]}`**'
                 return desc
@@ -258,9 +258,7 @@ class TestScripts:
             pass
 
         test_level = level(self, int(item[0][0]))
-        if test_level is None:
-            pass
-        else:
+        if test_level:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=test_level,
                                   colour=0xf20006)
