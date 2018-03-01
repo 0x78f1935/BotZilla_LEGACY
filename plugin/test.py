@@ -358,8 +358,9 @@ class TestScripts:
                     steal_list = '- **`None`**'
 
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```**\n\nThis city offers the following:\n\n',
+                                  description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```**\n\n',
                                   colour=0xf20006)
+            embed.add_field(name='This city offers the following:', value='\t')
             if can_steal:
                 embed.add_field(name='Items to steal', value=steal_list)
 
@@ -399,8 +400,9 @@ class TestScripts:
 
             print(f'\n\ncan_steal{can_steal}\n\nsteal_list: {steal_list}\n\n')
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=f'The current city you are in is **`{cityq[1]}`**\n\n**```{cityq[2]}```**\n\nThis city offers the following:\n\n',
+                                  description=f'The current city you are in is **`{cityq[1]}`**\n\n**```{cityq[2]}```**\n\n',
                                   colour=0xf20006)
+            embed.add_field(name='This city offers the following:', value='\t')
             if can_steal:
                 embed.add_field(name='Items to steal', value=steal_list)
 
