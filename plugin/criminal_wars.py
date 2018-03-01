@@ -540,7 +540,7 @@ class CriminalWars:
             if jail_time(self, jail[1], 'c_jail'):
                 time_to_wait = time_calc(self, 'c_jail')
                 embed = discord.Embed(title='Unable to move',
-                                      description=f'Destination **{item[0][2]}** unreachable\nThis is because you are in **jail**.\nThe judge decided to lock you up until:\n**```py\n{jail[1]}\n```**\nIn **`{time_to_wait}`** you will be released.\nTry again in that time.',
+                                      description=f'You are unable to travel\nThis is because you are in **jail**.\nThe judge decided to lock you up until:\n**```py\n{jail[1]}\n```**\nIn **`{time_to_wait}`** you will be released.\nTry again in that time.',
                                       colour=0xf20006)
                 embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
                 a = await self.bot.say(embed=embed)
