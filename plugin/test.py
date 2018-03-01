@@ -60,7 +60,7 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
             if profile is None:
                 print('profile not found')
-                query = f"INSERT INTO cr.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
+                query = f"INSERT INTO cr.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(1)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
@@ -130,7 +130,7 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
             if profile is None:
                 print('profile not found')
-                query = f"INSERT INTO cr.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
+                query = f"INSERT INTO cr.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(1)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
@@ -240,19 +240,18 @@ class TestScripts:
         else:
             pass
 
+        if int(user[1]) >= int(item[0][10]):
+            embed = discord.Embed(title='Level to low',
+                                  description=f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{user[1]}`**\nRequired for **`{item[0][1]}`** LVL: **`{item[0][10]}`**',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
         if user_choice in str(item):
             if right_city(self, item[0][0]):
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
                                       description=f'You are not in the right city\nTravel to **`{item[0][12]}`** to **`{item[0][2]}`**\nYou can check out **`{self.config["prefix"]}`city** for more information',
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-                return
-
-            if int(item[0][10]) >= int(user[1]):
-                print(int(item[0][10]), int(user[1]))
-                embed = discord.Embed(title='Level to low',
-                                      description=f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{user[1]}`**\nRequired for **`{item[0][1]}`** LVL: **`{item[0][10]}`**',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
@@ -356,7 +355,7 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
             if profile is None:
                 print('profile not found')
-                query = f"INSERT INTO cr.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
+                query = f"INSERT INTO cr.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(1)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
@@ -481,7 +480,7 @@ class TestScripts:
             self.database.cur.execute("ROLLBACK;")
             if profile is None:
                 print('profile not found')
-                query = f"INSERT INTO cr.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(0)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
+                query = f"INSERT INTO cr.c_user(ID, LVL, XP, score, money, city, protected) VALUES({ID}, {int(1)}, {int(0)}, {int(0)}, {int(500)}, 'New York', 'TRUE')"
                 self.database.cur.execute(query)
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
