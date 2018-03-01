@@ -557,7 +557,7 @@ class TestScripts:
                     city_names.append(f'- $**`{i[5]}`**,- : **`{i[1]}`**\n  *Travel time average: `{average}`*\n')
             avalaible_citys = '\n'.join(city_names)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description=f'Currently you are in: **`{user[5]}`**\nYou can travel to the following locations in game:\n\n{avalaible_citys}\n\nIf you are stuck use **`{self.config["prefix"]}help travel`** for more information',
+                                  description=f'Current location: **`{user[5]}`**\nYou can travel to the following locations in game:\n\n{avalaible_citys}\n\nIf you are stuck use **`{self.config["prefix"]}help travel`** for more information',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
