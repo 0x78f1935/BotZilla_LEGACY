@@ -249,7 +249,7 @@ class TestScripts:
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
 
-            if int(user[1]) >= int(item[0][10]):
+            if int(item[0][10]) >= int(user[1]):
                 embed = discord.Embed(title='Level to low',
                                       description=f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{user[1]}`**\nRequired for **`{item[0][1]}`** LVL: **`{item[0][10]}`**',
                                       colour=0xf20006)
@@ -270,7 +270,7 @@ class TestScripts:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
             await asyncio.sleep(10)
-            if  int(item[0][11]) >= int(jail_number):
+            if int(jail_number) >= int(item[0][11]):
                 # win
                 up = ':arrow_up_small:'
                 experience = int(user[2]) + int(item[0][5])
