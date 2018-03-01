@@ -536,8 +536,6 @@ class TestScripts:
         else:
             pass
 
-        print('all checks oke')
-
         if city is None:
             self.database.cur.execute(f"select * from cr.c_city;")
             city_check = self.database.cur.fetchall()
@@ -630,12 +628,13 @@ class TestScripts:
             user = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
+            print(user)
             time_to_wait = time_calc(self, 'c_travel')
 
             embed = discord.Embed(title='Flying to: '.format(city[1]),
                                   description=f'You took the airplane to **`{city[1]}`**\n:moneybag: $$ **`{user[4]}`**( ***-*** **`{city[5]}`**)\nTime in plane: **`{time_to_wait}`**',
                                   colour=0xf20006)
-            await self.bot.say(a, embed=embed)
+            a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
