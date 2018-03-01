@@ -169,10 +169,10 @@ class TestScripts:
             jt = jail_time(self, jail[1])
             now = datetime.datetime.now()
             future = datetime.datetime.strptime(jail[1], '%Y-%m-%d %H:%M:%S')
-            a = now - future
+            time_to_wait = future - now
             if jt:
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                      description=f'**You are in jail. You are free at** : **`{jail[1]}`**\nThere for you need to wait another : **`{a}`**',
+                                      description=f'You are in **jail**. You are **free** at : **`{jail[1]}`**\nThere for you need to **wait** another : **`{time_to_wait}`**',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
