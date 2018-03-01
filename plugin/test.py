@@ -180,6 +180,7 @@ class TestScripts:
 
         check_profile(self, ctx.message.author.id)
 
+        arg_check = item
         user_choice = str(item).lower()
         self.database.cur.execute(f"select * from cr.c_steal where name_item = '{user_choice}';")
         item = self.database.cur.fetchall()
@@ -196,6 +197,22 @@ class TestScripts:
         self.database.cur.execute(f"select * from cr.c_travel WHERE ID = {ctx.message.author.id};")
         travel = self.database.cur.fetchone()
         self.database.cur.execute("ROLLBACK;")
+
+        if arg_check is None:
+            self.database.cur.execute(f"select name from cr.c_steal WHERE city = '{user[5]}';")
+            actions = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            b = []
+            for i in actions:
+                d = f'- **`{i[0]}`**'
+                b.append(d)
+            c = "\n".join(b)
+            embed = discord.Embed(title='Unable to move',
+                                  description=f'Your current location is: **`{user[5]}`**\nThe following things are your point of interest\n**Steal**\n{c}',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            return
 
         if jail:
             if jail_time(self, jail[1], 'c_jail'):
@@ -223,15 +240,6 @@ class TestScripts:
         else:
             pass
 
-        if user[1] >= item[0][10]:
-            embed = discord.Embed(title='Level to low',
-                                  description=f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{user[1]}`**\nRequired for **`{item[0][1]}`** LVL: **`{item[0][10]}`**',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-
-        # Game itself
         if user_choice in str(item):
             if right_city(self, item[0][0]):
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
@@ -240,6 +248,16 @@ class TestScripts:
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
+
+            if int(user[1]) >= int(item[0][10]):
+                embed = discord.Embed(title='Level to low',
+                                      description=f'Your level is way to low. Please do a few "lower level crime" missions\nCurrent level: **`{user[1]}`**\nRequired for **`{item[0][1]}`** LVL: **`{item[0][10]}`**',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
+
+            # Game itself
 
             jail_number = random.randint(0, 100)
 
