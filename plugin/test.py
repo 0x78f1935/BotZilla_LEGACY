@@ -203,15 +203,16 @@ class TestScripts:
         else:
             pass
 
-        if right_city(self, item[0][0]):
-            embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                  description=f'You are not in the right city\nTravel to **`{item[0][12]}`** to **`{item[0][2]}`**',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-
         # Game itself
         if user_choice in str(item):
+            if right_city(self, item[0][0]):
+                embed = discord.Embed(title='{}:'.format(item[0][2]),
+                                      description=f'You are not in the right city\nTravel to **`{item[0][12]}`** to **`{item[0][2]}`**\nYou can check out **`{self.config["prefix"]}`city** for more information',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
+
             jail_number = random.randint(0, 100)
 
             embed = discord.Embed(title='{}:'.format(item[0][2]),
@@ -225,13 +226,16 @@ class TestScripts:
             print(int(jail_number), int(item[0][11]))
             if int(jail_number) >= int(item[0][11]):
                 # win
+                up = ':arrow_up_small:'
                 experience = int(user[2]) + int(item[0][5])
                 print(f'xp: {experience}')
                 level = int(user[1])
+                print_level = f':ok: LVL *`({level})`* ***-***'
                 print(f'lvl: {level}')
                 if int(experience) >= 100:
                     experience = 0
                     level = int(user[1]) + 1
+                    print_level = f'{up} LVL *`({user[1]})`* ***+*** **1**'
                 print(f'xp: {experience}')
                 print(f'lvl: {level}')
                 money = int(user[4]) + int(item[0][4])
@@ -245,8 +249,9 @@ class TestScripts:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 print('query done')
+
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                      description=f'**Objective :**\n**```{str(item[0][3])}```**\n\n**```{item[0][7]}```**',
+                                      description=f'**Objective :**\n**```{item[0][3]}```**\n{up} XP *`({user[2]})`* ***+*** **{item[0][5]}**\n{print_level}\n{up} $$$ *`({user[4]})`* ***+*** *`{item[0][4]}`*\n{up} SCORE *`({user[3]})`* ***+*** *`{item[0][6]}`* **```{item[0][7]}```**',
                                       colour=0xf20006)
                 await self.bot.edit_message(a, embed=embed)
             else:
