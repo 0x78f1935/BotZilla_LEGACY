@@ -84,7 +84,7 @@ class TestScripts:
 
         requested_user = await self.bot.get_user_info(player_profile[0])
         embed = discord.Embed(title='Criminal Record of {} [CR]'.format(requested_user.name),
-                              description=f'CR ID: **`{player_profile[0]}`**',
+                              description='\t',
                               colour=0xf20006)
 
         if player:
