@@ -531,13 +531,13 @@ class TestScripts:
         print('all checks oke')
 
         if city is None:
-            self.database.cur.execute(f"select city from cr.c_city;")
+            self.database.cur.execute(f"select * from cr.c_city;")
             city_check = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
 
             city_names = []
             for i in city_check:
-                city_names.append(f'- **`{i[0]}`**')
+                city_names.append(f'- $**`{i[5]}`**,- : **`{i[1]}`**\n  *Travel Time: `{i[4]}`*')
             avalaible_citys = '\n'.join(city_names)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'You can travel to the following locations in game:\n\n{avalaible_citys}\n\nIf you are stuck use **`{self.config["prefix"]}help travel`** for more information',
@@ -589,7 +589,7 @@ class TestScripts:
                 return
 
             jt = datetime.datetime.now() + datetime.timedelta(0, int(city[4]))
-            jt = str(jt.strftime('%Y-%m-%d %H:%M:%S'))
+            jt = jt.strftime('%Y-%m-%d %H:%M:%S')
             try:
                 query = f"INSERT INTO cr.c_travel(ID, travel_date, travel) VALUES({ctx.message.author.id}, '{jt}', '{city[1]}');"
                 self.database.cur.execute(query)
@@ -615,9 +615,8 @@ class TestScripts:
             embed = discord.Embed(title='Flying to: '.format(city[1]),
                                   description=f'You took the airplane to **`{city[1]}`**\n:moneybag: $$ **`{user[4]}`**( ***-*** **`{city[5]}`**)\nTime in plane: **`{time_to_wait}`**',
                                   colour=0xf20006)
-            embed.set_thumbnail(
-                url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
-            await self.bot.edit_message(a, embed=embed)
+            await self.bot.say(a, embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
 
