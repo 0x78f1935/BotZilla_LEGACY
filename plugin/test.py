@@ -369,13 +369,12 @@ class TestScripts:
 
         else:
             # search info about other city
-            if ' ' in city:
-                a = city.split(' ')
+            if ' ' in str(city):
+                a = str(city).split(' ')
                 c = []
                 for i in a:
                     c.append(i.lower().capitalize())
                 city = ' '.join(c)
-                print(city)
             else:
                 city = str(city).lower().capitalize()
 
@@ -386,24 +385,21 @@ class TestScripts:
             self.database.cur.execute(f"select name_item from cr.c_steal where city = '{city[1]}';")
             steal = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
+            print(city, steal)
             if steal is None:
+                steal_list = '- **`None`**'
                 can_steal = False
             else:
+                things_to_steal = []
+                for i in steal:
+                    things_to_steal.append(f'- **`{i[0]}`**')
+                steal_list = '\n'.join(things_to_steal)
                 can_steal = True
 
-            if can_steal:
-                try:
-                    things_to_steal = []
-                    for i in steal:
-                        things_to_steal.append(f'- **`{i[0]}`**')
-                    steal_list = '\n'.join(things_to_steal)
-                except Exception as e:
-                    steal_list = '- **`None`**'
-
+            print(can_steal, steal_list)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'The current city you are in is **`{city[1]}`**\n\n**```{city[2]}```**\n\nThis city offers the following:\n\n',
                                   colour=0xf20006)
-
             if can_steal:
                 embed.add_field(name='Items to steal', value=steal_list)
 
