@@ -12,6 +12,7 @@ import aiohttp
 import datetime
 import psycopg2
 import psycopg2.extras
+import socket
 
 try:
     from plugin.database import Database
@@ -27,8 +28,6 @@ config = tmp_config['config']
 emojiUnicode = tmp_config['unicode']
 exchange = tmp_config['exchange']
 botzillaChannels = tmp_config['channels']
-# The help command is currently set to be Direct Messaged.
-# If you would like to change that, change "pm_help = True" to "pm_help = False" on line 9.
 bot = Bot(description="BotZilla is built / maintained / self hosted by PuffDip\nUserdata may be stored for better experience.\n\nUpvote would be appreciated:\nhttps://discordbots.org/bot/397149515192205324", command_prefix=config['prefix'], pm_help=False)
 dbl = False
 try:
@@ -479,5 +478,23 @@ async def on_command_error(error, ctx):
         await bot.add_reaction(last_message, emojiUnicode['warning'])
         return
 
+
+async def never_offline(bot):
+    while True:
+        try:
+            bot.run(config['bot-key'])
+        except Exception as e:
+            print(f'CRITICAL - OFFLINE - {datetime.date.today()} {datetime.datetime.now()} - Ping to discord.gg')
+            try:
+                print(socket.create_connection(("www.discord.gg", 80)))
+                try:
+                    print(socket.create_connection(("www.google.com", 80)))
+                except OSError:
+                    print('Not connected google.com')
+            except OSError:
+                print('Not connected discord.gg')
+
+            await asyncio.sleep(10)
+
 if __name__ == '__main__':
-    bot.run(config['bot-key'])
+    bot.loop.create_task(never_offline(bot))
