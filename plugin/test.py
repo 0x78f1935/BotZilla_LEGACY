@@ -216,7 +216,7 @@ class TestScripts:
                 embed = discord.Embed(title='Unable to move',
                                       description=f'You are on a roadtrip to **`{travel[2]}`**.\nYou took a look at your planning schedule.\nAriving date:**```py\n{travel[1]}\n```**\nYou will arive in **`{time_to_wait}`**\nTry again in that time.',
                                       colour=0xf20006)
-                embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
+                embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418839121348526091/surprising-airplane-facts-plane-crashes.png')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
@@ -521,7 +521,7 @@ class TestScripts:
                 embed = discord.Embed(title='Unable to move',
                                       description=f'You are on a roadtrip to **`{travel[2]}`**.\nYou took a look at your planning schedule.\nAriving date:**```py\n{travel[1]}\n```**\nYou will arive in **`{time_to_wait}`**\nTry again in that time.',
                                       colour=0xf20006)
-                embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
+                embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418839121348526091/surprising-airplane-facts-plane-crashes.png')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
