@@ -528,6 +528,8 @@ class TestScripts:
         else:
             pass
 
+        print('all checks oke')
+
         if city is None:
             self.database.cur.execute(f"select city from cr.c_city;")
             city_check = self.database.cur.fetchall()
