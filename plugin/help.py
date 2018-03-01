@@ -161,7 +161,7 @@ class Help:
             embed.add_field(name='Utils', value=Utils_name, inline=True)
 
             embed.add_field(name='Images', value=Images_name, inline=True)
-            embed.add_field(name='Exchange', value=Exchange_name, inline=True)
+            embed.add_field(name='CriminalWars', value=Exchange_name, inline=True)
             if ctx.message.author.id in self.owner_list:
                 embed.add_field(name='Admin', value=Admin_name, inline=True)
             else:
