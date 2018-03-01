@@ -174,7 +174,7 @@ class TestScripts:
                 time_to_wait = future - now
                 time_to_wait = str(time_to_wait)[:8].replace('.', '')
                 embed = discord.Embed(title='{}:'.format(item[0][2]),
-                                      description=f'You are in **jail**. You are **free** at : **```{jail[1]}```**\nThere for you need to **wait** another : **`{time_to_wait}`**',
+                                      description=f'You are unable to **{item[0][2]}** becauase you are in **jail**.\nThe judge decided to lock you up until:\n**```py\n{jail[1]}\n```**\n\nIn **`{time_to_wait}`** you will be released.\nTry again in that time.',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
