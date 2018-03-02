@@ -367,13 +367,13 @@ class Fun:
 
 
     @commands.command(pass_context=True)
-    async def dict(self, ctx, *keywords):
+    async def dict(self, ctx, *, keywords : str = None):
         """
         Look something up in the UrbanDictionary.
         Use this command with a search keyword.
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!dict <{keywords}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        if not keywords:
+        if keywords is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Did you tried **`{}help dict`** yet?'.format(self.config['prefix']),
                                   colour=0xf20006)
@@ -391,12 +391,16 @@ class Fun:
 
                 source = json.dumps(source, indent=2)
                 result = json.loads(str(source))
+                example = str(result['list'][0]['example'])
+                example = example[:500]
+                definition = str(result['list'][0]['definition'])
+                definition = definition[:500]
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Your search tag was:\n***`{}`***'.format(old_keyword),
                                       colour=0xf20006)
                 embed.add_field(name='Word:', value='`{}`'.format(result['list'][0]['word']), inline=False)
-                embed.add_field(name='Definition:', value='```{}```'.format(result['list'][0]['definition']), inline=False)
-                embed.add_field(name='example:', value='```{}```'.format(result['list'][0]['example']), inline=True)
+                embed.add_field(name='Definition:', value='```{}```'.format(definition), inline=False)
+                embed.add_field(name='example:', value='```{}```'.format(example), inline=True)
                 embed.add_field(name='Author:', value='`{}`'.format(result['list'][0]['author']), inline=False)
                 embed.add_field(name='Link:', value='{}'.format(result['list'][0]['permalink']), inline=False)
                 embed.add_field(name='Likes:', value='\U0001f44d `{}`'.format(result['list'][0]['thumbs_up']),
