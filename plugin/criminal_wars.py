@@ -219,7 +219,7 @@ class CriminalWars:
                 d = f'- **`Lvl.{i[10]}`** : **`{i[1]}`**'
                 b.append(d)
             c = "\n".join(b)
-            embed = discord.Embed(title=f'{ctx.message.author.name} Unable to move',
+            embed = discord.Embed(title=f'{ctx.message.author.name}',
                                   description=f'Your current location is: **`{user[5]}`**\nThe following things are your point of interest\n\n**Steal**\n{c}',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
@@ -235,8 +235,8 @@ class CriminalWars:
                     d = f'- **`Lvl.{i[10]}`** : **`{i[1]}`**'
                     b.append(d)
                 c = "\n".join(b)
-                embed = discord.Embed(title=f'{ctx.message.author.name} Unable to move',
-                                      description=f'Not able to steal: **`{arg_check}`**\nYour current location is: **`{user[5]}`**\nThe following things are your point of interest\n\n**Steal**\n{c}',
+                embed = discord.Embed(title=f'{ctx.message.author.name} Unable to steal',
+                                      description=f'Not able to steal: **`{arg_check}`**\n\nYour current location is: **`{user[5]}`**\nThe following things are your point of interest\n\n**Steal**\n{c}',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
