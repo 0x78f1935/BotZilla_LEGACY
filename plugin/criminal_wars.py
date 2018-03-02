@@ -235,9 +235,6 @@ class CriminalWars:
                     d = f'- **`Lvl.{i[10]}`** : **`{i[1]}`**'
                     b.append(d)
                 c = "\n".join(b)
-                print(c)
-                print(arg_check)
-                print(user[5])
                 embed = discord.Embed(title='Unable to move',
                                       description=f'Not able to steal: **`{arg_check}`**\nYour current location is: **`{user[5]}`**\nThe following things are your point of interest\n\n**Steal**\n{c}',
                                       colour=0xf20006)
