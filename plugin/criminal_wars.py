@@ -225,6 +225,22 @@ class CriminalWars:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             return
+        else:
+            self.database.cur.execute(f"select name_item from cr.c_steal WHERE city = '{user[5]}';")
+            actions = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            if str(arg_check) not in str(actions):
+                b = []
+                for i in actions:
+                    d = f'- **`Lvl.{i[10]}`** : **`{i[1]}`**'
+                    b.append(d)
+                c = "\n".join(b)
+                embed = discord.Embed(title='Unable to move',
+                                      description=f'Not able to steal: **`{arg_check}`**\nYour current location is: **`{user[5]}`**\nThe following things are your point of interest\n\n**Steal**\n{c}',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
 
         if jail:
             if jail_time(self, jail[1], 'c_jail'):
@@ -273,25 +289,6 @@ class CriminalWars:
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-                return
-
-            self.database.cur.execute(f"select name_item from cr.c_steal WHERE city = '{user[5]}';")
-            lcheck = self.database.cur.fetchall()
-            self.database.cur.execute("ROLLBACK;")
-            if str(arg_check) not in str(lcheck):
-                self.database.cur.execute(f"select * from cr.c_steal WHERE city = '{user[5]}';")
-                actions = self.database.cur.fetchall()
-                self.database.cur.execute("ROLLBACK;")
-                b = []
-                for i in actions:
-                    d = f'- **`Lvl.{i[10]}`** : **`{i[1]}`**'
-                    b.append(d)
-                c = "\n".join(b)
-                embed = discord.Embed(title='Unable to move',
-                                      description=f'You could find nothing to steal..\nTry something else then: **`{arg_check}`**\nYour current location is: **`{user[5]}`**\nThe following things are your point of interest\n\n**Steal**\n{c}',
-                                      colour=0xf20006)
-                a = await self.bot.say(embed=embed)
-                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
                 return
 
             # Game itself
