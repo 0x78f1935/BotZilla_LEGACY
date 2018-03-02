@@ -284,7 +284,7 @@ class CriminalWars:
 
         if user_choice in str(item):
             if right_city(self, item[0][0]):
-                embed = discord.Embed(title=f'{ctx.message.author.name} {item[0][2]}:',
+                embed = discord.Embed(title=f'{ctx.message.author.name}, {item[0][2]}:',
                                       description=f'You are not in the right city\nTravel to **`{item[0][12]}`** to **`{item[0][2]}`**\nYou can check out **`{self.config["prefix"]}`city** for more information',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
@@ -295,7 +295,7 @@ class CriminalWars:
 
             jail_number = random.randint(0, 100)
 
-            embed = discord.Embed(title=f'{ctx.message.author.name} {item[0][2]}:',
+            embed = discord.Embed(title=f'{ctx.message.author.name}, {item[0][2]}:',
                                   description=f'**Objective :**\n**```{str(item[0][3])}```**',
                                   colour=0xf20006)
             embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418769190762315786/burglar-thief-costume-em3190--3119-pekm299x464ekm.jpg.png')
@@ -322,7 +322,7 @@ class CriminalWars:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
 
-                embed = discord.Embed(title=f'{ctx.message.author.name} {item[0][2]}:',
+                embed = discord.Embed(title=f'{ctx.message.author.name}, {item[0][2]}:',
                                       description=f'**Objective :**\n**```{item[0][3]}```**\n{up} XP *`({user[2]})`* ***+*** **{item[0][5]}**\n{print_level}\n:moneybag: $$$ *`({user[4]})`* ***+*** *`{item[0][4]}`*\n{up} SCORE *`({user[3]})`* ***+*** *`{item[0][6]}`* **```{item[0][7]}```**',
                                       colour=0xf20006)
                 embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/407238426417430539/418770188045910026/18568092-successful-thief-Stock-Vector.png')
@@ -345,7 +345,7 @@ class CriminalWars:
 
                 time_to_wait = time_calc(self, 'c_jail')
 
-                embed = discord.Embed(title=f'{ctx.message.author.name} {item[0][2]}:',
+                embed = discord.Embed(title=f'{ctx.message.author.name}, {item[0][2]}:',
                                       description=f'**Objective :**\n**```{str(item[0][3])}```**\n:police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car::police_car::oncoming_police_car:\n**```{item[0][8]}```**\nTime in jail: **`{time_to_wait}`**',
                                       colour=0xf20006)
                 embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418754296780161024/power-of-family.png')
