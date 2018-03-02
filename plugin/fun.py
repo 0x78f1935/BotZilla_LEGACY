@@ -388,7 +388,7 @@ class Fun:
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
         if keywords:
-            old_keyword = " ".join(keywords)
+            old_keyword = keywords
             try:
                 keywords = "%20".join(keywords)
                 url = 'http://api.urbandictionary.com/v0/define?term={}'.format(keywords)
