@@ -517,6 +517,21 @@ class CriminalWars:
             else:
                 pass
 
+        def level(self, city):
+            self.database.cur.execute(f"select * from cr.c_user WHERE ID = {ctx.message.author.id};")
+            user_level = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            self.database.cur.execute(f"select * from cr.c_city WHERE city = '{city}';")
+            item = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
+            item_level = int(item[6])
+            user_level = int(user_level[1])
+            if user_level >= item_level:
+                return False
+            else:
+                return True
+
         def jail_time(self, future, where):
             """
             need time from database to calculate if user is in jail
@@ -632,12 +647,26 @@ class CriminalWars:
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
                 return
 
-            self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
-            city = self.database.cur.fetchone()
-            self.database.cur.execute("ROLLBACK;")
-
             self.database.cur.execute(f"select * from cr.c_user where ID = {ctx.message.author.id};")
             user = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
+            test_level = level(self, city)
+
+            if test_level:
+                self.database.cur.execute(f"select * from cr.c_city WHERE city = '{city}';")
+                item = self.database.cur.fetchone()
+                self.database.cur.execute("ROLLBACK;")
+                desc = f'Your level is way too low. Please do a few "lower level crime" missions\nCurrent level: **`{user[1]}`**\nRequired for **`{item[1]}`** **`Lvl.{item[6]}`**'
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=desc,
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+                return
+
+            self.database.cur.execute(f"select * from cr.c_city where city = '{city}';")
+            city = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
 
             if city[1] == user[5]:
