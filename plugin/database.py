@@ -427,10 +427,9 @@ class Database:
         for command in self.bot.walk_commands():
             try:
                 hel = command.__dict__
-                pattern = re.compile('[\W_]+')
-                safe_name = pattern.sub(' ', str(command.name))
-                safe_cog = pattern.sub(' ', str(command.cog_name))
-                safe_info = pattern.sub(' ', str(hel['help']))
+                safe_name = str(command.name).replace("'", "\'").replace(';', '')
+                safe_cog = str(command.cog_name).replace("'", "\'").replace(';', '')
+                safe_info = str(hel['help']).replace("'", "\'").replace(';', '<insert semicolon here>')
                 self.cur.execute("INSERT INTO botzilla.help (name, cog, info) VALUES('{}', '{}', '{}');".format(safe_name, safe_cog, safe_info))
                 self.cur.execute("ROLLBACK;")
 
