@@ -51,28 +51,6 @@ class Information:
     # ========================
     #   Bot related commands
 
-    @commands.command(pass_context=True)
-    async def bitcoin(self, ctx):
-        """
-        Shows current bitcoin value
-        Show bitcoin valua from exchange
-        """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!bitcoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        url = self.tmp_config['exchange']['api-url']
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                source = await response.json()
-
-        source = json.dumps(source)
-        data = json.loads(str(source))
-
-        embed = discord.Embed(title="{}".format("Bitcoin :currency_exchange:"),
-                              description="Bitcoin price is currently at $**{}**".format(data['bpi']['USD']['rate']),
-                              color=0xf20006)
-        last_message = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-
-
     @commands.command(pass_context=True, aliases=["g"])
     async def google(self, ctx, *, search_term: str = None):
         """

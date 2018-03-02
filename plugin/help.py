@@ -122,7 +122,7 @@ class Help:
         Images_commands.append('**------**')
         Images_name = "\n".join(Images_commands)
 
-        self.database.cur.execute("select name from botzilla.help where cog = 'CriminalWars';")
+        self.database.cur.execute("select name from botzilla.help where cog = 'Exchange';")
         Exchange_cog = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
         Exchange_commands = []
@@ -161,7 +161,7 @@ class Help:
             embed.add_field(name='Utils', value=Utils_name, inline=True)
 
             embed.add_field(name='Images', value=Images_name, inline=True)
-            embed.add_field(name='CriminalWars[alpha]', value=Exchange_name, inline=True)
+            embed.add_field(name='Exchange', value=Exchange_name, inline=True)
             if ctx.message.author.id in self.owner_list:
                 embed.add_field(name='Admin', value=Admin_name, inline=True)
             else:

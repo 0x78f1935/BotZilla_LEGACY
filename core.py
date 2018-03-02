@@ -210,7 +210,7 @@ async def on_ready():
 
     plugins = (
         "admin",
-        "criminal_wars",
+        "exchange",
         "database",
         "fun",
         "music",
