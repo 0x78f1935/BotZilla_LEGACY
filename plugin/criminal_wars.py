@@ -682,6 +682,7 @@ class CriminalWars:
             embed = discord.Embed(title=f'{ctx.message.author.name} Flying to: {city[1]}',
                                   description=f'You took the airplane to **`{city[1]}`**\n:moneybag: $$ **`{user_n[4]}`** = **`{user[4]}`**( ***-*** **`{city[5]}`**)\nTime in plane: **`{time_to_wait}`**',
                                   colour=0xf20006)
+            embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/418839121348526091/surprising-airplane-facts-plane-crashes.png')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
