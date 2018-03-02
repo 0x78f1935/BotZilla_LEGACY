@@ -229,7 +229,9 @@ class CriminalWars:
             self.database.cur.execute(f"select name_item from cr.c_steal WHERE city = '{user[5]}';")
             actions = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
+            print(actions)
             if str(arg_check) not in str(actions):
+                print('test')
                 b = []
                 for i in actions:
                     d = f'- **`Lvl.{i[10]}`** : **`{i[1]}`**'
