@@ -374,11 +374,6 @@ class Fun:
         Look something up in the UrbanDictionary.
         Use this command with a search keyword.
         """
-        def print_exception():
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            error = f'{exc_type} : {fname} : {exc_tb.tb_lineno}'
-            return error
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!dict <{keywords}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if keywords is None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -419,8 +414,6 @@ class Fun:
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             except Exception as e:
-                print(f'{type(e).__name__} : {e}')
-                print(print_exception())
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Your search tag was:\n***`{}`***\n\nNothing found :sailboat:'.format(old_keyword, self.config['prefix']),
                                       colour=0xf20006)
