@@ -44,6 +44,7 @@ class TestScripts:
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
         else:
+            await self.bot.send_typing(ctx.message.channel)
             try:
                 url = "https://api.r6stats.com/api/v1/players/{}?platform=uplay".format(uplay_name)
                 async with aiohttp.ClientSession() as session:
@@ -54,10 +55,14 @@ class TestScripts:
                 print(test)
 
                 source = json.dumps(source)
-
                 data = json.loads(str(source))
+
+                last_updated = str(data['player']['updated_at'])
+                last_updated.replace('T', ' ').split('.')
+                last_updated = last_updated[0]
+
                 embed = discord.Embed(title='{} | {}:'.format(ctx.message.author.name, data['player']['username']),
-                                      description='The following stats are last updated around\n```{}```'.format(data['player']['updated_at']),
+                                      description='The following stats are last updated around\n```py\n{}\n```'.format(last_updated),
                                       colour=0xf20006)
                 embed.add_field(name='Ranked', value='Participation: {}'.format(data['player']['stats']['ranked']['has_played']), inline=True)
                 embed.add_field(name='Casual', value='Participation: {}'.format(data['player']['stats']['casual']['has_played']), inline=True)
