@@ -216,7 +216,6 @@ class Information:
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Pong :ping_pong: **{0:.0f}ms**'.format(ping_result),
                               colour=0xf20006)
-        embed.set_footer(text='PuffDip#5369 ©')
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
@@ -345,7 +344,6 @@ class Information:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Maybe you should considering using **`{}help say`** instead'.format(self.config['prefix']),
                                   colour=0xf20006)
-            embed.set_footer(text='PuffDip#5369 ©')
             await self.bot.say(embed=embed)
         else:
             try:
@@ -355,7 +353,6 @@ class Information:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='{}'.format(str(message)),
                                   colour=0xf20006)
-            embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
@@ -680,7 +677,6 @@ class Utils:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='Invalid username',
                                       colour=0xf20006)
-                embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
@@ -762,7 +758,7 @@ class Utils:
 
             if len(answers) < 2:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='You need atleast two answers',
+                                      description='You need at least two answers',
                                       colour=0xf20006)
                 embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
