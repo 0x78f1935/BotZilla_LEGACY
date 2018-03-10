@@ -32,55 +32,74 @@ class GameStats:
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
         else:
+            await self.bot.send_typing(ctx.message.channel)
             try:
                 url = "https://api.r6stats.com/api/v1/players/{}?platform=uplay".format(uplay_name)
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
                         source = await response.json(encoding='utf8')
 
+                test = json.dumps(source, indent=2)
+                print(test)
+
                 source = json.dumps(source)
                 data = json.loads(str(source))
-                embed = discord.Embed(title='{} | {}:'.format(ctx.message.author.name, data['player']['username']),
-                                      description='The following stats are last updated around\n```{}```'.format(data['player']['updated_at']),
-                                      colour=0xf20006)
-                embed.add_field(name='Ranked', value='Participation: {}'.format(data['player']['stats']['ranked']['has_played']), inline=True)
-                embed.add_field(name='Casual', value='Participation: {}'.format(data['player']['stats']['casual']['has_played']), inline=True)
-                embed.add_field(name='Overall', value='Headshots: {}'.format(data['player']['stats']['overall']['headshots']), inline=True)
 
-                embed.add_field(name='Wins', value=data['player']['stats']['ranked']['wins'], inline=True)
-                embed.add_field(name='Wins', value=data['player']['stats']['casual']['wins'], inline=True)
-                embed.add_field(name='Revives', value=data['player']['stats']['overall']['revives'], inline=True)
+                last_updated = datetime.datetime.strptime(str(data['player']['updated_at']), '%Y-%m-%dT%H:%M:%S.%fZ')
+                last_updated = str(last_updated).split('.')
+                last_updated = last_updated[0]
 
-                embed.add_field(name='Losses', value=data['player']['stats']['ranked']['losses'], inline=True)
-                embed.add_field(name='Losses', value=data['player']['stats']['casual']['losses'], inline=True)
-                embed.add_field(name='Suicides', value=data['player']['stats']['overall']['suicides'], inline=True)
+                embed = discord.Embed(
+                    title='{} | {}:'.format(ctx.message.author.name, data['player']['username']),
+                    description=f"The following stats are last updated:\n```py\n{last_updated}\n```",
+                    colour=0xf20006
+                )
 
-                embed.add_field(name='W/L Ratio', value=data['player']['stats']['ranked']['wlr'], inline=True)
-                embed.add_field(name='W/L Ratio', value=data['player']['stats']['casual']['wlr'], inline=True)
-                embed.add_field(name='Reinforcements Deployed', value=data['player']['stats']['overall']['reinforcements_deployed'], inline=True)
+                embed.add_field(
+                    name='Ranked',
+                    value=f"Participation: **`{data['player']['stats']['ranked']['has_played']}`**\n"
+                          f"Wins: **`{data['player']['stats']['ranked']['wins']}`**\n"
+                          f"Losses: **`{data['player']['stats']['ranked']['losses']}`**\n"
+                          f"W/L Ratio: **`{data['player']['stats']['ranked']['wlr']}`**\n"
+                          f"Kills: **`{data['player']['stats']['ranked']['kills']}`**\n"
+                          f"Deaths: **`{data['player']['stats']['ranked']['deaths']}`**\n"
+                          f"K/D Ratio: **`{data['player']['stats']['ranked']['kd']}`**\n"
+                          f"Playtime: **`{data['player']['stats']['ranked']['playtime']}`**\n\n",
+                    inline=True
+                )
 
-                embed.add_field(name='Kills', value=data['player']['stats']['ranked']['kills'], inline=True)
-                embed.add_field(name='Kills', value=data['player']['stats']['casual']['kills'], inline=True)
-                embed.add_field(name='Barricades Built', value=data['player']['stats']['overall']['barricades_built'], inline=True)
+                embed.add_field(
+                    name='Casual',
+                    value=f"Participation: **`{data['player']['stats']['casual']['has_played']}`**\n"
+                          f"Wins: **`{data['player']['stats']['casual']['wins']}`**\n"
+                          f"Losses: **`{data['player']['stats']['casual']['losses']}`**\n"
+                          f"W/L Ratio: **`{data['player']['stats']['casual']['wlr']}`**\n"
+                          f"Kills: **`{data['player']['stats']['casual']['kills']}`**\n"
+                          f"Deaths: **`{data['player']['stats']['casual']['deaths']}`**\n"
+                          f"K/D Ratio: **`{data['player']['stats']['casual']['kd']}`**\n"
+                          f"Playtime: **`{data['player']['stats']['casual']['playtime']}`**\n\n",
+                    inline=True
+                )
 
-                embed.add_field(name='Deaths', value=data['player']['stats']['ranked']['deaths'], inline=True)
-                embed.add_field(name='Deaths', value=data['player']['stats']['casual']['deaths'], inline=True)
-                embed.add_field(name='Steps Moved', value=data['player']['stats']['overall']['steps_moved'], inline=True)
+                embed.add_field(
+                    name='Overall',
+                    value=f"Headshots: **`{data['player']['stats']['overall']['headshots']}`**\n"
+                          f"Revives: **`{data['player']['stats']['overall']['revives']}`**\n"
+                          f"Suicides: **`{data['player']['stats']['overall']['suicides']}`**\n"
+                          f"Reinforcements Deployed: **`{data['player']['stats']['overall']['reinforcements_deployed']}`**\n"
+                          f"Barricades Built: **`{data['player']['stats']['overall']['barricades_built']}`**\n"
+                          f"Steps Moved: **`{data['player']['stats']['overall']['steps_moved']}`**\n"
+                          f"Bullets Fired: **`{data['player']['stats']['overall']['bullets_fired']}`**\n"
+                          f"Bullets Hit: **`{data['player']['stats']['overall']['bullets_hit']}`**",
+                    inline=True
+                )
 
-                embed.add_field(name='K/D Ratio', value=data['player']['stats']['ranked']['kd'], inline=True)
-                embed.add_field(name='K/D Ratio', value=data['player']['stats']['casual']['kd'], inline=True)
-                embed.add_field(name='Bullets Fired', value=data['player']['stats']['overall']['bullets_fired'], inline=True)
-
-                embed.add_field(name='Playtime', value=data['player']['stats']['ranked']['playtime'], inline=True)
-                embed.add_field(name='Playtime', value=data['player']['stats']['casual']['playtime'], inline=True)
-                embed.add_field(name='Bullets Hit', value=data['player']['stats']['overall']['bullets_hit'], inline=True)
                 embed.set_footer(text='Data © Rainbow Six Siege contributors, https://r6stats.com/')
-
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='Player **{}** not found'.format(uplay_name),
+                                      description='Player **`{}`** not found'.format(uplay_name),
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])

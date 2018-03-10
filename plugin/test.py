@@ -63,7 +63,7 @@ class TestScripts:
 
                 embed = discord.Embed(
                     title='{} | {}:'.format(ctx.message.author.name, data['player']['username']),
-                    description=f"The following stats are last updated around\n```py\n{last_updated}\n```",
+                    description=f"The following stats are last updated:\n```py\n{last_updated}\n```",
                     colour=0xf20006
                 )
 
