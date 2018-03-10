@@ -39,9 +39,6 @@ class GameStats:
                     async with session.get(url) as response:
                         source = await response.json(encoding='utf8')
 
-                test = json.dumps(source, indent=2)
-                print(test)
-
                 source = json.dumps(source)
                 data = json.loads(str(source))
 
