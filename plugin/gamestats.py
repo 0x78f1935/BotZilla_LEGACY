@@ -118,6 +118,7 @@ class GameStats:
             return
         else:
             old_account_name = account
+            await self.bot.send_typing(ctx.message.channel)
             try:
                 if ' ' in account:
                     account = account.replace(' ', '%20')
@@ -282,6 +283,7 @@ class GameStats:
             return
         else:
             old_account = account
+            await self.bot.send_typing(ctx.message.channel)
             try:
                 if ' ' in account:
                     account = account.replace(' ', '%20')
@@ -384,7 +386,7 @@ class GameStats:
                     if 'Construction' in item:
                         construction = f'{icon["Construction"]} **`{lvl[23][1]}`**'
 
-                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                embed = discord.Embed(title='{} | {}:'.format(ctx.message.author.name, old_account),
                                       description='Combat LVL: **`{}`**\tOverall LVL: **`{}`**'.format(combat_lvl, lvl[0][1]),
                                       colour=0xf20006)
                 embed.add_field(name='**Attack**', value=attack, inline=True)
