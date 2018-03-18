@@ -36,6 +36,8 @@ class TestScripts:
         sebisauce = []
         url = 'https://github.com/AnakiKaiver297/sebisauce'
 
+        await self.bot.send_typing(ctx.message.channel)
+
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 html = await response.read()
