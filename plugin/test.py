@@ -2,7 +2,8 @@ import json
 import discord
 from discord.ext import commands
 import aiohttp
-
+from bs4 import BeautifulSoup
+import random
 import datetime
 
 
@@ -28,6 +29,31 @@ class TestScripts:
             print('Test: Database files not found - {}'.format(e.args))
             pass
 
+    @commands.command(pass_context=True)
+    async def test(self, ctx):
+
+        hrefs = []
+        sebisauce = []
+        url = 'https://github.com/AnakiKaiver297/sebisauce'
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                html = await response.read()
+
+        bs = BeautifulSoup(html)
+        for link in bs.find_all('a'):
+            if link.has_attr('href'):
+                hrefs.append(link.attrs['href'])
+
+        for i in hrefs:
+            if 'sebisauce/blob/master' in str(i):
+                sebisauce.append(i)
+
+        im = 'https://github.com' + random.sample(sebisauce)
+        embed = discord.Embed(title='\t', description='\t', color=0xf20006)
+        embed.set_image(url=im)
+        embed.set_footer(text="Data © Sebi\'s Bot Tutorial contributors, discord.gg/GWdhBSp")
+        await self.bot.say(embed=embed)
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
