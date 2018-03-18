@@ -49,7 +49,7 @@ class TestScripts:
             if 'sebisauce/blob/master' in str(i):
                 sebisauce.append(i)
 
-        im = 'https://github.com/' + random.choice(sebisauce)
+        im = 'https://github.com' + random.choice(sebisauce)
         print(im)
         embed = discord.Embed(title='\t', description='\t', color=0xf20006)
         embed.set_image(url=im)
