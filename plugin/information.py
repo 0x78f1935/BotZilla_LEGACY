@@ -165,7 +165,7 @@ class Information:
             'Python (programming language), a computer programming language'
 
             related_related = r.related[search_number].url
-            message2user = "Type: %s \nText: %s \nSource: %s" % (related_type, related_text, related_related)
+            message2user = "**Type:**\n*`{}`*\n**Text:**\n*`{}`*\n**Source:**\n*`{}`*".format(related_type, related_text, related_related)
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='{}'.format(message2user),
                                   colour=0xf20006)
