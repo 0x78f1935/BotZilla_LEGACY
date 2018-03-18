@@ -31,31 +31,7 @@ class TestScripts:
 
     @commands.command(pass_context=True)
     async def test(self, ctx):
-
-        hrefs = []
-        sebisauce = []
-        url = 'https://github.com/AnakiKaiver297/sebisauce'
-
-        await self.bot.send_typing(ctx.message.channel)
-
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                html = await response.read()
-
-        bs = BeautifulSoup(html)
-        for link in bs.find_all('a'):
-            if link.has_attr('href'):
-                hrefs.append(link.attrs['href'])
-
-        for i in hrefs:
-            if 'sebisauce/blob/master' in str(i):
-                sebisauce.append(i)
-
-        im = 'https://github.com' + random.choice(sebisauce) + '?raw=true'
-        print(im)
-        embed = discord.Embed(title='\t', description='\t', color=0xf20006)
-        embed.set_image(url=im)
-        await self.bot.say(embed=embed)
+        pass
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))

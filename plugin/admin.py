@@ -5,6 +5,8 @@ import discord
 import traceback
 import aiohttp
 import datetime
+from bs4 import BeautifulSoup
+import random
 try:
     from plugin.database import Database
 except Exception as e:
@@ -492,19 +494,34 @@ class AdminCommands:
     @commands.command(pass_context=True)
     async def sebisauce(self, ctx):
         """
-        Sebisauce, api
+        Sebisauce,
         """
+        hrefs = []
+        sebisauce = []
+        url = 'https://github.com/AnakiKaiver297/sebisauce'
+
         await self.bot.send_typing(ctx.message.channel)
-        url = 'https://sebisauce.herokuapp.com/api/random'
+
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
-                data = await response.json(encoding='utf8')
+                html = await response.read()
 
-        im = data['file']
+        bs = BeautifulSoup(html)
+        for link in bs.find_all('a'):
+            if link.has_attr('href'):
+                hrefs.append(link.attrs['href'])
+
+        for i in hrefs:
+            if 'sebisauce/blob/master' in str(i):
+                sebisauce.append(i)
+
+        im = 'https://github.com' + random.choice(sebisauce) + '?raw=true'
+        print(im)
         embed = discord.Embed(title='\t', description='\t', color=0xf20006)
         embed.set_image(url=im)
         embed.set_footer(text="Data © Sebi\'s Bot Tutorial contributors, discord.gg/GWdhBSp")
         await self.bot.say(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
