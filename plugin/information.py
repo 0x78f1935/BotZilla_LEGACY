@@ -248,7 +248,6 @@ class Information:
             embed = discord.Embed(title="{}".format("Server Count"),
                                   description="We are in **{}** servers\nWe have **{}** members\nWe had a total of **{}** users\nThere are **{}** users online\nUptime: `{}`".format(
                                       str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), self.total_users, sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline), uptime),
-                                  url='https://discordapp.com/oauth2/authorize?client_id=397149515192205324&permissions=1261448256&scope=bot',
                                   color=0xf20006)
             embed.set_thumbnail(url='https://images.discordapp.net/avatars/397149515192205324/ced0f56a29af0b9bfecdb336d04544a3.png?size=512')
             embed.set_footer(text='PuffDip#5369 ©')
@@ -259,7 +258,6 @@ class Information:
             embed = discord.Embed(title="{}".format("Server Count"),
                                   description="We are in **{}** servers\nWe have **{}** members\nThere are **{}** users online".format(
                                       str(len(self.bot.servers)), str(len(set(self.bot.get_all_members()))), sum(1 for m in set(ctx.bot.get_all_members()) if m.status != discord.Status.offline)),
-                                  url='https://discordapp.com/oauth2/authorize?client_id=397149515192205324&permissions=1261448256&scope=bot',
                                   color=0xf20006)
             embed.set_thumbnail(url='https://images.discordapp.net/avatars/397149515192205324/ced0f56a29af0b9bfecdb336d04544a3.png?size=512')
             embed.set_footer(text='PuffDip#5369 ©')
