@@ -153,7 +153,7 @@ class Information:
 
                 source = json.dumps(source)
                 print(source)
-                if source['name'] == 0:
+                if source['name'] == str(0):
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Pokemon **`{}`** not found'.format(pokemon),
                                           colour=0xf20006)
