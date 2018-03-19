@@ -137,6 +137,7 @@ class Information:
 
         Usage:
         !!pokedex pikachu
+        !!pokedex 007
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!pokedex <{pokemon}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if pokemon is None:
