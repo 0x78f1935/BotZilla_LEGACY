@@ -171,7 +171,7 @@ class Information:
                 abilities = "\n".join(tmp)
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=f'**Name: ** *`{data["name"]}`*\n**Number: ** *`{data["number"]}`*\n**Type(s): ** *`{types}`*\n**Species: ** *`{data["species"]}`*\n**Height: ** *`{data["height"]}`*\n**Weight: ** *`{data["weight"]}`*\n\n**Abilities:**\n*`{abilities}`*',
+                                      description=f'**Name: ** *`{data["name"]}`*\n**Number: ** *`{data["number"]}`*\n**Type(s): ** *`{types}`*\n**Species: ** *`{data["species"]}`*\n**Height: ** *`{data["height"]}`*\n**Weight: ** *`{data["weight"]}`*\n**Description:**\n*```\n{data["description"]}\n```*\n\n**Abilities:**\n*`{abilities}`*',
                                       colour=0xf20006)
                 embed.set_thumbnail(url=data["image"])
                 last_message = await self.bot.say(embed=embed)
