@@ -155,7 +155,7 @@ class Information:
                 data = json.loads(str(source))
                 print(data)
                 print(data['name'])
-                if data['name'] == str(0):
+                if data['name'] == 0:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Pokemon **`{}`** not found'.format(pokemon),
                                           colour=0xf20006)
