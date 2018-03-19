@@ -131,6 +131,47 @@ class Information:
 
 
     @commands.command(pass_context=True)
+    async def pokedex(self, ctx, *, pokemon=None):
+        """
+        Pokedex
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!r6s <{uplay_name}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        if pokemon is None:
+            embed = discord.Embed(title="{}:".format(ctx.message.author.name),
+                                  description="Try **`{}help pokedex`** instead".format(self.config['prefix']),
+                                  color=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+            return
+        else:
+            await self.bot.send_typing(ctx.message.channel)
+            try:
+                url = "https://cheeze.club/api/pokedex/{}".format(pokemon)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        source = await response.json(encoding='utf8')
+
+                source = json.dumps(source)
+                data = json.loads(str(source))
+
+                last_updated = datetime.datetime.strptime(str(data['player']['updated_at']), '%Y-%m-%dT%H:%M:%S.%fZ')
+                last_updated = str(last_updated).split('.')
+                last_updated = last_updated[0]
+
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='working',
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='Pokemon **`{}`** not found'.format(pokemon),
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+
+
+    @commands.command(pass_context=True)
     async def fact(self, ctx, *, search_term: str = None):
         """
         Search for a fact!
