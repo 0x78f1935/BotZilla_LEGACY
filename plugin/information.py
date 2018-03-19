@@ -153,8 +153,7 @@ class Information:
 
                 source = json.dumps(source)
                 data = json.loads(str(source))
-                print(data)
-                print(data['name'])
+
                 if data['name'] == 0:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='Pokemon **`{}`** not found'.format(pokemon),
@@ -164,8 +163,9 @@ class Information:
                     return
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='working',
+                                      description=f'**Name: ** *`{data["name"]}`*\n**Number: ** *`{data["number"]}`*',
                                       colour=0xf20006)
+                embed.set_thumbnail(url=data["image"])
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
             except Exception as e:
