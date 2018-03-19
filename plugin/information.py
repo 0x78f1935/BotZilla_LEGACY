@@ -152,7 +152,13 @@ class Information:
                         source = await response.json(encoding='utf8')
 
                 source = json.dumps(source)
-                data = json.loads(str(source))
+                if source['name'] == 0:
+                    embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                          description='Pokemon **`{}`** not found'.format(pokemon),
+                                          colour=0xf20006)
+                    last_message = await self.bot.say(embed=embed)
+                    await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+                    return
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='working',
