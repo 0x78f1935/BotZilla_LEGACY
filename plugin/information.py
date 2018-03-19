@@ -162,10 +162,10 @@ class Information:
                     await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
                     return
 
-                types = "\n".join(data["types"])
+                types = " - ".join(data["types"])
 
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=f'**Name: ** *`{data["name"]}`*\n**Number: ** *`{data["number"]}`*\n**Type(s): **\n*`{types}`*\n**Species: ** *`{data["species"]}`*',
+                                      description=f'**Name: ** *`{data["name"]}`*\n**Number: ** *`{data["number"]}`*\n**Type(s): ** *`{types}`*\n**Species: ** *`{data["species"]}`*\n**Height: ** *`{data["height"]}`*\n**Weight: ** *`{data["weight"]}`*',
                                       colour=0xf20006)
                 embed.set_thumbnail(url=data["image"])
                 last_message = await self.bot.say(embed=embed)
