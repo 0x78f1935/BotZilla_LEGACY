@@ -134,7 +134,7 @@ class Information:
     async def pokedex(self, ctx, *, pokemon=None):
         """
         Pokedex, Show information about a specific pokemon
-        
+
         Usage:
         !!pokedex pikachu
         """

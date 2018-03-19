@@ -506,7 +506,7 @@ class AdminCommands:
             async with session.get(url) as response:
                 html = await response.read()
 
-        bs = BeautifulSoup(html)
+        bs = BeautifulSoup(html, 'lxml')
         for link in bs.find_all('a'):
             if link.has_attr('href'):
                 hrefs.append(link.attrs['href'])
