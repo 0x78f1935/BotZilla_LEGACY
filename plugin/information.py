@@ -154,10 +154,6 @@ class Information:
                 source = json.dumps(source)
                 data = json.loads(str(source))
 
-                last_updated = datetime.datetime.strptime(str(data['player']['updated_at']), '%Y-%m-%dT%H:%M:%S.%fZ')
-                last_updated = str(last_updated).split('.')
-                last_updated = last_updated[0]
-
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                       description='working',
                                       colour=0xf20006)
