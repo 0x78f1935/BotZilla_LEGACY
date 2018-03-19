@@ -135,7 +135,7 @@ class Information:
         """
         Pokedex
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!r6s <{uplay_name}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!pokedex <{pokemon}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if pokemon is None:
             embed = discord.Embed(title="{}:".format(ctx.message.author.name),
                                   description="Try **`{}help pokedex`** instead".format(self.config['prefix']),
