@@ -133,7 +133,10 @@ class Information:
     @commands.command(pass_context=True)
     async def pokedex(self, ctx, *, pokemon=None):
         """
-        Pokedex
+        Pokedex, Show information about a specific pokemon
+        
+        Usage:
+        !!pokedex pikachu
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!pokedex <{pokemon}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if pokemon is None:
