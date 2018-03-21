@@ -37,7 +37,7 @@ class TestScripts:
 
         print(members_who_already_infected)
 
-        if member.id in members_who_already_infected[0]:
+        if str(member.id) in str(members_who_already_infected[0]):
             await self.bot.say(f'{member.name} is already infected')
             return
 
