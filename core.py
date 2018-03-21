@@ -363,7 +363,9 @@ async def on_message(message):
     now = str(datetime.datetime.now())
     if infect is not None:
         if now < infect[1]:
-            await bot.add_reaction(message, str(infect[2]))
+            infected_emoji = infect[2]
+            print(infected_emoji)
+            await bot.add_reaction(message, infected_emoji)
 
     if message.author.bot: return
     database.cur.execute("SELECT ID FROM botzilla.blacklist;")
