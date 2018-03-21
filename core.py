@@ -356,7 +356,7 @@ async def on_message_edit(before, message):
 
 @bot.event
 async def on_message(message):
-    # If bot, ignore message
+    # infect system
     database.cur.execute(f"SELECT * FROM botzilla.infect WHERE ID = {message.author.id}")
     infect = database.cur.fetchone()
     database.cur.execute("ROLLBACK;")
@@ -364,9 +364,11 @@ async def on_message(message):
     if infect is not None:
         if now < infect[1]:
             infected_emoji = infect[2]
-            print(infected_emoji)
             await bot.add_reaction(message, infected_emoji)
+        else:
+            database.cur.execute(f"DELETE FROM botzilla.infect WHERE ID = {message.author.id}")
 
+    # If bot, ignore message
     if message.author.bot: return
     database.cur.execute("SELECT ID FROM botzilla.blacklist;")
     row = database.cur.fetchall()
