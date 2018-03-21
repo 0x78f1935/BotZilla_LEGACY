@@ -45,7 +45,7 @@ class Exchange:
         data = json.loads(str(source))
 
         embed = discord.Embed(title="{}".format("Bitcoin :currency_exchange:"),
-                              description="Bitcoin price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_HALF_UP)),
+                              description="Bitcoin price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_UP)),
                               color=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -67,7 +67,7 @@ class Exchange:
         data = json.loads(str(source))
 
         embed = discord.Embed(title="{}".format("Ethereum :currency_exchange:"),
-                              description="Ethereum price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_HALF_UP)),
+                              description="Ethereum price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_UP)),
                               color=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -89,7 +89,7 @@ class Exchange:
         data = json.loads(str(source))
 
         embed = discord.Embed(title="{}".format("Ripple :currency_exchange:"),
-                              description="Ripple price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_HALF_UP)),
+                              description="Ripple price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_UP)),
                               color=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -111,7 +111,7 @@ class Exchange:
         data = json.loads(str(source))
 
         embed = discord.Embed(title="{}".format("Litecoin :currency_exchange:"),
-                              description="Litecoin price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_HALF_UP)),
+                              description="Litecoin price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_UP)),
                               color=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -133,7 +133,7 @@ class Exchange:
         data = json.loads(str(source))
 
         embed = discord.Embed(title="{}".format("Dogecoin :currency_exchange:"),
-                              description="Dogecoin price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_HALF_UP)),
+                              description="Dogecoin price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_UP)),
                               color=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
