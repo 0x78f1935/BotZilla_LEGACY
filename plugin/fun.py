@@ -515,15 +515,17 @@ class Fun:
         if member is None or emoji is None:
             embed = discord.Embed(title=f'{ctx.message.author.name}',
                                   description=f'If you are stuck, Use **`{self.config["prefix"]}help infect`**\nThis will provide you with more information.',
-                                  color=0xf20006)
-            await self.bot.say(embed=embed)
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
         if str(member.id) in str(members_who_already_infected):
             embed = discord.Embed(title=f'{ctx.message.author.name}',
                                   description=f'**`{member.name}`** is already infected',
-                                  color=0xf20006)
-            await self.bot.say(embed=embed)
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, '\U0001f480')
         else:
             now = datetime.datetime.now()
             until = now + datetime.timedelta(hours=1)
@@ -532,8 +534,9 @@ class Fun:
             self.database.cur.execute("ROLLBACK;")
             embed = discord.Embed(title=f'{ctx.message.author.name}',
                                   description=f'**`{member.name}`** has been infected with **{emoji}** for **`one`** hour',
-                                  color=0xf20006)
-            await self.bot.say(embed=embed)
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
 def setup(bot):
