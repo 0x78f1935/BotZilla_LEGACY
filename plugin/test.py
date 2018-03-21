@@ -30,8 +30,14 @@ class TestScripts:
             pass
 
     @commands.command(pass_context=True)
-    async def test(self, ctx):
-        pass
+    async def test(self, ctx, member:discord.Member = None, emoji : str = None):
+        now = datetime.datetime.now()
+        until = now + datetime.timedelta(hours=1)
+        self.database.cur.execute("INSERT INTO botzilla.infect (ID, until, emoji) VALUES({}, '{}', '{}');".format(member.id, until, emoji))
+        self.database.cur.execute("ROLLBACK;")
+
+        await self.bot.say(f'{member} {emoji}')
+        await self.bot.say(f'**`{member.name}`** has been infected with **{emoji}** for **`one`** hour')
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
