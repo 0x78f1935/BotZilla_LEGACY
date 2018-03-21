@@ -117,13 +117,13 @@ class Exchange:
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
     @commands.command(pass_context=True, aliases=["doge"])
-    async def litecoin(self, ctx):
+    async def dogecoin(self, ctx):
         """
         Shows current Dogecoin value
         Show Dogecoin valua from exchange
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!dogecoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        url = 'https://api.coinmarketcap.com/v1/ticker/Litecoin/'
+        url = 'https://api.coinmarketcap.com/v1/ticker/Dogecoin/'
         cent = decimal.Decimal('0.01')
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
