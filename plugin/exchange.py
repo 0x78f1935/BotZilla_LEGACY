@@ -71,7 +71,7 @@ class Exchange:
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
-    @commands.command(pass_context=True, aliases=["eth"])
+    @commands.command(pass_context=True)
     async def ripple(self, ctx):
         """
         Shows current Ripple value
