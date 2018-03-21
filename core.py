@@ -363,6 +363,7 @@ async def on_message(message):
     now = str(datetime.datetime.now())
     if infect is not None:
         if now < infect[1]:
+            print(infect[2])
             await bot.add_reaction(message, infect[2])
 
     if message.author.bot: return
