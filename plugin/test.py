@@ -31,6 +31,14 @@ class TestScripts:
 
     @commands.command(pass_context=True)
     async def test(self, ctx, member:discord.Member = None, emoji : str = None):
+        self.database.cur.execute("SELECT ID from botzilla.blacklist;")
+        members_who_already_infected = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
+
+        if member.id in members_who_already_infected:
+            await self.bot.say(f'{member.name} is already infected')
+            return
+
         now = datetime.datetime.now()
         until = now + datetime.timedelta(hours=1)
         self.database.cur.execute("INSERT INTO botzilla.infect (ID, until, emoji) VALUES({}, '{}', '{}');".format(member.id, until, emoji))
