@@ -35,7 +35,9 @@ class TestScripts:
         members_who_already_infected = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
 
-        if str(member.id) in str(members_who_already_infected):
+        print(members_who_already_infected)
+
+        if member.id in members_who_already_infected:
             await self.bot.say(f'{member.name} is already infected')
             return
 
