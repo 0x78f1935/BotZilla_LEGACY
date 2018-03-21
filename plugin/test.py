@@ -31,7 +31,7 @@ class TestScripts:
 
     @commands.command(pass_context=True)
     async def test(self, ctx, member:discord.Member = None, emoji : str = None):
-        self.database.cur.execute("SELECT ID from botzilla.blacklist;")
+        self.database.cur.execute("SELECT ID from botzilla.infect;")
         members_who_already_infected = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
 
