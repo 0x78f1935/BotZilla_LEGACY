@@ -36,6 +36,7 @@ class Exchange:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!bitcoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = self.tmp_config['exchange']['api-url']
+        cent = decimal.Decimal('0.01')
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 source = await response.json()
@@ -44,7 +45,7 @@ class Exchange:
         data = json.loads(str(source))
 
         embed = discord.Embed(title="{}".format("Bitcoin :currency_exchange:"),
-                              description="Bitcoin price is currently at $**{}**".format(data['bpi']['USD']['rate']),
+                              description="Bitcoin price is currently at $**{}**".format(decimal.Decimal(float(data['bpi']['USD']['rate'])).quantize(cent, decimal.ROUND_HALF_UP)),
                               color=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
