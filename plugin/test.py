@@ -35,20 +35,17 @@ class TestScripts:
         members_who_already_infected = self.database.cur.fetchall()
         self.database.cur.execute("ROLLBACK;")
 
-        print(members_who_already_infected)
-
-        if str(member.id) in str(members_who_already_infected[0]):
+        if str(member.id) in str(members_who_already_infected):
             await self.bot.say(f'{member.name} is already infected')
-            return
+        else:
+            now = datetime.datetime.now()
+            until = now + datetime.timedelta(hours=1)
+            self.database.cur.execute("INSERT INTO botzilla.infect(ID, until, emoji) VALUES({}, '{}', '{}');".format(member.id, until, emoji))
+            self.database.conn.commit()
+            self.database.cur.execute("ROLLBACK;")
 
-        now = datetime.datetime.now()
-        until = now + datetime.timedelta(hours=1)
-        self.database.cur.execute("INSERT INTO botzilla.infect (ID, until, emoji) VALUES({}, '{}', '{}');".format(member.id, until, emoji))
-        self.database.conn.commit()
-        self.database.cur.execute("ROLLBACK;")
-
-        await self.bot.say(f'{member} {emoji}')
-        await self.bot.say(f'**`{member.name}`** has been infected with **{emoji}** for **`one`** hour')
+            await self.bot.say(f'{member} {emoji}')
+            await self.bot.say(f'**`{member.name}`** has been infected with **{emoji}** for **`one`** hour')
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))
