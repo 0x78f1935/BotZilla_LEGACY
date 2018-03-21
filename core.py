@@ -360,7 +360,7 @@ async def on_message(message):
     database.cur.execute(f"SELECT * FROM botzilla.infect WHERE ID = {message.author.id}")
     infect = database.cur.fetchone()
     database.cur.execute("ROLLBACK;")
-    now = datetime.datetime.now()
+    now = str(datetime.datetime.now())
     if infect is not None:
         if now < infect[1]:
             print(infect)
