@@ -363,10 +363,17 @@ async def on_message(message):
     now = str(datetime.datetime.now())
     if infect is not None:
         if now < infect[1]:
-            infected_emoji = infect[2]
-            await bot.add_reaction(message, infected_emoji)
+            try:
+                infected_emoji = infect[2]
+                await bot.add_reaction(message, infected_emoji)
+            except Exception as e:
+                database.cur.execute(f"DELETE FROM botzilla.infect WHERE ID = {message.author.id}")
+                database.conn.commit()
+                database.cur.execute("ROLLBACK;")
         else:
             database.cur.execute(f"DELETE FROM botzilla.infect WHERE ID = {message.author.id}")
+            database.conn.commit()
+            database.cur.execute("ROLLBACK;")
 
     # If bot, ignore message
     if message.author.bot: return

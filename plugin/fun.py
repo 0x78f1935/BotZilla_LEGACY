@@ -507,6 +507,7 @@ class Fun:
         """
         Now is your chance to infect someone with reactions!
         Each infect has a duration of one hour.
+        Works only with default emojis. No customs
         Usage:
           - !!infect <username | ping | id> <emoji>
         Example:
