@@ -34,8 +34,8 @@ class Exchange:
         Shows current bitcoin value
         Show bitcoin valua from exchange
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!bitcoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        url = self.tmp_config['exchange']['api-url']
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!Ethereum in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        url = 'https://api.coinmarketcap.com/v1/ticker/bitcoin/'
         cent = decimal.Decimal('0.01')
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
@@ -44,8 +44,8 @@ class Exchange:
         source = json.dumps(source)
         data = json.loads(str(source))
 
-        embed = discord.Embed(title="{}".format("Bitcoin :currency_exchange:"),
-                              description="Bitcoin price is currently at $**{}**".format(decimal.Decimal(float(data['bpi']['USD']['rate'])).quantize(cent, decimal.ROUND_HALF_UP)),
+        embed = discord.Embed(title="{}".format("Ethereum :currency_exchange:"),
+                              description="Ethereum price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_HALF_UP)),
                               color=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
