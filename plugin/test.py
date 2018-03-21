@@ -31,37 +31,7 @@ class TestScripts:
 
     @commands.command(pass_context=True)
     async def test(self, ctx, member:discord.Member = None, emoji : str = None):
-        """
-        Now is your chance to infect someone with reactions!
-        Each infect has a duration of one hour.
-        Usage:
-          - !!infect <username | ping | id> <emoji>
-        Example:
-          - !!infect puffdip :smirk:
-          - !!infect @puffdip :smiley:
-          - !!infect 275280442884751360 :wink:
-        """
-
-        self.database.cur.execute("SELECT ID from botzilla.infect;")
-        members_who_already_infected = self.database.cur.fetchall()
-        self.database.cur.execute("ROLLBACK;")
-
-        if member is None or emoji is None:
-            embed = discord.Embed(title=f'{ctx.message.author.name}',
-                                  description=f'To get help on how to infect someone.\nUse ***`{self.config["prefix"]}help infect`***',
-                                  color=0xf20006)
-            await self.bot.say(embed=embed)
-            return
-
-        if str(member.id) in str(members_who_already_infected):
-            await self.bot.say(f'{member.name} is already infected')
-        else:
-            now = datetime.datetime.now()
-            until = now + datetime.timedelta(hours=1)
-            self.database.cur.execute("INSERT INTO botzilla.infect(ID, until, emoji) VALUES({}, '{}', '{}');".format(member.id, until, emoji))
-            self.database.conn.commit()
-            self.database.cur.execute("ROLLBACK;")
-            await self.bot.say(f'**`{member.name}`** has been infected with **{emoji}** for **`one`** hour')
+        pass
 
 def setup(bot):
     bot.add_cog(TestScripts(bot))

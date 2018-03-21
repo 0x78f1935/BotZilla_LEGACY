@@ -477,7 +477,6 @@ class Fun:
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
         return
 
-
     @commands.command(pass_context=True, hidden=True)
     async def meow(self, ctx):
         """
@@ -494,6 +493,47 @@ class Fun:
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
+    @commands.command(pass_context=True)
+    async def infect(self, ctx, member:discord.Member = None, emoji : str = None):
+        """
+        Now is your chance to infect someone with reactions!
+        Each infect has a duration of one hour.
+        Usage:
+          - !!infect <username | ping | id> <emoji>
+        Example:
+          - !!infect puffdip :smirk:
+          - !!infect @puffdip :smiley:
+          - !!infect 275280442884751360 :wink:
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!infect <{member}> <{emoji}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        self.database.cur.execute("SELECT ID from botzilla.infect;")
+        members_who_already_infected = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
+
+        if member is None or emoji is None:
+            embed = discord.Embed(title=f'{ctx.message.author.name}',
+                                  description=f'If you are stuck, Use **`{self.config["prefix"]}help infect`**\nThis will provide you with more information.',
+                                  color=0xf20006)
+            await self.bot.say(embed=embed)
+            return
+
+        if str(member.id) in str(members_who_already_infected):
+            embed = discord.Embed(title=f'{ctx.message.author.name}',
+                                  description=f'**`{member.name}`** is already infected',
+                                  color=0xf20006)
+            await self.bot.say(embed=embed)
+        else:
+            now = datetime.datetime.now()
+            until = now + datetime.timedelta(hours=1)
+            self.database.cur.execute("INSERT INTO botzilla.infect(ID, until, emoji) VALUES({}, '{}', '{}');".format(member.id, until, emoji))
+            self.database.conn.commit()
+            self.database.cur.execute("ROLLBACK;")
+            embed = discord.Embed(title=f'{ctx.message.author.name}',
+                                  description=f'**`{member.name}`** has been infected with **{emoji}** for **`one`** hour',
+                                  color=0xf20006)
+            await self.bot.say(embed=embed)
 
 
 def setup(bot):
