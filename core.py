@@ -357,7 +357,7 @@ async def on_message_edit(before, message):
 @bot.event
 async def on_message(message):
     # If bot, ignore message
-    database.cur.execute(f"SELECT * FROM botilla.infect WHERE ID = {message.author.id}")
+    database.cur.execute(f"SELECT * FROM botzilla.infect WHERE ID = {message.author.id}")
     infect = database.cur.fetchone()
     database.cur.execute("ROLLBACK;")
 
