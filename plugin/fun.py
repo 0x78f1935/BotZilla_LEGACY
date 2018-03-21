@@ -33,12 +33,6 @@ class Images:
         self.channels = self.tmp_config['channels']
         self.emojiUnicode = self.tmp_config['unicode']
         self.owner_list = self.config['owner-id']
-        try:
-            self.database = Database(self.bot)
-            self.database_file_found = True
-        except Exception as e:
-            print('Test: Database files not found - {}'.format(e.args))
-            pass
 
 
     @commands.command(pass_context=True)
@@ -285,7 +279,7 @@ class Images:
 
 class Fun:
     """
-    Image related commands.
+    Fun related commands.
     """
 
     def __init__(self, bot):
@@ -298,7 +292,12 @@ class Fun:
         self.channels = self.tmp_config['channels']
         self.emojiUnicode = self.tmp_config['unicode']
         self.owner_list = self.config['owner-id']
-
+        try:
+            self.database = Database(self.bot)
+            self.database_file_found = True
+        except Exception as e:
+            print('Test: Database files not found - {}'.format(e.args))
+            pass
 
     @commands.command(pass_context=True)
     async def hack(self, ctx, *, account : str = None):
@@ -502,7 +501,6 @@ class Fun:
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-
 
     @commands.command(pass_context=True)
     async def infect(self, ctx, member:discord.Member = None, emoji : str = None):
