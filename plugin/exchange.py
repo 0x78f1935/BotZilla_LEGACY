@@ -57,6 +57,7 @@ class Exchange:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!Ethereum in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'https://api.coinmarketcap.com/v1/ticker/Ethereum/'
+        cent = decimal.Decimal('0.01')
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 source = await response.json()
@@ -65,7 +66,7 @@ class Exchange:
         data = json.loads(str(source))
 
         embed = discord.Embed(title="{}".format("Ethereum :currency_exchange:"),
-                              description="Ethereum price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd']))),
+                              description="Ethereum price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_HALF_UP)),
                               color=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
@@ -77,7 +78,8 @@ class Exchange:
         Show Ripple valua from exchange
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!ripple in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        url = 'https://api.coinmarketcap.com/v1/ticker/Ethereum/'
+        url = 'https://api.coinmarketcap.com/v1/ticker/Ripple/'
+        cent = decimal.Decimal('0.01')
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 source = await response.json()
@@ -86,7 +88,7 @@ class Exchange:
         data = json.loads(str(source))
 
         embed = discord.Embed(title="{}".format("Ripple :currency_exchange:"),
-                              description="Ripple price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd']))),
+                              description="Ripple price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_HALF_UP)),
                               color=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
