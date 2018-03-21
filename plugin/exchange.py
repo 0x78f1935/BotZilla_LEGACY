@@ -2,7 +2,7 @@ import json
 import discord
 from discord.ext import commands
 import aiohttp
-
+import decimal
 import datetime
 
 
@@ -66,7 +66,28 @@ class Exchange:
         data = json.loads(str(source))
 
         embed = discord.Embed(title="{}".format("Ethereum :currency_exchange:"),
-                              description="Ethereum price is currently at $**{},-**".format(round(float(data[0]['price_usd']))),
+                              description="Ethereum price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd']))),
+                              color=0xf20006)
+        last_message = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
+    @commands.command(pass_context=True, aliases=["eth"])
+    async def ripple(self, ctx):
+        """
+        Shows current Ripple value
+        Show Ripple valua from exchange
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!ripple in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        url = 'https://api.coinmarketcap.com/v1/ticker/Ethereum/'
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                source = await response.json()
+
+        source = json.dumps(source)
+        data = json.loads(str(source))
+
+        embed = discord.Embed(title="{}".format("Ripple :currency_exchange:"),
+                              description="Ripple price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd']))),
                               color=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
