@@ -94,6 +94,50 @@ class Exchange:
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
+    @commands.command(pass_context=True, aliases=["lte"])
+    async def litecoin(self, ctx):
+        """
+        Shows current Litecoin value
+        Show Litecoin valua from exchange
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!litecoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        url = 'https://api.coinmarketcap.com/v1/ticker/Litecoin/'
+        cent = decimal.Decimal('0.01')
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                source = await response.json()
+
+        source = json.dumps(source)
+        data = json.loads(str(source))
+
+        embed = discord.Embed(title="{}".format("Litecoin :currency_exchange:"),
+                              description="Litecoin price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_HALF_UP)),
+                              color=0xf20006)
+        last_message = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
+    @commands.command(pass_context=True, aliases=["doge"])
+    async def litecoin(self, ctx):
+        """
+        Shows current Dogecoin value
+        Show Dogecoin valua from exchange
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!dogecoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        url = 'https://api.coinmarketcap.com/v1/ticker/Litecoin/'
+        cent = decimal.Decimal('0.01')
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                source = await response.json()
+
+        source = json.dumps(source)
+        data = json.loads(str(source))
+
+        embed = discord.Embed(title="{}".format("Dogecoin :currency_exchange:"),
+                              description="Dogecoin price is currently at $**{}**".format(decimal.Decimal(float(data[0]['price_usd'])).quantize(cent, decimal.ROUND_HALF_UP)),
+                              color=0xf20006)
+        last_message = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
 
 def setup(bot):
     bot.add_cog(Exchange(bot))
