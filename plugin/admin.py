@@ -323,7 +323,7 @@ class AdminCommands:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            await asyncio.sleep(10)
+            await asyncio.sleep(7)
             try:
                 await self.bot.delete_message(a)
             except Exception as e:
@@ -334,7 +334,7 @@ class AdminCommands:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            await asyncio.sleep(10)
+            await asyncio.sleep(7)
             try:
                 await self.bot.delete_message(a)
             except Exception as e:
