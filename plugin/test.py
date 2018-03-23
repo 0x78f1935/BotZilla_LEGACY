@@ -35,5 +35,20 @@ class TestScripts:
 
 
 
+
+   @commands.command()
+    @commands.cooldown(1, 30, type=commands.BucketType.user)
+    async def infect(self, ctx, member:discord.Member, emoji):
+        if member.id == self.bot.user.id and ctx.author.id != owner_id:
+            await ctx.send(f'You rolled a Critical Fail...\nInfection bounces off and rebounds on the attacker.')
+            member = ctx.author
+        if member in self.bot.infected:
+            await ctx.send(f'{member.display_name} is already infected. Please wait until they are healed before infecting them again...')
+        else:
+            emoji = self.bot.get_emoji(int(emoji.split(':')[2].strip('>'))) if '<:' in emoji or '<a:' in emoji else emoji
+            self.bot.infected[member] = [emoji,datetime.now().timestamp()]
+            await ctx.send(f"{member.display_name} has been infected with {emoji}")
+
+
 def setup(bot):
     bot.add_cog(TestScripts(bot))

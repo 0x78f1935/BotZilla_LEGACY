@@ -530,6 +530,8 @@ class Fun:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
+        emoji = self.bot.get_emoji(int(emoji.split(':')[2].strip('>'))) if '<:' in emoji or '<a:' in emoji else emoji
+
         if str(member.id) in str(members_who_already_infected):
             embed = discord.Embed(title=f'{ctx.message.author.name}',
                                   description=f'**`{member.name}`** is already infected',
