@@ -230,7 +230,7 @@ class AdminCommands:
         DM single user
         First ID after ID message
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!senddm <{Message}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!senddm <{member.id}> <{Message}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Only the owner of this bot can use this command',
@@ -240,6 +240,7 @@ class AdminCommands:
             return
 
         await self.bot.delete_message(ctx.message)
+
         embed = discord.Embed(title='{}:'.format('Announcement'),
                               description='{}'.format(Message),
                               colour=0xf20006)
