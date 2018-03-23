@@ -225,12 +225,12 @@ class AdminCommands:
 
 
     @commands.command(pass_context=True, hidden=True)
-    async def senddm(self, ctx, *, user_id: str = None, Message: str = None):
+    async def senddm(self, ctx, user_id: discord.Member = None, *, MSG: str = None):
         """
         DM single user
         First ID after ID message
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!senddm <{Message}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!senddm <{user_id.id}> <{MSG}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Only the owner of this bot can use this command',
@@ -239,18 +239,14 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-
-        id = [int(s) for s in user_id.split() if s.isdigit()]
-        id = str(id).replace('[', '')
-        id = id.replace(']', '')
-        content = user_id.replace('{}'.format(id), '')
         await self.bot.delete_message(ctx.message)
         target = await self.bot.get_user_info(id)
         embed = discord.Embed(title='{}:'.format('Announcement'),
-                              description='{}'.format(content),
+                              description='{}'.format(MSG),
                               colour=0xf20006)
         last_message = await self.bot.send_message(target, embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
         for owner in self.config['owner-id']:
             owner = await self.bot.get_user_info(owner)
             last_message = await self.bot.send_message(owner, embed=embed)
