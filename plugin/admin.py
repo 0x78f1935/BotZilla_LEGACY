@@ -225,7 +225,7 @@ class AdminCommands:
 
 
     @commands.command(pass_context=True, hidden=True)
-    async def senddm(self, ctx, *, user_id: str = None, Message: str = None):
+    async def senddm(self, ctx, *, member:discord.Member = None, Message: str = None):
         """
         DM single user
         First ID after ID message
@@ -239,18 +239,13 @@ class AdminCommands:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-
-        id = [int(s) for s in user_id.split() if s.isdigit()]
-        id = str(id).replace('[', '')
-        id = id.replace(']', '')
-        content = user_id.replace('{}'.format(id), '')
         await self.bot.delete_message(ctx.message)
-        target = await self.bot.get_user_info(id)
         embed = discord.Embed(title='{}:'.format('Announcement'),
-                              description='{}'.format(content),
+                              description='{}'.format(Message),
                               colour=0xf20006)
-        last_message = await self.bot.send_message(target, embed=embed)
+        last_message = await self.bot.send_message(member, embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
         for owner in self.config['owner-id']:
             owner = await self.bot.get_user_info(owner)
             last_message = await self.bot.send_message(owner, embed=embed)
