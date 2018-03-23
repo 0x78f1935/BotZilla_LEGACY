@@ -240,11 +240,11 @@ class AdminCommands:
             return
 
         await self.bot.delete_message(ctx.message)
-
+        target = await self.bot.get_user_info(user_id.id)
         embed = discord.Embed(title='{}:'.format('Announcement'),
                               description='{}'.format(MSG),
                               colour=0xf20006)
-        last_message = await self.bot.send_message(user_id, embed=embed)
+        last_message = await self.bot.send_message(target, embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
 
         for owner in self.config['owner-id']:
