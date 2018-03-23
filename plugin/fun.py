@@ -600,7 +600,7 @@ class Fun:
         else:
             embed = discord.Embed(title=f'{ctx.message.author.name}',
                                   description=f'**`{member.name}`** has not yet been infected,\ninfect **`{member.name}`**! **`{self.config["prefix"]}help infect`** for more info',
-                                  colour=0xf20006)\
+                                  colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
