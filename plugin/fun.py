@@ -507,6 +507,8 @@ class Fun:
         """
         Now is your chance to infect someone with reactions!
         Each infect has a duration of one hour.
+        To get healed again check out heal for more info.
+          - !!help heal
         Works only with default emojis. No customs
         Usage:
           - !!infect <username | ping | id> <emoji>
@@ -545,6 +547,62 @@ class Fun:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
+    @commands.command(pass_context=True)
+    async def heal(self, ctx, member:discord.Member = None):
+        """
+        Heal someone who is infected.
+        If someone is not infected, infect them!
+        To get more information on how to infect someone, use
+          - !!help infect
+        Usage:
+          - !!heal <username | ping | id> <emoji>
+        Example:
+          - !!heal puffdip :smirk:
+          - !!heal @puffdip :smiley:
+          - !!heal 275280442884751360 :wink:
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!heal <{member}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+
+        if member is None:
+            embed = discord.Embed(title=f'{ctx.message.author.name}',
+                                  description=f'If you are stuck, Use **`{self.config["prefix"]}help heal`**\nThis will provide you with more information.',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        self.database.cur.execute("SELECT * from botzilla.infect WHERE ID = {};".format(member.id))
+        members_who_already_infected = self.database.cur.fetchall()
+        self.database.cur.execute("ROLLBACK;")
+
+        if str(member.id) in str(members_who_already_infected):
+            self.database.cur.execute("SELECT * from botzilla.infect WHERE ID = {};".format(member.id))
+            infected_member = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+            if member.id == infected_member[0]:
+                embed = discord.Embed(title=f'{ctx.message.author.name}',
+                                      description=f'**`{member.name}`** you can\'t heal yourself',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                return
+
+            self.database.cur.execute("DELETE FROM botzilla.infect WHERE ID = {};".format(member.id))
+            self.database.conn.commit()
+            self.database.cur.execute("ROLLBACK;")
+            embed = discord.Embed(title=f'{ctx.message.author.name}',
+                                  description=f'**`{member.name}`** is healed again',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        else:
+            embed = discord.Embed(title=f'{ctx.message.author.name}',
+                                  description=f'**`{member.name}`** has not yet been infected,\ninfect **`{member.name}`**! **`{self.config["prefix"]help infect} for more info`**',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
 def setup(bot):

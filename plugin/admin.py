@@ -223,7 +223,6 @@ class AdminCommands:
         except Exception as e:
             print(e.args)
 
-
     @commands.command(pass_context=True, hidden=True)
     async def senddm(self, ctx, user_id: discord.Member = None, *, MSG: str = None):
         """
@@ -335,7 +334,6 @@ class AdminCommands:
                 await self.bot.delete_message(a)
             except Exception as e:
                 pass
-
 
     @commands.command(pass_context=True, hidden=True)
     async def git(self, ctx):
