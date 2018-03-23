@@ -250,8 +250,8 @@ async def on_member_join(member):
     print('MEMBER JOINED {} | {} Joined: {}'.format(member.name, member.id, member.server))
     if member.server.id == '265828729970753537':
         welcome_channel = bot.get_channel('426860084161937410')
-        print(welcome_channel.name)
         await bot.send_message(welcome_channel, f'Welcome {member.name}')
+        print(welcome_channel.name)
 
     try:
         pattern = re.compile('[\W_]+')
