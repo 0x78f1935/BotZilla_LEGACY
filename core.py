@@ -248,6 +248,11 @@ async def on_ready():
 @bot.event
 async def on_member_join(member):
     print('MEMBER JOINED {} | {} Joined: {}'.format(member.name, member.id, member.server))
+    if member.server.id == '265828729970753537':
+        welcome_channel = bot.get_channel('426860084161937410')
+        print(welcome_channel.name)
+        bot.send_message(welcome_channel, f'Welcome {member.name}')
+
     try:
         pattern = re.compile('[\W_]+')
         name = pattern.sub('', str(member.name))
@@ -261,11 +266,6 @@ async def on_member_join(member):
             print(f'{type(e).__name__} : {e}')
 
 
-    print(member.server.id)
-    if member.server.id == '265828729970753537' or '424223060107853825':
-        welcome_channel = bot.get_channel(426860084161937410)
-        print(welcome_channel.name)
-        bot.send_message(welcome_channel, f'Welcome {member.name}')
 
 
 @bot.event
