@@ -312,6 +312,8 @@ class AdminCommands:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            await asyncio.sleep(3)
+            await self.bot.delete_message(a)
         except discord.ext.commands.CommandInvokeError as e:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description=f'**{type(e).__name__}:**\n```py\n{e}```',
