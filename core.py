@@ -254,8 +254,10 @@ async def on_member_join(member):
         database.cur.execute("INSERT INTO botzilla.users (ID, name) VALUES ({}, '{}');".format(member.id, name))
         database.cur.execute("ROLLBACK;")
         print('DATABASE ADD {} | {} has been added to the database'.format(member.name, member.id))
-        if member.server.id == '426860084161937410':
-            print(f'Welcome {member.name}')
+        if member.server.id == '265828729970753537':
+            welcome_channel = bot.get_channel('426860084161937410')
+            print(welcome_channel.name)
+            bot.send_message(welcome_channel, f'Welcome {member.name}')
     except Exception as e:
         if 'duplicate key' in str(e.args):
             pass
