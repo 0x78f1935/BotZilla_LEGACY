@@ -61,7 +61,7 @@ class GameStats:
                           f"Kills: **`{data['player']['stats']['ranked']['kills']}`**\n"
                           f"Deaths: **`{data['player']['stats']['ranked']['deaths']}`**\n"
                           f"K/D Ratio: **`{data['player']['stats']['ranked']['kd']}`**\n"
-                          f"Playtime: **`{(float(data['player']['stats']['ranked']['playtime']) / 60 / 60)}`** Hour(s)\n\n",
+                          f"Playtime: **`{int(float(data['player']['stats']['ranked']['playtime']) / 60 / 60)}`** Hour(s)\n\n",
                     inline=True
                 )
 
@@ -74,7 +74,7 @@ class GameStats:
                           f"Kills: **`{data['player']['stats']['casual']['kills']}`**\n"
                           f"Deaths: **`{data['player']['stats']['casual']['deaths']}`**\n"
                           f"K/D Ratio: **`{data['player']['stats']['casual']['kd']}`**\n"
-                          f"Playtime: **`{(float(data['player']['stats']['casual']['playtime']) / 60 / 60)}`** Hour(s)\n\n",
+                          f"Playtime: **`{int(float(data['player']['stats']['casual']['playtime']) / 60 / 60)}`** Hour(s)\n\n",
                     inline=True
                 )
 
