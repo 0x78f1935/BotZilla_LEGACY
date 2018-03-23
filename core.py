@@ -248,6 +248,7 @@ async def on_ready():
 @bot.event
 async def on_member_join(member):
     print('MEMBER JOINED {} | {} Joined: {}'.format(member.name, member.id, member.server))
+    # sebi server
     if member.server.id == '265828729970753537':
         welcome_channel = bot.get_channel('426860084161937410')
         await bot.send_message(welcome_channel, f'Welcome {member.name}')
