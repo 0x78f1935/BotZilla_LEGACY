@@ -253,6 +253,12 @@ async def on_member_join(member):
         await bot.send_message(welcome_channel, f'Welcome {member.name}')
         print(welcome_channel.name)
 
+    #test server
+    if member.server.id == '424223060107853825':
+        welcome_channel = bot.get_channel('426870698737139743')
+        await bot.send_message(welcome_channel, f'Welcome {member.name}')
+        print(welcome_channel.name)
+
     try:
         pattern = re.compile('[\W_]+')
         name = pattern.sub('', str(member.name))
