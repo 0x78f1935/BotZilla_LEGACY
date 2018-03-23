@@ -581,7 +581,7 @@ class Fun:
             self.database.cur.execute("SELECT * from botzilla.infect WHERE ID = {};".format(member.id))
             infected_member = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
-            if member.id == infected_member[0]:
+            if str(member.id) == str(infected_member[0]):
                 embed = discord.Embed(title=f'{ctx.message.author.name}',
                                       description=f'**`{member.name}`** you can\'t heal yourself',
                                       colour=0xf20006)
