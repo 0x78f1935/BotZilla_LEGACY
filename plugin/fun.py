@@ -277,6 +277,34 @@ class Images:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
 
+    @commands.command(pass_context=True ,aliases=["av"])
+    async def avatar(self, ctx, *, member:discord.Member):
+        """
+        Shows a big avatar from a discord user
+        Usage:
+          - !!avatar <username | ping | id>
+        Example:
+          - !!avatar puffdip
+          - !!avatar @puffdip
+          - !!avatar 275280442884751360
+        Alias:
+          - !!av
+        Example:
+          - !!av @puffdip
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!avatar <{member.name}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        if member:
+            user = await self.bot.get_user_info(member.id)
+        else:
+            user = await self.bot.get_user_info(ctx.message.author.id)
+
+        embed = discord.Embed(title='{}\'s avatar:'.format(user.name),
+                              description='\t',
+                              colour=0xf20006)
+        embed.set_image(url=user.avatar_url)
+        last_message = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
 class Fun:
     """
     Fun related commands.
