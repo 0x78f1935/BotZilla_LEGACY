@@ -251,9 +251,12 @@ async def on_member_remove(member):
     if member.server.id == '265828729970753537':
         welcome_channel = bot.get_channel('426860084161937410')
         join_date = member.joined_at
+        created_at = member.created_at
         embed = discord.Embed(title='Bye!',
                               description=f'{member.mention}, :wave:\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
                               colour=0xf20006)
+        embed.add_field(name=f'**`{member.name}`**\'s additional information',
+                        value=f'Joined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}\nTop rol **`{member.top_rol}`**\nDisplay name **`{member.display_name}`**\nAccount created at **`{created_at.strftime("%Y-%m-%d %H:%M:%S")}`**')
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f'Bot: {member.bot}')
         last_message = await bot.send_message(welcome_channel, embed=embed)
@@ -263,9 +266,12 @@ async def on_member_remove(member):
     if member.server.id == '406908371246252052':
         welcome_channel = bot.get_channel('406908371808157697')
         join_date = member.joined_at
+        created_at = member.created_at
         embed = discord.Embed(title='Bye!',
                               description=f'{member.mention}, :wave:\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
                               colour=0xf20006)
+        embed.add_field(name=f'**`{member.name}`**\'s additional information',
+                        value=f'Joined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}\nTop rol **`{member.top_rol}`**\nDisplay name **`{member.display_name}`**\nAccount created at **`{created_at.strftime("%Y-%m-%d %H:%M:%S")}`**')
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f'Bot: {member.bot}')
         last_message = await bot.send_message(welcome_channel, embed=embed)
@@ -284,9 +290,12 @@ async def on_member_join(member):
             a.append(str(emoji))
         emojis = " - ".join(a)
         join_date = member.joined_at
+        created_at = member.created_at
         embed = discord.Embed(title='Welcome!',
-                              description=f'{member.mention}, Enjoy your stay!\nAll emoji\'s on this server:\n{emojis}\n\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
+                              description=f'{member.mention}, Enjoy your stay!\n\nAll emoji\'s on this server:\n{emojis}',
                               colour=0xf20006)
+        embed.add_field(name=f'**`{member.name}`**\'s additional information',
+                        value=f'Joined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}\nTop rol **`{member.top_rol}`**\nDisplay name **`{member.display_name}`**\nAccount created at **`{created_at.strftime("%Y-%m-%d %H:%M:%S")}`**')
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f'Bot: {member.bot}')
         last_message = await bot.send_message(welcome_channel, embed=embed)
@@ -301,9 +310,12 @@ async def on_member_join(member):
             a.append(str(emoji))
         emojis = " - ".join(a)
         join_date = member.joined_at
+        created_at = member.created_at
         embed = discord.Embed(title='Welcome!',
-                              description=f'{member.mention}, Enjoy your stay!\nAll emoji\'s on this server:\n{emojis}\n\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
+                              description=f'{member.mention}, Enjoy your stay!\n\nAll emoji\'s on this server:\n{emojis}}`**',
                               colour=0xf20006)
+        embed.add_field(name=f'**`{member.name}`**\'s additional information',
+                        value=f'Joined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}\nTop rol **`{member.top_rol}`**\nDisplay name **`{member.display_name}`**\nAccount created at **`{created_at.strftime("%Y-%m-%d %H:%M:%S")}`**')
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f'Bot: {member.bot}')
         last_message = await bot.send_message(welcome_channel, embed=embed)
