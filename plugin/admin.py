@@ -569,17 +569,20 @@ class AdminCommands:
         api = json.dumps(api, indent=2)
 
         ftp = FTP(self.ftp_conf['ip'])
+        print(ftp)
         ftp.login(user=self.ftp_conf['user'], passwd=self.ftp_conf['pass'])
+        print('login succes')
         ftp.cwd('/official website/GUI/Pages/API/')
-
+        print('cd found')
         filename = 'export/sebisauce.json'
         with open(filename, 'w') as fp:
             fp.write(api)
-
+        print('file created')
 
         ftp.storbinary('STOR ' + filename, open(filename, 'rb'))
+        print('file stored')
         cur_dir = str(ftp.dir())
-
+        print(cur_dir)
         embed = discord.Embed(title='Sebisauce Collection is up-to-date',
                               description=f'**```py\n{cur_dir}\n```**',
                               colour=0xf20006)
