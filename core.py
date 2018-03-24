@@ -312,7 +312,7 @@ async def on_member_join(member):
         join_date = member.joined_at
         created_at = member.created_at
         embed = discord.Embed(title='Welcome!',
-                              description=f'{member.mention}, Enjoy your stay!\n\nAll emoji\'s on this server:\n{emojis}}`**',
+                              description=f'{member.mention}, Enjoy your stay!\n\nAll emoji\'s on this server:\n{emojis}`**',
                               colour=0xf20006)
         embed.add_field(name=f'**`{member.name}`**\'s additional information',
                         value=f'Joined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}\nTop rol **`{member.top_rol}`**\nDisplay name **`{member.display_name}`**\nAccount created at **`{created_at.strftime("%Y-%m-%d %H:%M:%S")}`**')
