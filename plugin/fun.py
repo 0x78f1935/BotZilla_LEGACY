@@ -161,7 +161,7 @@ class Images:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             except Exception as e:
                 embed = discord.Embed(title="{}".format(ctx.message.author.name),
-                                      description="The emoji **`{}`** was not found\nPerhaps this is not a custom server emoji.".format(emote),
+                                      description="The emoji **`{}`** was not found\nPerhaps this is not a custom server emoji.".format(emoji),
                                       color=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
