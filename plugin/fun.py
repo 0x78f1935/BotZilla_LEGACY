@@ -553,7 +553,7 @@ class Fun:
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 source = await response.json(encoding='utf8')
-        
+
         fact = source['text']
 
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),

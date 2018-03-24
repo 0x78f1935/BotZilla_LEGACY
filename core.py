@@ -278,9 +278,14 @@ async def on_member_join(member):
     # sebi server
     if member.server.id == '265828729970753537':
         welcome_channel = bot.get_channel('426860084161937410')
+        a = []
+        for emoji in member.server.emojis:
+            emoji = discord.utils.get(bot.get_all_emojis(), id=emoji.id)
+            a.append(str(emoji))
+        emojis = " - ".join(a)
         join_date = member.joined_at
         embed = discord.Embed(title='Welcome!',
-                              description=f'{member.mention}, Enjoy your stay!\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
+                              description=f'{member.mention}, Enjoy your stay!\nAll emoji\'s on this server:{emojis}\n\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
                               colour=0xf20006)
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f'Bot: {member.bot}')
@@ -290,9 +295,14 @@ async def on_member_join(member):
     #BotZilla server
     if member.server.id == '406908371246252052':
         welcome_channel = bot.get_channel('406908371808157697')
+        a = []
+        for emoji in member.server.emojis:
+            emoji = discord.utils.get(bot.get_all_emojis(), id=emoji.id)
+            a.append(str(emoji))
+        emojis = " - ".join(a)
         join_date = member.joined_at
         embed = discord.Embed(title='Welcome!',
-                              description=f'{member.mention}, Enjoy your stay!\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
+                              description=f'{member.mention}, Enjoy your stay!\nAll emoji\'s on this server:{emojis}\n\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
                               colour=0xf20006)
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f'Bot: {member.bot}')
