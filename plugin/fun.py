@@ -38,15 +38,15 @@ class Images:
     @commands.command(pass_context=True)
     async def ascii(self, ctx, font : str = None, *, text : str = None):
         '''
-        !!ascii <font> <text>
         Transform any text to ascii art.
-        !!ascii random This is a example
         All available fonts can you find here:
-        3-d, 3x5, 5lineoblique, acrobatic, alligator2, alligator, alphabet,
-        avatar, banner3, banner4, banner, barbwire, basic, bell, weird
-        bigchief, big, binary, block, broadway, bubble, bulbhead, calgphy2,
-        caligraphy, catwalk, chunky, coinstak, colossal, computer, contessa,
         Full list: https://www.flamingtext.com/tools/figlet/fontlist.html
+        Usage:
+          - !!ascii <font> <text>
+          - !!ascii <any random letter> <text> #gets a random font
+        Example:
+          - !!ascii big hello
+          - !!ascii . hello
         '''
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!ascii <{font}> <{text}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         fonts = ["3-d", "3x5", "5lineoblique", "acrobatic", "alligator2", "alligator", "alphabet", "avatar", "banner3",
@@ -132,6 +132,10 @@ class Images:
     async def big(self, ctx, *, emoji : str = None):
         """
         Make custom emojis 10x time bigger!
+        Usage:
+          - !!big <custom emoji>
+        Example:
+          - !!big :cactus_sap0:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!big <{emoji}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if emoji is None:
@@ -165,6 +169,8 @@ class Images:
     async def gif(self, ctx, *keywords):
         """
         Retrieves a random gif from a giphy search
+        Usage:
+          - !!gif
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!gif <{keywords}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if keywords:
@@ -215,6 +221,10 @@ class Images:
         Shows graphical content NSFW.
         Rule#34 : If it exists there is porn of it. If not, start uploading.
         Works only in channels with nsfw in the name.
+        Usage:
+          - !!rule34 <search term>
+        Example:
+          - !!rule34 pizza
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rule34 <{content}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if 'nsfw' not in str(ctx.message.channel.name).lower():
@@ -276,7 +286,6 @@ class Images:
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
-
     @commands.command(pass_context=True ,aliases=["av"])
     async def avatar(self, ctx, *, member:discord.Member=None):
         """
@@ -301,6 +310,7 @@ class Images:
         embed.set_image(url=user.avatar_url)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+
 
 class Fun:
     """
@@ -332,6 +342,11 @@ class Fun:
         to put the information they stole online.
         Use this command to check of your account has been leaked.
         Works on e-mail and username.
+        Usage:
+          - !!hack <account name | email>
+        Example:
+          - !!hack hermin10
+          - !!hack hermin10@hermin10.com
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!hack <{account}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if account == None:
@@ -406,6 +421,10 @@ class Fun:
         """
         Look something up in the UrbanDictionary.
         Use this command with a search keyword.
+        Usage:
+          - !!dict <keyword>
+        Example:
+          - !!dict Hippopotomonstrosesquipedaliophobia
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!dict <{keywords}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if keywords is None:
@@ -459,6 +478,10 @@ class Fun:
         """
         SpOnGeBoByFy, Transform your text!
         Use this command with any sentence you like to transform.
+        Usage:
+          - !!sb <text>
+        Example:
+          - !!sb hello world
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!sb <{text}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if text == None:
@@ -489,6 +512,8 @@ class Fun:
     async def joke(self, ctx):
         """
         Ever heard a Chuck Norris joke?
+        Usage:
+          - !!joke
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!joke in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'http://api.icndb.com/jokes/random%22'
@@ -514,6 +539,8 @@ class Fun:
     async def meow(self, ctx):
         """
         Spawn a kitty cat!
+        Usage:
+          - !!meow
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!meow in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'http://placekitten.com/'
