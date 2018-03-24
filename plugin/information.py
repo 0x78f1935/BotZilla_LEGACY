@@ -532,7 +532,7 @@ class Information:
           - !!phobia hippopotomonstrosesquipedaliophobia
 
         """
-        phobia = phobia.lower()
+
         url = 'http://ikbengeslaagd.com/API/phobia.json'
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
@@ -542,13 +542,15 @@ class Information:
             random_key = []
             for key in dict(source).keys():
                 random_key.append(key)
-            phobia_key = random.sample(random_key)
+            phobia_key =  random.choice(random_key)
             embed = discord.Embed(title=f'{phobia_key}',
                                   description=f'**`{source[phobia_key]}`**',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             return
+
+        phobia = phobia.lower()
 
         try:
             embed = discord.Embed(title=f'{phobia}',
