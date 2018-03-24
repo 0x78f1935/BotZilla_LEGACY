@@ -539,6 +539,7 @@ class Fun:
         else:
             now = datetime.datetime.now()
             until = now + datetime.timedelta(hours=1)
+            emoji = emoji.strip('<>').split(':')[-1]
             self.database.cur.execute("INSERT INTO botzilla.infect(ID, until, emoji) VALUES({}, '{}', '{}');".format(member.id, until, emoji))
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")

@@ -405,7 +405,10 @@ async def on_message(message):
     if infect is not None:
         if now < infect[1]:
             try:
-                infected_emoji = infect[2]
+                try:
+                    infected_emoji = discord.utils.get(bot.get_all_emojis(), id=infect[2])
+                except Exception as e:
+                    infected_emoji = infect[2]
                 await bot.add_reaction(message, infected_emoji)
             except Exception as e:
                 database.cur.execute(f"DELETE FROM botzilla.infect WHERE ID = {message.author.id}")
