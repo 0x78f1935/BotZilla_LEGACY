@@ -149,12 +149,8 @@ class Images:
             await self.bot.send_typing(ctx.message.channel)
             try:
                 emoji_stripped = emoji.strip('<>').split(':')[-1]
-                try:
-                    int(emoji_stripped)
-                    emoji = discord.utils.get(self.bot.get_all_emojis(), id=emoji_stripped)
-                except Exception as e:
-                    pass
-
+                int(emoji_stripped)
+                emoji = discord.utils.get(self.bot.get_all_emojis(), id=emoji_stripped)
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name), description='\t', colour=0xf20006)
                 embed.set_image(url=emoji.url)
                 a = await self.bot.say(embed=embed)
