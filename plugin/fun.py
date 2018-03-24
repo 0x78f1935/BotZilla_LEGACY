@@ -539,13 +539,13 @@ class Fun:
         else:
             now = datetime.datetime.now()
             until = now + datetime.timedelta(hours=1)
-            emoji = emoji.strip('<>').split(':')[-1]
+            emoji_stripped = emoji.strip('<>').split(':')[-1]
             try:
-                int(emoji)
-                emoji = discord.utils.get(self.bot.get_all_emojis(), id=emoji)
+                int(emoji_stripped)
+                emoji = discord.utils.get(self.bot.get_all_emojis(), id=emoji_stripped)
             except Exception as e:
                 pass
-            self.database.cur.execute("INSERT INTO botzilla.infect(ID, until, emoji) VALUES({}, '{}', '{}');".format(member.id, until, emoji))
+            self.database.cur.execute("INSERT INTO botzilla.infect(ID, until, emoji) VALUES({}, '{}', '{}');".format(member.id, until, emoji_stripped))
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")
             embed = discord.Embed(title=f'{ctx.message.author.name}',
