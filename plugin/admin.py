@@ -506,26 +506,20 @@ class AdminCommands:
         """
         Sebisauce,
         """
-        hrefs = []
-        sebisauce = []
-        url = 'https://github.com/AnakiKaiver297/sebisauce'
+        url = 'http://ikbengeslaagd.com/API/sebisauce.json'
 
         await self.bot.send_typing(ctx.message.channel)
 
         async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                html = await response.read()
+            async with session.get('http://ikbengeslaagd.com/API/sebisauce.json') as response:
+                source = await response.json(encoding='utf8')
 
-        bs = BeautifulSoup(html, 'lxml')
-        for link in bs.find_all('a'):
-            if link.has_attr('href'):
-                hrefs.append(link.attrs['href'])
+        total_sebi = 0
+        for key in dict.keys(source):
+            total_sebi += 1
 
-        for i in hrefs:
-            if 'sebisauce/blob/master' in str(i):
-                sebisauce.append(i)
+        im = random.randint(0, int(total_sebi) - 1)
 
-        im = 'https://github.com' + random.choice(sebisauce) + '?raw=true'
         embed = discord.Embed(title='\t', description='\t', color=0xf20006)
         embed.set_image(url=im)
         embed.set_footer(text="Data © Sebi\'s Bot Tutorial contributors, discord.gg/GWdhBSp")
