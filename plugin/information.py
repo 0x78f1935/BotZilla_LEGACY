@@ -520,7 +520,7 @@ class Information:
 
 
     @commands.command(pass_context=True, aliases=["phobia"])
-    async def fear(self, ctx, phobia:str = None):
+    async def fear(self, ctx, *, phobia:str = None):
         """
         Search for any fear, phobia
         No search for a phobia will result in a random pick
