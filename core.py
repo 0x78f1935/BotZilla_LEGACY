@@ -250,20 +250,24 @@ async def on_member_remove(member):
     # sebi server
     if member.server.id == '265828729970753537':
         welcome_channel = bot.get_channel('426860084161937410')
+        join_date = member.joined_at
         embed = discord.Embed(title='Bye!',
-                              description=f'{member.mention}, :wave:',
+                              description=f'{member.mention}, :wave:\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
                               colour=0xf20006)
         embed.set_thumbnail(url=member.avatar_url)
+        embed.set_footer(text=f'Bot: {member.bot}')
         last_message = await bot.send_message(welcome_channel, embed=embed)
         await bot.add_reaction(last_message, emojiUnicode['succes'])
 
     #BotZilla server
     if member.server.id == '406908371246252052':
         welcome_channel = bot.get_channel('406908371808157697')
+        join_date = member.joined_at
         embed = discord.Embed(title='Bye!',
-                              description=f'{member.mention}, :wave:',
+                              description=f'{member.mention}, :wave:\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
                               colour=0xf20006)
         embed.set_thumbnail(url=member.avatar_url)
+        embed.set_footer(text=f'Bot: {member.bot}')
         last_message = await bot.send_message(welcome_channel, embed=embed)
         await bot.add_reaction(last_message, emojiUnicode['succes'])
 
@@ -274,20 +278,24 @@ async def on_member_join(member):
     # sebi server
     if member.server.id == '265828729970753537':
         welcome_channel = bot.get_channel('426860084161937410')
+        join_date = member.joined_at
         embed = discord.Embed(title='Welcome!',
-                              description=f'{member.mention}, Enjoy your stay!',
+                              description=f'{member.mention}, Enjoy your stay!\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
                               colour=0xf20006)
         embed.set_thumbnail(url=member.avatar_url)
+        embed.set_footer(text=f'Bot: {member.bot}')
         last_message = await bot.send_message(welcome_channel, embed=embed)
         await bot.add_reaction(last_message, emojiUnicode['succes'])
 
     #BotZilla server
     if member.server.id == '406908371246252052':
         welcome_channel = bot.get_channel('406908371808157697')
+        join_date = member.joined_at
         embed = discord.Embed(title='Welcome!',
-                              description=f'{member.mention}, Enjoy your stay!',
+                              description=f'{member.mention}, Enjoy your stay!\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
                               colour=0xf20006)
         embed.set_thumbnail(url=member.avatar_url)
+        embed.set_footer(text=f'Bot: {member.bot}')
         last_message = await bot.send_message(welcome_channel, embed=embed)
         await bot.add_reaction(last_message, emojiUnicode['succes'])
 
