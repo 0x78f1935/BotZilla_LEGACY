@@ -278,7 +278,7 @@ class Images:
 
 
     @commands.command(pass_context=True ,aliases=["av"])
-    async def avatar(self, ctx, *, member:discord.Member=None):
+    async def avatar(self, ctx, *, member:discord.Member):
         """
         Shows a big avatar from a discord user
         Usage:
@@ -293,10 +293,8 @@ class Images:
           - !!av @puffdip
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!avatar <{member.name}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        if member:
-            user = await self.bot.get_user_info(member.id)
-        else:
-            user = await self.bot.get_user_info(ctx.message.author.id)
+        user = member or ctx.message.author
+        user = await self.bot.get_user_info(user.id)
 
         embed = discord.Embed(title='{}\'s avatar:'.format(user.name),
                               description='\t',
