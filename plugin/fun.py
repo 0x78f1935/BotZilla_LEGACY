@@ -548,8 +548,16 @@ class Fun:
             async with session.get(url) as response:
                 source = await response.read()
         art = str(source[559:1000], 'utf8')
+
+        url = 'https://cat-fact.herokuapp.com/facts/random?amount=1'
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                source = await response.json(encoding='utf8')
+        
+        fact = source['text']
+
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description='```{}```'.format(art),
+                              description='```{}```\n**Fact:** **`{}`**'.format(art, fact),
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
