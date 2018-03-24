@@ -146,17 +146,19 @@ class Images:
             await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
             return
         else:
-            emote = str(emoji).split(':')
+            await self.bot.send_typing(ctx.message.channel)
             try:
-                emote = ''.join(re.findall(r"[a-zA-Z_0-9]", emote[1]))
-                emoteO = discord.utils.get(ctx.message.server.emojis, name=emote)
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(emoteO.url, allow_redirects=True) as r:
-                        await self.bot.send_typing(ctx.message.channel)
-                        embed = discord.Embed(title='{}:'.format(ctx.message.author.name), description='\t', colour=0xf20006)
-                        embed.set_image(url=emoteO.url)
-                        a = await self.bot.say(embed=embed)
-                        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+                emoji_stripped = emoji.strip('<>').split(':')[-1]
+                try:
+                    int(emoji_stripped)
+                    emoji = discord.utils.get(self.bot.get_all_emojis(), id=emoji_stripped)
+                except Exception as e:
+                    pass
+
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name), description='\t', colour=0xf20006)
+                embed.set_image(url=emoji.url)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             except Exception as e:
                 embed = discord.Embed(title="{}".format(ctx.message.author.name),
                                       description="The emoji **`{}`** was not found\nPerhaps this is not a custom server emoji.".format(emote),
