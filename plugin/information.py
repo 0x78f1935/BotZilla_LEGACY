@@ -536,7 +536,7 @@ class Information:
           - !!phobia hippopotomonstrosesquipedaliophobia
 
         """
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!fear <{phobia}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'http://ikbengeslaagd.com/API/phobia.json'
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
