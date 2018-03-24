@@ -253,6 +253,7 @@ async def on_member_remove(member):
         embed = discord.Embed(title='Bye!',
                               description=f'{member.mention}, :wave:',
                               colour=0xf20006)
+        embed.set_thumbnail(url=member.avatar_url)
         last_message = await bot.send_message(welcome_channel, embed=embed)
         await bot.add_reaction(last_message, emojiUnicode['succes'])
 
@@ -262,6 +263,7 @@ async def on_member_remove(member):
         embed = discord.Embed(title='Bye!',
                               description=f'{member.mention}, :wave:',
                               colour=0xf20006)
+        embed.set_thumbnail(url=member.avatar_url)
         last_message = await bot.send_message(welcome_channel, embed=embed)
         await bot.add_reaction(last_message, emojiUnicode['succes'])
 
@@ -275,6 +277,7 @@ async def on_member_join(member):
         embed = discord.Embed(title='Welcome!',
                               description=f'{member.mention}, Enjoy your stay!',
                               colour=0xf20006)
+        embed.set_thumbnail(url=member.avatar_url)
         last_message = await bot.send_message(welcome_channel, embed=embed)
         await bot.add_reaction(last_message, emojiUnicode['succes'])
 
@@ -284,6 +287,7 @@ async def on_member_join(member):
         embed = discord.Embed(title='Welcome!',
                               description=f'{member.mention}, Enjoy your stay!',
                               colour=0xf20006)
+        embed.set_thumbnail(url=member.avatar_url)
         last_message = await bot.send_message(welcome_channel, embed=embed)
         await bot.add_reaction(last_message, emojiUnicode['succes'])
 
