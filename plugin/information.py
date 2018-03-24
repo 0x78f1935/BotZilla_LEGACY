@@ -532,19 +532,23 @@ class Information:
           - !!phobia hippopotomonstrosesquipedaliophobia
 
         """
-        if phobia is None:
-            embed = discord.Embed(title=f'{ctx.message.author.name}',
-                                  description=f'Are you afraid to read the help? **`{self.config["prefix"]}help fear`**',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-
         phobia = phobia.lower()
         url = 'http://ikbengeslaagd.com/API/phobia.json'
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 source = await response.json(encoding='utf8')
+
+        if phobia is None:
+            random_key = []
+            for key in dict(source).keys():
+                random_key.append(key)
+            phobia_key = random.sample(random_key)
+            embed = discord.Embed(title=f'{phobia_key}',
+                                  description=f'**`{source[phobia_key]}`**',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            return
 
         try:
             embed = discord.Embed(title=f'{phobia}',
