@@ -662,48 +662,6 @@ class Fun:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
-    @commands.command(pass_context=True, aliases=["phobia"])
-    async def fear(self, ctx, phobia:str = None):
-        """
-        Search for any fear, phobia
-        Alias : !!phobia
-        Usage:
-          - !!fear <fear>
-          - !!phobia <fear>
-        Example:
-          - !!fear hippopotomonstrosesquipedaliophobia
-          - !!phobia hippopotomonstrosesquipedaliophobia
-
-        """
-        if phobia is None:
-            embed = discord.Embed(title=f'{ctx.message.author.name}',
-                                  description=f'Are you afraid to read the help? **`{self.config["prefix"]}help fear`**',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-
-        phobia = phobia.lower()
-        url = 'http://ikbengeslaagd.com/JS/phobia.json'
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                source = await response.json(encoding='utf8')
-
-        try:
-            embed = discord.Embed(title=f'{phobia}',
-                                  description=f'**`{source[phobia]}`**',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
-        except Exception as e:
-            embed = discord.Embed(title=f'{ctx.message.author.name}',
-                                  description=f'I\'m sorry, but i could not find a phobia called:\n**`{phobia}`**',
-                                  colour=0xf20006)
-            a = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-            return
-
-
 def setup(bot):
     if ImgurClient is False:
         raise RuntimeError("You need the imgurpython module to use this.\n"
