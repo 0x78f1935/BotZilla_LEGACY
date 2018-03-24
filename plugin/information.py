@@ -547,7 +547,7 @@ class Information:
             for key in dict(source).keys():
                 random_key.append(key)
             phobia_key =  random.choice(random_key)
-            embed = discord.Embed(title=f'{phobia_key}',
+            embed = discord.Embed(title=f'{str(phobia_key).title()}',
                                   description=f'**`{source[phobia_key]}`**',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
@@ -557,7 +557,7 @@ class Information:
         phobia = phobia.lower()
 
         try:
-            embed = discord.Embed(title=f'{phobia}',
+            embed = discord.Embed(title=f'{str(phobia).title()}',
                                   description=f'**`{source[phobia]}`**',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
