@@ -532,7 +532,7 @@ class AdminCommands:
         await self.bot.say(embed=embed)
 
     @commands.command(pass_context=True)
-    async def sebiupdate(self, ctx):
+    async def updatesebi(self, ctx):
 
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!sebiupdate in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
