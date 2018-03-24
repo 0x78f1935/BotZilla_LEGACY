@@ -683,6 +683,7 @@ class Fun:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
+        phobia = phobia.lower()
         url = 'http://ikbengeslaagd.com/JS/phobia.json'
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
