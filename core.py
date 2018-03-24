@@ -285,7 +285,7 @@ async def on_member_join(member):
         emojis = " - ".join(a)
         join_date = member.joined_at
         embed = discord.Embed(title='Welcome!',
-                              description=f'{member.mention}, Enjoy your stay!\nAll emoji\'s on this server:{emojis}\n\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
+                              description=f'{member.mention}, Enjoy your stay!\nAll emoji\'s on this server:\n{emojis}\n\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
                               colour=0xf20006)
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f'Bot: {member.bot}')
@@ -302,7 +302,7 @@ async def on_member_join(member):
         emojis = " - ".join(a)
         join_date = member.joined_at
         embed = discord.Embed(title='Welcome!',
-                              description=f'{member.mention}, Enjoy your stay!\nAll emoji\'s on this server:{emojis}\n\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
+                              description=f'{member.mention}, Enjoy your stay!\nAll emoji\'s on this server:\n{emojis}\n\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
                               colour=0xf20006)
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f'Bot: {member.bot}')
