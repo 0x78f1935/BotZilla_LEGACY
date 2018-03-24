@@ -251,14 +251,20 @@ async def on_member_join(member):
     # sebi server
     if member.server.id == '265828729970753537':
         welcome_channel = bot.get_channel('426860084161937410')
-        await bot.send_message(welcome_channel, f'Welcome {member.name}')
-        print(welcome_channel.name)
+        embed = discord.Embed(title='Welcome!',
+                              description=f'{member.mention}, Enjoy your stay!',
+                              colour=0xf20006)
+        last_message = await bot.send_message(welcome_channel, embed=embed)
+        await bot.add_reaction(last_message, emojiUnicode['succes'])
 
-    #test server
-    if member.server.id == '424223060107853825':
-        welcome_channel = bot.get_channel('426870698737139743')
-        await bot.send_message(welcome_channel, f'Welcome {member.name}')
-        print(welcome_channel.name)
+    #BotZilla server
+    if member.server.id == '406908371246252052':
+        welcome_channel = bot.get_channel('406908371808157697')
+        embed = discord.Embed(title='Welcome!',
+                              description=f'{member.mention}, Enjoy your stay!',
+                              colour=0xf20006)
+        last_message = await bot.send_message(welcome_channel, embed=embed)
+        await bot.add_reaction(last_message, emojiUnicode['succes'])
 
     try:
         pattern = re.compile('[\W_]+')
