@@ -523,8 +523,12 @@ class Information:
     async def fear(self, ctx, phobia:str = None):
         """
         Search for any fear, phobia
+        No search for a phobia will result in a random pick
+
         Alias : !!phobia
+
         Usage:
+          - !!fear
           - !!fear <fear>
           - !!phobia <fear>
         Example:
