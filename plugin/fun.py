@@ -278,7 +278,7 @@ class Images:
 
 
     @commands.command(pass_context=True ,aliases=["av"])
-    async def avatar(self, ctx, *, member:discord.Member):
+    async def avatar(self, ctx, *, member:discord.Member=None):
         """
         Shows a big avatar from a discord user
         Usage:
