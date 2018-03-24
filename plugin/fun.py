@@ -509,7 +509,6 @@ class Fun:
         Each infect has a duration of one hour.
         To get healed again check out heal for more info.
           - !!help heal
-        Works only with default emojis. No customs
         Usage:
           - !!infect <username | ping | id> <emoji>
         Example:
