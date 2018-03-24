@@ -294,7 +294,6 @@ class Images:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!avatar <{member.name}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         user = member or ctx.message.author
-        user = await self.bot.get_user_info(user.id)
 
         embed = discord.Embed(title='{}\'s avatar:'.format(user.name),
                               description='\t',
