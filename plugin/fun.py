@@ -540,6 +540,11 @@ class Fun:
             now = datetime.datetime.now()
             until = now + datetime.timedelta(hours=1)
             emoji = emoji.strip('<>').split(':')[-1]
+            try:
+                int(emoji)
+                emoji = discord.utils.get(self.bot.get_all_emojis(), id=emoji)
+            except Exception as e:
+                pass
             self.database.cur.execute("INSERT INTO botzilla.infect(ID, until, emoji) VALUES({}, '{}', '{}');".format(member.id, until, emoji))
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")

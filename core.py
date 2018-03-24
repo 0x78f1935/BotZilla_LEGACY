@@ -406,6 +406,7 @@ async def on_message(message):
         if now < infect[1]:
             try:
                 try:
+                    int(infect[2])
                     infected_emoji = discord.utils.get(bot.get_all_emojis(), id=infect[2])
                 except Exception as e:
                     infected_emoji = infect[2]
