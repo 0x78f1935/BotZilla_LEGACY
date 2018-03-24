@@ -577,8 +577,7 @@ class AdminCommands:
             fp.write(api)
 
         ftp.storbinary('STOR ' + filename, open(filename, 'rb'))
-        cur_dir = ftp.retrlines('LIST')
-        ftp.quit()
+        cur_dir = str(ftp.retrlines('LIST'))
 
         embed = discord.Embed(title='Sebisauce Collection is up-to-date',
                               description=f'**```py\n{cur_dir}\n```**',
