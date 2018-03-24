@@ -6,6 +6,7 @@ import traceback
 import aiohttp
 import datetime
 from bs4 import BeautifulSoup
+from ftplib import FTP
 import random
 try:
     from plugin.database import Database
@@ -23,6 +24,7 @@ class AdminCommands:
         self.exchange = self.tmp_config['exchange']
         self.botzillaChannels = self.tmp_config['channels']
         self.owner_list = self.config['owner-id']
+        self.ftp_conf = self.tmp_config['FTP']
         self.blue_A = '\U0001f1e6'
         self.red_B = '\U0001f171'
         self.blue_I = '\U0001f1ee'
@@ -499,7 +501,6 @@ class AdminCommands:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-
     @commands.command(pass_context=True)
     async def sebisauce(self, ctx):
         """
@@ -529,6 +530,62 @@ class AdminCommands:
         embed.set_image(url=im)
         embed.set_footer(text="Data © Sebi\'s Bot Tutorial contributors, discord.gg/GWdhBSp")
         await self.bot.say(embed=embed)
+
+    @commands.command(pass_context=True)
+    async def sebiupdate(self, ctx):
+
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!sebiupdate in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+
+        if ctx.message.author.id not in self.owner_list:
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='Only the owner of this bot can use this command',
+                                  colour=0xf20006)
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['warning'])
+            return
+
+        hrefs = []
+        sebisauce = []
+        url = 'https://github.com/AnakiKaiver297/sebisauce'
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                html = await response.read()
+
+        bs = BeautifulSoup(html, 'lxml')
+        for link in bs.find_all('a'):
+            if link.has_attr('href'):
+                hrefs.append(link.attrs['href'])
+
+        for i in hrefs:
+            if 'sebisauce/blob/master' in str(i):
+                im = 'https://github.com' + i + '?raw=true'
+                sebisauce.append(im)
+        api = {}
+        count = 0
+        for i in sebisauce:
+            api[count] = i
+            count += 1
+        api = json.dumps(api, indent=2)
+
+        ftp = FTP(self.ftp_conf['ip'])
+        ftp.login(user=self.ftp_conf['user'], passwd=self.ftp_conf['pass'])
+        ftp.cwd('/official website/GUI/Pages/API/')
+
+        filename = 'export/sebisauce.json'
+        with open(filename, 'w') as fp:
+            fp.write(api)
+
+        ftp.storbinary('STOR ' + filename, open(filename, 'rb'))
+        cur_dir = ftp.retrlines('LIST')
+        ftp.quit()
+
+        embed = discord.Embed(title='Sebisauce Collection is up-to-date',
+                              description=f'**```py\n{cur_dir}\n```**',
+                              colour=0xf20006)
+        embed.set_footer(text='http://ikbengeslaagd.com/API/sebisauce.json')
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
 
 def setup(bot):
