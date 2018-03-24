@@ -574,7 +574,7 @@ class AdminCommands:
         print('login succes')
         ftp.cwd('/official website/GUI/Pages/API/')
         print('cd found')
-        filename = 'export/sebisauce.json'
+        filename = 'sebisauce.json'
         with open(filename, 'w') as fp:
             fp.write(api)
         print('file created')
