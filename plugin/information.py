@@ -541,7 +541,7 @@ class Information:
             return
 
         phobia = phobia.lower()
-        url = 'http://ikbengeslaagd.com/JS/phobia.json'
+        url = 'http://ikbengeslaagd.com/API/phobia.json'
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 source = await response.json(encoding='utf8')
