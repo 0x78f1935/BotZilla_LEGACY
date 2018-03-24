@@ -680,7 +680,7 @@ class Fun:
                 source = await response.json(encoding='utf8')
 
         embed = discord.Embed(title=f'{ctx.message.author.name}',
-                              description=f'**`{source[0]}`**\n~~**=======================**~~\n**`{phobia}`**',
+                              description=f'**`{phobia}`**\n~~**=======================**~~\n**`{source[phobia]}`**',
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
