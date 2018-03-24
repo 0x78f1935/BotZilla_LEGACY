@@ -569,22 +569,24 @@ class AdminCommands:
         api = json.dumps(api, indent=2)
 
         ftp = FTP(self.ftp_conf['ip'])
-        print(ftp)
         ftp.login(user=self.ftp_conf['user'], passwd=self.ftp_conf['pass'])
-        print('login succes')
         ftp.cwd('/official website/GUI/Pages/API/')
-        print('cd found')
         filename = 'sebisauce.json'
         with open(filename, 'w') as fp:
             fp.write(api)
-        print('file created')
 
         ftp.storbinary('STOR ' + filename, open(filename, 'rb'))
-        print('file stored')
-        cur_dir = str(ftp.retrlines('LIST').read())
-        print(cur_dir)
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get('http://ikbengeslaagd.com/API/sebisauce.json') as response:
+                source = await response.json(encoding='utf8')
+
+        total_sebi = 0
+        for key in dict.keys(source):
+            total_sebi += 1
+
         embed = discord.Embed(title='Sebisauce Collection is up-to-date',
-                              description=f'**```py\n{cur_dir}\n```**',
+                              description=f'Currently there are **`{total_sebi}`** entities',
                               colour=0xf20006)
         embed.set_footer(text='http://ikbengeslaagd.com/API/sebisauce.json')
         a = await self.bot.say(embed=embed)
