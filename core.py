@@ -246,6 +246,27 @@ async def on_ready():
 
 
 @bot.event
+async def on_member_remove(member):
+    # sebi server
+    if member.server.id == '265828729970753537':
+        welcome_channel = bot.get_channel('426860084161937410')
+        embed = discord.Embed(title='Bye!',
+                              description=f'{member.mention}, :wave:',
+                              colour=0xf20006)
+        last_message = await bot.send_message(welcome_channel, embed=embed)
+        await bot.add_reaction(last_message, emojiUnicode['succes'])
+
+    #BotZilla server
+    if member.server.id == '406908371246252052':
+        welcome_channel = bot.get_channel('406908371808157697')
+        embed = discord.Embed(title='Bye!',
+                              description=f'{member.mention}, :wave:',
+                              colour=0xf20006)
+        last_message = await bot.send_message(welcome_channel, embed=embed)
+        await bot.add_reaction(last_message, emojiUnicode['succes'])
+
+
+@bot.event
 async def on_member_join(member):
     print('MEMBER JOINED {} | {} Joined: {}'.format(member.name, member.id, member.server))
     # sebi server
