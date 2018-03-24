@@ -662,6 +662,30 @@ class Fun:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
+    @commands.command(pass_context=True, aliases=["phobia"])
+    async def fear(self, ctx, phobia:str = None):
+        """
+        Search for any fear, phobia
+        Usage:
+          - !!fear <fear>
+          - !!phobia <fear>
+        Example:
+          - !!fear hippopotomonstrosesquipedaliophobia
+          - !!phobia hippopotomonstrosesquipedaliophobia
+
+        """
+        url = 'http://ikbengeslaagd.com/JS/phobia.json'
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                source = await response.json(encoding='utf8')
+
+        embed = discord.Embed(title=f'{ctx.message.author.name}',
+                              description=f'**`{source[0]}`**\n~~**=======================**~~\n**`{phobia}`**',
+                              colour=0xf20006)
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+
 def setup(bot):
     if ImgurClient is False:
         raise RuntimeError("You need the imgurpython module to use this.\n"
