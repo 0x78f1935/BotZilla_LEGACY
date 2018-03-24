@@ -581,7 +581,7 @@ class AdminCommands:
 
         ftp.storbinary('STOR ' + filename, open(filename, 'rb'))
         print('file stored')
-        cur_dir = str(ftp.dir())
+        cur_dir = str(ftp.retrlines('LIST'))
         print(cur_dir)
         embed = discord.Embed(title='Sebisauce Collection is up-to-date',
                               description=f'**```py\n{cur_dir}\n```**',
