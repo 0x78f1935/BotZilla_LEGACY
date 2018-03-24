@@ -519,7 +519,7 @@ class AdminCommands:
         im = random.randint(0, int(total_sebi) - 1)
 
         embed = discord.Embed(title='\t', description='\t', color=0xf20006)
-        embed.set_image(url=source[im])
+        embed.set_image(url=source[str(im)])
         embed.set_footer(text="Data © Sebi\'s Bot Tutorial contributors, discord.gg/GWdhBSp")
         await self.bot.say(embed=embed)
 
