@@ -292,10 +292,9 @@ class Images:
         Example:
           - !!av @puffdip
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!avatar <{member.name}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         user = member or ctx.message.author
-        await self.bot.say(user.avatar_url)
-
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!avatar <{member.name}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        
         embed = discord.Embed(title='{}\'s avatar:'.format(user.name),
                               description='\t',
                               colour=0xf20006)
