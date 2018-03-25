@@ -313,9 +313,11 @@ class Help:
 
         print(paginator)
         page = 1
+        print('*******************************************************')
         for i in range(len(paginator.keys())):
-            new_page, reaction = await wait_for_reaction(start, generate_pages[page])
-            await self.bot.say(reaction.reaction.emoji)
+            new_page, reaction = await wait_for_reaction(start, paginator[page])
+            emoji_ascii = ascii(reaction.reaction.emoji)
+            await self.bot.say(f'{reaction.reaction.emoji} : {emoji_ascii}')
             page += 1
 
 def setup(bot):
