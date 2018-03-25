@@ -274,7 +274,7 @@ class Help:
                                 value=get_short_desc(i),
                                 inline=False)
                 pages.append(new_page)
-
+            print(pages)
             return pages
 
         def generate_pages():
