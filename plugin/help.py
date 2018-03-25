@@ -250,7 +250,7 @@ class Help:
         embed_page1 = discord.Embed(title='\t',
                                     description='\t',
                                     colour=0xf20006)
-        embed_page1.add_field(name=get_command('8ball')[0], value=get_short_desc('8ball'))
+        embed_page1.add_field(name=str(get_command('8ball')[0]), value=str(get_short_desc('8ball')))
 
 
         await self.bot.add_reaction(page, self.emoji_start)
