@@ -304,6 +304,7 @@ class Help:
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
 
+        # remove duplicates
         page = 0
         paginator = {}
         for key, value in generate_pages_result.items():
@@ -312,8 +313,9 @@ class Help:
 
         print(paginator)
         page = 1
+
         for i in range(len(paginator.keys())):
-            new_page, reaction = await wait_for_reaction(start, paginator[page])
+            new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
             emoji_ascii = ascii(reaction.reaction.emoji)
             await self.bot.say(f'{reaction.reaction.emoji} : {emoji_ascii}')
             page += 1
