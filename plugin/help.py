@@ -348,12 +348,12 @@ class Help:
                     print(page)
 
             if emoji_ascii == ascii(self.emoji_oneahead_txt):
-                if page_number >= 0 and page_number <= int(lenght_help - 1):
+                if page_number >= 0 and page_number <= lenght_help:
                     page_number = page_number + 1
                     print(page_number)
 
             if emoji_ascii == ascii(self.emoji_end_text):
-                if page_number <= int(lenght_help - 1):
+                if page_number <= lenght_help:
                     page_number = lenght_help
                     print(page_number)
 
