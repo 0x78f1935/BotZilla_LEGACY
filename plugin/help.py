@@ -338,7 +338,9 @@ class Help:
         await self.bot.add_reaction(start, self.emoji_end)
 
         await asyncio.sleep(0.6)
-        start.set_footer(text='Ready...')
+
+        page0.set_footer(text='Ready...')
+        await self.bot.edit_message(start, embed=page0)
 
         print('Reactions added')
 
