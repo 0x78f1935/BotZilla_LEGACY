@@ -341,7 +341,7 @@ class Help:
 
         print(f'QUery lenght: {lenght_help}')
 
-        for i in range(len(paginator.keys()) - 1):
+        for i in range(100):
             try:
                 reaction = await wait_for_reaction(start)
 
