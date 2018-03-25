@@ -316,21 +316,16 @@ class Help:
 
         for i in range(len(paginator.keys())):
             new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
-            if page <= 1:
-                await self.bot.remove_reaction(message=new_page, emoji=self.emoji_start)
-            if page >= 2 and page <= (lenght_help-2):
-                await self.bot.add_reaction(new_page, self.emoji_start)
-                await self.bot.add_reaction(new_page, self.emoji_oneback)
-                await self.bot.add_reaction(new_page, self.emoji_oneahead)
-                await self.bot.add_reaction(new_page, self.emoji_end)
-            if page >= (lenght_help-1):
-                await self.bot.remove_reaction(message=new_page, emoji=self.emoji_end)
-
-
-
             emoji_ascii = ascii(reaction.reaction.emoji)
+            if emoji_ascii == self.emoji_start:
+                page = 0
+            elif emoji_ascii == self.emoji_oneback:
+                page -= 1
+            elif emoji_ascii == self.emoji_oneahead:
+                page += 1
+            elif emoji_ascii == self.emoji_end:
+                page = lenght_help
             await self.bot.say(f'{reaction.reaction.emoji} : {emoji_ascii}')
-            page += 1
 
 def setup(bot):
     bot.add_cog(Help(bot))
