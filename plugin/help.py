@@ -245,7 +245,7 @@ class Help:
                 short_desc = f'**```\n{list_desc[0]}\n{list_desc[1]}```**'
             except Exception as e:
                 short_desc = f'**```\n{list_desc[0]}\n```**'
-            print(f'{short_desc} done {cog_name}')
+            print(f'{short_desc} done {command_object}')
             return short_desc
 
         def embed_help(content, reaction):
