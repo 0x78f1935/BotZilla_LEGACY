@@ -319,10 +319,10 @@ class Help:
             if page <= 1:
                 await self.bot.remove_reaction(message=new_page, emoji=self.emoji_start)
             if page >= 2 and page <= (lenght_help-2):
-                await self.bot.add_reaction(start, self.emoji_start)
-                await self.bot.add_reaction(start, self.emoji_oneback)
-                await self.bot.add_reaction(start, self.emoji_oneahead)
-                await self.bot.add_reaction(start, self.emoji_end)
+                await self.bot.add_reaction(new_page, self.emoji_start)
+                await self.bot.add_reaction(new_page, self.emoji_oneback)
+                await self.bot.add_reaction(new_page, self.emoji_oneahead)
+                await self.bot.add_reaction(new_page, self.emoji_end)
             if page >= (lenght_help-1):
                 await self.bot.remove_reaction(message=new_page, emoji=self.emoji_end)
 
