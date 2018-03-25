@@ -268,13 +268,14 @@ class Help:
                                      description=f'Category: **`{cog}`**',
                                      colour=0xf20006)
             split = lambda x, n: x if not x else [x[:n]] + [split([] if not -(len(x) - n) else x[-(len(x) - n):], n)][0]
-            list_list = split(data, 2)
-            for item in list_list[0]:
+            page_number = 0
+            for item in split(data, 2)[page_number]:
                 new_page.add_field(name=f"{self.config['prefix']}{item[0]}",
                                 value=get_short_desc(item),
                                 inline=False)
                 pages.append(new_page)
-                list_list.remove([0])
+                page_number += 1
+
             print(pages)
             return pages
 
