@@ -267,7 +267,7 @@ class Help:
             pages = []
             new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                                      colour=0xf20006)
-            split = lambda x, n: x if not x else [x[:n]] + [split([] if not -(len(x) - n) else x[-(len(x) - n):], n)][0]
+            # split = lambda x, n: x if not x else [x[:n]] + [split([] if not -(len(x) - n) else x[-(len(x) - n):], n)][0]
 
             # self.database.cur.execute("select count(cog) from botzilla.help where cog = '{}';".format(cog))
             # count_cog = self.database.cur.fetchone()
@@ -293,6 +293,7 @@ class Help:
                                 value=f'***`{get_short_desc(item)}`***',
                                 inline=False)
                 pages.append(new_page)
+                print(item)
             print(pages)
             return pages
 
