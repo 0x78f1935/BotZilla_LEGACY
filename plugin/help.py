@@ -255,7 +255,8 @@ class Help:
                 short_desc = list_desc[0]
             return short_desc
 
-        async def no_other_users(reaction):
+        async def wait_for_reaction(message):
+            reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
             try:
                 p = await self.bot.get_reaction_users(reaction=reaction.reaction, limit=1, after=self.bot.user)
                 for i in p:
@@ -264,10 +265,6 @@ class Help:
                         await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=i, message=start)
             except Exception as e:
                 await self.bot.say(e.args)
-
-        async def wait_for_reaction(message):
-            reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
-            await no_other_users(reaction)
             await wait_for_reaction(message)
 
         def create_new_page(cog:str):
