@@ -238,7 +238,7 @@ class Help:
             split_lines = command_desc.splitlines(keepends=True)
             list_desc = [i.strip() for i in split_lines if i != '\n']
             print(list_desc)
-            short_desc = f'{list_desc[0]}\n{list_desc[1]}'
+            short_desc = f'\t{list_desc[0]}\n\t{list_desc[1]}'
             command_dict = {command_object[0] : short_desc}
             return command_dict
 
