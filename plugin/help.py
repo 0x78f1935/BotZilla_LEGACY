@@ -365,10 +365,13 @@ class Help:
                     print(page_number)
 
             embed = paginator[str(page_number)]
-            embed.set_footer(text=f'PAGE: {page_number}')
+            embed.set_footer(text=f'PAGE: {page_number} / {len(paginator.keys())}')
             await self.bot.edit_message(start, embed=embed)
             try:
-                await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=ctx.message.author, message=start)
+                p = await bot.get_reaction_users(reaction=reaction.reaction, limit=100)
+                for user in p:
+                    if user.id != '397149515192205324':
+                        await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=user, message=start)
             except:
                 pass # can't remove it so don't bother doing so
             # await self.bot.say(f'PAGE: {page_number}')
