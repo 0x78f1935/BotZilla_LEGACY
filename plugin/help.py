@@ -244,8 +244,7 @@ class Help:
             try:
                 short_desc = f'**```\n{list_desc[0]}\n{list_desc[1]}```**'
             except Exception as e:
-                print(e.args)
-                short_desc = f'**```\n{list_desc[0]}\n```**'
+                short_desc = f'**```\n{split_lines}\n```**'
             print(f'{short_desc} done {command_object}')
             return short_desc
 
