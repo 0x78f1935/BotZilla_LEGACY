@@ -285,6 +285,9 @@ class Help:
                     new_list = split(data, 3)[page_number]
                 page_number += 1
 
+            new_list = list(set(new_list))
+            new_list = sorted(new_list)
+
             for item in new_list:
                 new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
                                 value=f'***`{get_short_desc(item)}`***',
