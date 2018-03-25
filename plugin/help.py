@@ -342,9 +342,10 @@ class Help:
         print(f'QUery lenght: {lenght_help}')
 
         for i in range(100):
-
-            reaction, user = await self.bot.wait_for('reaction_add', timeout=120.0)
-            #reaction = await wait_for_reaction(start)
+            try:
+                reaction = await wait_for_reaction(start)
+            except Exception as e:
+                print(e.args)
 
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start):
                 if page_number >= 1 and page_number <= lenght_help:
@@ -368,9 +369,9 @@ class Help:
             await self.bot.edit_message(start, embed=embed)
             await self.bot.clear_reactions(start)
             try:
-                await ctx.message.remove_reaction(reaction, user)
+                await self.bot.remove_reaction(start)
             except:
-                pass
+                pass # can't remove it so don't bother doing so
             # await self.bot.say(f'PAGE: {page_number}')
             # await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
 
