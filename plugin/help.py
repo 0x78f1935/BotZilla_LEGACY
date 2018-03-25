@@ -312,6 +312,50 @@ class Help:
                             value=get_short_desc(i),
                             inline=False)
 
+        # Music
+        Music = get_commands_by_cog('Music')
+        Music = sorted(Music)
+        page5 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                              description='Category: **`Music`**',
+                              colour=0xf20006)
+        for i in Music:
+            page5.add_field(name=f"{self.config['prefix']}{i[0]}",
+                            value=get_short_desc(i),
+                            inline=False)
+
+        # Utils
+        Utils = get_commands_by_cog('Utils')
+        Utils = sorted(Utils)
+        page6 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                              description='Category: **`Utils`**',
+                              colour=0xf20006)
+        for i in Utils:
+            page6.add_field(name=f"{self.config['prefix']}{i[0]}",
+                            value=get_short_desc(i),
+                            inline=False)
+
+        # Images
+        Images = get_commands_by_cog('Images')
+        Images = sorted(Images)
+        page7 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                              description='Category: **`Images`**',
+                              colour=0xf20006)
+        for i in Images:
+            page7.add_field(name=f"{self.config['prefix']}{i[0]}",
+                            value=get_short_desc(i),
+                            inline=False)
+
+        # Exchange
+        Exchange = get_commands_by_cog('Exchange')
+        Exchange = sorted(Exchange)
+        page8 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                              description='Category: **`Exchange`**',
+                              colour=0xf20006)
+        for i in Exchange:
+            page8.add_field(name=f"{self.config['prefix']}{i[0]}",
+                            value=get_short_desc(i),
+                            inline=False)
+
         await self.bot.add_reaction(start, self.emoji_start)
         await self.bot.add_reaction(start, self.emoji_five_back)
         await self.bot.add_reaction(start, self.emoji_oneback)
@@ -330,7 +374,14 @@ class Help:
         await self.bot.say(reaction.reaction.emoji)
         new_page, reaction = await wait_for_reaction(new_page, page4)
         await self.bot.say(reaction.reaction.emoji)
-
+        new_page, reaction = await wait_for_reaction(new_page, page5)
+        await self.bot.say(reaction.reaction.emoji)
+        new_page, reaction = await wait_for_reaction(new_page, page6)
+        await self.bot.say(reaction.reaction.emoji)
+        new_page, reaction = await wait_for_reaction(new_page, page7)
+        await self.bot.say(reaction.reaction.emoji)
+        new_page, reaction = await wait_for_reaction(new_page, page8)
+        await self.bot.say(reaction.reaction.emoji)
 
 
 def setup(bot):
