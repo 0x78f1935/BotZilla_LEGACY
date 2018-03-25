@@ -275,6 +275,7 @@ class Help:
                                 inline=False)
                 pages.append(new_page)
                 list_list.remove([0])
+            print(pages)
             return pages
 
         def generate_pages():
