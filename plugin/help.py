@@ -241,7 +241,7 @@ class Help:
             command_desc = command_object[2]
             split_lines = command_desc.splitlines(keepends=True)
             list_desc = [i.strip() for i in split_lines if i != '\n']
-            print(list_desc)
+            print(list_desc[0])
             try:
                 short_desc = f'{list_desc[0]}\n{list_desc[1]}'
             except Exception as e:
