@@ -324,6 +324,7 @@ class Help:
         lenght_help = int(len(paginator.keys()))
 
         new_page, reaction = await wait_for_reaction(start, paginator[page])
+        await self.bot.say(reaction.reaction.emoji)
         for i in range(len(paginator.keys())):
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start_txt):
                 if page == 0:
