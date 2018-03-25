@@ -402,8 +402,9 @@ class Help:
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
 
-        new_page, reaction = await wait_for_reaction(start, generate_pages['1'])
-        await self.bot.say(reaction.reaction.emoji)
+        for t in generate_pages.keys():
+            new_page, reaction = await wait_for_reaction(start, generate_pages[t])
+            await self.bot.say(reaction.reaction.emoji)
         # new_page, reaction = await wait_for_reaction(new_page, page2)
         # await self.bot.say(reaction.reaction.emoji)
         # new_page, reaction = await wait_for_reaction(new_page, page3)
