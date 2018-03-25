@@ -307,7 +307,7 @@ class Help:
 
         page = 0
         paginator = {}
-        for t in range(generate_pages.keys()):
+        for t in range(len(generate_pages.keys())):
             for item in generate_pages[t]:
                 paginator[page] = item
                 page += 1
