@@ -270,6 +270,8 @@ class Help:
         page1 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                               description='This command is under construction and may not work correctly',
                               colour=0xf20006)
+
+        Games = sorted(Games)
         for i in Games:
             print(i)
             page1.add_field(name=f"{self.config['prefix']}{i[0]}",
