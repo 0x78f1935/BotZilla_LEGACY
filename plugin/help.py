@@ -286,7 +286,7 @@ class Help:
                 page_number += 1
                 for item in new_list:
                     new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
-                                    value=get_short_desc(item),
+                                    value=f'***{get_short_desc(item)}***',
                                     inline=False)
                     pages.append(new_page)
             print(pages)
