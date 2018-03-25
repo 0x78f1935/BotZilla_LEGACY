@@ -606,7 +606,7 @@ class Fun:
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             except Exception as e:
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description=f'Could not find a breed called **`{breed}`**',
+                                      description=f'Could not find a breed called **`{breed}`**\nIf you are stuck use **`{self.config["prefix"]}help dog`**',
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['error'])
