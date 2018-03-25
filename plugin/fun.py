@@ -539,6 +539,8 @@ class Fun:
     async def meow(self, ctx):
         """
         Spawn a kitty cat!
+        This kitty cat tells you facts about cats
+
         Usage:
           - !!meow
         """
