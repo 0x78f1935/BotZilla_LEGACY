@@ -323,7 +323,7 @@ class Help:
             page += 1
 
         page = 0 # page 0 == introduction
-        lenght_help = int(len(paginator.keys()))
+        lenght_help = int(len(paginator.keys()) - 1)
 
         print(f'QUery lenght: {lenght_help}')
 
@@ -348,13 +348,13 @@ class Help:
 
             elif emoji_ascii == ascii(self.emoji_oneback_txt):
                 if page != 0:
-                    page -= 1
+                    page = page - 1
                     print(page)
                     print(paginator[str(page)])
 
             elif emoji_ascii == ascii(self.emoji_oneahead_txt):
                 if page != lenght_help:
-                    page += 1
+                    page = page + 1
                     print(page)
                     print(paginator[str(page)])
 
