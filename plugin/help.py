@@ -340,28 +340,28 @@ class Help:
         print(emoji_ascii == ascii(self.emoji_end))
 
         for i in range(len(paginator.keys())):
-            if emoji_ascii == ascii(self.emoji_start_txt):
+            if emoji_ascii == self.emoji_start:
                 if page != 0:
                     page = 0
                     print(page)
                     print(paginator[str(page)])
                     new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
 
-            elif emoji_ascii == ascii(self.emoji_oneback_txt):
+            elif emoji_ascii == self.emoji_oneback:
                 if page != 0:
                     page -= 1
                     print(page)
                     print(paginator[str(page)])
                     new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
 
-            elif emoji_ascii == ascii(self.emoji_oneahead_txt):
+            elif emoji_ascii == self.emoji_oneahead:
                 if page != lenght_help:
                     page += 1
                     print(page)
                     print(paginator[str(page)])
                     new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
 
-            elif emoji_ascii == ascii(self.emoji_end_txt):
+            elif emoji_ascii == self.emoji_end_txt:
                 if page != lenght_help:
                     page = lenght_help
                     print(page)
