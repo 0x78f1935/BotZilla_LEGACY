@@ -274,7 +274,7 @@ class Help:
             return reaction
 
         def create_new_page(cog:str):
-            print('New_page Function')
+            # print('New_page Function')
             data = get_commands_by_cog(cog)
             data = sorted(data)
             pages = []
@@ -286,39 +286,39 @@ class Help:
                                 value=f'***`{get_short_desc(item)}`***\n**Name:** ***`{item[0]}`***\n-',
                                 inline=False)
                 pages.append(new_page)
-            print('DONE New_page Function')
+            # print('DONE New_page Function')
             return pages
 
         def generate_pages():
-            print('generate_pages Function')
+            # print('generate_pages Function')
             all = []
-            print('all')
+            # print('all')
             all.append(create_new_page('Games'))
-            print('Games DONE')
+            # print('Games DONE')
             all.append(create_new_page('GameStats'))
-            print('GameStats DONE')
+            # print('GameStats DONE')
             all.append(create_new_page('Fun'))
-            print('Fun DONE')
+            # print('Fun DONE')
             all.append(create_new_page('Music'))
-            print('Music DONE')
+             #print('Music DONE')
             all.append(create_new_page('Utils'))
-            print('Utils DONE')
+            # print('Utils DONE')
             all.append(create_new_page('Images'))
-            print('Images DONE')
+            # print('Images DONE')
             all.append(create_new_page('Exchange'))
-            print('Exchange DONE')
+            # print('Exchange DONE')
 
             paginator = {}
             page_number = 0
             for item in all:
                 page_number += 1
                 paginator[str(page_number)] = item
-            print('DONE generate_pages Function')
+            # print('DONE generate_pages Function')
             return paginator
 
         #test
 
-        print('Function loaded in')
+        # print('Function loaded in')
 
         # Pages
         page0 = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
@@ -342,7 +342,7 @@ class Help:
         page0.set_footer(text='Ready...')
         await self.bot.edit_message(start, embed=page0)
 
-        print('Reactions added')
+        # print('Reactions added')
 
         # remove duplicates
         page = 0
@@ -355,39 +355,39 @@ class Help:
         page_number = 1
         lenght_help = int(len(paginator.keys()) - 1)
 
-        print(f'QUery lenght: {lenght_help}')
+        # print(f'QUery lenght: {lenght_help}')
 
         for i in range(100):
             reaction = await wait_for_reaction(start)
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = 0
-                    print(page_number)
+                    # print(page_number)
 
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_back):
                 if page_number >= 5 and page_number <= lenght_help:
                     page_number = page_number - 5
-                    print(page)
+                    # print(page)
 
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = page_number - 1
-                    print(page)
+                    # print(page)
 
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead):
                 if page_number >= 0 and page_number <= lenght_help - 1:
                     page_number = page_number + 1
-                    print(page_number)
+                    # print(page_number)
 
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_ahead):
                 if page_number >= 0 and page_number <= lenght_help - 5:
                     page_number = page_number + 5
-                    print(page)
+                    # print(page)
 
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end):
                 if page_number <= lenght_help:
                     page_number = lenght_help
-                    print(page_number)
+                    # print(page_number)
 
             embed = paginator[str(page_number)]
             embed.set_footer(text=f'Page: {int(page_number + 1)}/{int(len(paginator.keys()))}')
