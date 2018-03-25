@@ -226,13 +226,13 @@ class Help:
         self.emoji_end = '\u23ed'
 
         def get_games():
-            self.database.cur.execute("select name from botzilla.help where cog = 'Games';")
+            self.database.cur.execute("select * from botzilla.help where cog = 'Games';")
             Games_cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             Games_commands = []
             Games_commands.append('**------**')
             for i in Games_cog:
-                i = '-`{}{}`'.format(self.config['prefix'], i[0])
+                i = '-`{}{}`\n\t`{}`'.format(self.config['prefix'], i[0], i[2])
                 Games_commands.append(i)
             Games_commands.sort()
             Games_commands.append('**------**')
@@ -240,7 +240,7 @@ class Help:
             return Games_name
 
         def get_GameStats():
-            self.database.cur.execute("select name from botzilla.help where cog = 'GameStats';")
+            self.database.cur.execute("select * from botzilla.help where cog = 'GameStats';")
             GameStats_cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             GameStats_commands = []
@@ -254,7 +254,7 @@ class Help:
             return GameStats_name
 
         def get_fun():
-            self.database.cur.execute("select name from botzilla.help where cog = 'Fun';")
+            self.database.cur.execute("select * from botzilla.help where cog = 'Fun';")
             Fun_cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             Fun_commands = []
@@ -268,7 +268,7 @@ class Help:
             return Fun_name
 
         def get_information():
-            self.database.cur.execute("select name from botzilla.help where cog = 'Information';")
+            self.database.cur.execute("select * from botzilla.help where cog = 'Information';")
             Information_cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             Information_commands = []
@@ -282,7 +282,7 @@ class Help:
             return Information_name
 
         def get_music():
-            self.database.cur.execute("select name from botzilla.help where cog = 'Music';")
+            self.database.cur.execute("select * from botzilla.help where cog = 'Music';")
             Music_cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             Music_commands = []
@@ -296,7 +296,7 @@ class Help:
             return Music_name
 
         def get_utils():
-            self.database.cur.execute("select name from botzilla.help where cog = 'Utils';")
+            self.database.cur.execute("select * from botzilla.help where cog = 'Utils';")
             Utils_cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             Utils_commands = []
@@ -310,7 +310,7 @@ class Help:
             return Utils_name
 
         def get_images():
-            self.database.cur.execute("select name from botzilla.help where cog = 'Images';")
+            self.database.cur.execute("select * from botzilla.help where cog = 'Images';")
             Images_cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             Images_commands = []
@@ -324,7 +324,7 @@ class Help:
             return Images_name
 
         def get_exchange():
-            self.database.cur.execute("select name from botzilla.help where cog = 'Exchange';")
+            self.database.cur.execute("select * from botzilla.help where cog = 'Exchange';")
             Exchange_cog = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             Exchange_commands = []
