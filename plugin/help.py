@@ -273,13 +273,11 @@ class Help:
             self.database.cur.execute("select count(cog) from botzilla.help where cog = '{}';".format(cog))
             count_cog = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
-            print(count_cog)
 
             if count_cog[0] > 3:
                 count = int(count_cog[0] // 3)
             else:
                 count = 1
-            print(count)
             page_number = 0
             for item in range(count):
                 if count <= 1 :
@@ -292,8 +290,6 @@ class Help:
                                     value=get_short_desc(item[0]),
                                     inline=False)
                     pages.append(new_page)
-
-            print(pages)
             return pages
 
         def generate_pages():
