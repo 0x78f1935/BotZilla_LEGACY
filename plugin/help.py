@@ -263,13 +263,16 @@ class Help:
 
         page1 = discord.Embed(colour=0xf20006)
         page1.add_field(name=f"{self.config['prefix']}{get_command('8ball')[0]}",
-                        value=get_short_desc('8ball')['8ball'])
+                        value=get_short_desc('8ball')['8ball'],
+                        inline=False)
 
         page1.add_field(name=f"{self.config['prefix']}{get_command('battleship')[0]}",
-                        value=get_short_desc('battleship')['battleship'])
+                        value=get_short_desc('battleship')['battleship'],
+                        inline=False)
 
         page1.add_field(name=f"{self.config['prefix']}{get_command('highlow')[0]}",
-                        value=get_short_desc('highlow')['highlow'])
+                        value=get_short_desc('highlow')['highlow'],
+                        inline=False)
 
         await self.bot.add_reaction(start, self.emoji_start)
         await self.bot.add_reaction(start, self.emoji_five_back)
