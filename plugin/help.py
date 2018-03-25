@@ -257,7 +257,7 @@ class Help:
         start = await self.bot.say(embed=page0)
 
         page1 = discord.Embed(colour=0xf20006)
-        page1.add_field(name=get_command('battleship')[0], value=get_short_desc('battleship')['battleship'])
+        page1.add_field(name=f"{self.config['prefix']}{get_command('battleship')[0]}", value=get_short_desc('battleship')['battleship'])
 
         await self.bot.add_reaction(start, self.emoji_start)
         await self.bot.add_reaction(start, self.emoji_five_back)
