@@ -369,7 +369,7 @@ class Help:
             await self.bot.edit_message(start, embed=embed)
             users_who_used = await self.bot.get_reaction_users(reaction)
             try:
-                await self.bot.remove_reaction(start, users_who_used)
+                await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=users_who_used, message=start)
             except:
                 pass # can't remove it so don't bother doing so
             # await self.bot.say(f'PAGE: {page_number}')
