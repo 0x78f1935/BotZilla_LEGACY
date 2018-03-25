@@ -268,7 +268,7 @@ class Help:
                                      description=f'Category: **`{cog}`**',
                                      colour=0xf20006)
 
-            for i in data and range(3):
+            for i in data:
                 new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
                                 value=get_short_desc(i),
                                 inline=False)
