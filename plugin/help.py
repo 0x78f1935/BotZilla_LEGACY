@@ -289,8 +289,7 @@ class Help:
             paginator = {}
             page_number = 0
             for items in all:
-                for item in items:
-                    paginator[page_number] = item
+                paginator[page_number] = item
             print(paginator)
             return paginator
 
