@@ -338,12 +338,12 @@ class Help:
 
         for i in range(len(paginator.keys())):
             if emoji_ascii == ascii(self.emoji_start_txt):
-                if page != 0:
+                if page >= 1 and page <= lenght_help:
                     page = 0
                     print(page)
 
             elif emoji_ascii == ascii(self.emoji_oneback_txt):
-                if page != 0:
+                if page != int(0):
                     page = page - 1
                     print(page)
 
