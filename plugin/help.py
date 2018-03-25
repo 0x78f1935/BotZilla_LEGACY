@@ -264,14 +264,16 @@ class Help:
                     p = await self.bot.get_reaction_users(reaction=reaction.reaction, limit=100)
                     for i in p:
                         if i.id != '397149515192205324':
-                            await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=i, message=start)
+                            m = await self.bot.get_user_info('i.id')
+                            await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=m, message=start)
                 except Exception as e:
                     await asyncio.sleep(2)
                     try:
                         p = await self.bot.get_reaction_users(reaction=reaction.reaction, limit=100)
                         for i in p:
                             if i.id != '397149515192205324':
-                                await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=i, message=start)
+                                m = await self.bot.get_user_info('i.id')
+                                await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=m, message=start)
                     except Exception as e:
                         print(e.args)
                 await wait_for_reaction(message)
