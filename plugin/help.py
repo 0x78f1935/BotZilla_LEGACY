@@ -210,10 +210,6 @@ class Help:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
 
-class Help2(Help):
-    def __init__(self, bot):
-        self.bot = bot
-
     @commands.command(pass_context=True)
     async def test(self, ctx):
         """
@@ -225,4 +221,3 @@ class Help2(Help):
 
 def setup(bot):
     bot.add_cog(Help(bot))
-    bot.add_cog(Help2(bot))
