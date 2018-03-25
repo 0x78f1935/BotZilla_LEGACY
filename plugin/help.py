@@ -366,6 +366,7 @@ class Help:
 
             new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
             await self.bot.say(reaction.reaction.emoji)
+            print(paginator)
 
 
 
