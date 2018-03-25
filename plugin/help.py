@@ -300,9 +300,9 @@ class Help:
         await self.bot.say('Ready...')
 
         new_page, reaction = await wait_for_reaction(start, page1)
-        await self.bot.say(reaction.user.id)
+        await self.bot.say(reaction.emoji.id)
         new_page, reaction = await wait_for_reaction(new_page, page2)
-        await self.bot.say(reaction.user.id)
+        await self.bot.say(reaction.emoji.id)
 
 
 
