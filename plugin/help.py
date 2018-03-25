@@ -299,7 +299,8 @@ class Help:
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
 
-        reaction = await wait_for_reaction(start, page2)
+        new_page = await wait_for_reaction(start, page1)
+        new_page = await wait_for_reaction(new_page, page2)
 
 
 
