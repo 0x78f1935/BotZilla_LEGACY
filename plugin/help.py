@@ -371,7 +371,7 @@ class Help:
                 p = await bot.get_reaction_users(reaction=reaction.reaction, limit=100)
                 for user in p:
                     if user.id != '397149515192205324':
-                        await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=user, message=start)
+                        await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=user.id, message=start)
             except:
                 pass # can't remove it so don't bother doing so
             # await self.bot.say(f'PAGE: {page_number}')
