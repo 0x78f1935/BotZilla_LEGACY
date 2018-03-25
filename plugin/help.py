@@ -262,7 +262,7 @@ class Help:
             else:
                 await wait_for_reaction(message, new_page)
 
-        def new_page(cog:str):
+        def create_new_page(cog:str):
             print('New_page Function')
             data = get_commands_by_cog(cog)
             data = sorted(data)
@@ -281,19 +281,19 @@ class Help:
             print('generate_pages Function')
             all = []
             print('all')
-            all.append(new_page('Games'))
+            all.append(create_new_page('Games'))
             print('Games DONE')
-            all.append(new_page('GameStats'))
+            all.append(create_new_page('GameStats'))
             print('GameStats DONE')
-            all.append(new_page('Fun'))
+            all.append(create_new_page('Fun'))
             print('Fun DONE')
-            all.append(new_page('Music'))
+            all.append(create_new_page('Music'))
             print('Music DONE')
-            all.append(new_page('Utils'))
+            all.append(create_new_page('Utils'))
             print('Utils DONE')
-            all.append(new_page('Images'))
+            all.append(create_new_page('Images'))
             print('Images DONE')
-            all.append(new_page('Exchange'))
+            all.append(create_new_page('Exchange'))
             print('Exchange DONE')
 
             print(all)
