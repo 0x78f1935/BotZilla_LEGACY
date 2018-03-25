@@ -322,12 +322,12 @@ class Help:
             paginator[key] = value[0]
             page += 1
 
-        page = 1
+        page_number = 1
         lenght_help = int(len(paginator.keys()) - 1)
 
         print(f'QUery lenght: {lenght_help}')
 
-        new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
+        new_page, reaction = await wait_for_reaction(start, paginator[str(page_number)])
         emoji_ascii = ascii(str(reaction.reaction.emoji))
         print(reaction.reaction.emoji)
         print(emoji_ascii)
@@ -338,25 +338,26 @@ class Help:
 
         for i in range(len(paginator.keys())):
             if emoji_ascii == ascii(self.emoji_start_txt):
-                if page >= 1 and page <= lenght_help:
-                    page = 0
-                    print(page)
+                if page_number >= 1 and page_number <= lenght_help:
+                    page_number = 0
+                    print(page_number)
 
             elif emoji_ascii == ascii(self.emoji_oneback_txt):
-                if page != int(0):
-                    page = page - 1
+                if page_number >= 1 and page_number <= lenght_help:
+                    page_number = page_number - 1
                     print(page)
 
             elif emoji_ascii == ascii(self.emoji_oneahead_txt):
-                if page != lenght_help:
-                    page = page + 1
-                    print(page)
+                if page_number >= 0 and page_number <= int(lenght_help - 1):
+                    page_number = page_number + 1
+                    print(page_number)
 
             elif emoji_ascii == ascii(self.emoji_end_text):
-                if page != lenght_help:
-                    page = lenght_help
-                    print(page)
+                if page_number <= int(lenght_help - 1):
+                    page_number = lenght_help
+                    print(page_number)
 
+            new_page.set_footer(text=f'Page : {page_number} / {lenght_help}')
             new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
             await self.bot.say(f'{reaction.reaction.emoji} {page}')
             print(paginator)
