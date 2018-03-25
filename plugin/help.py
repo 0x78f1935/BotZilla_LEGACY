@@ -342,10 +342,9 @@ class Help:
         print(f'QUery lenght: {lenght_help}')
 
         for i in range(100):
-            try:
-                reaction = await wait_for_reaction(start)
-            except Exception as e:
-                print(e.args)
+
+            reaction, user = await self.bot.wait_for('reaction_add', timeout=120.0)
+            #reaction = await wait_for_reaction(start)
 
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start):
                 if page_number >= 1 and page_number <= lenght_help:
@@ -367,10 +366,11 @@ class Help:
             embed = paginator[str(page_number)]
             embed.set_footer(text=f'PAGE: {page_number}')
             await self.bot.edit_message(start, embed=embed)
-            botzilla = await self.bot.get_user_info(397149515192205324)
-            rs = [self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end]
-            for i in rs:
-                await self.bot.get_reaction_users(reaction, limit=1, after=botzilla)
+            await self.bot.clear_reactions(start)
+            try:
+                await ctx.message.remove_reaction(reaction, user)
+            except:
+                pass
             # await self.bot.say(f'PAGE: {page_number}')
             # await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
 
