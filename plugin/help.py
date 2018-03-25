@@ -245,14 +245,7 @@ class Help:
                 short_desc = f'{list_desc[0]}\n{list_desc[1]}'
             except Exception as e:
                 short_desc = list_desc[0]
-            print(short_desc)
             return short_desc
-
-        def embed_help(content, reaction):
-            embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                  description='{1}\n{0.user.name} : {0.reaction.emoji}'.format(reaction, content),
-                                  colour=0xf20006)
-            return embed
 
         async def wait_for_reaction(message, new_page):
             reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
@@ -267,34 +260,12 @@ class Help:
             pages = []
             new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                                      colour=0xf20006)
-            # split = lambda x, n: x if not x else [x[:n]] + [split([] if not -(len(x) - n) else x[-(len(x) - n):], n)][0]
-
-            # self.database.cur.execute("select count(cog) from botzilla.help where cog = '{}';".format(cog))
-            # count_cog = self.database.cur.fetchone()
-            # self.database.cur.execute("ROLLBACK;")
-            #
-            # if count_cog[0] > 3:
-            #     count = int(count_cog[0] // 3)
-            # else:
-            #     count = 1
-            # page_number = 0
-            # for item in range(count):
-            #     if count <= 1 :
-            #         new_list = data
-            #     else:
-            #         new_list = split(data, 3)[page_number]
-            #     page_number += 1
-            #
-            #     new_list = list(set(new_list))
-            #     new_list = sorted(new_list)
-
             for item in data:
                 new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
                                 value=f'***`{get_short_desc(item)}`***',
                                 inline=False)
                 pages.append(new_page)
                 print(item)
-            print(pages)
             return pages
 
         def generate_pages():
