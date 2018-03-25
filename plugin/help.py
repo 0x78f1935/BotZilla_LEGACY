@@ -293,7 +293,6 @@ class Help:
         start = await self.bot.say(embed=page0)
 
         generate_pages = generate_pages()
-        print(generate_pages)
 
         await self.bot.add_reaction(start, self.emoji_start)
         await self.bot.add_reaction(start, self.emoji_five_back)
@@ -312,7 +311,7 @@ class Help:
                 paginator[page] = item
                 page += 1
 
-        print(paginator)
+        print(generate_pages)
         page = 1
         print('*******************************************************')
         for i in range(len(paginator.keys())):
