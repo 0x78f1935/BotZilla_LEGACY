@@ -337,19 +337,19 @@ class Help:
         print(emoji_ascii == ascii(self.emoji_end))
 
         for i in range(len(paginator.keys()) - 1):
-            if emoji_ascii == ascii(self.emoji_start):
+            if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = 0
                     print(page_number)
-            elif emoji_ascii == ascii(self.emoji_oneback):
+            elif ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = page_number - 1
                     print(page)
-            elif emoji_ascii == ascii(self.emoji_oneahead):
+            elif ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead):
                 if page_number >= 0 and page_number <= lenght_help:
                     page_number = page_number + 1
                     print(page_number)
-            elif emoji_ascii == ascii(self.emoji_end):
+            elif ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end):
                 if page_number <= lenght_help:
                     page_number = lenght_help
                     print(page_number)
