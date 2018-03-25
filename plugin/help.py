@@ -327,14 +327,17 @@ class Help:
 
         print(f'QUery lenght: {lenght_help}')
 
-        new_page, reaction = await wait_for_reaction(start, paginator[page])
+        new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
+        emoji_ascii = ascii(str(reaction.reaction.emoji))
+        print(reaction.reaction.emoji)
+        print(emoji_ascii)
 
         await self.bot.say(reaction.reaction.emoji)
 
-        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start))
-        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback))
-        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead))
-        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end))
+        print(emoji_ascii == ascii(self.emoji_start))
+        print(emoji_ascii == ascii(self.emoji_oneback))
+        print(emoji_ascii == ascii(self.emoji_oneahead))
+        print(emoji_ascii == ascii(self.emoji_end))
 
         for i in range(len(paginator.keys())):
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start_txt):
