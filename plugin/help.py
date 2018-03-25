@@ -237,27 +237,25 @@ class Help:
             split_lines = command_desc.splitlines(keepends=True)
             list_desc = [i.strip() for i in split_lines if i != '\n']
             short_desc = f'{list_desc[0]}\n{list_desc[1]}'
-            command_dict = {command_object[0] : short_desc}
-            return command_dict
+            return short_desc
 
-        def embed_help(content, field_name = None, field_value = None, *, reaction):
-            if field_name is None or field_value is None:
-                embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                      description='{1}\n{0.user.name} : {0.reaction.emoji}'.format(reaction, content),
-                                      colour=0xf20006)
-                return embed
-            else:
-                embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                      description='{1}\n{0.user.name} : {0.reaction.emoji}'.format(reaction, content),
-                                      colour=0xf20006)
-                embed.add_field(name=field_name, value=field_value)
-                return embed
+        def embed_help(content, reaction):
+            embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                                  description='{1}\n{0.user.name} : {0.reaction.emoji}'.format(reaction, content),
+                                  colour=0xf20006)
+            return embed
 
         #test
+
+        # Pages
         embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                               description='This command is under construction and may not work correctly',
                               colour=0xf20006)
         page = await self.bot.say(embed=embed)
+
+        embed_page1 = discord.Embed(colour=0xf20006)
+        embed_page1.add_field(name=get_command('8ball')[0], value=get_short_desc('8ball'))
+
 
         await self.bot.add_reaction(page, self.emoji_start)
         await self.bot.add_reaction(page, self.emoji_five_back)
@@ -269,9 +267,11 @@ class Help:
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
 
+
+
         reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=page)
         if reaction.user.id == ctx.message.author.id:
-            await self.bot.edit_message(page, embed=embed_help(content=get_short_desc('battleship')['battleship'], field_name=get_short_desc('battleship').keys(), reaction=reaction))
+            await self.bot.edit_message(page, embed=embed_page1)
 
 def setup(bot):
     bot.add_cog(Help(bot))
