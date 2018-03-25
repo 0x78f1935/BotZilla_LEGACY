@@ -215,7 +215,46 @@ class Help:
         """
         Show this message
         """
-        await self.bot.say(self.config['prefix'])
+
+        #init
+        self.emoji_start = '\u23ee'
+        self.emoji_five_back = '\u23ea'
+        self.emoji_oneback = '\u25c0'
+        self.emoji_oneahead = '\u25b6'
+        self.emoji_five_ahead = '\u23e9'
+        self.emoji_end = '\u23ed'
+
+        #test
+        page = await self.bot.say('test')
+        await self.bot.add_reaction(page, self.emoji_start)
+        await self.bot.add_reaction(page, self.emoji_five_back)
+        await self.bot.add_reaction(page, self.emoji_oneback)
+        await self.bot.add_reaction(page, self.emoji_oneahead)
+        await self.bot.add_reaction(page, self.emoji_five_ahead)
+        await self.bot.add_reaction(page, self.emoji_end)
+
+        start = await self.bot.wait_for_reaction(emoji=self.emoji_start)
+        five_back = await self.bot.wait_for_reaction(emoji=self.emoji_start)
+        one_back = await self.bot.wait_for_reaction(emoji=self.emoji_start)
+        one_forward = await self.bot.wait_for_reaction(emoji=self.emoji_start)
+        five_forward = await self.bot.wait_for_reaction(emoji=self.emoji_start)
+        end = await self.bot.wait_for_reaction(emoji=self.emoji_start)
+
+        if start:
+            await self.bot.say(f'{start} Done start')
+        if five_back:
+            await self.bot.say(f'{five_back} Done five_back')
+        if one_back:
+            await self.bot.say(f'{one_back} Done one_back')
+        if one_forward:
+            await self.bot.say(f'{one_forward} Done one_forward')
+        if five_forward:
+            await self.bot.say(f'{five_forward} Done five_forward')
+        if end:
+            await self.bot.say(f'{end} Done end')
+
+        #debug
+        await self.bot.say(f'{self.config["prefix"]} Done')
 
 
 
