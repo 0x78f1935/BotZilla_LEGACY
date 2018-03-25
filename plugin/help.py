@@ -363,6 +363,7 @@ class Help:
 
             elif emoji_ascii == ascii(self.emoji_end_txt):
                 if page != lenght_help:
+                    page = lenght_help
                     print(page)
                     print(paginator[str(page)])
                     new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
