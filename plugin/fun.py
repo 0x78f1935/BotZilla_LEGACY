@@ -533,7 +533,7 @@ class Fun:
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
         return
 
-    @commands.command(pass_context=True, hidden=True)
+    @commands.command(pass_context=True, hidden=True, aliases=["cat"])
     async def meow(self, ctx):
         """
         Spawn a kitty cat!
@@ -559,6 +559,56 @@ class Fun:
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
+    @commands.command(pass_context=True, hidden=True, aliases=["dog"])
+    async def woof(self, ctx, *, breed:str = None):
+        """
+        Spawn a dog!
+
+        Alias = !!dog
+
+        Usage:
+          - !!woof
+          - !!woof <breed>
+          - !!dog
+        Example:
+          - !!dog
+          - !!woof bulldog
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!woof <{breed}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+
+        if breed is None:
+            url = 'https://dog.ceo/api/breeds/image/random'
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as response:
+                    source = await response.json(encoding='utf8')
+
+            embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                  description='\t',
+                                  colour=0xf20006)
+            embed.set_image(url=source['message'])
+            a = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+        else:
+            try:
+                breed = breed.lower()
+                url = f'https://dog.ceo/api/breed/{breed}/images'
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        source = await response.json(encoding='utf8')
+
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description='\t',
+                                      colour=0xf20006)
+                embed.set_image(url=random.choice(source['message']))
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+            except Exception as e:
+                embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
+                                      description=f'Could not find a breed called **`{breed}`**',
+                                      colour=0xf20006)
+                a = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
     @commands.command(pass_context=True)
     async def infect(self, ctx, member:discord.Member = None, emoji : str = None):
