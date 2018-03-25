@@ -237,14 +237,12 @@ class Help:
             self.database.cur.execute("ROLLBACK;")
             return command_object
 
-        def get_short_desc(command_name):
-            command_object = get_command_by_name(command_name)
-            command_desc = str(command_object[2])
+        def get_short_desc(command_object):
+            command_desc = command_object[2]
             split_lines = command_desc.splitlines(keepends=True)
             list_desc = [i.strip() for i in split_lines if i != '\n']
             short_desc = f'**```\n{list_desc[0]}\n{list_desc[1]}```**'
-            command_dict = {command_object[0] : short_desc}
-            return command_dict
+            return short_desc
 
         def embed_help(content, reaction):
             embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
@@ -274,8 +272,8 @@ class Help:
                               colour=0xf20006)
         for i in Games:
             print(i)
-            page1.add_field(name=f"{self.config['prefix']}{get_command(i[0])}",
-                            value=get_short_desc(i[0])[i[0]],
+            page1.add_field(name=f"{self.config['prefix']}{i[0]}",
+                            value=get_short_desc(i),
                             inline=False)
 
         await self.bot.add_reaction(start, self.emoji_start)
