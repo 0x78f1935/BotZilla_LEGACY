@@ -292,7 +292,6 @@ class Help:
                 for item in items:
                     page_number += 1
                     paginator[page_number] = item
-            print(paginator)
             return paginator
 
         #test
@@ -304,7 +303,6 @@ class Help:
         start = await self.bot.say(embed=page0)
 
         print(generate_pages())
-        await self.bot.say(generate_pages())
 
         # # Games
         # Games = get_commands_by_cog('Games')
