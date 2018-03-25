@@ -270,10 +270,11 @@ class Help:
             split = lambda x, n: x if not x else [x[:n]] + [split([] if not -(len(x) - n) else x[-(len(x) - n):], n)][0]
             list_list = split(data, 2)
             for items in list_list:
-                new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
-                                value=get_short_desc(i),
-                                inline=False)
-                pages.append(new_page)
+                for item in items:
+                    new_page.add_field(name=f"{self.config['prefix']}{item[0]}",
+                                    value=get_short_desc(item),
+                                    inline=False)
+                    pages.append(new_page)
             return pages
 
         def generate_pages():
