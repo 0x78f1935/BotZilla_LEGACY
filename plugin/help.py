@@ -272,7 +272,6 @@ class Help:
                               description='Category: **`Games`**',
                               colour=0xf20006)
         for i in Games:
-            print(i)
             page1.add_field(name=f"{self.config['prefix']}{i[0]}",
                             value=get_short_desc(i),
                             inline=False)
@@ -284,7 +283,6 @@ class Help:
                               description='Category: **`Games Stats`**',
                               colour=0xf20006)
         for i in Gamestats:
-            print(i)
             page2.add_field(name=f"{self.config['prefix']}{i[0]}",
                             value=get_short_desc(i),
                             inline=False)
@@ -296,8 +294,18 @@ class Help:
                               description='Category: **`Fun`**',
                               colour=0xf20006)
         for i in Fun:
-            print(i)
             page3.add_field(name=f"{self.config['prefix']}{i[0]}",
+                            value=get_short_desc(i),
+                            inline=False)
+
+        # Information
+        Information = get_commands_by_cog('Information')
+        Information = sorted(Information)
+        page4 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                              description='Category: **`Information`**',
+                              colour=0xf20006)
+        for i in Information:
+            page4.add_field(name=f"{self.config['prefix']}{i[0]}",
                             value=get_short_desc(i),
                             inline=False)
 
@@ -316,6 +324,8 @@ class Help:
         new_page, reaction = await wait_for_reaction(new_page, page2)
         await self.bot.say(reaction.reaction.emoji)
         new_page, reaction = await wait_for_reaction(new_page, page3)
+        await self.bot.say(reaction.reaction.emoji)
+        new_page, reaction = await wait_for_reaction(new_page, page4)
         await self.bot.say(reaction.reaction.emoji)
 
 
