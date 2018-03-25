@@ -245,15 +245,15 @@ class Help:
         await self.bot.add_reaction(page, self.emoji_five_ahead)
         await self.bot.add_reaction(page, self.emoji_end)
 
-        await asyncio.sleep(5)
+        await asyncio.sleep(3.5)
         await self.bot.say('sleep over')
 
         reaction = await self.bot.wait_for_reaction(emoji=self.emoji_start or
                                                           self.emoji_five_back or
                                                           self.emoji_oneback or
-                                                          self.emoji_oneahead
-                                                          or self.emoji_five_ahead
-                                                          or self.emoji_end,
+                                                          self.emoji_oneahead or
+                                                          self.emoji_five_ahead or
+                                                          self.emoji_end,
                                                     message=page)
 
         #debug
