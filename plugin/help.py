@@ -344,15 +344,6 @@ class Help:
         for i in range(100):
             try:
                 reaction = await wait_for_reaction(start)
-
-                #debug
-                emoji_ascii = ascii(str(reaction.reaction.emoji))
-                print(reaction.reaction.emoji)
-                print(emoji_ascii)
-                print(emoji_ascii == ascii(self.emoji_start))
-                print(emoji_ascii == ascii(self.emoji_oneback))
-                print(emoji_ascii == ascii(self.emoji_oneahead))
-                print(emoji_ascii == ascii(self.emoji_end))
             except Exception as e:
                 print(e.args)
 
@@ -373,11 +364,11 @@ class Help:
                     page_number = lenght_help
                     print(page_number)
 
-            await self.bot.edit_message(start, embed=paginator[str(page_number)])
-            await self.bot.say(f'PAGE: {page_number}')
-            await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
-            print(paginator)
-
+            embed = paginator[str(page_number)]
+            embed.set_footer(text=f'PAGE: {page_number}')
+            await self.bot.edit_message(start, embed=embed)
+            # await self.bot.say(f'PAGE: {page_number}')
+            # await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
 
 
 def setup(bot):
