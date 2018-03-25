@@ -281,8 +281,8 @@ class Help:
             new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                                      colour=0xf20006)
             for item in data:
-                new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
-                                value=f'***`{get_short_desc(item)}`***',
+                new_page.add_field(name=f"-- {self.config['prefix']}{item[0]}\n\n",
+                                value=f'***`{get_short_desc(item)}`***\nName: **`{item[0]}`** - Category: **`{cog}`**',
                                 inline=False)
                 pages.append(new_page)
             print('DONE New_page Function')
