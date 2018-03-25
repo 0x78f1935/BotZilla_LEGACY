@@ -263,7 +263,7 @@ class Help:
                 return reaction
             else:
                 try:
-                    await self.message.remove_reaction(reaction, reaction.user)
+                    await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=reaction.user, message=start)
                 except:
                     pass
                 await wait_for_reaction(message)
@@ -370,7 +370,7 @@ class Help:
             embed.set_footer(text=f'PAGE: {page_number} / {int(len(paginator.keys()) - 1)}')
             await self.bot.edit_message(start, embed=embed)
             try:
-                await self.message.remove_reaction(reaction, ctx.message.author.id)
+                await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=ctx.message.author, message=start)
             except:
                 pass
             # await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=ctx.message.author, message=start)
