@@ -367,9 +367,8 @@ class Help:
             embed = paginator[str(page_number)]
             embed.set_footer(text=f'PAGE: {page_number}')
             await self.bot.edit_message(start, embed=embed)
-            users_who_used = await self.bot.get_reaction_users(reaction)
             try:
-                await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=users_who_used, message=start)
+                await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=ctx.message.author, message=start)
             except:
                 pass # can't remove it so don't bother doing so
             # await self.bot.say(f'PAGE: {page_number}')
