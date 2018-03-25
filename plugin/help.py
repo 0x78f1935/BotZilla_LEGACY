@@ -298,22 +298,22 @@ class Help:
         page0 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                               description='This command is under construction and may not work correctly',
                               colour=0xf20006)
-        start = await self.bot.say(embed=page0)
+        new_page = await self.bot.say(embed=page0)
 
         generate_pages_result = generate_pages()
 
-        await self.bot.add_reaction(start, self.emoji_start)
-        #await self.bot.add_reaction(start, self.emoji_five_back) #Maybe if there are more commands
-        await self.bot.add_reaction(start, self.emoji_oneback)
-        await self.bot.add_reaction(start, self.emoji_oneahead)
-        #await self.bot.add_reaction(start, self.emoji_five_ahead) #Maybe if there are more commands
-        await self.bot.add_reaction(start, self.emoji_end)
+        await self.bot.add_reaction(new_page, self.emoji_start)
+        #await self.bot.add_reaction(new_page, self.emoji_five_back) #Maybe if there are more commands
+        await self.bot.add_reaction(new_page, self.emoji_oneback)
+        await self.bot.add_reaction(new_page, self.emoji_oneahead)
+        #await self.bot.add_reaction(new_page, self.emoji_five_ahead) #Maybe if there are more commands
+        await self.bot.add_reaction(new_page, self.emoji_end)
 
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
         reaction = await self.bot.wait_for_reaction(
             [self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead,
-             self.emoji_end], message=start)
+             self.emoji_end], message=new_page)
         # remove duplicates
         page = 0
         paginator = {}
@@ -333,7 +333,7 @@ class Help:
                     page = 0
                     print(page)
                     print(paginator[str(page)])
-                    new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
+                    new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
             elif ascii(reaction.reaction.emoji) == ascii(self.emoji_oneback_txt):
                 if page == 0:
                     pass
