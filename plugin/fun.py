@@ -39,6 +39,8 @@ class Images:
     async def ascii(self, ctx, font : str = None, *, text : str = None):
         '''
         Transform any text to ascii art.
+        Are you the new Rembrandt?
+
         All available fonts can you find here:
         Full list: https://www.flamingtext.com/tools/figlet/fontlist.html
         Usage:
@@ -126,12 +128,12 @@ class Images:
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
 
-
-
     @commands.command(pass_context=True)
     async def big(self, ctx, *, emoji : str = None):
         """
         Make custom emojis 10x time bigger!
+        For people with bad eyes
+
         Usage:
           - !!big <custom emoji>
         Example:
@@ -162,13 +164,16 @@ class Images:
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
-
     @commands.command(pass_context=True, no_pm=True)
     async def gif(self, ctx, *keywords):
         """
-        Retrieves a random gif from a giphy search
+        Retrieves a random gif from a giphy search.
+        Giphy is a famous gif website where people upload gifs.
+
         Usage:
-          - !!gif
+          - !!gif <search term>
+        Example:
+          - !!gif pizza
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!gif <{keywords}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if keywords:
@@ -288,6 +293,8 @@ class Images:
     async def avatar(self, ctx, *, member:discord.Member=None):
         """
         Shows a big avatar from a discord user
+        This also works on your own avatar.
+
         Usage:
           - !!avatar <username | ping | id>
         Example:
@@ -568,6 +575,7 @@ class Fun:
     async def dog(self, ctx, *, breed:str = None):
         """
         Spawn a dog!
+        Retrieve pictures from dogs.
 
         Alias = !!woof
 

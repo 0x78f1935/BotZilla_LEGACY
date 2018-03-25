@@ -661,8 +661,13 @@ class Utils:
     @commands.command(pass_context=True, aliases=["clock"])
     async def worldclock(self, ctx):
         """
-        Get a list of the global time in most timezones
+        Get a list of the global times.
+        This is a list based on GMT time.
+
         Alias: !!clock
+
+        Usage:
+          - !!clock
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!worldclock in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         await self.bot.send_typing(ctx.message.channel)
@@ -792,7 +797,9 @@ class Utils:
     @commands.command(pass_context=True)
     async def poll(self, ctx, timer = None, *questions_and_choices: str):
         """
-        Makes a poll quickly for your server.
+        Makes a poll for your server.
+        Choose your time, your question and your answers.
+
         !!poll <Timer for voters> <<question> ? <answer> ; <answer>>
         You can only have up to 20 choices and one question.
         Use ; and ? as a delimiter.
