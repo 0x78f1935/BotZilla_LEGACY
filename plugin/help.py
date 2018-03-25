@@ -228,6 +228,7 @@ class Help:
         def get_command(command_name):
             self.database.cur.execute("select * from botzilla.help where name = '{}';".format(command_name))
             command_object = self.database.cur.fetchone()
+            print(command_object)
             self.database.cur.execute("ROLLBACK;")
             return command_object
 
@@ -236,6 +237,7 @@ class Help:
             command_desc = str(command_object[2])
             split_lines = command_desc.splitlines(keepends=True)
             list_desc = [i.strip() for i in split_lines if i != '\n']
+            print(list_desc)
             short_desc = f'{list_desc[0]}\n{list_desc[1]}'
             command_dict = {command_object[0] : short_desc}
             return command_dict
