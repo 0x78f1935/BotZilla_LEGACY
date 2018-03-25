@@ -279,10 +279,10 @@ class Help:
 
             paginator = {}
             page_number = 0
-            list(set(all))
             for item in all:
-                page_number += 1
-                paginator[str(page_number)] = item
+                if str(item) not in str(paginator):
+                    page_number += 1
+                    paginator[str(page_number)] = item
             return paginator
 
         #test
