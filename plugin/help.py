@@ -328,10 +328,10 @@ class Help:
         generate_pages_result = generate_pages()
 
         await self.bot.add_reaction(start, self.emoji_start)
-        #await self.bot.add_reaction(new_page, self.emoji_five_back) #Maybe if there are more commands
+        await self.bot.add_reaction(start, self.emoji_five_back) #Maybe if there are more commands
         await self.bot.add_reaction(start, self.emoji_oneback)
         await self.bot.add_reaction(start, self.emoji_oneahead)
-        #await self.bot.add_reaction(new_page, self.emoji_five_ahead) #Maybe if there are more commands
+        await self.bot.add_reaction(start, self.emoji_five_ahead) #Maybe if there are more commands
         await self.bot.add_reaction(start, self.emoji_end)
 
         await asyncio.sleep(0.6)
@@ -358,21 +358,34 @@ class Help:
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = 0
                     print(page_number)
+
+            if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_back):
+                if page_number >= 5 and page_number <= lenght_help:
+                    page_number = page_number - 5
+                    print(page)
+
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = page_number - 1
                     print(page)
+
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead):
                 if page_number >= 0 and page_number <= lenght_help - 1:
                     page_number = page_number + 1
                     print(page_number)
+
+            if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_ahead):
+                if page_number >= 0 and page_number <= lenght_help - 5:
+                    page_number = page_number + 5
+                    print(page)
+
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end):
                 if page_number <= lenght_help:
                     page_number = lenght_help
                     print(page_number)
 
             embed = paginator[str(page_number)]
-            embed.set_footer(text=f'PAGE: {int(page_number + 1)} / {int(len(paginator.keys()))}')
+            embed.set_footer(text=f'**`Page:`** `{int(page_number + 1)}` / `{int(len(paginator.keys()))}`')
             await self.bot.edit_message(start, embed=embed)
 
 def setup(bot):
