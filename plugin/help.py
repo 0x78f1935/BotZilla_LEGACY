@@ -357,23 +357,6 @@ class Help:
                     page_number = lenght_help
                     print(page_number)
 
-        # for i in range(len(paginator.keys())):
-        #     if emoji_ascii == ascii(self.emoji_start_txt):
-        #         page_number = 0
-        #         print(page_number)
-        #
-        #     if emoji_ascii == ascii(self.emoji_oneback_txt):
-        #         page_number = page_number - 1
-        #         print(page)
-        #
-        #     if emoji_ascii == ascii(self.emoji_oneahead_txt):
-        #         page_number = page_number + 1
-        #         print(page_number)
-        #
-        #     if emoji_ascii == ascii(self.emoji_end_text):
-        #         page_number = lenght_help
-        #         print(page_number)
-
             new_page, reaction = await wait_for_reaction(new_page, paginator[str(page_number)])
             await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
             print(paginator)
