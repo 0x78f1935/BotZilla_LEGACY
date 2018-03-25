@@ -286,6 +286,7 @@ class Help:
                     new_list = split(data, 3)[page_number]
                 page_number += 1
                 for item in new_list:
+                    print(item)
                     new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
                                     value=get_short_desc(item[0]),
                                     inline=False)
