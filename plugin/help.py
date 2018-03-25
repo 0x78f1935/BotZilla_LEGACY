@@ -329,10 +329,10 @@ class Help:
 
         new_page, reaction = await wait_for_reaction(start, paginator[page])
 
-        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start_txt))
-        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback_txt))
-        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead_txt))
-        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end_txt))
+        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start))
+        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback))
+        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead))
+        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end))
 
         for i in range(len(paginator.keys())):
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start_txt):
