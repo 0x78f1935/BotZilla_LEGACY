@@ -253,7 +253,7 @@ class Help:
         async def wait_for_reaction(message, new_page):
             reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
             if ctx.message.author.id == reaction.user.id:
-                await self.bot.edit_message(message, embed=new_page)
+                return await self.bot.edit_message(message, embed=new_page)
             else:
                 await wait_for_reaction(message, new_page)
 
