@@ -246,9 +246,6 @@ class Help:
                                   colour=0xf20006)
             return embed
 
-        def wait_for_reaction(message):
-            return self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
-
         #test
 
         # Pages
@@ -271,7 +268,7 @@ class Help:
         await self.bot.say('Ready...')
 
         reaction = self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=start)
-        if ctx.message.author.id == reaction.user.id:
+        if reaction.user.id == ctx.message.author.id:
             await self.bot.edit_message(start, embed=page1)
 
 def setup(bot):
