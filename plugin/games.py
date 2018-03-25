@@ -39,6 +39,11 @@ class Games:
     async def ball8(self, ctx , *, question: str = None):
         """
         8ball! Ask BotZilla Any question.
+
+        Usage:
+          - !!8ball <question>
+        Example:
+          - !!8ball should I go to bed?
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!8ball <{question}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         question = question.lower()
