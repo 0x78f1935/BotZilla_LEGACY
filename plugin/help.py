@@ -344,7 +344,7 @@ class Help:
         for i in range(len(paginator.keys()) - 1):
             try:
                 reaction = await wait_for_reaction(new_page)
-                new_page = await self.bot.edit_message(new_page, embed=paginator[str(page_number)])
+                new_page = await self.bot.edit_message(new_page, embed=new_page[page_number])
 
                 #debug
                 emoji_ascii = ascii(str(reaction.reaction.emoji))
