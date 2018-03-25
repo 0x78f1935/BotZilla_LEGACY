@@ -314,7 +314,7 @@ class Help:
 
         print(paginator)
         page = 0
-        for i in range(len(paginator)):
+        for i in range(len(paginator.keys())):
             new_page, reaction = await wait_for_reaction(start, generate_pages[page])
             await self.bot.say(reaction.reaction.emoji)
             page += 1
