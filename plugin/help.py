@@ -234,11 +234,11 @@ class Help:
         await self.bot.add_reaction(page, self.emoji_end)
 
         start = await self.bot.wait_for_reaction(emoji=self.emoji_start)
-        five_back = await self.bot.wait_for_reaction(emoji=self.emoji_start)
-        one_back = await self.bot.wait_for_reaction(emoji=self.emoji_start)
-        one_forward = await self.bot.wait_for_reaction(emoji=self.emoji_start)
-        five_forward = await self.bot.wait_for_reaction(emoji=self.emoji_start)
-        end = await self.bot.wait_for_reaction(emoji=self.emoji_start)
+        five_back = await self.bot.wait_for_reaction(emoji=self.emoji_five_back)
+        one_back = await self.bot.wait_for_reaction(emoji=self.emoji_oneback)
+        one_forward = await self.bot.wait_for_reaction(emoji=self.emoji_oneahead)
+        five_forward = await self.bot.wait_for_reaction(emoji=self.emoji_five_ahead)
+        end = await self.bot.wait_for_reaction(emoji=self.emoji_end)
 
         if start:
             await self.bot.say(f'{start} Done start')
