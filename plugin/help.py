@@ -322,7 +322,7 @@ class Help:
             paginator[key] = value[0]
             page += 1
 
-        page = 0 # page 0 == introduction
+        page = 1
         lenght_help = int(len(paginator.keys()) - 1)
 
         print(f'QUery lenght: {lenght_help}')
