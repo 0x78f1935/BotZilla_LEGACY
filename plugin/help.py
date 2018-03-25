@@ -372,13 +372,8 @@ class Help:
                     print(page_number)
 
             embed = paginator[str(page_number)]
-            embed.set_footer(text=f'PAGE: {page_number} / {int(len(paginator.keys()) - 1)}')
+            embed.set_footer(text=f'PAGE: {int(page_number + 1)} / {int(len(paginator.keys()))}')
             await self.bot.edit_message(start, embed=embed)
-
-            # await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=ctx.message.author, message=start)
-            # await self.bot.say(f'PAGE: {page_number}')
-            # await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
-
 
 def setup(bot):
     bot.add_cog(Help(bot))
