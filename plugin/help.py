@@ -264,7 +264,7 @@ class Help:
                     p = await self.bot.get_reaction_users(reaction=reaction.reaction, limit=100)
                     for i in p:
                         if i != self.bot.user:
-                            await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=i, message=a)
+                            await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=i, message=start)
                 except Exception as e:
                     await self.bot.say(e.args)
                 await wait_for_reaction(message)
