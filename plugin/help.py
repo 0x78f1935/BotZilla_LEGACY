@@ -329,7 +329,7 @@ class Help:
 
         new_page, reaction = await wait_for_reaction(start, paginator[page])
 
-        print(reaction.reaction.emoji)
+        await self.bot.say(reaction.reaction.emoji)
 
         print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start))
         print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback))
