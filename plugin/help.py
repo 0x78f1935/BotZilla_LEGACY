@@ -262,6 +262,10 @@ class Help:
             if ctx.message.author.id == reaction.user.id:
                 return reaction
             else:
+                try:
+                    await self.message.remove_reaction(reaction, reaction.user)
+                except:
+                    pass
                 await wait_for_reaction(message)
 
         def create_new_page(cog:str):
@@ -344,12 +348,7 @@ class Help:
         print(f'QUery lenght: {lenght_help}')
 
         for i in range(100):
-            # try:
-                # reaction = await wait_for_reaction(start)
-            reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], timeout=120.0, message=start)
-            # except Exception as e:
-            #     print(e.args)
-
+            reaction = await wait_for_reaction(start)
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = 0
@@ -371,7 +370,7 @@ class Help:
             embed.set_footer(text=f'PAGE: {page_number} / {int(len(paginator.keys()) - 1)}')
             await self.bot.edit_message(start, embed=embed)
             try:
-                await self.message.remove_reaction(reaction, reaction.user)
+                await self.message.remove_reaction(reaction, ctx.message.author.id)
             except:
                 pass
             # await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=ctx.message.author, message=start)
