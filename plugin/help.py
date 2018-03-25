@@ -251,9 +251,9 @@ class Help:
         def wait_for_reaction(message):
             reaction = self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
             print(reaction)
-            if ctx.message.author.id != reaction.user.id:
+            if reaction.user.id != ctx.message.author.id:
                 wait_for_reaction(message)
-            else:
+            if reaction.user.id == ctx.message.author.id:
                 return reaction
 
         #test
