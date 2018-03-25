@@ -249,8 +249,8 @@ class Help:
             return embed
 
         def wait_for_reaction(message):
-            reaction = self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
-            print(reaction)
+            reaction = self.bot.wait_for_reaction(emoji=[self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
+            print(reaction.user.id)
 
             print(ctx.message.author.id)
             if str(reaction.user.id) != str(ctx.message.author.id):
