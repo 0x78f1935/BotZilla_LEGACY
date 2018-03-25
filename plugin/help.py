@@ -367,7 +367,10 @@ class Help:
             embed = paginator[str(page_number)]
             embed.set_footer(text=f'PAGE: {page_number}')
             await self.bot.edit_message(start, embed=embed)
-            await self.bot.clear_reactions(start)
+            botzilla = await self.bot.get_user_info(397149515192205324)
+            rs = [self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end]
+            for i in rs:
+                await self.bot.get_reaction_users(reaction, limit=1, after=botzilla)
             # await self.bot.say(f'PAGE: {page_number}')
             # await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
 
