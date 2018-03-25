@@ -265,28 +265,16 @@ class Help:
             data = sorted(data)
             pages = []
 
-            if len(data) > 3:
-                for i in data:
-                    new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                             description=f'Category: **`{cog}`**',
-                                             colour=0xf20006)
-                    for i in range(3):
-                        new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
-                                        value=get_short_desc(i),
-                                        inline=False)
-                        data.remove(i)
-                        pages.append(new_page)
-                    if len(data) <= 0:
-                        break
-            else:
+            for i in data:
                 new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                                          description=f'Category: **`{cog}`**',
                                          colour=0xf20006)
-                for i in data:
-                    new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
-                                    value=get_short_desc(i),
-                                    inline=False)
-                    pages.append(new_page)
+
+                new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
+                                value=get_short_desc(i),
+                                inline=False)
+                pages.append(new_page)
+
             return pages
 
         def generate_pages():
