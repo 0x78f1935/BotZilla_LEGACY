@@ -258,16 +258,20 @@ class Help:
             return short_desc
 
         async def wait_for_reaction(message):
-            reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message, timeout=120)
-            if ctx.message.author.id == reaction.user.id:
-                await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=ctx.message.author, message=message)
-                return reaction
-            else:
-                try:
-                    await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=reaction.user, message=message)
-                except:
-                    pass
-                await wait_for_reaction(message)
+            while True:
+                reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message, timeout=120)
+                if ctx.message.author.id == reaction.user.id:
+                    try:
+                        await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=ctx.message.author, message=message)
+                    except Exception as e:
+                        print(e.args)
+                    break
+                else:
+                    try:
+                        await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=reaction.user, message=message)
+                    except Exception as e:
+                        print(e.args)
+            return reaction
 
         def create_new_page(cog:str):
             print('New_page Function')
