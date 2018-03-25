@@ -346,7 +346,7 @@ class Help:
         for i in range(100):
             # try:
                 # reaction = await wait_for_reaction(start)
-            reaction, user = await self.bot.wait_for([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], timeout=120.0)
+            reaction, user = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], timeout=120.0)
             # except Exception as e:
             #     print(e.args)
 
