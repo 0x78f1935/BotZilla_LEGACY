@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import json
 import datetime
-
+import asyncio
 try:
     from plugin.database import Database
 except Exception as e:
@@ -232,6 +232,8 @@ class Help:
         await self.bot.add_reaction(page, self.emoji_oneahead)
         await self.bot.add_reaction(page, self.emoji_five_ahead)
         await self.bot.add_reaction(page, self.emoji_end)
+
+        await asyncio.sleep(5)
 
         start = await self.bot.wait_for_reaction(emoji=self.emoji_start)
         five_back = await self.bot.wait_for_reaction(emoji=self.emoji_five_back)
