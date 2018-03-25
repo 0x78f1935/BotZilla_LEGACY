@@ -242,9 +242,10 @@ class Help:
             split_lines = command_desc.splitlines(keepends=True)
             list_desc = [i.strip() for i in split_lines if i != '\n']
             try:
-                short_desc = f'**```\n{list_desc}\n{list_desc[1]}```**'
+                short_desc = f'**```\n{list_desc[0]}\n{list_desc[1]}```**'
             except Exception as e:
-                short_desc = f'**```\n{list_desc}\n```**'
+                print(e.args)
+                short_desc = f'**```\n{list_desc[0]}\n```**'
             print(f'{short_desc} done {command_object}')
             return short_desc
 
