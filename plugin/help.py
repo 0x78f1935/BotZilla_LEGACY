@@ -274,23 +274,25 @@ class Help:
                                 value=get_short_desc(i),
                                 inline=False)
                 pages.append(new_page)
-            print(pages)
             return pages
 
         def generate_pages():
-            Games = new_page('Games')
-            GameStats = new_page('GameStats')
-            Fun = new_page('Fun')
-            Music = new_page('Music')
-            Utils = new_page('Utils')
-            Images = new_page('Images')
-            Exchange = new_page('Exchange')
+            all = []
+            all.append(new_page('Games'))
+            all.append(new_page('GameStats'))
+            all.append(new_page('Fun'))
+            all.append(new_page('Music'))
+            all.append(new_page('Utils'))
+            all.append(new_page('Images'))
+            all.append(new_page('Exchange'))
 
             paginator = {}
             page_number = 0
-            for item in Games, GameStats, Fun, Music, Utils, Images, Images, Exchange:
-                paginator[page_number] = item
-            return generate_pages()
+            for items in all:
+                for item in items:
+                    paginator[page_number] = item
+            print(paginator)
+            return paginator
 
         #test
 
