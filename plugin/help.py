@@ -279,6 +279,7 @@ class Help:
 
             paginator = {}
             page_number = 0
+            list(set(all))
             for item in all:
                 page_number += 1
                 paginator[str(page_number)] = item
