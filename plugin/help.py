@@ -296,8 +296,6 @@ class Help:
             all.append(create_new_page('Exchange'))
             print('Exchange DONE')
 
-            print(all)
-
             paginator = {}
             page_number = 0
             for item in all:
