@@ -236,7 +236,7 @@ class Help:
                 Games_commands.append(i)
             Games_commands.sort()
             Games_commands.append('**------**')
-            Games_name = "\n\n".join(Games_commands)
+            Games_name = "\n\n**======**\n\n".join(Games_commands)
             return Games_name
 
         def get_GameStats():
@@ -339,7 +339,8 @@ class Help:
 
         def embed_help(content):
             embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                  description=f'{content}')
+                                  description=f'{content}',
+                                  colour=0xf20006)
             return embed
 
         #test
