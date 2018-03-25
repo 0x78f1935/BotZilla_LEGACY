@@ -283,7 +283,7 @@ class Help:
                                      colour=0xf20006)
             for item in data:
                 new_page.add_field(name=f"-- {self.config['prefix']}{item[0]}\n\n",
-                                value=f'\n\n***`{get_short_desc(item)}`***\n**Name:** ***`{item[0]}`***',
+                                value=f'***`{get_short_desc(item)}`***\n**Name:** ***`{item[0]}`***\n-',
                                 inline=False)
                 pages.append(new_page)
             print('DONE New_page Function')
@@ -338,7 +338,7 @@ class Help:
         await self.bot.add_reaction(start, self.emoji_end)
 
         await asyncio.sleep(0.6)
-        await self.bot.say('Ready...')
+        start.set_footer(text='Ready...')
 
         print('Reactions added')
 
