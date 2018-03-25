@@ -324,30 +324,42 @@ class Help:
         lenght_help = int(len(paginator.keys()))
 
         for i in range(len(paginator.keys())):
-            new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
-            emoji_ascii = ascii(reaction.reaction.emoji)
-            print(reaction.reaction.emoji)
+            reaction = await self.bot.wait_for_reaction(
+                [self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead,
+                 self.emoji_end], message=start)
+
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start_txt):
-                page = 0
-                print(page)
-                print(paginator[str(page)])
-                new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
+                if page == 0:
+                    pass
+                else:
+                    page = 0
+                    print(page)
+                    print(paginator[str(page)])
+                    new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
             elif ascii(reaction.reaction.emoji) == ascii(self.emoji_oneback_txt):
-                page -= 1
-                print(page)
-                print(paginator[str(page)])
-                new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
+                if page == 0:
+                    pass
+                else:
+                    page -= 1
+                    print(page)
+                    print(paginator[str(page)])
+                    new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
             elif ascii(reaction.reaction.emoji) == ascii(self.emoji_oneahead_txt):
-                page += 1
-                print(page)
-                print(paginator[str(page)])
-                new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
+                if page == lenght_help:
+                    pass
+                else:
+                    page += 1
+                    print(page)
+                    print(paginator[str(page)])
+                    new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
             elif ascii(reaction.reaction.emoji) == ascii(self.emoji_end_txt):
-                page = lenght_help
-                print(page)
-                print(paginator[str(page)])
-                new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            await self.bot.say(f'{reaction.reaction.emoji} : {emoji_ascii}')
+                if page == lenght_help:
+                    pass
+                else:
+                    page = lenght_help
+                    print(page)
+                    print(paginator[str(page)])
+                    new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
 
 def setup(bot):
     bot.add_cog(Help(bot))
