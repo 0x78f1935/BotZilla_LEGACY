@@ -357,7 +357,6 @@ class Help:
                     page_number = lenght_help
                     print(page_number)
 
-            new_page.set_footer(text=f'Page : {page_number} / {lenght_help}')
             new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
             await self.bot.say(f'{reaction.reaction.emoji} {page}')
             print(paginator)
