@@ -278,7 +278,7 @@ class Help:
                             inline=False)
 
         # Game Stats
-        Gamestats = get_commands_by_cog('Games')
+        Gamestats = get_commands_by_cog('GameStats')
         Gamestats = sorted(Gamestats)
         page2 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                               description='Category: **`Games Stats`**',
@@ -299,7 +299,8 @@ class Help:
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
 
-        reaction = await wait_for_reaction(start, page2)
+        reaction = await wait_for_reaction(start, page1)
+        reaction = await wait_for_reaction(page1, page2)
 
 
 
