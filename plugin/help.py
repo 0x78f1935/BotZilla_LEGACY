@@ -268,8 +268,8 @@ class Help:
                                      description=f'Category: **`{cog}`**',
                                      colour=0xf20006)
             split = lambda x, n: x if not x else [x[:n]] + [split([] if not -(len(x) - n) else x[-(len(x) - n):], n)][0]
-            print(split(data, 2))
-            for i in data:
+            list_list = split(data, 2)
+            for items in list_list:
                 new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
                                 value=get_short_desc(i),
                                 inline=False)
@@ -292,7 +292,7 @@ class Help:
                 for item in items:
                     page_number += 1
                     paginator[str(page_number)] = item
-                return paginator
+            return paginator
 
         #test
 
