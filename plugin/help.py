@@ -341,21 +341,29 @@ class Help:
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = 0
                     print(page_number)
+            else:
+                pass
 
-            elif emoji_ascii == ascii(self.emoji_oneback_txt):
+            if emoji_ascii == ascii(self.emoji_oneback_txt):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = page_number - 1
                     print(page)
+            else:
+                pass
 
-            elif emoji_ascii == ascii(self.emoji_oneahead_txt):
+            if emoji_ascii == ascii(self.emoji_oneahead_txt):
                 if page_number >= 0 and page_number <= lenght_help:
                     page_number = page_number + 1
                     print(page_number)
+            else:
+                pass
 
-            elif emoji_ascii == ascii(self.emoji_end_text):
+            if emoji_ascii == ascii(self.emoji_end_text):
                 if page_number <= lenght_help:
                     page_number = lenght_help
                     print(page_number)
+            else:
+                pass
 
             new_page, reaction = await wait_for_reaction(new_page, paginator[str(page_number)])
             await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
