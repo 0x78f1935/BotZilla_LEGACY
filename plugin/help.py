@@ -271,7 +271,6 @@ class Help:
 
             pages = []
             print(f'empty list {pages}')
-            print(f'data: {data}')
             if len(data) > 3:
                 print(f'len > 3 {len(data)}')
                 for i in data:
@@ -279,8 +278,11 @@ class Help:
                                     value=get_short_desc(i),
                                     inline=False)
                     data.remove(i)
+                    if len(data) <= 0:
+                        break
                     print(f'new data len {len(data)}')
                 pages.append(new_page)
+                print(pages)
             else:
                 print(f'len < 3')
                 for i in data:
@@ -288,7 +290,7 @@ class Help:
                                     value=get_short_desc(i),
                                     inline=False)
                 pages.append(new_page)
-            print(pages)
+                print(pages)
             return pages
 
         def generate_pages():
