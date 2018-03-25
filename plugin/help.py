@@ -248,28 +248,13 @@ class Help:
         await asyncio.sleep(8)
         await self.bot.say('sleep over')
 
-        start = await self.bot.wait_for_reaction(emoji=self.emoji_start, message=page)
-        five_back = await self.bot.wait_for_reaction(emoji=self.emoji_five_back, message=page)
-        one_back = await self.bot.wait_for_reaction(emoji=self.emoji_oneback, message=page)
-        one_forward = await self.bot.wait_for_reaction(emoji=self.emoji_oneahead, message=page)
-        five_forward = await self.bot.wait_for_reaction(emoji=self.emoji_five_ahead, message=page)
-        end = await self.bot.wait_for_reaction(emoji=self.emoji_end, message=page)
+        def check_react(reaction):
+            return reaction == self.emoji_start or reaction == self.emoji_five_back or reaction == self.emoji_oneback or reaction == self.emoji_oneahead or reaction == self.emoji_five_ahead or reaction == self.emoji_end
 
-        if start:
-            await self.bot.say(f'{start} Done start')
-        if five_back:
-            await self.bot.say(f'{five_back} Done five_back')
-        if one_back:
-            await self.bot.say(f'{one_back} Done one_back')
-        if one_forward:
-            await self.bot.say(f'{one_forward} Done one_forward')
-        if five_forward:
-            await self.bot.say(f'{five_forward} Done five_forward')
-        if end:
-            await self.bot.say(f'{end} Done end')
+        reaction = await self.bot.wait_for_reaction(check=check_react, message=page)
 
         #debug
-        await self.bot.say(f'{self.config["prefix"]} Done')
+        await self.bot.say(f'{self.config["prefix"]} Done {reaction}')
 
 
 
