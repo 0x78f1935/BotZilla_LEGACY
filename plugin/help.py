@@ -241,7 +241,10 @@ class Help:
             command_desc = command_object[2]
             split_lines = command_desc.splitlines(keepends=True)
             list_desc = [i.strip() for i in split_lines if i != '\n']
-            short_desc = f'**```\n{list_desc[0]}\n{list_desc[1]}```**'
+            try:
+                short_desc = f'**```\n{list_desc[0]}\n{list_desc[1]}```**'
+            except Exception as e:
+                short_desc = f'**```\n{list_desc[0]}\n```**'
             return short_desc
 
         def embed_help(content, reaction):
