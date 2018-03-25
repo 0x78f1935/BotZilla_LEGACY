@@ -252,7 +252,7 @@ class Help:
 
         #debug
         await self.bot.say(f'{self.config["prefix"]} Done {reaction}\n\n')
-        await self.bot.say('{0.user} : {0.reaction.emoji}'.format(reaction))
+        await self.bot.say('{0.user.id} : {0.reaction.emoji}'.format(reaction))
 
 
 
