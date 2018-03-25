@@ -295,10 +295,10 @@ class Help:
         generate_pages_result = generate_pages()
 
         await self.bot.add_reaction(start, self.emoji_start)
-        await self.bot.add_reaction(start, self.emoji_five_back)
+        #await self.bot.add_reaction(start, self.emoji_five_back)
         await self.bot.add_reaction(start, self.emoji_oneback)
         await self.bot.add_reaction(start, self.emoji_oneahead)
-        await self.bot.add_reaction(start, self.emoji_five_ahead)
+        #await self.bot.add_reaction(start, self.emoji_five_ahead)
         await self.bot.add_reaction(start, self.emoji_end)
 
         await asyncio.sleep(0.6)
@@ -306,13 +306,12 @@ class Help:
 
         # remove duplicates
         page = 0
-        paginator = {}
+        paginator = {'0' : page0}
         for key, value in generate_pages_result.items():
             paginator[key] = value[0]
             page += 1
 
-        print(paginator)
-        page = 1
+        page = 0 # page 0 == introduction
 
         for i in range(len(paginator.keys())):
             new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
