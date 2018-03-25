@@ -280,9 +280,8 @@ class Help:
             paginator = {}
             page_number = 0
             for item in all:
-                if str(item) not in str(paginator):
-                    page_number += 1
-                    paginator[str(page_number)] = item
+                page_number += 1
+                paginator[str(page_number)] = item
             return paginator
 
         #test
@@ -293,7 +292,7 @@ class Help:
                               colour=0xf20006)
         start = await self.bot.say(embed=page0)
 
-        generate_pages = generate_pages()
+        generate_pages_result = generate_pages()
 
         await self.bot.add_reaction(start, self.emoji_start)
         await self.bot.add_reaction(start, self.emoji_five_back)
@@ -307,10 +306,9 @@ class Help:
 
         page = 0
         paginator = {}
-        for t in generate_pages.keys():
-            for item in generate_pages[t]:
-                paginator[page] = item
-                page += 1
+        for item in generate_pages[str(page)]:
+            paginator[page] = item
+            page += 1
 
         print(paginator)
         page = 1
