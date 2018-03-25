@@ -280,13 +280,21 @@ class Help:
         def generate_pages():
             print('generate_pages Function')
             all = []
+            print('all')
             all.append(new_page('Games'))
+            print('Games DONE')
             all.append(new_page('GameStats'))
+            print('GameStats DONE')
             all.append(new_page('Fun'))
+            print('Fun DONE')
             all.append(new_page('Music'))
+            print('Music DONE')
             all.append(new_page('Utils'))
+            print('Utils DONE')
             all.append(new_page('Images'))
+            print('Images DONE')
             all.append(new_page('Exchange'))
+            print('Exchange DONE')
 
             print(all)
 
