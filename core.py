@@ -256,7 +256,7 @@ async def on_member_remove(member):
                               description=f'{member.mention}, :wave:\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
                               colour=0xf20006)
         embed.add_field(name=f'**`{member.name}`**\'s additional information',
-                        value=f'Joined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}\nTop rol **`{member.top_rol}`**\nDisplay name **`{member.display_name}`**\nAccount created at **`{created_at.strftime("%Y-%m-%d %H:%M:%S")}`**')
+                        value=f'Joined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}\nTop rol **`{member.top_rol}`**\nDisplay name **`{member.name}`**\nAccount created at **`{created_at.strftime("%Y-%m-%d %H:%M:%S")}`**')
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f'Bot: {member.bot}')
         last_message = await bot.send_message(welcome_channel, embed=embed)
@@ -271,7 +271,7 @@ async def on_member_remove(member):
                               description=f'{member.mention}, :wave:\nJoined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}`**',
                               colour=0xf20006)
         embed.add_field(name=f'**`{member.name}`**\'s additional information',
-                        value=f'Joined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}\nTop rol **`{member.top_rol}`**\nDisplay name **`{member.display_name}`**\nAccount created at **`{created_at.strftime("%Y-%m-%d %H:%M:%S")}`**')
+                        value=f'Joined at **`{join_date.strftime("%Y-%m-%d %H:%M:%S")}\nTop rol **`{member.top_rol}`**\nDisplay name **`{member.name}`**\nAccount created at **`{created_at.strftime("%Y-%m-%d %H:%M:%S")}`**')
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f'Bot: {member.bot}')
         last_message = await bot.send_message(welcome_channel, embed=embed)
