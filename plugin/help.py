@@ -340,7 +340,7 @@ class Help:
 
         await asyncio.sleep(0.6)
 
-        page0.set_footer(text=f'Ready...\tVersion: {self.version}')
+        page0.set_footer(text=f'Version: {self.version}\tReady...')
         await self.bot.edit_message(start, embed=page0)
 
         # print('Reactions added')
@@ -391,7 +391,7 @@ class Help:
                     # print(page_number)
 
             embed = paginator[str(page_number)]
-            embed.set_footer(text=f'Page: {int(page_number + 1)}/{int(len(paginator.keys()))}\tVersion: {self.version}')
+            embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
             await self.bot.edit_message(start, embed=embed)
 
 def setup(bot):
