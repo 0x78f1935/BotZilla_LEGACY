@@ -241,7 +241,6 @@ class Help:
             command_desc = command_object[2]
             split_lines = command_desc.splitlines(keepends=True)
             list_desc = [i.strip() for i in split_lines if i != '\n']
-            print(list_desc[0])
             try:
                 short_desc = f'{list_desc[0]}\n{list_desc[1]}'
             except Exception as e:
@@ -286,11 +285,11 @@ class Help:
                     new_list = split(data, 3)[page_number]
                 page_number += 1
                 for item in new_list:
-                    print(item)
                     new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
                                     value=get_short_desc(item[0]),
                                     inline=False)
                     pages.append(new_page)
+            print(pages)
             return pages
 
         def generate_pages():
@@ -305,6 +304,7 @@ class Help:
 
             paginator = {}
             page_number = 0
+            print(all)
             for items in all:
                 for item in items:
                     page_number += 1
