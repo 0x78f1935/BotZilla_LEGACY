@@ -261,7 +261,7 @@ class Help:
                 return reaction
             else:
                 await wait_for_reaction(message)
-                
+
         def create_new_page(cog:str):
             print('New_page Function')
             data = get_commands_by_cog(cog)
@@ -367,7 +367,9 @@ class Help:
             embed = paginator[str(page_number)]
             embed.set_footer(text=f'PAGE: {page_number} / {int(len(paginator.keys()) - 1)}')
             await self.bot.edit_message(start, embed=embed)
-            await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=ctx.message.author, message=start)
+            p = self.bot.get_all_members()
+            for people in p:
+                await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=people, message=start)
             # await self.bot.say(f'PAGE: {page_number}')
             # await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
 
