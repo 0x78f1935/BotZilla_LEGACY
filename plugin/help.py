@@ -316,7 +316,7 @@ class Help:
         page = 1
         print('*******************************************************')
         for i in range(len(paginator.keys())):
-            new_page, reaction = await wait_for_reaction(start, generate_pages[page])
+            new_page, reaction = await wait_for_reaction(start, paginator[page])
             await self.bot.say(reaction.reaction.emoji)
             page += 1
 
