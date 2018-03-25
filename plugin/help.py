@@ -288,6 +288,8 @@ class Help:
             all.append(new_page('Images'))
             all.append(new_page('Exchange'))
 
+            print(all)
+
             paginator = {}
             page_number = 0
             for item in all:
