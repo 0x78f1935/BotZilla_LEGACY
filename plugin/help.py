@@ -356,7 +356,7 @@ class Help:
                     page_number = page_number - 1
                     print(page)
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead):
-                if page_number >= 0 and page_number <= lenght_help:
+                if page_number >= 0 and page_number <= lenght_help - 1:
                     page_number = page_number + 1
                     print(page_number)
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end):
