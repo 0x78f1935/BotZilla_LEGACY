@@ -312,13 +312,20 @@ class Help:
             page += 1
 
         page = 0 # page 0 == introduction
+        lenght_help = int(len(paginator.keys()))
 
         for i in range(len(paginator.keys())):
             new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
             if page <= 1:
-                await self.bot.add_reaction(new_page, self.emoji_oneback)
-                await self.bot.add_reaction(new_page, self.emoji_oneahead)
-                await self.bot.add_reaction(new_page, self.emoji_end)
+                await self.bot.remove_reaction(new_page, self.emoji_start)
+            if page >= 2 and page <= (lenght_help-2):
+                await self.bot.add_reaction(start, self.emoji_start)
+                await self.bot.add_reaction(start, self.emoji_oneback)
+                await self.bot.add_reaction(start, self.emoji_oneahead)
+                await self.bot.add_reaction(start, self.emoji_end)
+            if page >= (lenght_help-1):
+                await self.bot.remove_reaction(new_page, self.emoji_end)
+
 
 
             emoji_ascii = ascii(reaction.reaction.emoji)
