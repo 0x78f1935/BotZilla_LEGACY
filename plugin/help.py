@@ -251,10 +251,10 @@ class Help:
         def wait_for_reaction(message):
             reaction = self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
             print(reaction)
-            if reaction.user.id != ctx.message.author.id:
+            if str(reaction.user.id) != str(ctx.message.author.id):
                 print('not user')
                 wait_for_reaction(message)
-            if reaction.user.id == ctx.message.author.id:
+            if str(reaction.user.id) == str(ctx.message.author.id):
                 print('user found')
                 return reaction
 
