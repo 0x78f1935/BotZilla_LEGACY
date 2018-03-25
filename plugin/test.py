@@ -29,9 +29,5 @@ class TestScripts:
             print('Test: Database files not found - {}'.format(e.args))
             pass
 
-    @commands.command(pass_context=True)
-    async def test(self, ctx, member:discord.Member = None, emoji : str = None):
-        pass
-
 def setup(bot):
     bot.add_cog(TestScripts(bot))
