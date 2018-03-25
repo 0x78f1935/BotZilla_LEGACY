@@ -233,8 +233,8 @@ class Help:
         await self.bot.add_reaction(page, self.emoji_five_ahead)
         await self.bot.add_reaction(page, self.emoji_end)
 
-        await asyncio.sleep(5)
-
+        await asyncio.sleep(8)
+        await self.bot.say('sleep over')
         start = await self.bot.wait_for_reaction(emoji=self.emoji_start)
         five_back = await self.bot.wait_for_reaction(emoji=self.emoji_five_back)
         one_back = await self.bot.wait_for_reaction(emoji=self.emoji_oneback)
