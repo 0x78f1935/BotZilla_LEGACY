@@ -321,7 +321,9 @@ class Help:
 
         # Pages
         page0 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                              description='This command is under construction and may not work correctly',
+                              description='This command is under construction and may not work correctly\n'
+                                          'If you are stuck this console is for you.\nNavigate around with the **`emoji\'s`** underneath.\n\n`{0}`: Firt page\n`{1}`: Five pages back\n`{2}`: One page back\n`{3}`: Next page\n`{4}`: Skip next five pages\n`{5}`: Last page'.format(
+                                  self.emoji_start_txt, self.emoji_five_back_txt, self.emoji_oneback_txt, self.emoji_oneahead_txt, self.emoji_five_ahead_txt, self.emoji_end_txt),
                               colour=0xf20006)
         start = await self.bot.say(embed=page0)
 
