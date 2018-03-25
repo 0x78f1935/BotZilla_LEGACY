@@ -269,7 +269,7 @@ class Help:
 
         reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=page)
         if reaction.user.id == ctx.message.author.id:
-            await self.bot.edit_message(start, embed=page0)
+            await self.bot.edit_message(start, embed=page1)
 
 def setup(bot):
     bot.add_cog(Help(bot))
