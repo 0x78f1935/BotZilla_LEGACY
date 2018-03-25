@@ -225,14 +225,20 @@ class Help:
         self.emoji_five_ahead = '\u23e9'
         self.emoji_end = '\u23ed'
 
-        def get_command(command_name):
+        def get_command_by_name(command_name):
             self.database.cur.execute("select * from botzilla.help where name = '{}';".format(command_name))
             command_object = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
             return command_object
 
+        def get_commands_by_cog(cog_name):
+            self.database.cur.execute("select * from botzilla.help where name = '{}';".format(cog_name))
+            command_object = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            return command_object
+
         def get_short_desc(command_name):
-            command_object = get_command(command_name)
+            command_object = get_command_by_name(command_name)
             command_desc = str(command_object[2])
             split_lines = command_desc.splitlines(keepends=True)
             list_desc = [i.strip() for i in split_lines if i != '\n']
@@ -261,18 +267,15 @@ class Help:
                               colour=0xf20006)
         start = await self.bot.say(embed=page0)
 
-        page1 = discord.Embed(colour=0xf20006)
-        page1.add_field(name=f"{self.config['prefix']}{get_command('8ball')[0]}",
-                        value=get_short_desc('8ball')['8ball'],
-                        inline=False)
+        Games = get_commands_by_cog('Games')
 
-        page1.add_field(name=f"{self.config['prefix']}{get_command('battleship')[0]}",
-                        value=get_short_desc('battleship')['battleship'],
-                        inline=False)
-
-        page1.add_field(name=f"{self.config['prefix']}{get_command('highlow')[0]}",
-                        value=get_short_desc('highlow')['highlow'],
-                        inline=False)
+        page1 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                              description='This command is under construction and may not work correctly',
+                              colour=0xf20006)
+        for i in Games:
+            page1.add_field(name=f"{self.config['prefix']}{get_command(i[0])}",
+                            value=get_short_desc(i[0])[i[0]],
+                            inline=False)
 
         await self.bot.add_reaction(start, self.emoji_start)
         await self.bot.add_reaction(start, self.emoji_five_back)
