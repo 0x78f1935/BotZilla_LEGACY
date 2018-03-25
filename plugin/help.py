@@ -3,6 +3,7 @@ from discord.ext import commands
 import json
 import datetime
 import asyncio
+
 try:
     from plugin.database import Database
 except Exception as e:
@@ -224,6 +225,17 @@ class Help:
         self.emoji_five_ahead = '\u23e9'
         self.emoji_end = '\u23ed'
 
+        def parse_time(s):
+            hour, min, sec = s.split(':')
+            try:
+                hour = int(hour)
+                min = int(min)
+                sec = int(sec)
+            except ValueError:
+                # handle errors here, but this isn't a bad default to ignore errors
+                return 0
+            return hour * 60 * 60 + min * 60 + sec
+
         #test
         page = await self.bot.say('test')
         await self.bot.add_reaction(page, self.emoji_start)
@@ -235,25 +247,33 @@ class Help:
 
         await asyncio.sleep(8)
         await self.bot.say('sleep over')
-        start = await self.bot.wait_for_reaction(emoji=self.emoji_start, message=page)
-        five_back = await self.bot.wait_for_reaction(emoji=self.emoji_five_back, message=page)
-        one_back = await self.bot.wait_for_reaction(emoji=self.emoji_oneback, message=page)
-        one_forward = await self.bot.wait_for_reaction(emoji=self.emoji_oneahead, message=page)
-        five_forward = await self.bot.wait_for_reaction(emoji=self.emoji_five_ahead, message=page)
-        end = await self.bot.wait_for_reaction(emoji=self.emoji_end, message=page)
 
-        if start:
-            await self.bot.say(f'{start} Done start')
-        if five_back:
-            await self.bot.say(f'{five_back} Done five_back')
-        if one_back:
-            await self.bot.say(f'{one_back} Done one_back')
-        if one_forward:
-            await self.bot.say(f'{one_forward} Done one_forward')
-        if five_forward:
-            await self.bot.say(f'{five_forward} Done five_forward')
-        if end:
-            await self.bot.say(f'{end} Done end')
+        t = 300
+        while t >= 0:
+            start = await self.bot.wait_for_reaction(emoji=self.emoji_start, message=page)
+            five_back = await self.bot.wait_for_reaction(emoji=self.emoji_five_back, message=page)
+            one_back = await self.bot.wait_for_reaction(emoji=self.emoji_oneback, message=page)
+            one_forward = await self.bot.wait_for_reaction(emoji=self.emoji_oneahead, message=page)
+            five_forward = await self.bot.wait_for_reaction(emoji=self.emoji_five_ahead, message=page)
+            end = await self.bot.wait_for_reaction(emoji=self.emoji_end, message=page)
+
+            await asyncio.sleep(1)
+            t -= 1
+
+            if start:
+                await self.bot.say(f'{start} Done start')
+            if five_back:
+                await self.bot.say(f'{five_back} Done five_back')
+            if one_back:
+                await self.bot.say(f'{one_back} Done one_back')
+            if one_forward:
+                await self.bot.say(f'{one_forward} Done one_forward')
+            if five_forward:
+                await self.bot.say(f'{five_forward} Done five_forward')
+            if end:
+                await self.bot.say(f'{end} Done end')
+
+
 
         #debug
         await self.bot.say(f'{self.config["prefix"]} Done')
