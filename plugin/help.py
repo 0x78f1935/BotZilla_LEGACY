@@ -258,7 +258,7 @@ class Help:
         async def wait_for_reaction(message, new_page):
             reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
             if ctx.message.author.id == reaction.user.id:
-                return await self.bot.edit_message(message, embed=new_page), reaction
+                return reaction
             else:
                 await wait_for_reaction(message, new_page)
 
@@ -300,16 +300,16 @@ class Help:
         page0 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                               description='This command is under construction and may not work correctly',
                               colour=0xf20006)
-        start = await self.bot.say(embed=page0)
+        new_page = await self.bot.say(embed=page0)
 
         generate_pages_result = generate_pages()
 
-        await self.bot.add_reaction(start, self.emoji_start)
-        #await self.bot.add_reaction(start, self.emoji_five_back) #Maybe if there are more commands
-        await self.bot.add_reaction(start, self.emoji_oneback)
-        await self.bot.add_reaction(start, self.emoji_oneahead)
-        #await self.bot.add_reaction(start, self.emoji_five_ahead) #Maybe if there are more commands
-        await self.bot.add_reaction(start, self.emoji_end)
+        await self.bot.add_reaction(new_page, self.emoji_start)
+        #await self.bot.add_reaction(new_page, self.emoji_five_back) #Maybe if there are more commands
+        await self.bot.add_reaction(new_page, self.emoji_oneback)
+        await self.bot.add_reaction(new_page, self.emoji_oneahead)
+        #await self.bot.add_reaction(new_page, self.emoji_five_ahead) #Maybe if there are more commands
+        await self.bot.add_reaction(new_page, self.emoji_end)
 
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
@@ -327,7 +327,7 @@ class Help:
 
         print(f'QUery lenght: {lenght_help}')
 
-        new_page, reaction = await wait_for_reaction(start, paginator[str(page_number)])
+        new_page, reaction = await wait_for_reaction(new_page, paginator[str(page_number)])
         emoji_ascii = ascii(str(reaction.reaction.emoji))
         print(reaction.reaction.emoji)
         print(emoji_ascii)
@@ -338,7 +338,8 @@ class Help:
 
         for i in range(len(paginator.keys()) - 1):
             try:
-                new_page, reaction = await wait_for_reaction(new_page, paginator[str(page_number)])
+                reaction = await wait_for_reaction(new_page, paginator[str(page_number)])
+                new_page = await self.bot.edit_message(new_page, embed=new_page)
             except Exception as e:
                 print(e.args)
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start):
