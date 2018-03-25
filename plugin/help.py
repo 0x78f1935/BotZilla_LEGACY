@@ -300,7 +300,9 @@ class Help:
         await self.bot.say('Ready...')
 
         new_page = await wait_for_reaction(start, page1)
+        await self.bot.say(new_page.user.id)
         new_page = await wait_for_reaction(new_page, page2)
+        await self.bot.say(new_page.user.id)
 
 
 
