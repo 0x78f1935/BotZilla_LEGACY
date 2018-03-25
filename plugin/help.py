@@ -311,7 +311,9 @@ class Help:
 
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
-
+        reaction = await self.bot.wait_for_reaction(
+            [self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead,
+             self.emoji_end], message=start)
         # remove duplicates
         page = 0
         paginator = {}
@@ -322,10 +324,6 @@ class Help:
 
         page = 0 # page 0 == introduction
         lenght_help = int(len(paginator.keys()))
-
-        reaction = await self.bot.wait_for_reaction(
-            [self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead,
-             self.emoji_end], message=start)
 
         for i in range(len(paginator.keys())):
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start_txt):
