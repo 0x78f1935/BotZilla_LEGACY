@@ -265,7 +265,8 @@ class Help:
             print(f'get command {cog}')
             data = sorted(data)
             print(f'sorted {cog}')
-            new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+            embed = str(0)
+            embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                                   description=f'Category: **`{cog}`**',
                                   colour=0xf20006)
 
@@ -274,22 +275,24 @@ class Help:
             if len(data) > 3:
                 print(f'len > 3 {len(data)}')
                 for i in data:
-                    new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
+                    embed.add_field(name=f"{self.config['prefix']}{i[0]}",
                                     value=get_short_desc(i),
                                     inline=False)
+                    embed += 1
                     data.remove(i)
                     if len(data) <= 0:
                         break
                     print(f'new data len {len(data)}')
-                pages.append(new_page)
+                pages.append(embed)
                 print(pages)
             else:
                 print(f'len < 3')
                 for i in data:
-                    new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
+                    embed.add_field(name=f"{self.config['prefix']}{i[0]}",
                                     value=get_short_desc(i),
                                     inline=False)
-                pages.append(new_page)
+                    embed += 1
+                pages.append(embed)
                 print(pages)
             return pages
 
