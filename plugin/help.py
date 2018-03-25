@@ -234,10 +234,11 @@ class Help:
         def get_short_desc(command_name):
             command_object = get_command(command_name)
             command_desc = str(command_object[2])
+            name = str(command_object[0])
             split_lines = command_desc.splitlines(keepends=True)
             list_desc = [i.strip() for i in split_lines if i != '\n']
             short_desc = f'{list_desc[0]}\n{list_desc[1]}'
-            return short_desc
+            return name, short_desc
 
         #test
 
@@ -247,10 +248,11 @@ class Help:
                               colour=0xf20006)
         page = await self.bot.say(embed=embed)
 
+        name, short_desc = get_command('8ball')
         embed_page1 = discord.Embed(title='\t',
                                     description='\t',
                                     colour=0xf20006)
-        embed_page1.add_field(name=str(get_command('8ball')), value=str(get_short_desc('8ball')))
+        embed_page1.add_field(name=name, value=short_desc)
 
 
         await self.bot.add_reaction(page, self.emoji_start)
