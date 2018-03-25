@@ -268,6 +268,7 @@ class Help:
                                      description=f'Category: **`{cog}`**',
                                      colour=0xf20006)
 
+            print(len(data))
             if len(data) > 3:
                 for i in data and range(3):
                     new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
