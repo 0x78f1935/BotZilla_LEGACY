@@ -385,7 +385,7 @@ class Help:
                     print(page_number)
 
             embed = paginator[str(page_number)]
-            embed.set_footer(text=f'**`Page:`** `{int(page_number + 1)}` / `{int(len(paginator.keys()))}`')
+            embed.set_footer(text=f'Page: [{int(page_number + 1)}]//[{int(len(paginator.keys()))}]')
             await self.bot.edit_message(start, embed=embed)
 
 def setup(bot):
