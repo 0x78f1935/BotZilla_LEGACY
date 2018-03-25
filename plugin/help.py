@@ -306,15 +306,15 @@ class Help:
 
         page = 0
         paginator = {}
-        for t in generate_pages.values():
-            paginator[page] = t
-            page += 1
+        for t in generate_pages.keys():
+            for item in generate_pages[t]:
+                paginator[page] = item
+                page += 1
 
-        print(generate_pages)
+        print(paginator)
         page = 1
-        print('*******************************************************')
         for i in range(len(paginator.keys())):
-            new_page, reaction = await wait_for_reaction(start, paginator[page])
+            new_page, reaction = await wait_for_reaction(start, generate_pages[page])
             await self.bot.say(reaction.reaction.emoji)
             page += 1
 
