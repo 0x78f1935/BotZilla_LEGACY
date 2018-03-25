@@ -317,16 +317,16 @@ class Help:
         for i in range(len(paginator.keys())):
             new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
             emoji_ascii = ascii(reaction.reaction.emoji)
-            if emoji_ascii == self.emoji_start:
+            if str(emoji_ascii) == self.emoji_start:
                 page = 0
                 new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            elif emoji_ascii == self.emoji_oneback:
+            elif str(emoji_ascii) == self.emoji_oneback:
                 page -= 1
                 new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            elif emoji_ascii == self.emoji_oneahead:
+            elif str(emoji_ascii) == self.emoji_oneahead:
                 page += 1
                 new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            elif emoji_ascii == self.emoji_end:
+            elif str(emoji_ascii) == self.emoji_end:
                 page = lenght_help
                 new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
             await self.bot.say(f'{reaction.reaction.emoji} : {emoji_ascii}')
