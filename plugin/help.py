@@ -336,7 +336,7 @@ class Help:
         print(emoji_ascii == ascii(self.emoji_oneahead))
         print(emoji_ascii == ascii(self.emoji_end))
 
-        for i in range(len(paginator.keys())):
+        for i in range(len(paginator.keys()) - 1):
             if emoji_ascii == ascii(self.emoji_start_txt):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = 0
