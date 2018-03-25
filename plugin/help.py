@@ -245,11 +245,12 @@ class Help:
         await self.bot.add_reaction(page, self.emoji_five_ahead)
         await self.bot.add_reaction(page, self.emoji_end)
 
-        await asyncio.sleep(3.5)
+        await asyncio.sleep(1.5)
         await self.bot.say('sleep over')
 
         while True:
             reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=page)
+            await asyncio.sleep(1)
             if reaction.user.id == ctx.message.author.id:
                 break
 
