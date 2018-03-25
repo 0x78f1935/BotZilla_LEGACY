@@ -251,7 +251,7 @@ class Help:
         reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=page)
 
         #debug
-        await self.bot.say(f'{self.config["prefix"]} Done {reaction}')
+        await self.bot.say(f'{self.config["prefix"]} Done {reaction}\n\n{0.user} {0.reaction.emoji}')
 
 
 
