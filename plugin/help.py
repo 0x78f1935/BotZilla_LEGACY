@@ -225,6 +225,8 @@ class Help:
         self.emoji_five_ahead = '\u23e9'
         self.emoji_end = '\u23ed'
 
+        self.message = ctx.message
+
         self.emoji_start_txt = '⏮'
         self.emoji_five_back_txt = '⏪'
         self.emoji_oneback_txt = '◀'
@@ -342,10 +344,11 @@ class Help:
         print(f'QUery lenght: {lenght_help}')
 
         for i in range(100):
-            try:
-                reaction = await wait_for_reaction(start)
-            except Exception as e:
-                print(e.args)
+            # try:
+                # reaction = await wait_for_reaction(start)
+            reaction, user = await self.bot.wait_for([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], timeout=120.0)
+            # except Exception as e:
+            #     print(e.args)
 
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start):
                 if page_number >= 1 and page_number <= lenght_help:
@@ -367,9 +370,11 @@ class Help:
             embed = paginator[str(page_number)]
             embed.set_footer(text=f'PAGE: {page_number} / {int(len(paginator.keys()) - 1)}')
             await self.bot.edit_message(start, embed=embed)
-            p = self.bot.get_all_members()
-            for people in p:
-                await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=people, message=start)
+            try:
+                await self.message.remove_reaction(reaction, user)
+            except:
+                pass
+            # await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=ctx.message.author, message=start)
             # await self.bot.say(f'PAGE: {page_number}')
             # await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
 
