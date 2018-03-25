@@ -326,6 +326,7 @@ class Help:
         for i in range(len(paginator.keys())):
             new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
             emoji_ascii = ascii(reaction.reaction.emoji)
+            print(reaction.reaction.emoji)
             if str(reaction.reaction.emoji) == self.emoji_start_txt:
                 page = 0
                 print(page)
