@@ -225,6 +225,14 @@ class Help:
         self.emoji_five_ahead = '\u23e9'
         self.emoji_end = '\u23ed'
 
+        self.emoji_start_txt = '⏮'
+        self.emoji_five_back_txt = '⏪'
+        self.emoji_oneback_txt = '◀'
+        self.emoji_oneahead_txt = '▶'
+        self.emoji_five_ahead_txt = '⏩'
+        self.emoji_end_txt = '⏭'
+
+
         def get_command_by_name(command_name):
             self.database.cur.execute("select * from botzilla.help where name = '{}';".format(command_name))
             command_object = self.database.cur.fetchone()
@@ -318,22 +326,22 @@ class Help:
         for i in range(len(paginator.keys())):
             new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
             emoji_ascii = ascii(reaction.reaction.emoji)
-            if str(emoji_ascii) == self.emoji_start:
+            if str(reaction.reaction.emoji) == self.emoji_start_txt:
                 page = 0
                 print(page)
                 print(paginator[str(page)])
                 new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            elif str(emoji_ascii) == self.emoji_oneback:
+            elif str(reaction.reaction.emoji) == self.emoji_oneback_txt:
                 page -= 1
                 print(page)
                 print(paginator[str(page)])
                 new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            elif str(emoji_ascii) == self.emoji_oneahead:
+            elif str(reaction.reaction.emoji) == self.emoji_oneahead_txt:
                 page += 1
                 print(page)
                 print(paginator[str(page)])
                 new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            elif str(emoji_ascii) == self.emoji_end:
+            elif str(reaction.reaction.emoji) == self.emoji_end_txt:
                 page = lenght_help
                 print(page)
                 print(paginator[str(page)])
