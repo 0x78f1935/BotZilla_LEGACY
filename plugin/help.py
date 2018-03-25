@@ -265,16 +265,27 @@ class Help:
                               colour=0xf20006)
         start = await self.bot.say(embed=page0)
 
+        # Games
         Games = get_commands_by_cog('Games')
-
-        page1 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                              description='This command is under construction and may not work correctly',
-                              colour=0xf20006)
-
         Games = sorted(Games)
+        page1 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                              description='Category: **`Games`**',
+                              colour=0xf20006)
         for i in Games:
             print(i)
             page1.add_field(name=f"{self.config['prefix']}{i[0]}",
+                            value=get_short_desc(i),
+                            inline=False)
+
+        # Game Stats
+        Gamestats = get_commands_by_cog('Games')
+        Gamestats = sorted(Gamestats)
+        page2 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                              description='Category: **`Games Stats`**',
+                              colour=0xf20006)
+        for i in Gamestats:
+            print(i)
+            page2.add_field(name=f"{self.config['prefix']}{i[0]}",
                             value=get_short_desc(i),
                             inline=False)
 
@@ -289,6 +300,7 @@ class Help:
         await self.bot.say('Ready...')
 
         reaction = await wait_for_reaction(start, page1)
+        reaction = await wait_for_reaction(page1, page2)
 
 
 
