@@ -248,11 +248,14 @@ class Help:
         await asyncio.sleep(3.5)
         await self.bot.say('sleep over')
 
-        reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=page)
+        while True:
+            reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=page)
+            if reaction.user.id == ctx.message.author.id:
+                break
 
         #debug
         await self.bot.say(f'{self.config["prefix"]} Done {reaction}\n\n')
-        await self.bot.say('{0.user.id} : {0.reaction.emoji}'.format(reaction))
+        await self.bot.say('{0.user.name} : {0.reaction.emoji}'.format(reaction))
 
 
 
