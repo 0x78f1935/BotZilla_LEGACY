@@ -273,6 +273,7 @@ class Help:
                               description='This command is under construction and may not work correctly',
                               colour=0xf20006)
         for i in Games:
+            print(i)
             page1.add_field(name=f"{self.config['prefix']}{get_command(i[0])}",
                             value=get_short_desc(i[0])[i[0]],
                             inline=False)
