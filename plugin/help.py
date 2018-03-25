@@ -292,7 +292,7 @@ class Help:
                 for item in items:
                     page_number += 1
                     paginator[str(page_number)] = item
-            return paginator
+                return paginator
 
         #test
 
