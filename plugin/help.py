@@ -227,23 +227,31 @@ class Help:
 
         def get_command(command_name):
             self.database.cur.execute("select * from botzilla.help where name = '{}';".format(command_name))
-            Games_cog = self.database.cur.fetchall()
+            command_object = self.database.cur.fetchone()
             self.database.cur.execute("ROLLBACK;")
-            Games_commands = []
-            Games_commands.append('**------**')
-            for i in Games_cog:
-                i = '-`{}{}`\n\t`{}`'.format(self.config['prefix'], i[0], i[2])
-                Games_commands.append(i)
-            Games_commands.sort()
-            Games_commands.append('**------**')
-            Games_name = "\n\n**======**\n\n".join(Games_commands)
-            return Games_name
+            return command_object
 
-        def embed_help(content, reaction):
-            embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                  description='{1}\n{0.user.name} : {0.reaction.emoji}'.format(reaction, content),
-                                  colour=0xf20006)
-            return embed
+        def get_short_desc(command_name):
+            command_object = get_command(command_name)
+            command_desc = str(command_object[2])
+            split_lines = command_desc.splitlines(keepends=True)
+            list_desc = [i.strip() for i in split_lines if i != '\n']
+            short_desc = f'{list_desc[0]}\n{list_desc[1]}'
+            command_dict = {command_object[0] : short_desc}
+            return command_dict
+
+        def embed_help(content, field_name = None, field_value = None, *, reaction):
+            if field_name is None or field_value is None:
+                embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                                      description='{1}\n{0.user.name} : {0.reaction.emoji}'.format(reaction, content),
+                                      colour=0xf20006)
+                return embed
+            else:
+                embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                                      description='{1}\n{0.user.name} : {0.reaction.emoji}'.format(reaction, content),
+                                      colour=0xf20006)
+                embed.add_field(name=field_name, value=field_value)
+                return embed
 
         #test
         embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
@@ -263,7 +271,7 @@ class Help:
 
         reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=page)
         if reaction.user.id == ctx.message.author.id:
-            await self.bot.edit_message(page, embed=embed_help(get_games(), reaction=reaction))
+            await self.bot.edit_message(page, embed=embed_help(content=get_short_desc('battleship')['battleship'], field_name=get_short_desc('battleship').keys(), reaction=reaction))
 
 def setup(bot):
     bot.add_cog(Help(bot))
