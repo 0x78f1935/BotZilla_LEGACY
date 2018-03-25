@@ -246,19 +246,11 @@ class Help:
         await self.bot.add_reaction(page, self.emoji_end)
 
         await asyncio.sleep(1.5)
-        await self.bot.say('sleep over')
+        await self.bot.say('Ready...')
 
-        t = 300 #5 minutes
-        while t >= 0:
-            reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=page)
-            await asyncio.sleep(1)
-            t = t - 1
-            print(t)
-            if reaction.user.id == ctx.message.author.id:
-                await self.bot.say('{0.user.name} : {0.reaction.emoji}'.format(reaction)) # debug
-                break
-
-        await self.bot.say('{0.user.mention} No emoji is used in your test'.format(reaction))
+        reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=page)
+        if reaction.user.id == ctx.message.author.id:
+            await self.bot.say('{0.user.name} : {0.reaction.emoji}'.format(reaction)) # debug
 
 def setup(bot):
     bot.add_cog(Help(bot))
