@@ -263,6 +263,7 @@ class Help:
                 await wait_for_reaction(message, new_page)
 
         def new_page(cog):
+            print('New_page Function')
             data = get_commands_by_cog(cog)
             data = sorted(data)
             pages = []
@@ -273,9 +274,11 @@ class Help:
                                 value=f'***`{get_short_desc(item)}`***',
                                 inline=False)
                 pages.append(new_page)
+            print('DONE New_page Function')
             return pages
 
         def generate_pages():
+            print('generate_pages Function')
             all = []
             all.append(new_page('Games'))
             all.append(new_page('GameStats'))
@@ -290,7 +293,7 @@ class Help:
             for item in all:
                 page_number += 1
                 paginator[str(page_number)] = item
-            print('Paginator done')
+            print('DONE generate_pages Function')
             return paginator
 
         #test
