@@ -245,13 +245,10 @@ class Help:
         await self.bot.add_reaction(page, self.emoji_five_ahead)
         await self.bot.add_reaction(page, self.emoji_end)
 
-        await asyncio.sleep(8)
+        await asyncio.sleep(3.5)
         await self.bot.say('sleep over')
 
-        def check_react(reaction):
-            return reaction == self.emoji_start or reaction == self.emoji_five_back or reaction == self.emoji_oneback or reaction == self.emoji_oneahead or reaction == self.emoji_five_ahead or reaction == self.emoji_end
-
-        reaction = await self.bot.wait_for_reaction(check=check_react, message=page)
+        reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=page)
 
         #debug
         await self.bot.say(f'{self.config["prefix"]} Done {reaction}')
