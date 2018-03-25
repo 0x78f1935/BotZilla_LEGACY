@@ -289,6 +289,18 @@ class Help:
                             value=get_short_desc(i),
                             inline=False)
 
+        # Fun
+        Fun = get_commands_by_cog('Fun')
+        Fun = sorted(Fun)
+        page3 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                              description='Category: **`Fun`**',
+                              colour=0xf20006)
+        for i in Fun:
+            print(i)
+            page3.add_field(name=f"{self.config['prefix']}{i[0]}",
+                            value=get_short_desc(i),
+                            inline=False)
+
         await self.bot.add_reaction(start, self.emoji_start)
         await self.bot.add_reaction(start, self.emoji_five_back)
         await self.bot.add_reaction(start, self.emoji_oneback)
@@ -303,7 +315,8 @@ class Help:
         await self.bot.say(reaction.reaction.emoji)
         new_page, reaction = await wait_for_reaction(new_page, page2)
         await self.bot.say(reaction.reaction.emoji)
-        await self.bot.say(f'```{reaction.reaction.id}```')
+        new_page, reaction = await wait_for_reaction(new_page, page3)
+        await self.bot.say(reaction.reaction.emoji)
 
 
 
