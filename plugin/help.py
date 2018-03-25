@@ -228,7 +228,6 @@ class Help:
         def get_command(command_name):
             self.database.cur.execute("select * from botzilla.help where name = '{}';".format(command_name))
             command_object = self.database.cur.fetchone()
-            print(command_object)
             self.database.cur.execute("ROLLBACK;")
             return command_object
 
@@ -237,7 +236,6 @@ class Help:
             command_desc = str(command_object[2])
             split_lines = command_desc.splitlines(keepends=True)
             list_desc = [i.strip() for i in split_lines if i != '\n']
-            print(list_desc)
             short_desc = f'**```\n{list_desc[0]}\n{list_desc[1]}```**'
             command_dict = {command_object[0] : short_desc}
             return command_dict
@@ -272,9 +270,7 @@ class Help:
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
 
-        await asyncio.sleep(.5)
-
-        reaction = wait_for_reaction(start)
+        reaction = self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
         if ctx.message.author.id == reaction.user.id:
             await self.bot.edit_message(start, embed=page1)
 
