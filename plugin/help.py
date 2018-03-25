@@ -295,10 +295,10 @@ class Help:
         generate_pages_result = generate_pages()
 
         await self.bot.add_reaction(start, self.emoji_start)
-        #await self.bot.add_reaction(start, self.emoji_five_back)
+        #await self.bot.add_reaction(start, self.emoji_five_back) #Maybe if there are more commands
         await self.bot.add_reaction(start, self.emoji_oneback)
         await self.bot.add_reaction(start, self.emoji_oneahead)
-        #await self.bot.add_reaction(start, self.emoji_five_ahead)
+        #await self.bot.add_reaction(start, self.emoji_five_ahead) #Maybe if there are more commands
         await self.bot.add_reaction(start, self.emoji_end)
 
         await asyncio.sleep(0.6)
@@ -315,6 +315,12 @@ class Help:
 
         for i in range(len(paginator.keys())):
             new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
+            if page <= 1:
+                await self.bot.add_reaction(new_page, self.emoji_oneback)
+                await self.bot.add_reaction(new_page, self.emoji_oneahead)
+                await self.bot.add_reaction(new_page, self.emoji_end)
+
+
             emoji_ascii = ascii(reaction.reaction.emoji)
             await self.bot.say(f'{reaction.reaction.emoji} : {emoji_ascii}')
             page += 1
