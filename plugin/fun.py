@@ -510,6 +510,8 @@ class Fun:
     async def joke(self, ctx):
         """
         Ever heard a Chuck Norris joke?
+        He is ready to tell you the joke of your life
+
         Usage:
           - !!joke
         """
