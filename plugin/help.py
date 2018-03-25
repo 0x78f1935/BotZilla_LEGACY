@@ -268,9 +268,19 @@ class Help:
                                      colour=0xf20006)
             split = lambda x, n: x if not x else [x[:n]] + [split([] if not -(len(x) - n) else x[-(len(x) - n):], n)][0]
             page_number = 0
-            new_list = split(data, 2)[1]
-            print(new_list)
-            for item in new_list:
+
+            self.database.cur.execute("select count(cog) from botzilla.help where cog = '{}';".format(cog))
+            count_cog = self.database.cur.fetchone()
+            self.database.cur.execute("ROLLBACK;")
+
+            if count_cog[0] > 3:
+                count = int(count_cog[0] // 3)
+            else:
+                count = 1
+
+            page_number = 0
+            for item in range(count):
+                new_list = split(data, 3)[page_number]
                 new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
                                 value=get_short_desc(item),
                                 inline=False)
