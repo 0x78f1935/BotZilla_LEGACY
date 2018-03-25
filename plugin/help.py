@@ -269,12 +269,13 @@ class Help:
                                      colour=0xf20006)
 
             if len(data) > 3:
-                for i in range(3):
-                    for i in data:
+                for i in data:
+                    for times in range(3):
                         new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
                                         value=get_short_desc(i),
                                         inline=False)
                         pages.append(new_page)
+
             return pages
 
         def generate_pages():
