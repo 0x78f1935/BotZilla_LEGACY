@@ -560,23 +560,23 @@ class Fun:
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-    @commands.command(pass_context=True, hidden=True, aliases=["dog"])
-    async def woof(self, ctx, *, breed:str = None):
+    @commands.command(pass_context=True, hidden=True, aliases=["woof"])
+    async def dog(self, ctx, *, breed:str = None):
         """
         Spawn a dog!
 
-        Alias = !!dog
+        Alias = !!woof
 
         Usage:
           - !!woof
           - !!woof <breed>
           - !!dog
         Example:
-          - !!dog
-          - !!woof bulldog
+          - !!woof
+          - !!dog bulldog
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!woof <{breed}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-
+        await self.bot.send_typing(ctx.message.channel)
         if breed is None:
             url = 'https://dog.ceo/api/breeds/image/random'
             async with aiohttp.ClientSession() as session:
@@ -601,6 +601,7 @@ class Fun:
                                       description='\t',
                                       colour=0xf20006)
                 embed.set_image(url=random.choice(source['message']))
+                embed.set_footer(text=f'Breed: {breed}')
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
             except Exception as e:
