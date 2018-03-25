@@ -291,7 +291,7 @@ class Help:
             for items in all:
                 for item in items:
                     page_number += 1
-                    paginator[page_number] = item
+                    paginator[str(page_number)] = item
             return paginator
 
         #test
@@ -302,7 +302,7 @@ class Help:
                               colour=0xf20006)
         start = await self.bot.say(embed=page0)
 
-        print(generate_pages())
+        generate_pages = generate_pages()
 
         # # Games
         # Games = get_commands_by_cog('Games')
@@ -402,8 +402,8 @@ class Help:
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
 
-        # new_page, reaction = await wait_for_reaction(start, page1)
-        # await self.bot.say(reaction.reaction.emoji)
+        new_page, reaction = await wait_for_reaction(start, generate_pages['1'])
+        await self.bot.say(reaction.reaction.emoji)
         # new_page, reaction = await wait_for_reaction(new_page, page2)
         # await self.bot.say(reaction.reaction.emoji)
         # new_page, reaction = await wait_for_reaction(new_page, page3)
