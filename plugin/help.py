@@ -265,12 +265,11 @@ class Help:
             data = sorted(data)
             pages = []
             new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                     description=f'Category: **`{cog}`**',
                                      colour=0xf20006)
             split = lambda x, n: x if not x else [x[:n]] + [split([] if not -(len(x) - n) else x[-(len(x) - n):], n)][0]
             page_number = 0
             for item in split(data, 2)[page_number]:
-                new_page.add_field(name=f"{self.config['prefix']}{item[0]}",
+                new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
                                 value=get_short_desc(item),
                                 inline=False)
                 pages.append(new_page)
