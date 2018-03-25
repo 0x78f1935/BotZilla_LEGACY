@@ -345,29 +345,26 @@ class Help:
                     page = 0
                     print(page)
                     print(paginator[str(page)])
-                    new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
 
             elif emoji_ascii == self.emoji_oneback:
                 if page != 0:
                     page -= 1
                     print(page)
                     print(paginator[str(page)])
-                    new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
 
             elif emoji_ascii == self.emoji_oneahead:
                 if page != lenght_help:
                     page += 1
                     print(page)
                     print(paginator[str(page)])
-                    new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
 
-            elif emoji_ascii == self.emoji_end_txt:
+            elif emoji_ascii == self.emoji_end:
                 if page != lenght_help:
                     page = lenght_help
                     print(page)
                     print(paginator[str(page)])
-                    new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
 
+            new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
             await self.bot.say(reaction.reaction.emoji)
 
 
