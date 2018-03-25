@@ -265,7 +265,6 @@ class Help:
                                 value=f'***`{get_short_desc(item)}`***',
                                 inline=False)
                 pages.append(new_page)
-                print(item)
             return pages
 
         def generate_pages():
@@ -280,8 +279,8 @@ class Help:
 
             paginator = {}
             page_number = 0
-            print(all)
             for items in all:
+                print(items)
                 for item in items:
                     page_number += 1
                     paginator[str(page_number)] = item
