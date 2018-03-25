@@ -305,25 +305,19 @@ class Help:
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
 
+        page = 0
+        paginator = {}
         for t in generate_pages.keys():
-            new_page, reaction = await wait_for_reaction(start, generate_pages[t])
-            await self.bot.say(reaction.reaction.emoji)
-        # new_page, reaction = await wait_for_reaction(new_page, page2)
-        # await self.bot.say(reaction.reaction.emoji)
-        # new_page, reaction = await wait_for_reaction(new_page, page3)
-        # await self.bot.say(reaction.reaction.emoji)
-        # new_page, reaction = await wait_for_reaction(new_page, page4)
-        # await self.bot.say(reaction.reaction.emoji)
-        # new_page, reaction = await wait_for_reaction(new_page, page5)
-        # await self.bot.say(reaction.reaction.emoji)
-        # new_page, reaction = await wait_for_reaction(new_page, page6)
-        # await self.bot.say(reaction.reaction.emoji)
-        # new_page, reaction = await wait_for_reaction(new_page, page7)
-        # await self.bot.say(reaction.reaction.emoji)
-        # new_page, reaction = await wait_for_reaction(new_page, page8)
-        # await self.bot.say(reaction.reaction.emoji)
-        # await self.bot.say(ascii(reaction.reaction.emoji))
+            for item in generate_pages[t]:
+                paginator[page] = item
+                page += 1
 
+        print(paginator)
+        page = 0
+        for i in range(len(paginator)):
+            new_page, reaction = await wait_for_reaction(start, generate_pages[page])
+            await self.bot.say(reaction.reaction.emoji)
+            page += 1
 
 def setup(bot):
     bot.add_cog(Help(bot))
