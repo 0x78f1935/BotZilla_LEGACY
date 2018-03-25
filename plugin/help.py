@@ -294,6 +294,8 @@ class Help:
 
         #test
 
+        print('Function loaded in')
+
         # Pages
         page0 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                               description='This command is under construction and may not work correctly',
@@ -323,8 +325,15 @@ class Help:
         page = 0 # page 0 == introduction
         lenght_help = int(len(paginator.keys()))
 
+        print(f'QUery lenght: {lenght_help}')
+
         new_page, reaction = await wait_for_reaction(start, paginator[page])
-        await self.bot.say(reaction.reaction.emoji)
+
+        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start_txt))
+        print(ascii(reaction.reaction.emoji) == ascii(self.emoji_oneback_txt))
+        print(ascii(reaction.reaction.emoji) == ascii(self.emoji_oneahead_txt))
+        print(ascii(reaction.reaction.emoji) == ascii(self.emoji_end_txt))
+
         for i in range(len(paginator.keys())):
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start_txt):
                 if page == 0:
@@ -358,6 +367,9 @@ class Help:
                     print(page)
                     print(paginator[str(page)])
                     new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
+
+            await self.bot.say(reaction.reaction.emoji)
+
 
 def setup(bot):
     bot.add_cog(Help(bot))
