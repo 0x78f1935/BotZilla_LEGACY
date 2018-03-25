@@ -337,6 +337,11 @@ class Help:
             Exchange_name = "\n".join(Exchange_commands)
             return Exchange_name
 
+        def embed_help(content):
+            embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                                  description=f'{content}')
+            return embed
+
         #test
         page = await self.bot.say('test')
         await self.bot.add_reaction(page, self.emoji_start)
@@ -352,7 +357,7 @@ class Help:
         reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=page)
         if reaction.user.id == ctx.message.author.id:
             await self.bot.say('{0.user.name} : {0.reaction.emoji}'.format(reaction)) # debug
-            await self.bot.edit_message(page, get_games())
+            await self.bot.edit_message(page, embed_help(get_games()))
 
 def setup(bot):
     bot.add_cog(Help(bot))
