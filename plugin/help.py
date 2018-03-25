@@ -313,7 +313,7 @@ class Help:
                 page += 1
 
         print(paginator)
-        page = 0
+        page = 1
         for i in range(len(paginator.keys())):
             new_page, reaction = await wait_for_reaction(start, generate_pages[page])
             await self.bot.say(reaction.reaction.emoji)
