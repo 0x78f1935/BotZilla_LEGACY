@@ -330,9 +330,9 @@ class Help:
         new_page, reaction = await wait_for_reaction(start, paginator[page])
 
         print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start_txt))
-        print(ascii(reaction.reaction.emoji) == ascii(self.emoji_oneback_txt))
-        print(ascii(reaction.reaction.emoji) == ascii(self.emoji_oneahead_txt))
-        print(ascii(reaction.reaction.emoji) == ascii(self.emoji_end_txt))
+        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback_txt))
+        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead_txt))
+        print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end_txt))
 
         for i in range(len(paginator.keys())):
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start_txt):
@@ -343,7 +343,7 @@ class Help:
                     print(page)
                     print(paginator[str(page)])
                     new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            elif ascii(reaction.reaction.emoji) == ascii(self.emoji_oneback_txt):
+            elif ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback_txt):
                 if page == 0:
                     pass
                 else:
@@ -351,7 +351,7 @@ class Help:
                     print(page)
                     print(paginator[str(page)])
                     new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            elif ascii(reaction.reaction.emoji) == ascii(self.emoji_oneahead_txt):
+            elif ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead_txt):
                 if page == lenght_help:
                     pass
                 else:
@@ -359,7 +359,7 @@ class Help:
                     print(page)
                     print(paginator[str(page)])
                     new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            elif ascii(reaction.reaction.emoji) == ascii(self.emoji_end_txt):
+            elif ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end_txt):
                 if page == lenght_help:
                     pass
                 else:
