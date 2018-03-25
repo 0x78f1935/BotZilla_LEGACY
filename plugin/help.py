@@ -243,9 +243,9 @@ class Help:
             list_desc = [i.strip() for i in split_lines if i != '\n']
             print(list_desc)
             try:
-                short_desc = f'**```\n{list_desc[0]}\n{list_desc[1]}```**'
+                short_desc = f'{list_desc[0]}\n{list_desc[1]}'
             except Exception as e:
-                short_desc = f'**```\n{list_desc[0]}\n```**'
+                short_desc = list_desc[0]
             print(short_desc)
             return short_desc
 
