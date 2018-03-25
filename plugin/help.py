@@ -235,12 +235,12 @@ class Help:
 
         await asyncio.sleep(8)
         await self.bot.say('sleep over')
-        start = await self.bot.wait_for_reaction(emoji=self.emoji_start)
-        five_back = await self.bot.wait_for_reaction(emoji=self.emoji_five_back)
-        one_back = await self.bot.wait_for_reaction(emoji=self.emoji_oneback)
-        one_forward = await self.bot.wait_for_reaction(emoji=self.emoji_oneahead)
-        five_forward = await self.bot.wait_for_reaction(emoji=self.emoji_five_ahead)
-        end = await self.bot.wait_for_reaction(emoji=self.emoji_end)
+        start = await self.bot.wait_for_reaction(emoji=self.emoji_start, message=page)
+        five_back = await self.bot.wait_for_reaction(emoji=self.emoji_five_back, message=page)
+        one_back = await self.bot.wait_for_reaction(emoji=self.emoji_oneback, message=page)
+        one_forward = await self.bot.wait_for_reaction(emoji=self.emoji_oneahead, message=page)
+        five_forward = await self.bot.wait_for_reaction(emoji=self.emoji_five_ahead, message=page)
+        end = await self.bot.wait_for_reaction(emoji=self.emoji_end, message=page)
 
         if start:
             await self.bot.say(f'{start} Done start')
