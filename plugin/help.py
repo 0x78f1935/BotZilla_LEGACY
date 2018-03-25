@@ -269,6 +269,7 @@ class Help:
             split = lambda x, n: x if not x else [x[:n]] + [split([] if not -(len(x) - n) else x[-(len(x) - n):], n)][0]
             page_number = 0
             new_list = split(data, 2)[page_number]
+            print(new_list)
             for item in new_list:
                 new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
                                 value=get_short_desc(item),
