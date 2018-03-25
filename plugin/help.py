@@ -284,13 +284,13 @@ class Help:
                     new_list = data
                 else:
                     new_list = split(data, 3)[page_number]
-                print(new_list)
-                print(item[0])
-                new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{new_list[0]}\n\n",
-                                value=get_short_desc(new_list[0]),
-                                inline=False)
-                pages.append(new_page)
                 page_number += 1
+                for item in new_list:
+                    new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
+                                    value=get_short_desc(item[0]),
+                                    inline=False)
+                    pages.append(new_page)
+
 
             print(pages)
             return pages
