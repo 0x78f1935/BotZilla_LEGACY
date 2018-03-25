@@ -263,6 +263,7 @@ class Help:
         def new_page(cog):
             data = get_commands_by_cog(cog)
             data = sorted(data)
+            item_number = 0
             pages = []
             new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                                      colour=0xf20006)
@@ -285,11 +286,13 @@ class Help:
                 else:
                     new_list = split(data, 3)[page_number]
                 print(new_list)
-                new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
-                                value=get_short_desc(item[0]),
+
+                new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[item_number][0]}\n\n",
+                                value=get_short_desc(item[item_number][0]),
                                 inline=False)
                 pages.append(new_page)
                 page_number += 1
+                item_number += 1
 
             print(pages)
             return pages
