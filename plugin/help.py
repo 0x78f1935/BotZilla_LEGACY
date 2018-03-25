@@ -245,6 +245,7 @@ class Help:
                 short_desc = f'**```\n{list_desc[0]}\n{list_desc[1]}```**'
             except Exception as e:
                 short_desc = f'**```\n{list_desc[0]}\n```**'
+            print(f'{short_desc} done {cog_name}')
             return short_desc
 
         def embed_help(content, reaction):
@@ -290,7 +291,6 @@ class Help:
                                     value=get_short_desc(item[0]),
                                     inline=False)
                     pages.append(new_page)
-
 
             print(pages)
             return pages
