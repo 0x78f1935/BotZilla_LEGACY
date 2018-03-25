@@ -225,16 +225,117 @@ class Help:
         self.emoji_five_ahead = '\u23e9'
         self.emoji_end = '\u23ed'
 
-        def parse_time(s):
-            hour, min, sec = s.split(':')
-            try:
-                hour = int(hour)
-                min = int(min)
-                sec = int(sec)
-            except ValueError:
-                # handle errors here, but this isn't a bad default to ignore errors
-                return 0
-            return hour * 60 * 60 + min * 60 + sec
+        def get_games():
+            self.database.cur.execute("select name from botzilla.help where cog = 'Games';")
+            Games_cog = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            Games_commands = []
+            Games_commands.append('**------**')
+            for i in Games_cog:
+                i = '-`{}{}`'.format(self.config['prefix'], i[0])
+                Games_commands.append(i)
+            Games_commands.sort()
+            Games_commands.append('**------**')
+            Games_name = "\n".join(Games_commands)
+            return Games_name
+
+        def get_GameStats():
+            self.database.cur.execute("select name from botzilla.help where cog = 'GameStats';")
+            GameStats_cog = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            GameStats_commands = []
+            GameStats_commands.append('**------**')
+            for i in GameStats_cog:
+                i = '-`{}{}`'.format(self.config['prefix'], i[0])
+                GameStats_commands.append(i)
+            GameStats_commands.sort()
+            GameStats_commands.append('**------**')
+            GameStats_name = "\n".join(GameStats_commands)
+            return GameStats_name
+
+        def get_fun():
+            self.database.cur.execute("select name from botzilla.help where cog = 'Fun';")
+            Fun_cog = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            Fun_commands = []
+            Fun_commands.append('**------**')
+            for i in Fun_cog:
+                i = '-`{}{}`'.format(self.config['prefix'], i[0])
+                Fun_commands.append(i)
+            Fun_commands.sort()
+            Fun_commands.append('**------**')
+            Fun_name = "\n".join(Fun_commands)
+            return Fun_name
+
+        def get_information():
+            self.database.cur.execute("select name from botzilla.help where cog = 'Information';")
+            Information_cog = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            Information_commands = []
+            Information_commands.append('**------**')
+            for i in Information_cog:
+                i = '-`{}{}`'.format(self.config['prefix'], i[0])
+                Information_commands.append(i)
+            Information_commands.sort()
+            Information_commands.append('**------**')
+            Information_name = "\n".join(Information_commands)
+            return Information_name
+
+        def get_music():
+            self.database.cur.execute("select name from botzilla.help where cog = 'Music';")
+            Music_cog = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            Music_commands = []
+            Music_commands.append('**------**')
+            for i in Music_cog:
+                i = '-`{}{}`'.format(self.config['prefix'], i[0])
+                Music_commands.append(i)
+            Music_commands.sort()
+            Music_commands.append('**------**')
+            Music_name = "\n".join(Music_commands)
+            return Music_name
+
+        def get_utils():
+            self.database.cur.execute("select name from botzilla.help where cog = 'Utils';")
+            Utils_cog = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            Utils_commands = []
+            Utils_commands.append('**------**')
+            for i in Utils_cog:
+                i = '-`{}{}`'.format(self.config['prefix'], i[0])
+                Utils_commands.append(i)
+            Utils_commands.sort()
+            Utils_commands.append('**------**')
+            Utils_name = "\n".join(Utils_commands)
+            return Utils_name
+
+        def get_images():
+            self.database.cur.execute("select name from botzilla.help where cog = 'Images';")
+            Images_cog = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            Images_commands = []
+            Images_commands.append('**------**')
+            for i in Images_cog:
+                i = '-`{}{}`'.format(self.config['prefix'], i[0])
+                Images_commands.append(i)
+            Images_commands.sort()
+            Images_commands.append('**------**')
+            Images_name = "\n".join(Images_commands)
+            return Images_name
+
+        def get_exchange():
+            self.database.cur.execute("select name from botzilla.help where cog = 'Exchange';")
+            Exchange_cog = self.database.cur.fetchall()
+            self.database.cur.execute("ROLLBACK;")
+            Exchange_commands = []
+            Exchange_commands.append('**------**')
+            for i in Exchange_cog:
+                i = '-`{}{}`'.format(self.config['prefix'], i[0])
+                Exchange_commands.append(i)
+            Exchange_commands.sort()
+            Exchange_commands.append('**------**')
+            Exchange_name = "\n".join(Exchange_commands)
+            return Exchange_name
 
         #test
         page = await self.bot.say('test')
@@ -251,7 +352,7 @@ class Help:
         reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=page)
         if reaction.user.id == ctx.message.author.id:
             await self.bot.say('{0.user.name} : {0.reaction.emoji}'.format(reaction)) # debug
-            await self.bot.edit_message(page, 'test2')
+            await self.bot.edit_message(page, await get_games())
 
 def setup(bot):
     bot.add_cog(Help(bot))
