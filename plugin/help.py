@@ -262,7 +262,7 @@ class Help:
             else:
                 await wait_for_reaction(message, new_page)
 
-        def new_page(cog):
+        def new_page(cog:str):
             print('New_page Function')
             data = get_commands_by_cog(cog)
             data = sorted(data)
