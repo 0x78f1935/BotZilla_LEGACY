@@ -260,6 +260,44 @@ class Help:
             else:
                 await wait_for_reaction(message, new_page)
 
+        def new_page(cog):
+            data = get_commands_by_cog(cog)
+            data = sorted(data)
+            new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                                  description=f'Category: **`{cog}`**',
+                                  colour=0xf20006)
+
+            pages = []
+            if len(data) > 3:
+                for i in data:
+                    new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
+                                    value=get_short_desc(i),
+                                    inline=False)
+                    data.remove(i)
+                pages.append(new_page)
+            else:
+                for i in data:
+                    new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
+                                    value=get_short_desc(i),
+                                    inline=False)
+                pages.append(new_page)
+            return pages
+
+        def generate_pages():
+            Games = new_page('Games')
+            GameStats = new_page('GameStats')
+            Fun = new_page('Fun')
+            Music = new_page('Music')
+            Utils = new_page('Utils')
+            Images = new_page('Images')
+            Exchange = new_page('Exchange')
+
+            paginator = {}
+            page_number = 0
+            for item in Games, GameStats, Fun, Music, Utils, Images, Images, Exchange:
+                paginator[page_number] = item
+            return generate_pages()
+
         #test
 
         # Pages
@@ -268,93 +306,96 @@ class Help:
                               colour=0xf20006)
         start = await self.bot.say(embed=page0)
 
-        # Games
-        Games = get_commands_by_cog('Games')
-        Games = sorted(Games)
-        page1 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                              description='Category: **`Games`**',
-                              colour=0xf20006)
-        for i in Games:
-            page1.add_field(name=f"{self.config['prefix']}{i[0]}",
-                            value=get_short_desc(i),
-                            inline=False)
+        print(generate_pages())
+        await self.bot.say(generate_pages())
 
-        # Game Stats
-        Gamestats = get_commands_by_cog('GameStats')
-        Gamestats = sorted(Gamestats)
-        page2 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                              description='Category: **`Games Stats`**',
-                              colour=0xf20006)
-        for i in Gamestats:
-            page2.add_field(name=f"{self.config['prefix']}{i[0]}",
-                            value=get_short_desc(i),
-                            inline=False)
-
-        # Fun
-        Fun = get_commands_by_cog('Fun')
-        Fun = sorted(Fun)
-        page3 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                              description='Category: **`Fun`**',
-                              colour=0xf20006)
-        for i in Fun:
-            page3.add_field(name=f"{self.config['prefix']}{i[0]}",
-                            value=get_short_desc(i),
-                            inline=False)
-
-        # Information
-        Information = get_commands_by_cog('Information')
-        Information = sorted(Information)
-        page4 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                              description='Category: **`Information`**',
-                              colour=0xf20006)
-        for i in Information:
-            page4.add_field(name=f"{self.config['prefix']}{i[0]}",
-                            value=get_short_desc(i),
-                            inline=False)
-
-        # Music
-        Music = get_commands_by_cog('Music')
-        Music = sorted(Music)
-        page5 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                              description='Category: **`Music`**',
-                              colour=0xf20006)
-        for i in Music:
-            page5.add_field(name=f"{self.config['prefix']}{i[0]}",
-                            value=get_short_desc(i),
-                            inline=False)
-
-        # Utils
-        Utils = get_commands_by_cog('Utils')
-        Utils = sorted(Utils)
-        page6 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                              description='Category: **`Utils`**',
-                              colour=0xf20006)
-        for i in Utils:
-            page6.add_field(name=f"{self.config['prefix']}{i[0]}",
-                            value=get_short_desc(i),
-                            inline=False)
-
-        # Images
-        Images = get_commands_by_cog('Images')
-        Images = sorted(Images)
-        page7 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                              description='Category: **`Images`**',
-                              colour=0xf20006)
-        for i in Images:
-            page7.add_field(name=f"{self.config['prefix']}{i[0]}",
-                            value=get_short_desc(i),
-                            inline=False)
-
-        # Exchange
-        Exchange = get_commands_by_cog('Exchange')
-        Exchange = sorted(Exchange)
-        page8 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                              description='Category: **`Exchange`**',
-                              colour=0xf20006)
-        for i in Exchange:
-            page8.add_field(name=f"{self.config['prefix']}{i[0]}",
-                            value=get_short_desc(i),
-                            inline=False)
+        # # Games
+        # Games = get_commands_by_cog('Games')
+        # Games = sorted(Games)
+        # page1 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+        #                       description='Category: **`Games`**',
+        #                       colour=0xf20006)
+        # for i in Games:
+        #     page1.add_field(name=f"{self.config['prefix']}{i[0]}",
+        #                     value=get_short_desc(i),
+        #                     inline=False)
+        #
+        # # Game Stats
+        # Gamestats = get_commands_by_cog('GameStats')
+        # Gamestats = sorted(Gamestats)
+        # page2 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+        #                       description='Category: **`Games Stats`**',
+        #                       colour=0xf20006)
+        # for i in Gamestats:
+        #     page2.add_field(name=f"{self.config['prefix']}{i[0]}",
+        #                     value=get_short_desc(i),
+        #                     inline=False)
+        #
+        # # Fun
+        # Fun = get_commands_by_cog('Fun')
+        # Fun = sorted(Fun)
+        # page3 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+        #                       description='Category: **`Fun`**',
+        #                       colour=0xf20006)
+        # for i in Fun:
+        #     page3.add_field(name=f"{self.config['prefix']}{i[0]}",
+        #                     value=get_short_desc(i),
+        #                     inline=False)
+        #
+        # # Information
+        # Information = get_commands_by_cog('Information')
+        # Information = sorted(Information)
+        # page4 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+        #                       description='Category: **`Information`**',
+        #                       colour=0xf20006)
+        # for i in Information:
+        #     page4.add_field(name=f"{self.config['prefix']}{i[0]}",
+        #                     value=get_short_desc(i),
+        #                     inline=False)
+        #
+        # # Music
+        # Music = get_commands_by_cog('Music')
+        # Music = sorted(Music)
+        # page5 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+        #                       description='Category: **`Music`**',
+        #                       colour=0xf20006)
+        # for i in Music:
+        #     page5.add_field(name=f"{self.config['prefix']}{i[0]}",
+        #                     value=get_short_desc(i),
+        #                     inline=False)
+        #
+        # # Utils
+        # Utils = get_commands_by_cog('Utils')
+        # Utils = sorted(Utils)
+        # page6 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+        #                       description='Category: **`Utils`**',
+        #                       colour=0xf20006)
+        # for i in Utils:
+        #     page6.add_field(name=f"{self.config['prefix']}{i[0]}",
+        #                     value=get_short_desc(i),
+        #                     inline=False)
+        #
+        # # Images
+        # Images = get_commands_by_cog('Images')
+        # Images = sorted(Images)
+        # page7 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+        #                       description='Category: **`Images`**',
+        #                       colour=0xf20006)
+        # for i in Images:
+        #     page7.add_field(name=f"{self.config['prefix']}{i[0]}",
+        #                     value=get_short_desc(i),
+        #                     inline=False)
+        #
+        # # Exchange
+        # Exchange = get_commands_by_cog('Exchange')
+        # Exchange = sorted(Exchange)
+        # page8 = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+        #                       description='Category: **`Exchange`**',
+        #                       colour=0xf20006)
+        # for i in Exchange:
+        #     page8.add_field(name=f"{self.config['prefix']}{i[0]}",
+        #                     value=get_short_desc(i),
+        #                     inline=False)
 
         await self.bot.add_reaction(start, self.emoji_start)
         await self.bot.add_reaction(start, self.emoji_five_back)
@@ -366,23 +407,23 @@ class Help:
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
 
-        new_page, reaction = await wait_for_reaction(start, page1)
-        await self.bot.say(reaction.reaction.emoji)
-        new_page, reaction = await wait_for_reaction(new_page, page2)
-        await self.bot.say(reaction.reaction.emoji)
-        new_page, reaction = await wait_for_reaction(new_page, page3)
-        await self.bot.say(reaction.reaction.emoji)
-        new_page, reaction = await wait_for_reaction(new_page, page4)
-        await self.bot.say(reaction.reaction.emoji)
-        new_page, reaction = await wait_for_reaction(new_page, page5)
-        await self.bot.say(reaction.reaction.emoji)
-        new_page, reaction = await wait_for_reaction(new_page, page6)
-        await self.bot.say(reaction.reaction.emoji)
-        new_page, reaction = await wait_for_reaction(new_page, page7)
-        await self.bot.say(reaction.reaction.emoji)
-        new_page, reaction = await wait_for_reaction(new_page, page8)
-        await self.bot.say(reaction.reaction.emoji)
-        await self.bot.say(ascii(reaction.reaction.emoji))
+        # new_page, reaction = await wait_for_reaction(start, page1)
+        # await self.bot.say(reaction.reaction.emoji)
+        # new_page, reaction = await wait_for_reaction(new_page, page2)
+        # await self.bot.say(reaction.reaction.emoji)
+        # new_page, reaction = await wait_for_reaction(new_page, page3)
+        # await self.bot.say(reaction.reaction.emoji)
+        # new_page, reaction = await wait_for_reaction(new_page, page4)
+        # await self.bot.say(reaction.reaction.emoji)
+        # new_page, reaction = await wait_for_reaction(new_page, page5)
+        # await self.bot.say(reaction.reaction.emoji)
+        # new_page, reaction = await wait_for_reaction(new_page, page6)
+        # await self.bot.say(reaction.reaction.emoji)
+        # new_page, reaction = await wait_for_reaction(new_page, page7)
+        # await self.bot.say(reaction.reaction.emoji)
+        # new_page, reaction = await wait_for_reaction(new_page, page8)
+        # await self.bot.say(reaction.reaction.emoji)
+        # await self.bot.say(ascii(reaction.reaction.emoji))
 
 
 def setup(bot):
