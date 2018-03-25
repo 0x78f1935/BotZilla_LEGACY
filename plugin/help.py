@@ -355,10 +355,6 @@ class Help:
                     print(page_number)
 
             await self.bot.say(f'PAGE: {page_number}')
-            await self.bot.say(f'emoji_ascii == ascii(self.emoji_start) = {(emoji_ascii == ascii(self.emoji_start))}')
-            await self.bot.say(f'emoji_ascii == ascii(self.emoji_start) = {(emoji_ascii == ascii(self.emoji_oneback))}')
-            await self.bot.say(f'emoji_ascii == ascii(self.emoji_start) = {(emoji_ascii == ascii(self.emoji_oneahead))}')
-            await self.bot.say(f'emoji_ascii == ascii(self.emoji_start) = {(emoji_ascii == ascii(self.emoji_end))}')
 
             new_page, reaction = await wait_for_reaction(new_page, paginator[str(page_number)])
             await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
