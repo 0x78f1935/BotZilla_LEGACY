@@ -337,14 +337,18 @@ class Help:
             Exchange_name = "\n".join(Exchange_commands)
             return Exchange_name
 
-        def embed_help(content):
+        def embed_help(content, reaction):
             embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                  description=f'{content}',
+                                  description='{1}\n{0.user.name} : {0.reaction.emoji}'.format(reaction, content),
                                   colour=0xf20006)
             return embed
 
         #test
-        page = await self.bot.say('test')
+        embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                              description='This command is under construction and may not work correctly',
+                              colour=0xf20006)
+        page = await self.bot.say(embed=embed)
+
         await self.bot.add_reaction(page, self.emoji_start)
         await self.bot.add_reaction(page, self.emoji_five_back)
         await self.bot.add_reaction(page, self.emoji_oneback)
