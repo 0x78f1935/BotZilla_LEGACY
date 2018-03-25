@@ -39,6 +39,7 @@ class Games:
     async def ball8(self, ctx , *, question: str = None):
         """
         8ball! Ask BotZilla Any question.
+        Botzilla will answer almoste anything!
 
         Usage:
           - !!8ball <question>
