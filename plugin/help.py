@@ -354,6 +354,7 @@ class Help:
                     page_number = lenght_help
                     print(page_number)
 
+            await self.bot.say(f'PAGE: {page_number}')
 
             new_page, reaction = await wait_for_reaction(new_page, paginator[str(page_number)])
             await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
