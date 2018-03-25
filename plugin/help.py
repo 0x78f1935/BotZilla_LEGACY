@@ -260,6 +260,13 @@ class Help:
             if ctx.message.author.id == reaction.user.id:
                 return reaction
             else:
+                try:
+                    p = await self.bot.get_reaction_users(reaction=reaction.reaction, limit=100)
+                    for i in p:
+                        if i.id != '397149515192205324':
+                            await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=i, message=start)
+                except:
+                    pass  # can't remove it so don't bother doing so
                 await wait_for_reaction(message)
 
         def create_new_page(cog:str):
@@ -367,13 +374,7 @@ class Help:
             embed = paginator[str(page_number)]
             embed.set_footer(text=f'PAGE: {page_number} / {int(len(paginator.keys()) - 1)}')
             await self.bot.edit_message(start, embed=embed)
-            try:
-                p = await self.bot.get_reaction_users(reaction=reaction.reaction, limit=100)
-                for i in p:
-                    if i.id != '397149515192205324':
-                        await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=i, message=start)
-            except:
-                pass # can't remove it so don't bother doing so
+            await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=ctx.message.author, message=start)
             # await self.bot.say(f'PAGE: {page_number}')
             # await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
 
