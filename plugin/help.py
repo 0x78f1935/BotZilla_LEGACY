@@ -264,16 +264,16 @@ class Help:
             data = get_commands_by_cog(cog)
             data = sorted(data)
             pages = []
+            new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
+                                     description=f'Category: **`{cog}`**',
+                                     colour=0xf20006)
 
-            for i in data:
-                new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                         description=f'Category: **`{cog}`**',
-                                         colour=0xf20006)
-
-                new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
-                                value=get_short_desc(i),
-                                inline=False)
-                pages.append(new_page)
+            if len(data) > 3:
+                for i in data and range(3):
+                    new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
+                                    value=get_short_desc(i),
+                                    inline=False)
+                    pages.append(new_page)
             return pages
 
         def generate_pages():
