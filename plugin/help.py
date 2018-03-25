@@ -236,7 +236,7 @@ class Help:
                 Games_commands.append(i)
             Games_commands.sort()
             Games_commands.append('**------**')
-            Games_name = "\n".join(Games_commands)
+            Games_name = "\n\n".join(Games_commands)
             return Games_name
 
         def get_GameStats():
