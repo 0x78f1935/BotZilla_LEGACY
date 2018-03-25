@@ -232,7 +232,7 @@ class Help:
             return command_object
 
         def get_commands_by_cog(cog_name):
-            self.database.cur.execute("select * from botzilla.help where name = '{}';".format(cog_name))
+            self.database.cur.execute("select * from botzilla.help where cog = '{}';".format(cog_name))
             command_object = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
             return command_object
