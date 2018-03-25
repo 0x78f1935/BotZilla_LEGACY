@@ -300,10 +300,10 @@ class Help:
         await self.bot.say('Ready...')
 
         new_page, reaction = await wait_for_reaction(start, page1)
-        await self.bot.say(reaction.emoji)
+        await self.bot.say(reaction.reaction.emoji)
         new_page, reaction = await wait_for_reaction(new_page, page2)
-        await self.bot.say(reaction.emoji)
-        await self.bot.say(ascii(reaction.emoji))
+        await self.bot.say(reaction.reaction.emoji)
+        await self.bot.say(ascii(reaction.reaction.emoji))
 
 
 
