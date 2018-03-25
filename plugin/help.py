@@ -293,6 +293,7 @@ class Help:
         start = await self.bot.say(embed=page0)
 
         generate_pages_result = generate_pages()
+        print(generate_pages_result, end='\n*****************\n')
 
         await self.bot.add_reaction(start, self.emoji_start)
         await self.bot.add_reaction(start, self.emoji_five_back)
