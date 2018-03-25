@@ -337,28 +337,28 @@ class Help:
         print(emoji_ascii == ascii(self.emoji_end))
 
         for i in range(len(paginator.keys()) - 1):
-            if emoji_ascii == ascii(self.emoji_start_txt):
+            if emoji_ascii == ascii(self.emoji_start):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = 0
                     print(page_number)
-            elif emoji_ascii == ascii(self.emoji_oneback_txt):
+            elif emoji_ascii == ascii(self.emoji_oneback):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = page_number - 1
                     print(page)
-            elif emoji_ascii == ascii(self.emoji_oneahead_txt):
+            elif emoji_ascii == ascii(self.emoji_oneahead):
                 if page_number >= 0 and page_number <= lenght_help:
                     page_number = page_number + 1
                     print(page_number)
-            elif emoji_ascii == ascii(self.emoji_end_txt):
+            elif emoji_ascii == ascii(self.emoji_end):
                 if page_number <= lenght_help:
                     page_number = lenght_help
                     print(page_number)
 
             await self.bot.say(f'PAGE: {page_number}')
-            await self.bot.say(f'emoji_ascii == ascii(self.emoji_start) = {emoji_ascii == ascii(self.emoji_start)}')
-            await self.bot.say(f'emoji_ascii == ascii(self.emoji_start) = {emoji_ascii == ascii(self.emoji_oneback))}')
-            await self.bot.say(f'emoji_ascii == ascii(self.emoji_start) = {emoji_ascii == ascii(self.emoji_oneahead))}')
-            await self.bot.say(f'emoji_ascii == ascii(self.emoji_start) = {emoji_ascii == ascii(self.emoji_end))}')
+            # await self.bot.say(f'emoji_ascii == ascii(self.emoji_start) = {emoji_ascii == ascii(self.emoji_start)}')
+            # await self.bot.say(f'emoji_ascii == ascii(self.emoji_start) = {emoji_ascii == ascii(self.emoji_oneback))}')
+            # await self.bot.say(f'emoji_ascii == ascii(self.emoji_start) = {emoji_ascii == ascii(self.emoji_oneahead))}')
+            # await self.bot.say(f'emoji_ascii == ascii(self.emoji_start) = {emoji_ascii == ascii(self.emoji_end))}')
 
             new_page, reaction = await wait_for_reaction(new_page, paginator[str(page_number)])
             await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
