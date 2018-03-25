@@ -248,10 +248,10 @@ class Help:
                                   colour=0xf20006)
             return embed
 
-        def wait_for_reaction(ctx, message):
+        def wait_for_reaction(message):
             reaction = self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
-            if ctx.message.author.id != reaction.user.id:
-                wait_for_reaction()
+            if ctx.message.author.id == reaction.user.id:
+                wait_for_reaction(message)
             else:
                 return reaction
 
@@ -278,7 +278,7 @@ class Help:
 
         await asyncio.sleep(.5)
 
-        wait_for_reaction(ctx, start)
+        wait_for_reaction(start)
         await self.bot.edit_message(start, embed=page1)
 
 def setup(bot):
