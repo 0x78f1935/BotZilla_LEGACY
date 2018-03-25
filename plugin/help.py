@@ -267,15 +267,13 @@ class Help:
             new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
                                      description=f'Category: **`{cog}`**',
                                      colour=0xf20006)
-
-            if len(data) > 3:
-                for i in data:
-                    for times in range(3):
-                        new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
-                                        value=get_short_desc(i),
-                                        inline=False)
-                        pages.append(new_page)
-
+            split = lambda x, n: x if not x else [x[:n]] + [split([] if not -(len(x) - n) else x[-(len(x) - n):], n)][0]
+            print(split(data, 2))
+            for i in data:
+                new_page.add_field(name=f"{self.config['prefix']}{i[0]}",
+                                value=get_short_desc(i),
+                                inline=False)
+                pages.append(new_page)
             return pages
 
         def generate_pages():
