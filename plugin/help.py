@@ -269,30 +269,30 @@ class Help:
                                      colour=0xf20006)
             split = lambda x, n: x if not x else [x[:n]] + [split([] if not -(len(x) - n) else x[-(len(x) - n):], n)][0]
 
-            self.database.cur.execute("select count(cog) from botzilla.help where cog = '{}';".format(cog))
-            count_cog = self.database.cur.fetchone()
-            self.database.cur.execute("ROLLBACK;")
+            # self.database.cur.execute("select count(cog) from botzilla.help where cog = '{}';".format(cog))
+            # count_cog = self.database.cur.fetchone()
+            # self.database.cur.execute("ROLLBACK;")
+            #
+            # if count_cog[0] > 3:
+            #     count = int(count_cog[0] // 3)
+            # else:
+            #     count = 1
+            # page_number = 0
+            # for item in range(count):
+            #     if count <= 1 :
+            #         new_list = data
+            #     else:
+            #         new_list = split(data, 3)[page_number]
+            #     page_number += 1
+            #
+            #     new_list = list(set(new_list))
+            #     new_list = sorted(new_list)
 
-            if count_cog[0] > 3:
-                count = int(count_cog[0] // 3)
-            else:
-                count = 1
-            page_number = 0
-            for item in range(count):
-                if count <= 1 :
-                    new_list = data
-                else:
-                    new_list = split(data, 3)[page_number]
-                page_number += 1
-
-                new_list = list(set(new_list))
-                new_list = sorted(new_list)
-
-                for item in new_list:
-                    new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
-                                    value=f'***`{get_short_desc(item)}`***',
-                                    inline=False)
-                    pages.append(new_page)
+            for item in data:
+                new_page.add_field(name=f"Category: **`{cog}`**\n{self.config['prefix']}{item[0]}\n\n",
+                                value=f'***`{get_short_desc(item)}`***',
+                                inline=False)
+                pages.append(new_page)
             print(pages)
             return pages
 
