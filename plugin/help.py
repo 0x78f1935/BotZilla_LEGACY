@@ -265,8 +265,15 @@ class Help:
                     for i in p:
                         if i.id != '397149515192205324':
                             await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=i, message=start)
-                except:
-                    pass  # can't remove it so don't bother doing so
+                except Exception as e:
+                    await asyncio.sleep(2)
+                    try:
+                        p = await self.bot.get_reaction_users(reaction=reaction.reaction, limit=100)
+                        for i in p:
+                            if i.id != '397149515192205324':
+                                await self.bot.remove_reaction(emoji=reaction.reaction.emoji, member=i, message=start)
+                    except Exception as e:
+                        print(e.args)
                 await wait_for_reaction(message)
 
         def create_new_page(cog:str):
