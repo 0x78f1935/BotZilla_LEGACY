@@ -329,6 +329,8 @@ class Help:
 
         new_page, reaction = await wait_for_reaction(start, paginator[page])
 
+        print(reaction)
+
         print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start))
         print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback))
         print(ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead))
