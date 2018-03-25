@@ -255,12 +255,12 @@ class Help:
                 short_desc = list_desc[0]
             return short_desc
 
-        async def wait_for_reaction(message, new_page):
+        async def wait_for_reaction(message):
             reaction = await self.bot.wait_for_reaction([self.emoji_start, self.emoji_five_back, self.emoji_oneback, self.emoji_oneahead, self.emoji_five_ahead, self.emoji_end], message=message)
             if ctx.message.author.id == reaction.user.id:
                 return reaction
             else:
-                await wait_for_reaction(message, new_page)
+                await wait_for_reaction(message)
 
         def create_new_page(cog:str):
             print('New_page Function')
@@ -326,6 +326,8 @@ class Help:
         await asyncio.sleep(0.6)
         await self.bot.say('Ready...')
 
+        print('Reactions added')
+
         # remove duplicates
         page = 0
         paginator = {}
@@ -339,21 +341,22 @@ class Help:
 
         print(f'QUery lenght: {lenght_help}')
 
-        new_page, reaction = await wait_for_reaction(new_page, paginator[str(page_number)])
-        emoji_ascii = ascii(str(reaction.reaction.emoji))
-        print(reaction.reaction.emoji)
-        print(emoji_ascii)
-        print(emoji_ascii == ascii(self.emoji_start))
-        print(emoji_ascii == ascii(self.emoji_oneback))
-        print(emoji_ascii == ascii(self.emoji_oneahead))
-        print(emoji_ascii == ascii(self.emoji_end))
-
         for i in range(len(paginator.keys()) - 1):
             try:
-                reaction = await wait_for_reaction(new_page, paginator[str(page_number)])
+                reaction = await wait_for_reaction(new_page)
                 new_page = await self.bot.edit_message(new_page, embed=new_page)
+
+                #debug
+                emoji_ascii = ascii(str(reaction.reaction.emoji))
+                print(reaction.reaction.emoji)
+                print(emoji_ascii)
+                print(emoji_ascii == ascii(self.emoji_start))
+                print(emoji_ascii == ascii(self.emoji_oneback))
+                print(emoji_ascii == ascii(self.emoji_oneahead))
+                print(emoji_ascii == ascii(self.emoji_end))
             except Exception as e:
                 print(e.args)
+
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = 0
