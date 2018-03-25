@@ -317,7 +317,8 @@ class Help:
         print('*******************************************************')
         for i in range(len(paginator.keys())):
             new_page, reaction = await wait_for_reaction(start, paginator[page])
-            await self.bot.say(f'{reaction.reaction.emoji} : {ascii(reaction.reaction.emoji)}')
+            emoji_ascii = ascii(reaction.reaction.emoji)
+            await self.bot.say(f'{reaction.reaction.emoji} : {emoji_ascii}')
             page += 1
 
 def setup(bot):
