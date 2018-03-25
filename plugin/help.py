@@ -341,15 +341,15 @@ class Help:
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = 0
                     print(page_number)
-            if emoji_ascii == ascii(self.emoji_oneback_txt):
+            elif emoji_ascii == ascii(self.emoji_oneback_txt):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = page_number - 1
                     print(page)
-            if emoji_ascii == ascii(self.emoji_oneahead_txt):
+            elif emoji_ascii == ascii(self.emoji_oneahead_txt):
                 if page_number >= 0 and page_number <= lenght_help:
                     page_number = page_number + 1
                     print(page_number)
-            if emoji_ascii == ascii(self.emoji_end_text):
+            elif emoji_ascii == ascii(self.emoji_end_text):
                 if page_number <= lenght_help:
                     page_number = lenght_help
                     print(page_number)
