@@ -337,6 +337,10 @@ class Help:
         print(emoji_ascii == ascii(self.emoji_end))
 
         for i in range(len(paginator.keys()) - 1):
+            try:
+                new_page, reaction = await wait_for_reaction(new_page, paginator[str(page_number)])
+            except Exception as e:
+                print(e.args)
             if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start):
                 if page_number >= 1 and page_number <= lenght_help:
                     page_number = 0
@@ -355,8 +359,6 @@ class Help:
                     print(page_number)
 
             await self.bot.say(f'PAGE: {page_number}')
-
-            new_page, reaction = await wait_for_reaction(new_page, paginator[str(page_number)])
             await self.bot.say(f'{reaction.reaction.emoji} {page_number}')
             print(paginator)
 
