@@ -239,12 +239,6 @@ class Help:
             short_desc = f'{list_desc[0]}\n{list_desc[1]}'
             return short_desc
 
-        def embed_help(content, reaction):
-            embed = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                  description='{1}\n{0.user.name} : {0.reaction.emoji}'.format(reaction, content),
-                                  colour=0xf20006)
-            return embed
-
         #test
 
         # Pages
@@ -253,7 +247,9 @@ class Help:
                               colour=0xf20006)
         page = await self.bot.say(embed=embed)
 
-        embed_page1 = discord.Embed(colour=0xf20006)
+        embed_page1 = discord.Embed(title='\t',
+                                    description='\t',
+                                    colour=0xf20006)
         embed_page1.add_field(name=get_command('8ball')[0], value=get_short_desc('8ball'))
 
 
