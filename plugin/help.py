@@ -306,7 +306,8 @@ class Help:
 
         # remove duplicates
         page = 0
-        paginator = {'0' : page0}
+        paginator = {}
+        paginator['0'] = page0
         for key, value in generate_pages_result.items():
             paginator[key] = value[0]
             page += 1
