@@ -327,22 +327,22 @@ class Help:
             new_page, reaction = await wait_for_reaction(start, paginator[str(page)])
             emoji_ascii = ascii(reaction.reaction.emoji)
             print(reaction.reaction.emoji)
-            if str(reaction.reaction.emoji) == self.emoji_start_txt:
+            if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start_txt):
                 page = 0
                 print(page)
                 print(paginator[str(page)])
                 new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            elif str(reaction.reaction.emoji) == self.emoji_oneback_txt:
+            elif ascii(reaction.reaction.emoji) == ascii(self.emoji_oneback_txt):
                 page -= 1
                 print(page)
                 print(paginator[str(page)])
                 new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            elif str(reaction.reaction.emoji) == self.emoji_oneahead_txt:
+            elif ascii(reaction.reaction.emoji) == ascii(self.emoji_oneahead_txt):
                 page += 1
                 print(page)
                 print(paginator[str(page)])
                 new_page, reaction = await wait_for_reaction(new_page, paginator[str(page)])
-            elif str(reaction.reaction.emoji) == self.emoji_end_txt:
+            elif ascii(reaction.reaction.emoji) == ascii(self.emoji_end_txt):
                 page = lenght_help
                 print(page)
                 print(paginator[str(page)])
