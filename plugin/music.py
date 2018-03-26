@@ -247,7 +247,11 @@ class Music:
     @commands.command(pass_context=True, no_pm=True)
     async def summon(self, ctx):
         """
-        Summons the bot to join your voice channel.
+        Summon botzilla in your voice channel.
+        You have to be in a voice channel to use this command.
+
+        Usage:
+          - !!summon
         """
         summoned_channel = ctx.message.author.voice_channel
         if summoned_channel is None:
@@ -275,13 +279,19 @@ class Music:
     @commands.command(pass_context=True, no_pm=True)
     async def play(self, ctx, *, song: str = None):
         """
-        Plays a song. !!play <SONG>
+        Plays a song in a voice channel.
+        You have to be in a voice channel.
         If there is a song currently in the queue, then it is
         queued until the next song is done playing.
-        This command automatically searches as well from YouTube.
-        The list of supported sites can be found here:
-        https://rg3.github.io/youtube-dl/supportedsites.html
-        You also can add a playlist, or just search on keyword
+        This command automatically searches YouTube.
+        You also can add a playlist, or just search on keyword.
+
+        Usage:
+          - !!play <song>
+          - !!play <playlist>
+        Example:
+          - !!play hopsin - no words
+          - !!play http://youtubelink.com/song
         """
         if song is None:
             embed = discord.Embed(title='MusicPlayer:',
@@ -373,6 +383,11 @@ class Music:
         """
         Sets the volume of the currently playing song.
         Volume can be set between 0 and 200 where 100 is default.
+
+        Usage:
+          - !!volume <number>
+        Example:
+          - !!volume 50
         """
         if value == None or value < 0 or value > 200:
             embed = discord.Embed(title='MusicPlayer:',
@@ -401,6 +416,10 @@ class Music:
     async def pause(self, ctx):
         """
         Pauses the currently played song.
+        There has to be a song that is playing.
+
+        Usage:
+          - !!pause
         """
         state = self.get_voice_state(ctx.message.server)
         if state.is_playing():
@@ -424,6 +443,10 @@ class Music:
     async def resume(self, ctx):
         """
         Resumes the currently played song.
+        There has to be a song that is paused.
+
+        Usage:
+          - !!resume
         """
         state = self.get_voice_state(ctx.message.server)
         if state.is_playing():
@@ -448,6 +471,9 @@ class Music:
         """
         Stops playing audio and leaves the voice channel.
         This also clears the queue.
+
+        Usage:
+          - !!stop
         """
         server = ctx.message.server
         state = self.get_voice_state(server)
@@ -480,6 +506,9 @@ class Music:
         """
         Vote to skip a song. The song requester can automatically skip.
         Majority vote is needed for the song to be skipped.
+
+        Usage:
+          - !!skip
         """
         state = self.get_voice_state(ctx.message.server)
         if not state.is_playing():
@@ -541,6 +570,10 @@ class Music:
     async def np(self, ctx):
         """
         Shows what is playing right now.
+        There has to be a song that is playing.
+
+        Usage:
+          - !!np
         """
         state = self.get_voice_state(ctx.message.server)
         if state.current is None:
@@ -565,6 +598,14 @@ class Music:
     async def _list(self, ctx):
         """
         Shows the music queue for your server.
+        If there is no queue botzilla will notify you about it.
+
+        Alias : !!que, !!list
+
+        Usage:
+          - !!queue
+          - !!que
+          - !!list
         """
         state = self.get_voice_state(ctx.message.server)
         entries = [x for x in state.songs._queue]
@@ -604,10 +645,18 @@ class Music:
     async def _info(self, ctx):
         """
         Shows info about the currently played song.
+        There need to be a song playing in a voice channel.
+
+        Usage:
+          - !!info
         """
         state = self.get_voice_state(ctx.message.server)
         if state.current is None:
-            await self.bot.say('Not playing anything.')
+            embed = discord.Embed(title=f'{ctx.message.author.name}:',
+                                  description='Not playing anything.',
+                                  colour=0xf20006)
+            out = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(out, self.emojiUnicode['warning'])
         else:
             skip_count = len(state.skip_votes)
             t1 = state.currenttime
@@ -631,7 +680,11 @@ Duration: `[{3[0]}m {3[1]}s/{4[0]}m {4[1]}s]`
     @commands.command(name="repeat", pass_context=True, no_pm=True)
     async def _repeat(self, ctx):
         """
-        Toggle repeat the current playing song
+        Toggle repeat the current playing song.
+        There needs to be a song playing.
+
+        Usage:
+          - !!repeat
         """
         state = self.get_voice_state(ctx.message.server)
         if state.current is None:
