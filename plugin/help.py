@@ -52,7 +52,6 @@ class Help:
         """
         Show this message
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!help <{command}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         self.message = ctx.message
 
         def get_command_by_name():
@@ -128,9 +127,6 @@ class Help:
             # print('Images DONE')
             all.append(create_new_page('Exchange'))
             # print('Exchange DONE')
-            if ctx.message.author.id in self.owner_list:
-                all.append(create_new_page('AdminCommands'))
-
 
             paginator = {}
             page_number = 0
@@ -162,10 +158,6 @@ class Help:
             await self.bot.add_reaction(start, self.emoji_five_ahead) #Maybe if there are more commands
             await self.bot.add_reaction(start, self.emoji_end)
 
-            if ctx.message.author.id in self.owner_list:
-                self.admin_emoji = discord.utils.get(self.bot.get_all_emojis(), id='415638404802543616')
-                await self.bot.add_reaction(start, self.admin_emoji)
-
             await asyncio.sleep(0.6)
 
             page0.set_footer(text=f'Version: {self.version}\tReady...')
@@ -182,8 +174,7 @@ class Help:
                 page += 1
 
             page_number = 1
-
-            lenght_help = len(paginator.keys())
+            lenght_help = int(len(paginator.keys()) - 1)
 
             # print(f'QUery lenght: {lenght_help}')
 
@@ -216,25 +207,11 @@ class Help:
 
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end):
                     if page_number <= lenght_help:
-                        if ctx.message.author.id in self.owner_list:
-                            page_number = lenght_help - 1
-                        else:
-                            page_number = lenght_help
+                        page_number = lenght_help
                         # print(page_number)
 
-                if ctx.message.author.id in self.owner_list:
-                    if ascii(str(reaction.reaction.emoji)) == ascii(self.admin_emoji):
-                        if page_number <= lenght_help:
-                            page_number = lenght_help
-                            # print(page_number)
-
                 embed = paginator[str(page_number)]
-
-                if ctx.message.author.id in self.owner_list:
-                    embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(int(paginator.keys() - 1)))}')
-                else:
-                    embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
-
+                embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
                 await self.bot.edit_message(start, embed=embed)
 
         if command != None:
