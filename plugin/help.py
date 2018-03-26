@@ -212,7 +212,7 @@ class Help:
 
 
     @commands.command(pass_context=True)
-    async def test(self, ctx, *, command: str = None):
+    async def test(self, ctx, command: str = None):
         """
         Show this message
         """
