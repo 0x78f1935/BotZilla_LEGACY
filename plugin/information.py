@@ -54,7 +54,17 @@ class Information:
     @commands.command(pass_context=True, aliases=["g"])
     async def google(self, ctx, *, search_term: str = None):
         """
-        Make a google search
+        Make a google search.
+        Retrieve the top 3 search results.
+
+        Alias : !!g
+
+        Usage:
+          - !!google <search>
+          - !!g <search>
+        Example:
+          - !!google what time is it now?
+          - !!g what time is it now?
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!g <{search_term}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if search_term is None:
@@ -133,11 +143,15 @@ class Information:
     @commands.command(pass_context=True)
     async def pokedex(self, ctx, *, pokemon=None):
         """
-        Pokedex, Show information about a specific pokemon
+        Discord Pokedex.
+        Show information about a specific pokemon.
 
         Usage:
-        !!pokedex pikachu
-        !!pokedex 007
+          - !!pokedex <pokemon name>
+          - !!pokedex <pokemon number>
+        Example:
+          - !!pokedex pikachu
+          - !!pokedex 007
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!pokedex <{pokemon}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if pokemon is None:
@@ -194,6 +208,11 @@ class Information:
         Search for a fact!
         Use this command in combination with a subject you like
         to get a fact for that subject
+
+        Usage:
+          - !!fact <search term>
+        Example:
+          - !!fact cats
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!fact <{search_term}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if search_term is None:
@@ -245,9 +264,9 @@ class Information:
         """
         Invite BotZilla to your server!
         Gives BotZilla OAuth url. Use this to add him to your server!
-        When the database restarts botzilla will automatically join voice channels
-        with `music` in the name. Alternative names:
-        | oauth | invite | join |
+
+        Usage:
+          - !!invite
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!invite in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -262,9 +281,11 @@ class Information:
     @commands.command(pass_context=True)
     async def ping(self, ctx):
         """
-        Check server response.
         Sends a package to the discord server.
         Calculates response time
+
+        Usage:
+          - !!ping
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!ping in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         before = time.monotonic()
@@ -283,6 +304,9 @@ class Information:
         """
         Give information about Botzilla.
         Count the community, servers and more!
+
+        Usage:
+          - !!count
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!count in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if self.database_file_found:
@@ -327,7 +351,11 @@ class Information:
     @commands.command(pass_context=True)
     async def swcount(self, ctx):
         """
-        Count total swearwords used in servers where BotZilla is in
+        Count total swearwords used in servers where BotZilla is in.
+        Counts each word individual.
+
+        Usage:
+          - !!swcount
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!swcount in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if self.database_file_found:
@@ -393,7 +421,11 @@ class Information:
         """
         Say something as BotZilla.
         This only works in the direct channel the command is used in.
-        Secret egg ;)
+
+        Usage:
+          - !!say <message>
+        Example:
+          - !!say Hello World!
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!say <{message}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if message is None:
@@ -418,6 +450,11 @@ class Information:
         """
         Get more information about a location.
         Supported: Zipcode, City, Country, street, latitude, longitude
+
+        Usage:
+          - !!location <supported>
+        Example:
+          - !!location england
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!location <{keywords}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if keywords is None:
@@ -574,9 +611,13 @@ class Information:
     @commands.command(pass_context=True)
     async def number(self, ctx, *, number : str = None):
         """
-        Shows information about a specific number. Example:
-        -42 is the number of spots (or pips, cicrular patches or pits) on a pair of standard six-side dice-
-        Use only numbers
+        Shows information about a specific number.
+        Some numbers may mean multiple things.
+
+        Usage:
+          - !!number <number>
+        Example:
+          - !!number 42
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!number <{number}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if number is None:
@@ -667,6 +708,7 @@ class Utils:
         Alias: !!clock
 
         Usage:
+          - !!worldclock
           - !!clock
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!worldclock in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
@@ -706,6 +748,9 @@ class Utils:
         Generate random user information.
         The information provided is all fake.
         This could be used to make a user profiles for role play goals.
+
+        Usage:
+          - !!profile
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!profile in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         try:
@@ -736,6 +781,12 @@ class Utils:
         """
         Check permissions of any user in the server
         Leave blank to check your own permissions
+
+        Usage:
+          - !!perm
+          - !!perm <member.mention>
+        Example:
+          - !!perm @puffdip
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!perm <{username}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if username is None:
@@ -800,11 +851,13 @@ class Utils:
         Makes a poll for your server.
         Choose your time, your question and your answers.
 
-        !!poll <Timer for voters> <<question> ? <answer> ; <answer>>
+        Usage:
+          - !!poll <seconds> <question> ? <Answer A> ; <Answer B> ..
+        Example:
+          - !!poll 300 are you male or female? Male ; Female ; other
+
         You can only have up to 20 choices and one question.
         Use ; and ? as a delimiter.
-        Example:   10 question? answerA; answer B; answerC
-        a Voter get ^ seconds to vote in this situation
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!poll <{questions_and_choices}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
 
@@ -1011,10 +1064,16 @@ class Utils:
 
 
     @commands.command(pass_context=True)
-    async def blacklist(self, ctx, username=None, *, reason: str = None):
+    async def blacklist(self, ctx, username:discord.Member=None, *, reason: str = None):
         """
-        Starts a blacklist vote. Ban people from making use of BotZilla.
+        Starts a blacklist vote.
+        Ban people from making use of BotZilla.
         5 votes are needed.
+
+        Usage:
+          - !!blacklist <member.mention | username | ID> <reason>
+        Example:
+          - !!blacklist PuffDip Spamming server
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!blacklist <{username}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if username is None:
@@ -1036,12 +1095,8 @@ class Utils:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
         else:
-            username = username.replace('<@', '')
-            username = username.replace('>', '')
-            username = username.replace('!', '')
-
             try:
-                name = await self.bot.get_user_info(username)
+                name = await self.bot.get_user_info(username.id)
                 if name.id in self.database.blacklist:
                     embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                           description='*`{}` already on the blacklist*'.format(name),
@@ -1061,8 +1116,8 @@ class Utils:
 
 
             embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
-                                  description='Total votes are needed: **{}**\n**2** Minutes remaining..\n\nWould you like to blacklist:\n\n**`{}`**\n\nReason:\n\n**`{}`**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(
-                                      vote_policy, name, str(reason)),
+                                  description='**`2`** Minutes remaining..\n\nWould you like to blacklist:\n\n**`{}`**\n\nReason:\n\n**`{}`**\n\nPeople who got blacklisted can\'t use BotZilla anymore.\nEven in other servers'.format(
+                                      name, str(reason)),
                                   colour=0xf20006)
             embed.set_footer(text='PuffDip#5369 ©')
             a = await self.bot.say(embed=embed)
@@ -1080,7 +1135,7 @@ class Utils:
                 if float(total_yes) >= yes_needed:
                     try:
                         reason = str(reason).replace(';', '')
-                        self.database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, '{}', '{}', {});".format(name.id, str(name), str(reason), total))
+                        self.database.cur.execute("INSERT INTO botzilla.blacklist (ID, server_name, reason, total_votes) VALUES ({}, '{}', '{}', {});".format(username.id, username.name, str(reason), total))
                         self.database.cur.execute("ROLLBACK;")
                         print(f'Vote blacklist approved for {username}')
                         await self.bot.delete_message(message)
@@ -1089,7 +1144,7 @@ class Utils:
                         pass
                     finally:
                         embed = discord.Embed(title='Blacklist vote approved:',
-                                              description='Blacklist vote has been approved for **`{}`**'.format(name),
+                                              description='Blacklist vote has been approved for **`{}`**'.format(username.name),
                                               colour=0xf20006)
                         embed.set_footer(text='PuffDip#5369 ©')
                         a = await self.bot.say(embed=embed)
@@ -1097,7 +1152,7 @@ class Utils:
                         await self.bot.delete_message(message)
             else:
                 embed = discord.Embed(title='Blacklist vote started by {}:'.format(ctx.message.author.name),
-                                      description='Blacklist vote has been declined for **`{}`**'.format(name),
+                                      description='Blacklist vote has been declined for **`{}`**'.format(username.name),
                                       colour=0xf20006)
                 embed.set_footer(text='PuffDip#5369 ©')
                 a = await self.bot.say(embed=embed)
@@ -1105,15 +1160,26 @@ class Utils:
                 await self.bot.delete_message(message)
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=["suggestion", "sug"])
     async def report(self, ctx, *, Message: str = None):
         """
         Report any issue to the bot owner
-        Did you find any bugs. Something that annoys you.
+        Suggestions and bug reports are more then welcome
         Report it with this command please.
         This way needed changes could be made.
         You risk a place on the global blacklist if you use this command
         for spam or other exploits.
+
+        Alias : !!suggestion, !!sug
+
+        Usage:
+          - !!report <message>
+          - !!suggestion <message>
+          - !!sug <message>
+        Example:
+          - !!report bug report on command !!test
+          - !!suggestion Make ... new command
+          - !!sug Can you limit command X
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!report <{Message}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if Message is None:
@@ -1177,7 +1243,12 @@ class Utils:
     async def copy(self, ctx, number = None):
         """
         Copy messages in channel.
-        Use a number to specify the amount of messages you want to copy.
+        Retrieve a hastebin link.
+
+        Usage:
+          - !!copy <number>
+        Example:
+          - !!copy 50
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!copy <{number}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if number is None:
@@ -1245,9 +1316,16 @@ class Utils:
 
 
     @commands.command(pass_context=True)
-    async def id(self, ctx, *, username=None):
+    async def id(self, ctx, *, username:discord.Member=None):
         """
-        Shows your ID or the id of the user.
+        Shows your ID or the id of any other user.
+        This can be usefull for development.
+
+        Usage:
+          - !!id
+          - !!id <member.mention | ID | username>
+        Example:
+          - !!id @puffdip
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!id <{username}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if username is None:
@@ -1258,12 +1336,8 @@ class Utils:
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
         else:
             try:
-                username = username.replace('<@', '')
-                username = username.replace('>', '')
-                username = username.replace('!', '')
-                await self.bot.get_user_info(username)
                 embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                      description='The ID you looking for is:\n**`{}`**'.format(str(username)),
+                                      description='The ID you looking for is:\n**`{}`**'.format(username.id),
                                       colour=0xf20006)
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['succes'])
@@ -1279,7 +1353,12 @@ class Utils:
     async def emoji(self, ctx, *, emoji : str = None):
         """
         Shows ASCII information about the emoji.
-        Usefull for developers.
+        This can be usefull for development.
+
+        Usage:
+          - !!emoji <emoji>
+        Example:
+          - !!emoji :smiley:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!emoji <{emoji}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if emoji is None:
