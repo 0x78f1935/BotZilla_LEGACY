@@ -155,15 +155,16 @@ class Help:
 
             generate_pages_result = generate_pages()
 
+            if ctx.message.author.id in self.owner_list:
+                self.admin_emoji = discord.utils.get(self.bot.get_all_emojis(), id='415638404802543616')
+                await self.bot.add_reaction(start, self.admin_emoji)
             await self.bot.add_reaction(start, self.emoji_start)
             await self.bot.add_reaction(start, self.emoji_five_back) #Maybe if there are more commands
             await self.bot.add_reaction(start, self.emoji_oneback)
             await self.bot.add_reaction(start, self.emoji_oneahead)
             await self.bot.add_reaction(start, self.emoji_five_ahead) #Maybe if there are more commands
             await self.bot.add_reaction(start, self.emoji_end)
-            if ctx.message.author.id in self.owner_list:
-                self.admin_emoji = discord.utils.get(self.bot.get_all_emojis(), id='415638404802543616')
-                await self.bot.add_reaction(start, self.admin_emoji)
+
 
             await asyncio.sleep(0.6)
 
@@ -214,11 +215,25 @@ class Help:
 
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end):
                     if page_number <= lenght_help:
-                        page_number = lenght_help
+                        if ctx.message.author.id in self.owner_list:
+                            pass
+                        else:
+                            page_number = lenght_help - 1
                         # print(page_number)
 
+                if ctx.message.author.id in self.owner_list:
+                    if ascii(str(reaction.reaction.emoji)) == ascii(self.admin_emoji):
+                        if page_number <= lenght_help:
+                            page_number = lenght_help
+                            # print(page_number)
+
                 embed = paginator[str(page_number)]
-                embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
+
+                if ctx.message.author.id in self.owner_list:
+                    embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(int(paginator.keys() - 1)))}')
+                else:
+                    embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
+
                 await self.bot.edit_message(start, embed=embed)
 
         if command != None:
