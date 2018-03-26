@@ -40,8 +40,12 @@ class REPL:
             return '{0.__class__.__name__}: {0}'.format(e)
         return '{0.text}{1:>{0.offset}}\n{2}: {0}'.format(e, '^', type(e).__name__)
 
+
     @commands.command(pass_context=True, hidden=True, name='exec')
     async def _eval(self, ctx, *, body: str = None):
+        """
+        Only the owner of this bot can use this command.
+        """
         if ctx.message.author.id not in owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='{}'.format('Only the owner of this bot can use this command'),
@@ -168,6 +172,9 @@ class REPL:
 
     @commands.command(pass_context=True, hidden=True)
     async def repl(self, ctx):
+        """
+        Only the owner of this bot can use this command.
+        """
         if ctx.message.author.id not in owner_list:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='{}'.format('Only the owner of this bot can use this command'),
