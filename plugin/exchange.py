@@ -33,6 +33,12 @@ class Exchange:
         """
         Shows current bitcoin value
         Show bitcoin value from exchange
+
+        Alias : btc
+
+        Usage:
+          - !!bitcoin
+          - !!btc
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!bitcoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'https://api.coinmarketcap.com/v1/ticker/bitcoin/'
@@ -55,6 +61,12 @@ class Exchange:
         """
         Shows current Ethereum value
         Show Ethereum value from exchange
+
+        Alias : eth
+
+        Usage:
+          - !!ethereum
+          - !!eth
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!ethereum in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'https://api.coinmarketcap.com/v1/ticker/Ethereum/'
@@ -77,6 +89,9 @@ class Exchange:
         """
         Shows current Ripple value
         Show Ripple value from exchange
+
+        Usage:
+          - !!ripple
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!ripple in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'https://api.coinmarketcap.com/v1/ticker/Ripple/'
@@ -99,6 +114,12 @@ class Exchange:
         """
         Shows current Litecoin value
         Show Litecoin value from exchange
+
+        Alias : lte
+
+        Usage:
+          - !!litecoin
+          - !!lte
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!litecoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'https://api.coinmarketcap.com/v1/ticker/Litecoin/'
@@ -121,6 +142,12 @@ class Exchange:
         """
         Shows current Dogecoin value
         Show Dogecoin value from exchange
+
+        Alias : doge
+
+        Usage:
+          - !!dogecoin
+          - !!doge
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!dogecoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'https://api.coinmarketcap.com/v1/ticker/Dogecoin/'
@@ -137,7 +164,6 @@ class Exchange:
                               color=0xf20006)
         last_message = await self.bot.say(embed=embed)
         await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
-
 
 def setup(bot):
     bot.add_cog(Exchange(bot))
