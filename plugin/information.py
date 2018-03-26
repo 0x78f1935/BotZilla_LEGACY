@@ -853,7 +853,7 @@ class Utils:
 
         Usage:
           - !!poll <seconds> <question> ? <Answer A> ; <Answer B> ..
-          
+
         Example:
           - !!poll 300 are you male or female? Male ; Female ; other
 

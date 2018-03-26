@@ -221,8 +221,9 @@ class Help:
                 self.database.cur.execute("select * from botzilla.help where name = '{}';".format(str(command).lower()))
                 command_object = self.database.cur.fetchone()
                 self.database.cur.execute("ROLLBACK;")
+                desc = str(command_object[2]).replace('<insert semicolon here>', ';')
                 embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
-                                      description=f'**\nCommand:** - **`{self.config["prefix"]}{command_object[0]}`**\n**Category:** - **`{command_object[1]}`**\n\n**Description:**\n**```\n{command_object[2]}\n```**',
+                                      description=f'**\nCommand:** - **`{self.config["prefix"]}{command_object[0]}`**\n**Category:** - **`{command_object[1]}`**\n\n**Description:**\n**```\n{desc}\n```**',
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
