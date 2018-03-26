@@ -236,11 +236,12 @@ class Help:
         self.emoji_end_txt = '⏭'
 
 
-        def get_command_by_name(command_name):
-            self.database.cur.execute("select * from botzilla.help where name = '{}';".format(command_name))
-            command_object = self.database.cur.fetchone()
+        def get_command_by_name():
+            self.database.cur.execute("select * from botzilla.help;")
+            command_object = self.database.cur.fetchall()
             self.database.cur.execute("ROLLBACK;")
-            return command_object
+            command_names = [i[0] for i in command_object]
+            return command_names
 
         def get_commands_by_cog(cog_name):
             self.database.cur.execute("select * from botzilla.help where cog = '{}';".format(cog_name))
@@ -394,6 +395,11 @@ class Help:
                 embed = paginator[str(page_number)]
                 embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
                 await self.bot.edit_message(start, embed=embed)
-
+        if command:
+            commanden = await get_command_by_name()
+            if str(command).lower() in commanden:
+                await self.bot.say('command is there')
+            else:
+                await self.bot.say('command is NOT there')
 def setup(bot):
     bot.add_cog(Help(bot))
