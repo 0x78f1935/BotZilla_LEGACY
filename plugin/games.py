@@ -228,6 +228,12 @@ class Games:
         Higher or Lower? Gamble your way out! 0 ~ 1.000
         Is the next number higher or lower then your current number?
         Vote with the whole server!
+
+        Alias : highlow
+
+        Usage:
+          - !!HighLow
+          - !!highlow
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!highlow in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         while True:
@@ -279,7 +285,6 @@ class Games:
                     await self.bot.add_reaction(a, '\U0001f60f')
                     break
 
-
             elif winner == total_more and new_number >= number:
                 embed = discord.Embed(title='HighLow started by {}:'.format(ctx.message.author.name),
                                       description='Victorious! You hit number **`{}`**\nYour previous number was **`{}`**\n\nTotals\n-------\n:arrow_up_small: : **`{}`**    :arrow_down_small: : **`{}`**\nTotal Votes: **`{}`**\n\nNext round in **`10`** Seconds'.format(new_number, number, total_more, total_less, total_votes),
@@ -314,7 +319,7 @@ class Games:
         Play Battleship the game!!
         Progress will be saved.
 
-        alias = !!b
+        Alias : !!b
 
         Shows playground a.k.a map
             -  !!battleship
@@ -568,7 +573,6 @@ class Games:
                 self.database.conn.commit()
                 self.database.cur.execute("ROLLBACK;")
                 return
-
 
         # Remove leftovers
         print('singleplayer request found')

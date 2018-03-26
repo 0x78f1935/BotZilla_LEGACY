@@ -22,6 +22,11 @@ class GameStats:
         """
         Shows your Rainbow Six Siege stats.
         Use your Uplay username for this command
+
+        Usage:
+          - !!r6s <Uplay name>
+        Example:
+          - !!r6s PuffDLp
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!r6s <{uplay_name}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if uplay_name is None:
@@ -102,11 +107,20 @@ class GameStats:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=["runescape3"])
     async def rs3(self, ctx, *, account: str = None):
         """
         Shows your Runescape 3 stats.
         Use your Runescape 3 username for this command
+
+        Alias : runescape3
+
+        Usage:
+          - !!rs3 <username>
+          - !!runescape3 <username>
+        Example:
+          - !!rs3 sebi
+          - !!runescape3 sebi
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rs3 <{account}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if account is None:
@@ -272,6 +286,11 @@ class GameStats:
         """
         Shows your Oldschool Runscape stats.
         Use your Oldschool Runscape username for this command
+
+        Usage:
+          - !!osrs <username>
+        Example:
+          - !!osrs uniq
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!osrs <{account}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if account is None:
