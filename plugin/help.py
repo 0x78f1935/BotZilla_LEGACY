@@ -52,6 +52,7 @@ class Help:
         """
         Show this message
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!help <{command}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         self.message = ctx.message
 
         def get_command_by_name():
