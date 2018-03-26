@@ -32,7 +32,7 @@ class Exchange:
     async def bitcoin(self, ctx):
         """
         Shows current bitcoin value
-        Show bitcoin valua from exchange
+        Show bitcoin value from exchange
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!bitcoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'https://api.coinmarketcap.com/v1/ticker/bitcoin/'
@@ -54,7 +54,7 @@ class Exchange:
     async def ethereum(self, ctx):
         """
         Shows current Ethereum value
-        Show Ethereum valua from exchange
+        Show Ethereum value from exchange
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!ethereum in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'https://api.coinmarketcap.com/v1/ticker/Ethereum/'
@@ -76,7 +76,7 @@ class Exchange:
     async def ripple(self, ctx):
         """
         Shows current Ripple value
-        Show Ripple valua from exchange
+        Show Ripple value from exchange
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!ripple in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'https://api.coinmarketcap.com/v1/ticker/Ripple/'
@@ -98,7 +98,7 @@ class Exchange:
     async def litecoin(self, ctx):
         """
         Shows current Litecoin value
-        Show Litecoin valua from exchange
+        Show Litecoin value from exchange
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!litecoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'https://api.coinmarketcap.com/v1/ticker/Litecoin/'
@@ -120,7 +120,7 @@ class Exchange:
     async def dogecoin(self, ctx):
         """
         Shows current Dogecoin value
-        Show Dogecoin valua from exchange
+        Show Dogecoin value from exchange
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!dogecoin in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         url = 'https://api.coinmarketcap.com/v1/ticker/Dogecoin/'
