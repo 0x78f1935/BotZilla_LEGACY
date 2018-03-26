@@ -3,17 +3,14 @@ import json
 import discord
 import aiohttp
 import random
-import re
 import xml.etree.ElementTree
 import datetime
 import pyfiglet
-import sys
-import os
+
 try:
     from plugin.database import Database
 except:
     pass
-
 try:
     from imgurpython import ImgurClient
 except:
@@ -33,7 +30,6 @@ class Images:
         self.channels = self.tmp_config['channels']
         self.emojiUnicode = self.tmp_config['unicode']
         self.owner_list = self.config['owner-id']
-
 
     @commands.command(pass_context=True)
     async def ascii(self, ctx, font : str = None, *, text : str = None):
@@ -217,7 +213,6 @@ class Images:
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
 
-
     @commands.command(pass_context=True)
     async def rule34(self, ctx, *, content=None):
         """
@@ -343,10 +338,13 @@ class Fun:
     async def hack(self, ctx, *, account : str = None):
         """
         Check if your username or email is hacked.
+        Data provided by https://haveibeenpwned.com/
+
         Sometimes companys get hacked. Sometime the hackers decide
-        to put the information they stole online.
+        to put the stolen information online.
         Use this command to check of your account has been leaked.
         Works on e-mail and username.
+
         Usage:
           - !!hack <account name | email>
         Example:
@@ -420,12 +418,12 @@ class Fun:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-
     @commands.command(pass_context=True)
     async def dict(self, ctx, *, keywords : str = None):
         """
         Look something up in the UrbanDictionary.
         Use this command with a search keyword.
+
         Usage:
           - !!dict <keyword>
         Example:
@@ -477,12 +475,12 @@ class Fun:
                 a = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(a, self.emojiUnicode['warning'])
 
-
     @commands.command(pass_context=True)
     async def sb(self, ctx, *, text : str = None):
         """
         SpOnGeBoByFy, Transform your text!
         Use this command with any sentence you like to transform.
+
         Usage:
           - !!sb <text>
         Example:
@@ -511,7 +509,6 @@ class Fun:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
-
 
     @commands.command(pass_context=True)
     async def joke(self, ctx):
@@ -630,6 +627,7 @@ class Fun:
         Each infect has a duration of one hour.
         To get healed again check out heal for more info.
           - !!help heal
+
         Usage:
           - !!infect <username | ping | id> <emoji>
         Example:
@@ -674,13 +672,13 @@ class Fun:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-
     @commands.command(pass_context=True)
     async def heal(self, ctx, member:discord.Member = None):
         """
         Heal someone who is infected.
         If someone is not infected, infect them!
         To get more information on how to infect someone, use
+
           - !!help infect
         Usage:
           - !!heal <username | ping | id> <emoji>
