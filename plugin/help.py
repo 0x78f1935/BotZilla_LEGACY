@@ -216,9 +216,9 @@ class Help:
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end):
                     if page_number <= lenght_help:
                         if ctx.message.author.id in self.owner_list:
-                            pass
-                        else:
                             page_number = lenght_help - 1
+                        else:
+                            page_number = lenght_help
                         # print(page_number)
 
                 if ctx.message.author.id in self.owner_list:
