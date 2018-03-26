@@ -212,7 +212,7 @@ class Help:
 
 
     @commands.command(pass_context=True)
-    async def test(self, ctx):
+    async def test(self, ctx, *, command: str = None):
         """
         Show this message
         """
@@ -319,80 +319,81 @@ class Help:
 
         #test
 
-        # print('Function loaded in')
+        if command is None:
+            # print('Function loaded in')
 
-        # Pages
-        page0 = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
-                              description='This command is under construction and may not work correctly\n\n'
-                                          'If you are stuck this console is for you.\nNavigate around with the **`emoji\'s`** underneath.\n\n`{0}`: Firt page\n`{1}`: Five pages back\n`{2}`: One page back\n`{3}`: Next page\n`{4}`: Skip next five pages\n`{5}`: Last page\n\nIf you like to retrieve more information about a command.\nSimply add any command name behind **`{6}help`**\nFor example: Their is a command called **`battleship`**.\nIt\'s a game what you can play in discord.\nFor more information on how to play battleship use **`{6}help battleship`**\n\nIf this console is **`2`** minutes inactive it will shutdown'.format(
-                                  self.emoji_start_txt, self.emoji_five_back_txt, self.emoji_oneback_txt, self.emoji_oneahead_txt, self.emoji_five_ahead_txt, self.emoji_end_txt, self.config['prefix']),
-                              colour=0xf20006)
-        start = await self.bot.say(embed=page0)
+            # Pages
+            page0 = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
+                                  description='This command is under construction and may not work correctly\n\n'
+                                              'If you are stuck this console is for you.\nNavigate around with the **`emoji\'s`** underneath.\n\n`{0}`: Firt page\n`{1}`: Five pages back\n`{2}`: One page back\n`{3}`: Next page\n`{4}`: Skip next five pages\n`{5}`: Last page\n\nIf you like to retrieve more information about a command.\nSimply add any command name behind **`{6}help`**\nFor example: Their is a command called **`battleship`**.\nIt\'s a game what you can play in discord.\nFor more information on how to play battleship use **`{6}help battleship`**\n\nIf this console is **`2`** minutes inactive it will shutdown'.format(
+                                      self.emoji_start_txt, self.emoji_five_back_txt, self.emoji_oneback_txt, self.emoji_oneahead_txt, self.emoji_five_ahead_txt, self.emoji_end_txt, self.config['prefix']),
+                                  colour=0xf20006)
+            start = await self.bot.say(embed=page0)
 
-        generate_pages_result = generate_pages()
+            generate_pages_result = generate_pages()
 
-        await self.bot.add_reaction(start, self.emoji_start)
-        await self.bot.add_reaction(start, self.emoji_five_back) #Maybe if there are more commands
-        await self.bot.add_reaction(start, self.emoji_oneback)
-        await self.bot.add_reaction(start, self.emoji_oneahead)
-        await self.bot.add_reaction(start, self.emoji_five_ahead) #Maybe if there are more commands
-        await self.bot.add_reaction(start, self.emoji_end)
+            await self.bot.add_reaction(start, self.emoji_start)
+            await self.bot.add_reaction(start, self.emoji_five_back) #Maybe if there are more commands
+            await self.bot.add_reaction(start, self.emoji_oneback)
+            await self.bot.add_reaction(start, self.emoji_oneahead)
+            await self.bot.add_reaction(start, self.emoji_five_ahead) #Maybe if there are more commands
+            await self.bot.add_reaction(start, self.emoji_end)
 
-        await asyncio.sleep(0.6)
+            await asyncio.sleep(0.6)
 
-        page0.set_footer(text=f'Version: {self.version}\tReady...')
-        await self.bot.edit_message(start, embed=page0)
+            page0.set_footer(text=f'Version: {self.version}\tReady...')
+            await self.bot.edit_message(start, embed=page0)
 
-        # print('Reactions added')
+            # print('Reactions added')
 
-        # remove duplicates
-        page = 0
-        paginator = {}
-        paginator['0'] = page0
-        for key, value in generate_pages_result.items():
-            paginator[key] = value[0]
-            page += 1
+            # remove duplicates
+            page = 0
+            paginator = {}
+            paginator['0'] = page0
+            for key, value in generate_pages_result.items():
+                paginator[key] = value[0]
+                page += 1
 
-        page_number = 1
-        lenght_help = int(len(paginator.keys()) - 1)
+            page_number = 1
+            lenght_help = int(len(paginator.keys()) - 1)
 
-        # print(f'QUery lenght: {lenght_help}')
+            # print(f'QUery lenght: {lenght_help}')
 
-        for i in range(100):
-            reaction = await wait_for_reaction(start)
-            if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start):
-                if page_number >= 1 and page_number <= lenght_help:
-                    page_number = 0
-                    # print(page_number)
+            for i in range(100):
+                reaction = await wait_for_reaction(start)
+                if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start):
+                    if page_number >= 1 and page_number <= lenght_help:
+                        page_number = 0
+                        # print(page_number)
 
-            if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_back):
-                if page_number >= 5 and page_number <= lenght_help:
-                    page_number = page_number - 5
-                    # print(page)
+                if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_back):
+                    if page_number >= 5 and page_number <= lenght_help:
+                        page_number = page_number - 5
+                        # print(page)
 
-            if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback):
-                if page_number >= 1 and page_number <= lenght_help:
-                    page_number = page_number - 1
-                    # print(page)
+                if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback):
+                    if page_number >= 1 and page_number <= lenght_help:
+                        page_number = page_number - 1
+                        # print(page)
 
-            if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead):
-                if page_number >= 0 and page_number <= lenght_help - 1:
-                    page_number = page_number + 1
-                    # print(page_number)
+                if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead):
+                    if page_number >= 0 and page_number <= lenght_help - 1:
+                        page_number = page_number + 1
+                        # print(page_number)
 
-            if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_ahead):
-                if page_number >= 0 and page_number <= lenght_help - 5:
-                    page_number = page_number + 5
-                    # print(page)
+                if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_ahead):
+                    if page_number >= 0 and page_number <= lenght_help - 5:
+                        page_number = page_number + 5
+                        # print(page)
 
-            if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end):
-                if page_number <= lenght_help:
-                    page_number = lenght_help
-                    # print(page_number)
+                if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end):
+                    if page_number <= lenght_help:
+                        page_number = lenght_help
+                        # print(page_number)
 
-            embed = paginator[str(page_number)]
-            embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
-            await self.bot.edit_message(start, embed=embed)
+                embed = paginator[str(page_number)]
+                embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
+                await self.bot.edit_message(start, embed=embed)
 
 def setup(bot):
     bot.add_cog(Help(bot))
