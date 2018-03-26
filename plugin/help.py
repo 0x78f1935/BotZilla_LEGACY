@@ -181,10 +181,7 @@ class Help:
                 page += 1
 
             page_number = 1
-            if ctx.message.author.id in self.owner_list:
-                lenght_help = int(len(paginator.keys()) - 2)
-            else:
-                lenght_help = int(len(paginator.keys()) - 1)
+            lenght_help = int(len(paginator.keys()) - 1)
 
             # print(f'QUery lenght: {lenght_help}')
 
@@ -206,30 +203,19 @@ class Help:
                         # print(page)
 
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead):
-                    if ctx.message.author.id not in self.owner_list:
-                        if page_number >= 0 and page_number <= lenght_help - 2:
-                            page_number = page_number + 1
-                            # print(page_number)
-                    if ctx.message.author.id in self.owner_list:
-                        if page_number >= 0 and page_number <= lenght_help - 1:
-                            page_number = page_number + 1
+                    if page_number >= 0 and page_number <= lenght_help - 1:
+                        page_number = page_number + 1
+                        # print(page_number)
 
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_ahead):
-                    if ctx.message.author.id not in self.owner_list:
-                        if page_number >= 0 and page_number <= lenght_help - 6:
-                            page_number = page_number + 5
-                            # print(page)
-                    if ctx.message.author.id in self.owner_list:
-                        if page_number >= 0 and page_number <= lenght_help - 5:
-                            page_number = page_number + 5
+                    if page_number >= 0 and page_number <= lenght_help - 5:
+                        page_number = page_number + 5
+                        # print(page)
 
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end):
-                    if ctx.message.author.id not in self.owner_list:
-                        if page_number <= lenght_help:
-                            page_number = lenght_help - 1
-                            # print(page_number)
-                    if ctx.message.author.id in self.owner_list:
+                    if page_number <= lenght_help:
                         page_number = lenght_help
+                        # print(page_number)
 
                 embed = paginator[str(page_number)]
                 embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
