@@ -400,6 +400,14 @@ class Help:
             commanden = get_command_by_name()
             print(commanden)
             if str(command).lower() in commanden:
+                self.database.cur.execute("select * from botzilla.help where name = '{}';".format(str(command).lower()))
+                command_object = self.database.cur.fetchone()
+                self.database.cur.execute("ROLLBACK;")
+                embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
+                                      description=f'**Command:** - **`{self.config["prefix"]}{command_object[0]}`**\n**Category:** - **`{command_object[1]}`**\n\n**Description:**\n**```\n{command_object[2]}\n```**',
+                                      colour=0xf20006)
+                last_message = await self.bot.say(embed=embed)
+                await self.bot.add_reaction(last_message, self.emojiUnicode['Warning'])
                 await self.bot.say('command is there')
             else:
                 await self.bot.say('command is NOT there')
