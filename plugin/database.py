@@ -32,7 +32,6 @@ class Database:
         self.reconnect_db_times = int(self.database_settings['reconnect_trys'])
         self.blacklist = []
 
-
         for i in range(self.reconnect_db_times):
             try:
                 self.conn = psycopg2.connect("dbname='{}' user='{}' host='{}' port='{}' password={}".format(
@@ -76,8 +75,13 @@ class Database:
     @commands.command(pass_context=True, hidden=True)
     async def sql(self, ctx, *, query: str = None):
         """
-        Acces database and run a query.
-        use a query psql based.
+        Acces database and run a postgress query.
+        Only the owner of this bot can use this command.
+
+        Usage:
+          - !!sql <query>
+        Example:
+          - !!sql select * from *;
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!sql in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
@@ -146,6 +150,10 @@ class Database:
     async def get_users(self, ctx):
         """
         Update datebase with current active users
+        Only the owner of this bot can use this command.
+
+        Usage:
+          - !!get_users
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!get_users in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
@@ -189,6 +197,10 @@ class Database:
     async def get_music(self, ctx):
         """
         Update datebase with current active music channels
+        Only the owner of this bot can use this command.
+
+        Usage:
+          - !!get_music
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!get_music in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
@@ -216,7 +228,6 @@ class Database:
                     data = [int(channel.id), str(channel.name), re.sub('\W+', '', str(server.name)), str(channel.type)]
                     data_channels.append(data)
 
-
         self.cur.execute('ROLLBACK;')
         for items in data_channels:
             try:
@@ -235,11 +246,14 @@ class Database:
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-
     @commands.command(pass_context=True, hidden=True)
     async def dbexport(self, ctx):
         """
         Export database data to export folder
+        Only the owner of this bot can use this command.
+
+        Usage:
+          - !!dbexport
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!dbexport in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
@@ -249,7 +263,6 @@ class Database:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
-
 
         if not self.database_online:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -274,7 +287,6 @@ class Database:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-
         try:
             self.cur.execute("SELECT * from botzilla.music;")
             rows = self.cur.fetchall()
@@ -289,7 +301,6 @@ class Database:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
-
 
         try:
             self.cur.execute("SELECT * from botzilla.blacklist;")
@@ -306,7 +317,6 @@ class Database:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-
         try:
             self.cur.execute("SELECT * from botzilla.musicque;")
             rows = self.cur.fetchall()
@@ -322,18 +332,20 @@ class Database:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Done!',
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-
     @commands.command(pass_context=True, hidden=True)
     async def dbimport(self, ctx):
         """
         Import CSV data from import folder
+        Only the owner of this bot can use this command.
+
+        Usage:
+          - !!dbimport
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!dbimport in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
@@ -343,7 +355,6 @@ class Database:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
-
 
         if not self.database_online:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
@@ -369,7 +380,6 @@ class Database:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-
         try:
             with open(self.database_import_location_blacklist, 'r') as file:
                 reader = csv.reader(file, delimiter=',')
@@ -389,7 +399,6 @@ class Database:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-
         try:
             with open(self.database_import_location_music_channels, 'r') as file:
                 reader = csv.reader(file, delimiter=',')
@@ -408,18 +417,20 @@ class Database:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
-
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                               description='Done!',
                               colour=0xf20006)
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-
     @commands.command(pass_context=True, hidden=True)
     async def updatehelp(self, ctx):
         """
         Update help
+        Only the owner of this bot can use this command.
+
+        Usage:
+          - !!updatehelp
         """
         self.cur.execute('drop table botzilla.help;')
         self.cur.execute("ROLLBACK;")
@@ -445,12 +456,14 @@ class Database:
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
-
     @commands.command(pass_context=True, hidden=True)
     async def importmusic(self, ctx):
         """
-        Import CSV data from import folder
-        Imports music
+        Import CSV data from import folder, Imports music.
+        Only the owner of this bot can use this command.
+
+        Usage:
+          - !!importmusic
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!importmusic in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if ctx.message.author.id not in self.owner_list:
@@ -461,7 +474,6 @@ class Database:
             await self.bot.add_reaction(a, self.emojiUnicode['warning'])
             return
 
-
         if not self.database_online:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
                                   description='Could not connect to database.',
@@ -469,7 +481,6 @@ class Database:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
             return
-
 
         try:
             with open(self.database_import_musicque, 'r') as file:
@@ -498,7 +509,6 @@ class Database:
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
-
 
 def setup(bot):
     bot.add_cog(Database(bot))
