@@ -181,7 +181,10 @@ class Help:
                 page += 1
 
             page_number = 1
-            lenght_help = int(len(paginator.keys()) - 1)
+            if ctx.message.author.id in self.owner_list:
+                lenght_help = int(len(paginator.keys()) - 2)
+            else:
+                lenght_help = int(len(paginator.keys()) - 1)
 
             # print(f'QUery lenght: {lenght_help}')
 
