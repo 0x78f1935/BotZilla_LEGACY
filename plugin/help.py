@@ -182,7 +182,8 @@ class Help:
                 page += 1
 
             page_number = 1
-            lenght_help = int(len(paginator.keys()) - 1)
+            
+            lenght_help = len(paginator.keys())
 
             # print(f'QUery lenght: {lenght_help}')
 
