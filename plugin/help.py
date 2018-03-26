@@ -395,8 +395,9 @@ class Help:
                 embed = paginator[str(page_number)]
                 embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
                 await self.bot.edit_message(start, embed=embed)
-        if command is not None:
-            commanden = await get_command_by_name()
+
+        if command != None:
+            commanden = get_command_by_name()
             print(commanden)
             if str(command).lower() in commanden:
                 await self.bot.say('command is there')
