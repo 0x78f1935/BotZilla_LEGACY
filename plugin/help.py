@@ -155,9 +155,6 @@ class Help:
 
             generate_pages_result = generate_pages()
 
-            if ctx.message.author.id in self.owner_list:
-                self.admin_emoji = discord.utils.get(self.bot.get_all_emojis(), id='415638404802543616')
-                await self.bot.add_reaction(start, self.admin_emoji)
             await self.bot.add_reaction(start, self.emoji_start)
             await self.bot.add_reaction(start, self.emoji_five_back) #Maybe if there are more commands
             await self.bot.add_reaction(start, self.emoji_oneback)
@@ -165,6 +162,9 @@ class Help:
             await self.bot.add_reaction(start, self.emoji_five_ahead) #Maybe if there are more commands
             await self.bot.add_reaction(start, self.emoji_end)
 
+            if ctx.message.author.id in self.owner_list:
+                self.admin_emoji = discord.utils.get(self.bot.get_all_emojis(), id='415638404802543616')
+                await self.bot.add_reaction(start, self.admin_emoji)
 
             await asyncio.sleep(0.6)
 
@@ -182,7 +182,7 @@ class Help:
                 page += 1
 
             page_number = 1
-            
+
             lenght_help = len(paginator.keys())
 
             # print(f'QUery lenght: {lenght_help}')
