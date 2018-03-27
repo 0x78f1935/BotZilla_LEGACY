@@ -290,11 +290,11 @@ class Help:
         obj = [x.strip() for x in obj]
         obj = [x for x in obj if x is not ""]
         for i in obj:
-            if i == 'html' or 'http' in i or 'library' in i or 'stable' in i or 'readthedocs' in i or 'http://aiohttp.readthedocs.org/en/stable/client_referenceproxyconnector' in i:
+            if i == 'html' or 'http' in i or 'library' in i or 'stable' in i or 'readthedocs' in i:
                 obj.remove(i)
 
         for i in obj_links:
-            if 'https' in i or len(i) <= 1 or 'stable' in i or 'readthedocs' in i or 'http://aiohttp.readthedocs.org/en/stable/client_referenceproxyconnector' in i:
+            if 'https' in i or len(i) <= 1 or 'stable' in i or 'readthedocs' in i:
                 obj_links.remove(i)
 
         if user_input in obj:
@@ -319,7 +319,13 @@ class Help:
                 if len(''.join(result)) >= link_limit_rtfm:
                     break
 
+            for item in result:
+                if 'readthedocs' in str(item):
+                    result.remove(item)
+
             result_list_prettyfy = ''.join(result)
+
+
             embed.add_field(name=f'Useful Links:',
                             value=f'{result_list_prettyfy}\nMore information can be found [here]({url})')
             msg = await self.bot.say(embed=embed)
