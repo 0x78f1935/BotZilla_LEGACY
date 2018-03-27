@@ -325,7 +325,7 @@ class Help:
                 if 'readthedocs' in str(item):
                     result.remove(item)
 
-            result_list_prettyfy = ''.join(result)
+            result_list_prettyfy = ''.join(set(result))
 
 
             embed.add_field(name=f'Useful Links:',
