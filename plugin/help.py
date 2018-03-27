@@ -3,9 +3,6 @@ from discord.ext import commands
 import json
 import datetime
 import asyncio
-import xml
-from dependency import fuzzy
-import re
 
 try:
     from plugin.database import Database
@@ -238,40 +235,8 @@ class Help:
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
-
-    async def build_rtfm_lookup_table(self):
-        cache = {}
-
-        page_types = {
-            'rewrite': (
-                'https://rapptz.github.io/discord.py/docs/api.html',
-                'https://rapptz.github.io/discord.py/docs/ext/commands/api.html'
-            ),
-            'latest': (
-                'https://discordpy.readthedocs.org/en/latest/api.html',
-            )
-        }
-
-        for key, pages in page_types.items():
-            sub = cache[key] = {}
-            for page in pages:
-                async with self.bot.session.get(page) as resp:
-                    if resp.status != 200:
-                        await self.bot.say('Cannot build rtfm lookup table, try again later.')
-                        return
-
-                    text = await resp.text(encoding='utf-8')
-                    root = xml.etree.fromstring(text, xml.etree.HTMLParser())
-                    nodes = root.findall(".//dt/a[@class='headerlink']")
-
-                    for node in nodes:
-                        href = node.get('href', '')
-                        as_key = href.replace('#discord.', '').replace('ext.commands.', '')
-                        sub[as_key] = page + href
-        self._rtfm_cache = cache
-
     @commands.command(pass_context=True)
-    async def rtfm(self, ctx, key, obj):
+    async def rtfm(self, ctx, obj=None):
         """
         Discord.py documentation.
         Usefull for developers.
@@ -282,8 +247,9 @@ class Help:
           - !!rtfm message
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{obj}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        base_url = f'https://discordpy.readthedocs.org/en/{key}/'
-        await self.bot.say(base_url)
+        base_url = f'http://discordpy.readthedocs.io/en/latest/api.html#'
+        if obj is None:
+            await self.bot.say(base_url+'api-reference')
 
 
 
