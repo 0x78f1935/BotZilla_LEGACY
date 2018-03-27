@@ -298,11 +298,9 @@ class Help:
                 obj_links.remove(i)
 
         if user_input in obj:
-            search_match_lower = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
-                            str(user_input).lower() in x]
+            search_match_lower = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if str(user_input).lower() in x]
 
-            search_match_capital = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
-                                  str(user_input).capitalize() in x]
+            search_match_capital = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if str(user_input).capitalize() in x]
 
             search_match = []
             for i in search_match_capital:
@@ -314,9 +312,7 @@ class Help:
             ref_names = []
 
             for item in search_match:
-                item = str(item).replace('http://discordpy.readthedocs.io/en/latest/api.html', '').replace('.html',
-                                                                                                           '').replace(
-                    'html', '').replace('.html', '').replace('#', '')
+                item = str(item).replace('http://discordpy.readthedocs.io/en/latest/api.html', '').replace('.html', '').replace('html', '').replace('.html', '').replace('#', '')
                 if item.endswith('.'):
                     continue
                 else:
