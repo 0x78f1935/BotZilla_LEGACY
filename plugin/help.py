@@ -252,6 +252,18 @@ class Help:
         hrefs = []
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
 
+        embed = discord.Embed(title=f'Manual for {ctx.message.author.name}, RTFM!!',
+                              description=f'If you miss something, please use the suggest command.\n**`{self.config["prefix"]}help report`** for more info about this command.\nUse a object to search more accurate, More info **`{self.config["prefix"]}help rtfm`**',
+                              colour=0xf20006)
+        if obj is None:
+            embed.add_field(name='Useful related links',
+                            value=f'{result}')
+            none_object = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
+            return
+
+        user_input = str(obj)
+
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 html = await response.read()
@@ -291,8 +303,7 @@ class Help:
         print(obj)
         print(obj_links)
 
-        user_input = input('What are you looking for? >> ')
-        if str(user_input) in obj:
+        if user_input in obj:
             search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
                             str(user_input) in x]
         print(search_match)
@@ -302,20 +313,10 @@ class Help:
 
         print(result)
 
-        embed = discord.Embed(title=f'Manual for {ctx.message.author.name}, RTFM!!',
-                              description=f'If you miss something, please use the suggest command.\n**`{self.config["prefix"]}help report`** for more info about this command.\nUse a object to search more accurate, More info **`{self.config["prefix"]}help rtfm`**',
-                              colour=0xf20006)
-        if obj is None:
-            embed.add_field(name='Useful related links',
-                            value=f'{result}')
-            none_object = await self.bot.say(embed=embed)
-            await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
-            return
-
-
-
-
-
+        embed.add_field(name='Useful related links',
+                        value=f'{result}')
+        none_object = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
 
 def setup(bot):
     bot.add_cog(Help(bot))
