@@ -146,8 +146,7 @@ class Help:
 
             # Pages
             page0 = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
-                                  description='This command is under construction and may not work correctly\n\n'
-                                              'If you are stuck this console is for you.\nNavigate around with the **`emoji\'s`** underneath.\n\n`{0}`: First page\n`{1}`: Five pages back\n`{2}`: One page back\n`{3}`: Next page\n`{4}`: Skip next five pages\n`{5}`: Last page\n\nIf you like to retrieve more information about a command.\nSimply add any command name behind **`{6}help`**\nFor example: Their is a command called **`battleship`**.\nIt\'s a game what you can play in discord.\nFor more information on how to play battleship use **`{6}help battleship`**\n\nIf this console is **`2`** minutes inactive it will shutdown'.format(
+                                  description='If you are stuck this console is for you.\nNavigate around with the **`emoji\'s`** underneath.\n\n`{0}`: First page\n`{1}`: Five pages back\n`{2}`: One page back\n`{3}`: Next page\n`{4}`: Skip next five pages\n`{5}`: Last page\n\nIf you like to retrieve more information about a command.\nSimply add any command name behind **`{6}help`**\nFor example: Their is a command called **`battleship`**.\nIt\'s a game what you can play in discord.\nFor more information on how to play battleship use **`{6}help battleship`**\n\nIf this console is **`2`** minutes inactive it will shutdown'.format(
                                       self.emoji_start_txt, self.emoji_five_back_txt, self.emoji_oneback_txt, self.emoji_oneahead_txt, self.emoji_five_ahead_txt, self.emoji_end_txt, self.config['prefix']),
                                   colour=0xf20006)
             start = await self.bot.say(embed=page0)
@@ -163,7 +162,7 @@ class Help:
 
             await asyncio.sleep(0.6)
 
-            page0.set_footer(text=f'Version: {self.version}\tReady...')
+            page0.set_footer(text=f'Version: {self.version}\t\tReady...\t\tDev help: !!rtfm')
             await self.bot.edit_message(start, embed=page0)
 
             # print('Reactions added')
@@ -214,7 +213,7 @@ class Help:
                         # print(page_number)
 
                 embed = paginator[str(page_number)]
-                embed.set_footer(text=f'Version: {self.version}\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
+                embed.set_footer(text=f'Version: {self.version}\t\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}\t\tDev help: !!rtfm')
                 await self.bot.edit_message(start, embed=embed)
 
         if command != None:
@@ -335,8 +334,8 @@ class Help:
             embed.add_field(name=f'Useful Links:',
                             value=f'No results found on **`{user_input}`**..')
             msg = await self.bot.say(embed=embed)
+            embed.set_footer(text=f'discord.py')
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
-
 
 def setup(bot):
     bot.add_cog(Help(bot))
