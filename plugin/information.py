@@ -749,7 +749,7 @@ class Utils:
 
         embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/417703639658921994/clock-png-clock-png-image-1478.png')
         embed.set_image(url='https://media.discordapp.net/attachments/407238426417430539/417703230680727552/Standard_World_Time_Zones.png?width=1276&height=677')
-        embed.set_footer(text=f'Server time : {datetime.date.today()} {datetime.datetime.now()}')
+        embed.set_footer(text=f'Server time : {datetime.date.today()} {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
         a = await self.bot.say(embed=embed)
         await self.bot.add_reaction(a, self.emojiUnicode['succes'])
 
