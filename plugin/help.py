@@ -3,6 +3,8 @@ from discord.ext import commands
 import json
 import datetime
 import asyncio
+import aiohttp
+from bs4 import BeautifulSoup
 
 try:
     from plugin.database import Database
@@ -18,7 +20,7 @@ owner_list = config['owner-id']
 class Help:
     def __init__(self, bot):
         self.bot = bot
-        bot_version = 'V0.7'
+        bot_version = 'V0.8'
         self.version = bot_version
         self.tmp_config = json.loads(str(open('./options/config.js').read()))
         self.config = self.tmp_config['config']
@@ -247,17 +249,70 @@ class Help:
           - !!rtfm message
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{obj}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        base_url = f'http://discordpy.readthedocs.io/en/latest/api.html#'
+        hrefs = []
+        url = 'http://discordpy.readthedocs.io/en/latest/api.html'
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                html = await response.read()
+
+        bs = BeautifulSoup(html, 'lxml')
+
+        for link in bs.find_all('a'):
+            if link.has_attr('href'):
+                hrefs.append(link.attrs['href'])
+
+        print(hrefs)
+
+        api = {}
+        obj = []
+        obj_links = hrefs[:]
+
+        for item in hrefs:
+            try:
+                item = item.split('.')
+                for i in item:
+                    obj.append(str(i).replace('#', ''))
+            except:
+                obj.append(str(item).replace('#', ''))
+
+        obj = [x.strip() for x in obj]
+        obj = [x for x in obj if x is not ""]
+        for i in obj:
+            if i == 'html' or 'http' in i or 'library' in i:
+                obj.remove(i)
+
+        for i in obj_links:
+            if 'https' in i or len(i) <= 1:
+                obj_links.remove(i)
+
+        api = json.dumps(api, indent=2)
+        print('===============================\n' + api)
+        print(obj)
+        print(obj_links)
+
+        user_input = input('What are you looking for? >> ')
+        if str(user_input) in obj:
+            search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
+                            str(user_input) in x]
+        print(search_match)
+        print(len(search_match))
+
+        result = f'- {search_match}\n'
+
+        print(result)
 
         embed = discord.Embed(title=f'Manual for {ctx.message.author.name}, RTFM!!',
-                              description=f'If you miss something, please use the suggest command.\n**`{self.config["prefix"]}help report`** for more info about this command.\nUse a object to search more accurate, More info can you find here **`{self.config["prefix"]}help rtfm`**',
+                              description=f'If you miss something, please use the suggest command.\n**`{self.config["prefix"]}help report`** for more info about this command.\nUse a object to search more accurate, More info **`{self.config["prefix"]}help rtfm`**',
                               colour=0xf20006)
         if obj is None:
-            embed.add_field(name='Useful links',
-                            value=f"[Api Reference]({base_url}+'api-reference')")
+            embed.add_field(name='Useful related links',
+                            value=f'{result}')
             none_object = await self.bot.say(embed=embed)
             await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
             return
+
+
 
 
 
