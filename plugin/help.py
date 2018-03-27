@@ -283,54 +283,7 @@ class Help:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{obj}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         base_url = f'https://discordpy.readthedocs.org/en/{key}/'
-
-        if obj is None:
-            await self.bot.say(base_url)
-            return
-
-        if not hasattr(self, '_rtfm_cache'):
-            await self.bot.send_typing(ctx.message.channel)
-
-        # identifiers don't have spaces
-        obj = obj.replace(' ', '_')
-
-        if key == 'rewrite':
-            pit_of_success_helpers = {
-                'vc': 'VoiceClient',
-                'msg': 'Message',
-                'color': 'Colour',
-                'perm': 'Permissions',
-                'channel': 'TextChannel',
-                'chan': 'TextChannel',
-            }
-
-            # point the abc.Messageable types properly:
-            q = obj.lower()
-            for name in dir(discord.abc.Messageable):
-                if name[0] == '_':
-                    continue
-                if q == name:
-                    obj = f'abc.Messageable.{name}'
-                    break
-
-            def replace(o):
-                return pit_of_success_helpers.get(o.group(0), '')
-
-            pattern = re.compile('|'.join(fr'\b{k}\b' for k in pit_of_success_helpers.keys()))
-            obj = pattern.sub(replace, obj)
-
-        cache = list(self._rtfm_cache[key].items())
-        def transform(tup):
-            return tup[0]
-
-        matches = fuzzy.finder(obj, cache, key=lambda t: t[0], lazy=False)[:5]
-
-        e = discord.Embed(colour=discord.Colour.blurple())
-        if len(matches) == 0:
-            return await self.bot.say('Could not find anything. Sorry.')
-
-        e.description = '\n'.join(f'[{key}]({url})' for key, url in matches)
-        await self.bot.say(embed=e)
+        await self.bot.say(base_url)
 
 
 
