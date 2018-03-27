@@ -285,7 +285,7 @@ class Help:
         base_url = f'https://discordpy.readthedocs.org/en/{key}/'
 
         if obj is None:
-            await ctx.send(base_url)
+            await self.bot.say(base_url)
             return
 
         if not hasattr(self, '_rtfm_cache'):
