@@ -260,7 +260,7 @@ class Help:
                               colour=0xf20006)
         if obj is None:
             embed.add_field(name='Useful related links',
-                            value=f'{result}')
+                            value=f'  - [API Reference](http://discordpy.readthedocs.io/en/latest/api.html#api-reference)')
             none_object = await self.bot.say(embed=embed)
             await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
             return
@@ -319,7 +319,7 @@ class Help:
 
             link_number = 0
             for i in search_match:
-                result.append('- [{}]({})\n'.format(ref_names[link_number], i))
+                result.append('  - [{}]({})\n'.format(ref_names[link_number], i))
                 link_number += 1
                 if len(''.join(result)) >= link_limit_rtfm:
                     break
