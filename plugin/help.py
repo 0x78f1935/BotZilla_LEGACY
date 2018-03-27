@@ -298,8 +298,18 @@ class Help:
                 obj_links.remove(i)
 
         if user_input in obj:
-            search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
-                            str(user_input) in x]
+            search_match_lower = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
+                            str(user_input).lower() in x]
+
+            search_match_capital = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
+                                  str(user_input).capitalize() in x]
+
+            search_match = []
+            for i in search_match_capital:
+                search_match.append(i)
+            for i in search_match_lower:
+                search_match.append(i)
+
             result = []
             ref_names = []
 
@@ -323,6 +333,7 @@ class Help:
                 if 'readthedocs' in str(item):
                     result.remove(item)
 
+            sorted(result)
             result_list_prettyfy = ''.join(result)
 
 
