@@ -307,7 +307,10 @@ class Help:
                 item = str(item).replace('http://discordpy.readthedocs.io/en/latest/api.html', '').replace('.html',
                                                                                                            '').replace(
                     'html', '').replace('.html', '').replace('#', '')
-                ref_names.append(item)
+                if item.endswith('.'):
+                    continue
+                else:
+                    ref_names.append(item)
 
             link_number = 0
             for i in search_match:
