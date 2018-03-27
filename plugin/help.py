@@ -250,7 +250,9 @@ class Help:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{obj}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         hrefs = []
+        user_input = obj
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
+        link_limit_rtfm = 350  # 350 == 5 links
 
         await self.bot.send_typing(ctx.message.channel)
 
@@ -263,8 +265,6 @@ class Help:
             none_object = await self.bot.say(embed=embed)
             await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
             return
-
-        user_input = str(obj)
 
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
@@ -298,17 +298,35 @@ class Help:
                 obj_links.remove(i)
 
         if user_input in obj:
-            search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links[0] if
+            search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
                             str(user_input) in x]
+            result = []
+            ref_names = []
 
-        result = f'- {search_match}\n'
+            for item in search_match:
+                item = str(item).replace('http://discordpy.readthedocs.io/en/latest/api.html', '').replace('.html',
+                                                                                                           '').replace(
+                    'html', '').replace('.html', '').replace('#', '')
+                ref_names.append(item)
 
-        print(result)
+            link_number = 0
+            for i in search_match:
+                result.append('- [{}]({})\n'.format(ref_names[link_number], i))
+                link_number += 1
+                if len(''.join(result)) >= link_limit_rtfm:
+                    break
 
-        embed.add_field(name='Useful related links',
-                        value=f'{result}')
-        none_object = await self.bot.say(embed=embed)
-        await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
+            result_list_prettyfy = ''.join(result)
+            embed.add_field(name=f'Manual for {ctx.message.author.name}',
+                            value=result_list_prettyfy)
+            msg = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
+        else:
+            embed.add_field(name=f'Manual for {ctx.message.author.name}',
+                            value='No results..')
+            msg = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
+
 
 def setup(bot):
     bot.add_cog(Help(bot))
