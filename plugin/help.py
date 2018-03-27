@@ -249,7 +249,7 @@ class Help:
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{obj}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         base_url = f'http://discordpy.readthedocs.io/en/latest/api.html#'
 
-        embed = discord.Embed(title=f'Manual for {ctx.message.author.name}, rtfm!',
+        embed = discord.Embed(title=f'Manual for {ctx.message.author.name}, RTFM!!',
                               description=f'If you miss something, please use the suggest command.\n**`{self.config["prefix"]}help report`** for more info about this command.\nUse a object to search more accurate, More info can you find here **`{self.config["prefix"]}help rtfm`**',
                               colour=0xf20006)
         if obj is None:
