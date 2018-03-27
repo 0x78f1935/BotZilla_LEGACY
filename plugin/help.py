@@ -298,7 +298,7 @@ class Help:
                 obj_links.remove(i)
 
         if user_input in obj:
-            search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
+            search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links[0] if
                             str(user_input) in x]
 
         result = f'- {search_match}\n'
