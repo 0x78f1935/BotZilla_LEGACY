@@ -726,14 +726,25 @@ class Utils:
                     strf_time = current_time.strftime('%Y-%m-%d %H:%M:%S')
                     timezone_list[zone[1]] = strf_time
 
+        GMT_Plus = {}
+        GMT_Min = {}
+        GMT_Rest = {}
+        for key, value in timezone_list.items():
+            if '+' in key:
+                GMT_Plus[key] = value
+            elif '-' in key:
+                GMT_Min[key] = value
+            else:
+                GMT_Rest[key] = value
+
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                              description=f'**`Greenwich`** : {" "* (28-len(timezone_list["Greenwich"]))}{timezone_list["Greenwich"]}\n**`Universal`** : {" "* (28-len(timezone_list["Greenwich"]))}{timezone_list["Universal"]}\n**`Zulu`** : {" "* (39-len(timezone_list["Greenwich"]))}{timezone_list["Zulu"]}\n\n**`Overview of all timezones:`**',
+                              description=f'{GMT_Rest["Greenwich"]} - **`Greenwich`**\n{GMT_Rest["Universal"]} - **`Universal`**\n{GMT_Rest["Zulu"]} - **`Zulu`**\n\n**`Overview of all timezones:`**',
                               color=0xf20006)
         embed.add_field(name='**`UTC +`**',
-                        value=f'**`UTC0`**\n{timezone_list["GMT0"]}\n**`UTC+12`**\n{timezone_list["GMT+12"]}\n**`UTC+11`**\n{timezone_list["GMT+11"]}\n**`UTC+10`**\n{timezone_list["GMT+10"]}\n**`UTC+9`**\n{timezone_list["GMT+9"]}\n**`UTC+8`**\n{timezone_list["GMT+8"]}\n**`UTC+7`**\n{timezone_list["GMT+7"]}\n**`UTC+6`**\n{timezone_list["GMT+6"]}\n**`UTC+5`**\n{timezone_list["GMT+5"]}\n**`UTC+4`**\n{timezone_list["GMT+4"]}\n**`UTC+3`**\n{timezone_list["GMT+3"]}\n**`UTC+2`**\n{timezone_list["GMT+2"]}\n**`UTC+1`**\n{timezone_list["GMT+1"]}',
+                        value=f'`{GMT_Plus["GMT+0"]}` - **GMT** **`+0`**\n`{GMT_Plus["GMT+1"]}` - **GMT** **`+1`**\n`{GMT_Plus["GMT+2"]}` - **GMT** **`+2`**\n`{GMT_Plus["GMT+3"]}` - **GMT** **`+3`**\n`{GMT_Plus["GMT+4"]}` - **GMT** **`+4`**\n`{GMT_Plus["GMT+5"]}` - **GMT** **`+5`**\n`{GMT_Plus["GMT+6"]}` - **GMT** **`+6`**\n`{GMT_Plus["GMT+7"]}` - **GMT** **`+7`**\n`{GMT_Plus["GMT+8"]}` - **GMT** **`+8`**\n`{GMT_Plus["GMT+9"]}` - **GMT** **`+9`**\n`{GMT_Plus["GMT+10"]}` - **GMT** **`+10`**\n`{GMT_Plus["GMT+11"]}` - **GMT** **`+11`**\n`{GMT_Plus["GMT+12"]}` - **GMT** **`+12`**',
                         inline=True)
         embed.add_field(name='**`UTC -`**',
-                        value=f'**`UTC-14`**\n{timezone_list["GMT-14"]}\n**`UTC-13`**\n{timezone_list["GMT-13"]}\n**`UTC-12`**\n{timezone_list["GMT-12"]}\n**`UTC-11`**\n{timezone_list["GMT-11"]}\n**`UTC-10`**\n{timezone_list["GMT-10"]}\n**`UTC-9`**\n{timezone_list["GMT-9"]}\n**`UTC-8`**\n{timezone_list["GMT-8"]}\n**`UTC-7`**\n{timezone_list["GMT-7"]}\n**`UTC-6`**\n{timezone_list["GMT-6"]}\n**`UTC-5`**\n{timezone_list["GMT-5"]}\n**`UTC-4`**\n{timezone_list["GMT-4"]}\n**`UTC-3`**\n{timezone_list["GMT-3"]}\n**`UTC-2`**\n{timezone_list["GMT-2"]}\n**`UTC-1`**\n{timezone_list["GMT-1"]}',
+                        value=f'`{GMT_Min["GMT-0"]}` - **GMT** **`-0`**\n`{GMT_Min["GMT-1"]}` - **GMT** **`-1`**\n`{GMT_Min["GMT-2"]}` - **GMT** **`-2`**\n`{GMT_Min["GMT-3"]}` - **GMT** **`-3`**\n`{GMT_Min["GMT-4"]}` - **GMT** **`-4`**\n`{GMT_Min["GMT-5"]}` - **GMT** **`-5`**\n`{GMT_Min["GMT-6"]}` - **GMT** **`-6`**\n`{GMT_Min["GMT-7"]}` - **GMT** **`-7`**\n`{GMT_Min["GMT-8"]}` - **GMT** **`-8`**\n`{GMT_Min["GMT-9"]}` - **GMT** **`-9`**\n`{GMT_Min["GMT-10"]}` - **GMT** **`-10`**\n`{GMT_Min["GMT-11"]}` - **GMT** **`-11`**\n`{GMT_Min["GMT-12"]}` - **GMT** **`-12`**\n`{GMT_Min["GMT-13"]}` - **GMT** **`-13`**\n`{GMT_Min["GMT-14"]}` - **GMT** **`-14`**',
                         inline=True)
         embed.set_thumbnail(url='https://media.discordapp.net/attachments/407238426417430539/417703639658921994/clock-png-clock-png-image-1478.png')
         embed.set_image(url='https://media.discordapp.net/attachments/407238426417430539/417703230680727552/Standard_World_Time_Zones.png?width=1276&height=677')
