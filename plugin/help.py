@@ -297,13 +297,13 @@ class Help:
                 obj_links.remove(i)
 
         if user_input in obj:
-            search_match = []
-            for item in obj_links:
-                match = re.match(r'(.*){}(.*?)'.format(str(user_input).lower()), str(item).lower())
-                search_match.append(match.group())
+            # search_match = []
+            # for item in obj_links:
+            #     match = re.match(r'(.*){}(.*?)'.format(str(user_input).lower()), str(item).lower())
+            #     search_match.append(match.group())
 
-            # search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
-            #                 str(user_input) in x]
+            search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
+                            str(user_input) in x]
 
             result = []
             ref_names = []
