@@ -237,7 +237,7 @@ class Help:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
     @commands.command(pass_context=True)
-    async def rtfm(self, ctx, obj=None, rewrite=None):
+    async def rtfm(self, ctx, obj=None):
         """
         Discord.py documentation.
         Usefull for developers.
@@ -251,9 +251,6 @@ class Help:
         hrefs = []
         user_input = obj
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
-        if rewrite:
-            url = 'https://discordpy.readthedocs.io/en/rewrite/'
-            
         link_limit_rtfm = 1000  # 350 == 5 links
 
         await self.bot.send_typing(ctx.message.channel)
