@@ -3,6 +3,9 @@ from discord.ext import commands
 import json
 import datetime
 import asyncio
+import xml
+from dependency import fuzzy
+import re
 
 try:
     from plugin.database import Database
@@ -52,6 +55,7 @@ class Help:
         """
         Show this message
         """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!help <{command}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         self.message = ctx.message
 
         def get_command_by_name():
@@ -233,6 +237,102 @@ class Help:
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
+
+
+    async def build_rtfm_lookup_table(self):
+        cache = {}
+
+        page_types = {
+            'rewrite': (
+                'https://rapptz.github.io/discord.py/docs/api.html',
+                'https://rapptz.github.io/discord.py/docs/ext/commands/api.html'
+            ),
+            'latest': (
+                'https://discordpy.readthedocs.org/en/latest/api.html',
+            )
+        }
+
+        for key, pages in page_types.items():
+            sub = cache[key] = {}
+            for page in pages:
+                async with self.bot.session.get(page) as resp:
+                    if resp.status != 200:
+                        await self.bot.say('Cannot build rtfm lookup table, try again later.')
+                        return
+
+                    text = await resp.text(encoding='utf-8')
+                    root = xml.etree.fromstring(text, xml.etree.HTMLParser())
+                    nodes = root.findall(".//dt/a[@class='headerlink']")
+
+                    for node in nodes:
+                        href = node.get('href', '')
+                        as_key = href.replace('#discord.', '').replace('ext.commands.', '')
+                        sub[as_key] = page + href
+        self._rtfm_cache = cache
+
+    @commands.command(pass_context=True)
+    async def rtfm(self, ctx, key, obj):
+        """
+        Discord.py documentation.
+        Usefull for developers.
+
+        Usage:
+          - !!rtfm <Event | Object | Function>
+        Example:
+          - !!rtfm message
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{obj}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        base_url = f'https://discordpy.readthedocs.org/en/{key}/'
+
+        if obj is None:
+            await ctx.send(base_url)
+            return
+
+        if not hasattr(self, '_rtfm_cache'):
+            await self.bot.send_typing(ctx.message.channel)
+
+        # identifiers don't have spaces
+        obj = obj.replace(' ', '_')
+
+        if key == 'rewrite':
+            pit_of_success_helpers = {
+                'vc': 'VoiceClient',
+                'msg': 'Message',
+                'color': 'Colour',
+                'perm': 'Permissions',
+                'channel': 'TextChannel',
+                'chan': 'TextChannel',
+            }
+
+            # point the abc.Messageable types properly:
+            q = obj.lower()
+            for name in dir(discord.abc.Messageable):
+                if name[0] == '_':
+                    continue
+                if q == name:
+                    obj = f'abc.Messageable.{name}'
+                    break
+
+            def replace(o):
+                return pit_of_success_helpers.get(o.group(0), '')
+
+            pattern = re.compile('|'.join(fr'\b{k}\b' for k in pit_of_success_helpers.keys()))
+            obj = pattern.sub(replace, obj)
+
+        cache = list(self._rtfm_cache[key].items())
+        def transform(tup):
+            return tup[0]
+
+        matches = fuzzy.finder(obj, cache, key=lambda t: t[0], lazy=False)[:5]
+
+        e = discord.Embed(colour=discord.Colour.blurple())
+        if len(matches) == 0:
+            return await self.bot.say('Could not find anything. Sorry.')
+
+        e.description = '\n'.join(f'[{key}]({url})' for key, url in matches)
+        await self.bot.say(embed=e)
+
+
 
 def setup(bot):
     bot.add_cog(Help(bot))
