@@ -250,16 +250,15 @@ class Help:
         base_url = f'http://discordpy.readthedocs.io/en/latest/api.html#'
 
         embed = discord.Embed(title=f'Manual for {ctx.message.author.name}, rtfm!',
-                              description=f'If you miss something, please use the suggest command.\n **`{self.config["prefix"]}help report`** for more info about this command.'
-                                          f'Use a object to search more accurate, More info can you find here **`{self.config["prefix"]}help rtfm`**',
+                              description=f'If you miss something, please use the suggest command.\n**`{self.config["prefix"]}help report`** for more info about this command.\nUse a object to search more accurate, More info can you find here **`{self.config["prefix"]}help rtfm`**',
                               colour=0xf20006)
         if obj is None:
-            embed.add_field(name='Api Reference',
-                            value=base_url+'api-reference')
+            embed.add_field(name='Useful links',
+                            value=f"[Api Reference]({base_url}+'api-reference')")
             none_object = await self.bot.say(embed=embed)
             await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
             return
-        
+
 
 
 
