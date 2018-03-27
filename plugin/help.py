@@ -317,13 +317,13 @@ class Help:
                     break
 
             result_list_prettyfy = ''.join(result)
-            embed.add_field(name=f'Manual for {ctx.message.author.name}',
-                            value=result_list_prettyfy)
+            embed.add_field(name=f'Useful Links:',
+                            value=f'{result_list_prettyfy}\n\nMore information can be found [here]({url})')
             msg = await self.bot.say(embed=embed)
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
         else:
-            embed.add_field(name=f'Manual for {ctx.message.author.name}',
-                            value='No results..')
+            embed.add_field(name=f'Useful Links:',
+                            value=f'No results found on **`{user_input}`**..')
             msg = await self.bot.say(embed=embed)
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
 
