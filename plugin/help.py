@@ -252,6 +252,8 @@ class Help:
         hrefs = []
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
 
+        await self.bot.send_typing(ctx.message.channel)
+
         embed = discord.Embed(title=f'Manual for {ctx.message.author.name}, RTFM!!',
                               description=f'If you miss something, please use the suggest command.\n**`{self.config["prefix"]}help report`** for more info about this command.\nUse a object to search more accurate, More info **`{self.config["prefix"]}help rtfm`**',
                               colour=0xf20006)
@@ -274,9 +276,6 @@ class Help:
             if link.has_attr('href'):
                 hrefs.append(link.attrs['href'])
 
-        print(hrefs)
-
-        api = {}
         obj = []
         obj_links = hrefs[:]
 
@@ -298,16 +297,9 @@ class Help:
             if 'https' in i or len(i) <= 1:
                 obj_links.remove(i)
 
-        api = json.dumps(api, indent=2)
-        print('===============================\n' + api)
-        print(obj)
-        print(obj_links)
-
         if user_input in obj:
             search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
                             str(user_input) in x]
-        print(search_match)
-        print(len(search_match))
 
         result = f'- {search_match}\n'
 
