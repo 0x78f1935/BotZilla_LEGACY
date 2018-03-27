@@ -5,7 +5,7 @@ import datetime
 import asyncio
 import aiohttp
 from bs4 import BeautifulSoup
-
+import re
 try:
     from plugin.database import Database
 except Exception as e:
@@ -162,7 +162,7 @@ class Help:
 
             await asyncio.sleep(0.6)
 
-            page0.set_footer(text=f'Version: {self.version}\t\tReady...\t\tDev help: !!rtfm')
+            page0.set_footer(text=f'Version: {self.version}\t|\tDev help: !!rtfm\t|\tReady...')
             await self.bot.edit_message(start, embed=page0)
 
             # print('Reactions added')
@@ -213,7 +213,7 @@ class Help:
                         # print(page_number)
 
                 embed = paginator[str(page_number)]
-                embed.set_footer(text=f'Version: {self.version}\t\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}\t\tDev help: !!rtfm')
+                embed.set_footer(text=f'Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
                 await self.bot.edit_message(start, embed=embed)
 
         if command != None:
@@ -297,8 +297,13 @@ class Help:
                 obj_links.remove(i)
 
         if user_input in obj:
-            search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
-                            str(user_input) in x]
+            search_match = []
+            for item in obj_links:
+                match = re.match(r'(.*){}(.*?)'.format(str(user_input).lower()), str(item).lower())
+                search_match.append(match.group())
+
+            # search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if
+            #                 str(user_input) in x]
 
             result = []
             ref_names = []
