@@ -302,7 +302,7 @@ class Help:
             #     if re.search(r'^(.?)([{}?])(.+)$'.format(str(user_input).lower()), str(item).lower()):
             #         search_match.append(item)
 
-            search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if str(user_input) in x]
+            search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if str(user_input).lower() in x or str(user_input).capitalize() in x or str(user_input).upper() in x]
 
             result = []
             ref_names = []
