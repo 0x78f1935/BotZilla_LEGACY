@@ -250,6 +250,7 @@ class Help:
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{obj}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         hrefs = []
         user_input = obj
+        user_input.replace(' ', '_')
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
         link_limit_rtfm = 1000  # 350 == 5 links
 
@@ -298,7 +299,6 @@ class Help:
                 obj_links.remove(i)
 
         if user_input in obj:
-            user_input.replace(' ', '_')
             search_match = []
             for item in obj_links:
                 if '.' in item:
