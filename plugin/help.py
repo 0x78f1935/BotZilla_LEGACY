@@ -317,7 +317,7 @@ class Help:
                 break
 
         # Pretyfy
-        src_format = set(src_format)
+        src_format = list(set(src_format))
         prety_format = '\n'.join(sorted(src_format, key=len))
 
         if search not in prety_format:
