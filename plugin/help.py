@@ -348,10 +348,12 @@ class Help:
             for item in clean_set_list:
                 clean_dict_list[item] = 'http://discord.py.readthedocs.io/en/latest/api.html{}'.format(item)
 
+            print(clean_dict_list)
             for key, value in clean_dict_list.items():
                 new_results.append('- [{}]({})'.format(key, value))
 
             result_list_prettyfy = '\n'.join(new_results)
+            print(result_list_prettyfy)
 
             embed.add_field(name=f'Useful Links:',
                             value=f'{result_list_prettyfy}\nMore information can be found [here]({url})')
