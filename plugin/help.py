@@ -251,9 +251,9 @@ class Help:
         hrefs = []
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
         link_limit_rtfm = 8  # 350 == 5 links
-        logging_help = "**[logging]('https://discordpy.readthedocs.io/en/latest/logging.html')**"
-        whats_new = "**[whats_new]('https://discordpy.readthedocs.io/en/latest/whats_new.html'**"
-        migrating = "**[migrating]('https://discordpy.readthedocs.io/en/latest/migrating.html')**"
+        logging_help = "**[logging](https://discordpy.readthedocs.io/en/latest/logging.html)**"
+        whats_new = "**[whats_new](https://discordpy.readthedocs.io/en/latest/whats_new.html**"
+        migrating = "**[migrating](https://discordpy.readthedocs.io/en/latest/migrating.html)**"
 
         # # make bot do stuff
         await self.bot.send_typing(ctx.message.channel)
