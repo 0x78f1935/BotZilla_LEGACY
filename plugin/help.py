@@ -356,7 +356,7 @@ class Help:
             print(result_list_prettyfy)
 
             embed.add_field(name=f'Useful Links:',
-                            value=f'{result_list_prettyfy}\nMore information can be found [here]({url})')
+                            value=f'{result_list_prettyfy}\n\nMore information can be found [here]({url})')
             msg = await self.bot.say(embed=embed)
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
         else:
