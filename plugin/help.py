@@ -302,27 +302,22 @@ class Help:
                     filtered_dict[key] = 'https://discordpy.readthedocs.io/en/latest/api.html#{}'.format(key)
 
         src_format = []
-        if search in filtered_dict.keys():
-            # format matches
-            search_matches = str(json.dumps(filtered_dict, indent=2))
-            src_match_load = json.loads(search_matches)
+        # if search in filtered_dict.keys():
+        # format matches
+        search_matches = str(json.dumps(filtered_dict, indent=2))
+        src_match_load = json.loads(search_matches)
 
-            for key, value in src_match_load.items():
-                src_format.append(f"- [{key}]({value})")
+        for key, value in src_match_load.items():
+            src_format.append(f"- [{key}]({value})")
 
-            # Pretyfy
-            sort_res = sorted(src_format, key=len)
-            for n in range(link_limit_rtfm):
-                prety_format = '\n'.join(sort_res)
+        print(search in src_match_load.keys())
+        # Pretyfy
+        sort_res = sorted(src_format, key=len)
+        for n in range(link_limit_rtfm):
+            prety_format = '\n'.join(sort_res)
 
-            embed.add_field(name=f'Useful Links:',
-                            value=f'**{prety_format}**..\n\nMore information can be found **{api_ref}** or **[here](https://www.google.nl/search?q=discordpy%20{search})**')
-            embed.add_field(name=f'Additional useful links:',
-                            value=f'{logging_help}\n{migrating}\n{whats_new}')
-            msg = await self.bot.say(embed=embed)
-            embed.set_footer(text=f'discord.py')
-            await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
-        else:
+        if bool(prety_format) is False:
+            print('no results found')
             embed.add_field(name=f'Useful Links:',
                             value=f'- No results found on **`{search}`**..')
             embed.add_field(name=f'Additional links:',
@@ -330,6 +325,15 @@ class Help:
             msg = await self.bot.say(embed=embed)
             embed.set_footer(text=f'discord.py')
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
+        else:
+            embed.add_field(name=f'Useful Links:',
+                            value=f'**{prety_format}**..\n\nMore information can be found **{api_ref}** or **[here](https://www.google.nl/search?q=discordpy%20{search})**')
+            embed.add_field(name=f'Additional useful links:',
+                            value=f'{logging_help}\n{migrating}\n{whats_new}')
+            msg = await self.bot.say(embed=embed)
+            embed.set_footer(text=f'discord.py')
+            await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
+
 
 def setup(bot):
     bot.add_cog(Help(bot))
