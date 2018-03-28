@@ -304,7 +304,7 @@ class Help:
             return
 
         with open('./options/rtfm.txt', 'r') as inputfile:
-            filtered_hrefs = list(inputfile)
+            filtered_hrefs = list(inputfile.read())
 
         # Make a dictionary out of the hrefs, add also a link to each href
         dict_hrefs = {}
