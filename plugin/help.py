@@ -251,7 +251,7 @@ class Help:
         hrefs = []
         user_input = obj
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
-        link_limit_rtfm = 10  # 350 == 5 links
+        link_limit_rtfm = 8  # 350 == 5 links
 
         await self.bot.send_typing(ctx.message.channel)
 
