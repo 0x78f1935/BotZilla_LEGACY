@@ -311,7 +311,6 @@ class Help:
 
         with open('./options/rtfm.txt', 'r') as f:
             filtered_hrefs = json.loads(f.read())
-        await self.bot.say(type(filtered_hrefs))
 
         # Make a dictionary out of the hrefs, add also a link to each href
         dict_hrefs = {}
