@@ -313,7 +313,7 @@ class Help:
             result_list_prettyfy = '\n'.join(sorted(new_results[:link_limit_rtfm]))
 
             embed.add_field(name=f'Useful Links:',
-                            value=f'{result_list_prettyfy}\n\nMore information can be found [here]({url})')
+                            value=f'{result_list_prettyfy}\n\nMore information can be found [here]({url}) or [here](https://www.google.com/)')
             msg = await self.bot.say(embed=embed)
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
         else:
