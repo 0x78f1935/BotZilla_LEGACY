@@ -252,7 +252,7 @@ class Help:
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
         link_limit_rtfm = 20
         logging_help = "[logging](https://discordpy.readthedocs.io/en/latest/logging.html)"
-        whats_new = "[whats_new](https://discordpy.readthedocs.io/en/latest/whats_new.html"
+        whats_new = "[whats_new](https://discordpy.readthedocs.io/en/latest/whats_new.html)"
         migrating = "[migrating](https://discordpy.readthedocs.io/en/latest/migrating.html)"
         api_ref = "[here](http://discordpy.readthedocs.io/en/latest/api.html#api-reference)"
 
