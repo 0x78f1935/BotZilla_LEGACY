@@ -319,7 +319,7 @@ class Help:
         print(search in src_match_load.keys())
 
         # Pretyfy
-        prety_format = '\n'.join(sorted(set(src_format), key=len))
+        prety_format = '\n'.join(sorted(set(src_format)), key=len)
 
         if search not in prety_format:
             prety_format = f'No results\n`{search}`'
