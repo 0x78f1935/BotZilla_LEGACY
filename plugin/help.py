@@ -250,7 +250,7 @@ class Help:
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{search}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         hrefs = []
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
-        link_limit_rtfm = 5
+        link_limit_rtfm = 8
         logging_help = "[logging](https://discordpy.readthedocs.io/en/latest/logging.html)"
         whats_new = "[whats_new](https://discordpy.readthedocs.io/en/latest/whats_new.html)"
         migrating = "[migrating](https://discordpy.readthedocs.io/en/latest/migrating.html)"
@@ -319,18 +319,6 @@ class Help:
         # Pretyfy
         prety_format = '\n'.join(sorted(src_format, key=len))
 
-        print(prety_format)
-
-        # if bool(prety_format) == False:
-        #     print('no results found')
-        #     embed.add_field(name=f'Useful Links:',
-        #                     value=f'- No results found on **`{search}`**..')
-        #     embed.add_field(name=f'Additional links:',
-        #                     value=f'{logging_help}\n{migrating}\n{whats_new}')
-        #     msg = await self.bot.say(embed=embed)
-        #     embed.set_footer(text=f'discord.py')
-        #     await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
-        # else:
         if search not in prety_format:
             prety_format = f'No results\n`{search}`'
         embed.add_field(name=f'Useful Links:',
