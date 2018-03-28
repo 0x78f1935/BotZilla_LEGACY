@@ -331,7 +331,7 @@ class Help:
         #     embed.set_footer(text=f'discord.py')
         #     await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
         # else:
-        if prety_format is None:
+        if search not in prety_format:
             prety_format = f'No results\n{search}'
         embed.add_field(name=f'Useful Links:',
                         value=f'**{prety_format}**\n...\n\nMore information can be found **{api_ref}** or **[here](https://www.google.nl/search?q=discordpy%20{search})**')
