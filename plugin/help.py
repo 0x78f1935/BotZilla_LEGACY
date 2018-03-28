@@ -316,7 +316,7 @@ class Help:
         for n in range(link_limit_rtfm):
             prety_format = '\n'.join(sort_res)
 
-        if bool(prety_format) is False:
+        if bool(prety_format) == False:
             print('no results found')
             embed.add_field(name=f'Useful Links:',
                             value=f'- No results found on **`{search}`**..')
