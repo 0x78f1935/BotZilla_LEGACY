@@ -189,7 +189,7 @@ class Help:
 
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_back):
                     if page_number >= 5 and page_number <= lenght_help:
-                        page_number = page_number - 5
+                        page_number = page_number - 4
                         # print(page)
 
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback):
@@ -204,7 +204,7 @@ class Help:
 
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_ahead):
                     if page_number >= 0 and page_number <= lenght_help - 5:
-                        page_number = page_number + 5
+                        page_number = page_number + 4
                         # print(page)
 
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end):
