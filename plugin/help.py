@@ -327,6 +327,7 @@ class Help:
 
             result_list_prettyfy = ''.join(set(result))
 
+            print(result_list_prettyfy)
 
             embed.add_field(name=f'Useful Links:',
                             value=f'{result_list_prettyfy}\nMore information can be found [here]({url})')
