@@ -313,7 +313,7 @@ class Help:
                 del src_match_load[key]
 
         # Save file
-        async with open('./options/rtfm.js', 'w') as outfile:
+        with open('./options/rtfm.js', 'w') as outfile:
             json.dump(str(filtered_dict), outfile)
 
         limiter = 0
