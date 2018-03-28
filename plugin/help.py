@@ -304,7 +304,7 @@ class Help:
         src_format = []
         # if search in filtered_dict.keys():
         # format matches
-        search_matches = str(json.dumps(filtered_dict, indent=2))
+        search_matches = json.dumps(filtered_dict, indent=2)
         src_match_load = json.loads(search_matches)
 
         # Remove links duplicates
@@ -313,8 +313,10 @@ class Help:
                 del src_match_load[key]
 
         # Save file
-        with open('./options/rtfm.js', 'w') as outfile:
+        with open('./export/rtfm_search.js', 'w') as outfile:
             json.dump(str(dict_hrefs), outfile)
+        with open('./export/rtfm_search.js', 'w') as outfile:
+            json.dump(src_match_load, outfile)
 
         limiter = 0
         for key, value in src_match_load.items():
