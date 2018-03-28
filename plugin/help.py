@@ -309,7 +309,7 @@ class Help:
             prety_format = '\n'.join(sorted(src_format, key=len))
             print(prety_format)
             embed.add_field(name=f'Useful Links:',
-                            value=f'**`{prety_format}`**..\n\nMore information can be found [here](http://discordpy.readthedocs.io/en/latest/api.html#api-reference) or [here](https://www.google.nl/search?q={search})**')
+                            value=f'**{prety_format}**..\n\nMore information can be found [here](http://discordpy.readthedocs.io/en/latest/api.html#api-reference) or [here](https://www.google.nl/search?q={search})**')
             embed.add_field(name=f'Additional useful links:',
                             value=f'- {logging_help}\n- {migrating}\n- {whats_new}')
             msg = await self.bot.say(embed=embed)
@@ -318,6 +318,8 @@ class Help:
         else:
             embed.add_field(name=f'Useful Links:',
                             value=f'- No results found on **`{search}`**..\n\n**Additional useful links:**\n- {logging_help}\n- {migrating}\n- {whats_new}')
+            embed.add_field(name=f'Additional useful links:',
+                            value=f'- {logging_help}\n- {migrating}\n- {whats_new}')
             msg = await self.bot.say(embed=embed)
             embed.set_footer(text=f'discord.py')
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
