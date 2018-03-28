@@ -307,15 +307,15 @@ class Help:
         search_matches = str(json.dumps(filtered_dict, indent=2))
         src_match_load = json.loads(search_matches)
 
+        # Remove links duplicates
+        for key in src_match_load.keys():
+            if key in src_match_load.keys():
+                src_match_load.delete(key)
+
         limiter = 0
         for key, value in src_match_load.items():
             if str(key).startswith('discord.'):
                 key = str(key).replace('discord.', '')
-
-            # Remove links duplicates
-            if key in src_format:
-                pass
-            else:
                 src_format.append(f"- [{key}]({value})")
 
             # limiter check
