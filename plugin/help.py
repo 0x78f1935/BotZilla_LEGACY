@@ -310,7 +310,7 @@ class Help:
             for key, value in clean_dict_list.items():
                 new_results.append('- [{}]({})'.format(key, value))
 
-            result_list_prettyfy = '\n'.join(new_results[:link_limit_rtfm])
+            result_list_prettyfy = '\n'.join(sorted(new_results[:link_limit_rtfm]))
 
             embed.add_field(name=f'Useful Links:',
                             value=f'{result_list_prettyfy}\n\nMore information can be found [here]({url})')
