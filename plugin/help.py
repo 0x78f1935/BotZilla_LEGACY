@@ -273,7 +273,7 @@ class Help:
             f.write(json.dumps(filtered_hrefs))
 
         embed = discord.Embed(title=f'RTFM!!, updated..',
-                              description=f'Done :thumbsup: ',
+                              description=f':regional_indicator_r: :regional_indicator_t: :regional_indicator_f: :regional_indicator_m:\n\nDone :thumbsup: ',
                               colour=0xf20006)
         msg = await self.bot.say(embed=embed)
         await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
@@ -311,6 +311,7 @@ class Help:
 
         with open('./options/rtfm.txt', 'r') as f:
             filtered_hrefs = json.loads(f.read())
+        await self.bot.say(type(filtered_hrefs))
 
         # Make a dictionary out of the hrefs, add also a link to each href
         dict_hrefs = {}
