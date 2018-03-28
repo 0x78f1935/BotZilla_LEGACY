@@ -237,7 +237,7 @@ class Help:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
     @commands.command(pass_context=True)
-    async def rtfm(self, ctx, *, obj:str=None):
+    async def rtfm(self, ctx, *, search:str=None):
         """
         Discord.py documentation.
         Usefull for developers.
@@ -249,7 +249,6 @@ class Help:
         """
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{obj}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         hrefs = []
-        user_input = obj
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
         link_limit_rtfm = 8  # 350 == 5 links
 
@@ -258,7 +257,7 @@ class Help:
         embed = discord.Embed(title=f'Manual for {ctx.message.author.name}, RTFM!!',
                               description=f'If you miss something, please use the suggest command.\n**`{self.config["prefix"]}help report`** for more info about this command.\nUse a object to search more accurate, More info **`{self.config["prefix"]}help rtfm`**',
                               colour=0xf20006)
-        if obj is None:
+        if search is None:
             embed.add_field(name='Useful related links',
                             value=f'- [API Reference](http://discordpy.readthedocs.io/en/latest/api.html#api-reference)')
             none_object = await self.bot.say(embed=embed)
@@ -276,9 +275,9 @@ class Help:
                 hrefs.append(link.attrs['href'])
 
         obj = []
-        obj_links = hrefs[:]
+        print(hrefs)
 
-        for item in obj_links:
+        for item in hrefs:
             try:
                 item = item.split('.')
                 for i in item:
@@ -289,24 +288,25 @@ class Help:
         obj = [x.strip() for x in obj]
         obj = [x for x in obj if x is not ""]
 
-        if user_input in obj:
-            user_input.replace(' ', '_')
+        if search in obj:
+            search.replace(' ', '_')
             search_match = []
-            for item in obj_links:
+            for item in hrefs:
                 if '.' in item:
                     tmp = item.split('.')
                     for i in tmp:
-                        if re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(i).lower()):
+                        if re.search(r'^.*{}.*$'.format(str(search).lower()), str(i).lower()):
                             search_match.append(item)
                 else:
-                    if re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(item).lower()):
+                    if re.search(r'^.*{}.*$'.format(str(search).lower()), str(item).lower()):
                         search_match.append(item)
 
             clean_dict_list = {}
             new_results = []
             clean_set_list = list(set(search_match))
             for item in clean_set_list:
-                clean_dict_list[str(item).replace('#', '')] = 'https://discordpy.readthedocs.io/en/latest/api.html{}'.format(item)
+                clean_dict_list[
+                    str(item).replace('#', '')] = 'https://discordpy.readthedocs.io/en/latest/api.html{}'.format(item)
 
             for key, value in clean_dict_list.items():
                 new_results.append('- [{}]({})'.format(key, value))
