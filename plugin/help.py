@@ -314,7 +314,7 @@ class Help:
 
         # Save file
         with open('./options/rtfm.js', 'w') as outfile:
-            json.dump(str(filtered_dict), outfile)
+            json.dump(str(dict_hrefs), outfile)
 
         limiter = 0
         for key, value in src_match_load.items():
