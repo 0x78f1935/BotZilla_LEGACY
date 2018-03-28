@@ -315,8 +315,11 @@ class Help:
         # Save file
         with open('./export/rtfm_search.js', 'w') as outfile:
             json.dump(str(dict_hrefs), outfile)
-        with open('./export/rtfm_search.js', 'w') as outfile:
-            json.dump(src_match_load, outfile)
+        with open('./export/rtfm_src.js', 'w') as outfile:
+            tmp = {}
+            for key, value in dict_hrefs.items():
+                tmp[key] = 'https://discordpy.readthedocs.io/en/latest/api.html#{}'.format(key)
+            json.dump(tmp, outfile)
 
         limiter = 0
         for key, value in src_match_load.items():
@@ -333,8 +336,11 @@ class Help:
         src_format = list(set(src_format))
         prety_format = '\n'.join(sorted(src_format, key=len))
 
+        # check if there are results
         if search not in prety_format:
             prety_format = f'No results\n`{search}`'
+
+        # prep and send message
         embed.add_field(name=f'Useful Links:',
                         value=f'**{prety_format}**\n...\n\nMore information can be found **{api_ref}** or **[here](https://www.google.nl/search?q=discordpy%20{search})**')
         embed.add_field(name=f'Additional useful links:',
