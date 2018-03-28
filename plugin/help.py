@@ -294,10 +294,10 @@ class Help:
                 if '.' in item:
                     tmp = item.split('.')
                     for i in tmp:
-                        if re.search(r'^.*{}.*$'.format(str(search).lower()), str(i).lower()):
+                        if re.search(r'^(.*{}.*)$'.format(str(search).lower()), str(i).lower()):
                             search_match.append(item)
                 else:
-                    if re.search(r'^.*{}.*$'.format(str(search).lower()), str(item).lower()):
+                    if re.search(r'^(.*{}.*)$'.format(str(search).lower()), str(item).lower()):
                         search_match.append(item)
 
             clean_dict_list = {}
