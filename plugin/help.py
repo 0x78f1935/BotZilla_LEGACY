@@ -325,6 +325,7 @@ class Help:
                 result.append('- [{}]({})\n'.format(ref_names[link_number], f'http://discordpy.readthedocs.io/en/latest/api.html{i}')) # make hyper links
                 link_number += 1
                 if len(''.join(result)) >= link_limit_rtfm:
+                    print(result)
                     break
 
             for item in result:
