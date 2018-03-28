@@ -309,7 +309,7 @@ class Help:
 
         # Remove links duplicates
         for key in src_match_load.keys():
-            if key in src_match_load.keys():
+            if key not in src_match_load.keys():
                 del src_match_load[key]
 
         limiter = 0
