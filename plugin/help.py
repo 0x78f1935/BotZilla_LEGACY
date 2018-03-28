@@ -251,7 +251,7 @@ class Help:
         hrefs = []
         user_input = obj
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
-        link_limit_rtfm = 1000  # 350 == 5 links
+        link_limit_rtfm = 5  # 350 == 5 links
 
         await self.bot.send_typing(ctx.message.channel)
 
@@ -352,7 +352,7 @@ class Help:
             for key, value in clean_dict_list.items():
                 new_results.append('- [{}]({})'.format(key, value))
 
-            result_list_prettyfy = '\n'.join(new_results)
+            result_list_prettyfy = '\n'.join(new_results[:link_limit_rtfm])
             print(result_list_prettyfy)
 
             embed.add_field(name=f'Useful Links:',
