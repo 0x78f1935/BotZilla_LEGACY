@@ -269,8 +269,14 @@ class Help:
                     filtered_hrefs.append(i)
 
         # save file to export
-        with open('./export/rtfm.txt', 'w') as outfile:
-            outfile.write(filtered_hrefs)
+        with open('./export/rtfm.txt', 'w') as f:
+            f.write(json.dumps(filtered_hrefs))
+
+        embed = discord.Embed(title=f'RTFM!!, updated..',
+                              description=f'Done :thumbsup: ',
+                              colour=0xf20006)
+        msg = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
 
     @commands.command(pass_context=True)
     async def rtfm(self, ctx, search: str = None):
@@ -303,8 +309,8 @@ class Help:
             await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
             return
 
-        with open('./options/rtfm.txt', 'r') as inputfile:
-            filtered_hrefs = list(inputfile.read())
+        with open('./options/rtfm.txt', 'r') as f:
+            filtered_hrefs = json.loads(f.read())
 
         # Make a dictionary out of the hrefs, add also a link to each href
         dict_hrefs = {}
