@@ -254,6 +254,7 @@ class Help:
         logging_help = "[logging](https://discordpy.readthedocs.io/en/latest/logging.html)"
         whats_new = "[whats_new](https://discordpy.readthedocs.io/en/latest/whats_new.html"
         migrating = "[migrating](https://discordpy.readthedocs.io/en/latest/migrating.html)"
+        api_ref = "[here](http://discordpy.readthedocs.io/en/latest/api.html#api-reference)"
 
         # # make bot do stuff
         await self.bot.send_typing(ctx.message.channel)
@@ -310,7 +311,7 @@ class Help:
                 prety_format = '\n'.join(sorted(src_format, key=len))
 
             embed.add_field(name=f'Useful Links:',
-                            value=f'**{prety_format}**..\n\nMore information can be found [here](http://discordpy.readthedocs.io/en/latest/api.html#api-reference) or [here](https://www.google.nl/search?q={search})**')
+                            value=f'**{prety_format}**..\n\nMore information can be found **{api_ref}** or **[here](https://www.google.nl/search?q=discordpy%20{search})**')
             embed.add_field(name=f'Additional useful links:',
                             value=f'{logging_help}\n{migrating}\n{whats_new}')
             msg = await self.bot.say(embed=embed)
