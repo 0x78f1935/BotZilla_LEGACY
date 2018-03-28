@@ -314,7 +314,7 @@ class Help:
 
         # Save file
         async with open('./options/rtfm.js', 'w') as outfile:
-            json.dump(search_matches, outfile)
+            json.dump(str(filtered_dict), outfile)
 
         limiter = 0
         for key, value in src_match_load.items():
