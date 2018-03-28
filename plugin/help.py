@@ -307,11 +307,11 @@ class Help:
         search_matches = str(json.dumps(filtered_dict, indent=2))
         src_match_load = json.loads(search_matches)
 
-        for n in range(link_limit_rtfm):
-            for key, value in src_match_load.items():
-                src_format.append(f"- [{key}]({value})")
+        for key, value in src_match_load.items() and key in range(link_limit_rtfm):
+            src_format.append(f"- [{key}]({value})")
 
         print(search in src_match_load.keys())
+
         # Pretyfy
         prety_format = '\n'.join(sorted(src_format, key=len))
 
