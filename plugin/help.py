@@ -237,7 +237,7 @@ class Help:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
     @commands.command(pass_context=True)
-    async def rtfm(self, ctx, obj=None):
+    async def rtfm(self, ctx, obj:str=None):
         """
         Discord.py documentation.
         Usefull for developers.
@@ -288,6 +288,7 @@ class Help:
 
         obj = [x.strip() for x in obj]
         obj = [x for x in obj if x is not ""]
+
         for i in obj:
             if i == 'html' or 'http' in i or 'library' in i or 'stable' in i or 'readthedocs' in i:
                 obj.remove(i)
@@ -297,6 +298,7 @@ class Help:
                 obj_links.remove(i)
 
         if user_input in obj:
+            user_input.replace(' ', '_')
             search_match = []
             for item in obj_links:
                 if '.' in item:
