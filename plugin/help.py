@@ -289,7 +289,7 @@ class Help:
         Example:
           - !!rtfm message
         """
-        link_limit_rtfm = 8
+        link_limit_rtfm = 5
         logging_help = "[logging](https://discordpy.readthedocs.io/en/latest/logging.html)"
         whats_new = "[whats_new](https://discordpy.readthedocs.io/en/latest/whats_new.html)"
         migrating = "[migrating](https://discordpy.readthedocs.io/en/latest/migrating.html)"
