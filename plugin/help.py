@@ -299,13 +299,14 @@ class Help:
 
         if user_input in obj:
             user_input.replace(' ', '_')
-            print(user_input)
             search_match = []
             for item in obj_links:
                 if '.' in item:
                     tmp = item.split('.')
                     for i in tmp:
+                        print(i)
                         if re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(i).lower()):
+                            print(f'Found {item}')
                             search_match.append(item)
                 elif re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(item).lower()):
                     search_match.append(item)
