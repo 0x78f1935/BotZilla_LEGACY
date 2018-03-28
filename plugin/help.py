@@ -357,8 +357,6 @@ class Help:
         # prep and send message
         embed.add_field(name=f'Useful Links:',
                         value=f'**{prety_format}**\nMore information can be found **{api_ref}** or **[here](https://www.google.nl/search?q=discordpy%20{search})**')
-        embed.add_field(name=f'Additional useful links:',
-                        value=f'{logging_help}\n{migrating}\n{whats_new}')
         msg = await self.bot.say(embed=embed)
         embed.set_footer(text=f'discord.py')
         await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
