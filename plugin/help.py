@@ -298,7 +298,7 @@ class Help:
             # Filter the dictionary on user input
 
             for key, value in dict_hrefs.items():
-                if search in key or search in value:
+                if search.lower() in key.lower() or search.lower() in value.lower():
                     filtered_dict[key] = 'https://discordpy.readthedocs.io/en/latest/api.html#{}'.format(key)
 
         src_format = []
