@@ -307,8 +307,12 @@ class Help:
         search_matches = str(json.dumps(filtered_dict, indent=2))
         src_match_load = json.loads(search_matches)
 
-        for key, value in src_match_load.items() and key in range(link_limit_rtfm):
+        limiter = 0
+        for key, value in src_match_load.items():
             src_format.append(f"- [{key}]({value})")
+            limiter += 1
+            if limiter >= link_limit_rtfm:
+                break
 
         print(search in src_match_load.keys())
 
