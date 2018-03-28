@@ -237,7 +237,43 @@ class Help:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
     @commands.command(pass_context=True)
-    async def rtfm(self, ctx, search:str=None):
+    async def updatertfm(self, ctx, search:str=None):
+        """
+        Update Discord.py documentation.
+        Only the bot owner can use this command
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{search}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        if ctx.message.author.id not in self.owner_list:
+            return
+
+        hrefs = []
+        url = 'http://discordpy.readthedocs.io/en/latest/api.html'
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                html = await response.read()
+
+        bs = BeautifulSoup(html, 'lxml')
+
+        for link in bs.find_all('a'):
+            if link.has_attr('href'):
+                hrefs.append(link.attrs['href'])
+
+        # Filter results, remove all != doc pages
+        filtered_hrefs = []
+        for i in hrefs:
+            if str(i).startswith('#'):
+                if str(i) == '#':
+                    pass  ### remove index page
+                else:
+                    filtered_hrefs.append(i)
+
+        # save file to export
+        with open('./export/rtfm.txt', 'w') as outfile:
+            outfile.write(filtered_hrefs)
+
+    @commands.command(pass_context=True)
+    async def rtfm(self, ctx, search: str = None):
         """
         Discord.py documentation.
         Usefull for developers.
@@ -247,9 +283,6 @@ class Help:
         Example:
           - !!rtfm message
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{search}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
-        hrefs = []
-        url = 'http://discordpy.readthedocs.io/en/latest/api.html'
         link_limit_rtfm = 8
         logging_help = "[logging](https://discordpy.readthedocs.io/en/latest/logging.html)"
         whats_new = "[whats_new](https://discordpy.readthedocs.io/en/latest/whats_new.html)"
@@ -270,24 +303,8 @@ class Help:
             await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
             return
 
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                html = await response.read()
-
-        bs = BeautifulSoup(html, 'lxml')
-
-        for link in bs.find_all('a'):
-            if link.has_attr('href'):
-                hrefs.append(link.attrs['href'])
-
-        # Filter results, remove all != doc pages
-        filtered_hrefs = []
-        for i in hrefs:
-            if str(i).startswith('#'):
-                if str(i) == '#':
-                    pass  ### remove index page
-                else:
-                    filtered_hrefs.append(i)
+        with open('./options/rtfm.txt', 'r') as inputfile:
+            filtered_hrefs = list(inputfile)
 
         # Make a dictionary out of the hrefs, add also a link to each href
         dict_hrefs = {}
@@ -311,15 +328,6 @@ class Help:
         for key in src_match_load.keys():
             if key not in src_match_load.keys():
                 del src_match_load[key]
-
-        # Save file
-        with open('./export/rtfm_search.js', 'w') as outfile:
-            json.dump(str(dict_hrefs), outfile)
-        with open('./export/rtfm_src.js', 'w') as outfile:
-            tmp = {}
-            for key, value in dict_hrefs.items():
-                tmp[key] = 'https://discordpy.readthedocs.io/en/latest/api.html#{}'.format(key)
-            json.dump(tmp, outfile)
 
         limiter = 0
         for key, value in src_match_load.items():
