@@ -289,13 +289,15 @@ class Help:
         obj = [x.strip() for x in obj]
         obj = [x for x in obj if x is not ""]
 
-        for i in obj:
-            # if i == 'html' or 'http' in i or 'library' in i or 'stable' in i or 'readthedocs' in i:
-            obj.remove(i)
+        # Remove section aka filter
 
-        for i in obj_links:
-            # if 'https' in i or len(i) <= 1 or 'stable' in i or 'readthedocs' in i:
-            obj_links.remove(i)
+        # for i in obj:
+        #     if i == 'html' or 'http' in i or 'library' in i or 'stable' in i or 'readthedocs' in i:
+        #         obj.remove(i)
+        #
+        # for i in obj_links:
+        #     if 'https' in i or len(i) <= 1 or 'stable' in i or 'readthedocs' in i:
+        #         obj_links.remove(i)
 
         if user_input in obj:
             user_input.replace(' ', '_')
