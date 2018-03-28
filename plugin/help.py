@@ -237,7 +237,7 @@ class Help:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
     @commands.command(pass_context=True)
-    async def rtfm(self, ctx, obj:str=None):
+    async def rtfm(self, ctx, *, obj:str=None):
         """
         Discord.py documentation.
         Usefull for developers.
