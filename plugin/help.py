@@ -316,10 +316,9 @@ class Help:
             if limiter >= link_limit_rtfm:
                 break
 
-        print(search in src_match_load.keys())
-
         # Pretyfy
-        prety_format = '\n'.join(sorted(list(set(src_format))), key=len)
+        src_format = set(src_format)
+        prety_format = '\n'.join(sorted(src_format, key=len))
 
         if search not in prety_format:
             prety_format = f'No results\n`{search}`'
