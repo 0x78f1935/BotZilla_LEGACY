@@ -263,7 +263,9 @@ class Help:
                               colour=0xf20006)
         if search is None:
             embed.add_field(name='Useful related links',
-                            value=f'- [API Reference](http://discordpy.readthedocs.io/en/latest/api.html#api-reference)\n{logging_help}\n{migrating}\n{whats_new}')
+                            value=f'- [API Reference](http://discordpy.readthedocs.io/en/latest/api.html#api-reference)')
+            embed.add_field(name=f'Additional useful links:',
+                            value=f'{logging_help}\n{migrating}\n{whats_new}')
             none_object = await self.bot.say(embed=embed)
             await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
             return
@@ -289,26 +291,29 @@ class Help:
 
         # Make a dictionary out of the hrefs, add also a link to each href
         dict_hrefs = {}
+        filtered_dict = {}
         for item in filtered_hrefs:
             dict_hrefs[str(item)[1:]] = str(item)[1:].split('.')  # remove '#' from tag
 
             # Filter the dictionary on user input
-            filtered_dict = {}
+
             for key, value in dict_hrefs.items():
                 if search in key or search in value:
                     filtered_dict[key] = 'https://discordpy.readthedocs.io/en/latest/api.html#{}'.format(key)
 
+        src_format = []
         if search in filtered_dict.keys():
             # format matches
             search_matches = str(json.dumps(filtered_dict, indent=2))
             src_match_load = json.loads(search_matches)
-            src_format = []
+
             for key, value in src_match_load.items():
                 src_format.append(f"- [{key}]({value})")
 
             # Pretyfy
+            sort_res = sorted(src_format, key=len)
             for n in range(link_limit_rtfm):
-                prety_format = '\n'.join(sorted(src_format, key=len))
+                prety_format = '\n'.join(sort_res)
 
             embed.add_field(name=f'Useful Links:',
                             value=f'**{prety_format}**..\n\nMore information can be found **{api_ref}** or **[here](https://www.google.nl/search?q=discordpy%20{search})**')
