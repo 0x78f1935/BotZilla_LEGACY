@@ -250,7 +250,7 @@ class Help:
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{search}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         hrefs = []
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
-        link_limit_rtfm = 8  # 350 == 5 links
+        link_limit_rtfm = 20
         logging_help = "[logging](https://discordpy.readthedocs.io/en/latest/logging.html)"
         whats_new = "[whats_new](https://discordpy.readthedocs.io/en/latest/whats_new.html"
         migrating = "[migrating](https://discordpy.readthedocs.io/en/latest/migrating.html)"
@@ -262,7 +262,7 @@ class Help:
                               colour=0xf20006)
         if search is None:
             embed.add_field(name='Useful related links',
-                            value=f'- [API Reference](http://discordpy.readthedocs.io/en/latest/api.html#api-reference)\n- {logging_help}\n- {migrating}\n- {whats_new}')
+                            value=f'- [API Reference](http://discordpy.readthedocs.io/en/latest/api.html#api-reference)\n{logging_help}\n{migrating}\n{whats_new}')
             none_object = await self.bot.say(embed=embed)
             await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
             return
@@ -306,12 +306,13 @@ class Help:
                 src_format.append(f"- [{key}]({value})")
 
             # Pretyfy
-            prety_format = '\n'.join(sorted(src_format, key=len))
-            print(prety_format)
+            for n in range(link_limit_rtfm):
+                prety_format = '\n'.join(sorted(src_format, key=len))
+
             embed.add_field(name=f'Useful Links:',
                             value=f'**{prety_format}**..\n\nMore information can be found [here](http://discordpy.readthedocs.io/en/latest/api.html#api-reference) or [here](https://www.google.nl/search?q={search})**')
             embed.add_field(name=f'Additional useful links:',
-                            value=f'- {logging_help}\n- {migrating}\n- {whats_new}')
+                            value=f'{logging_help}\n{migrating}\n{whats_new}')
             msg = await self.bot.say(embed=embed)
             embed.set_footer(text=f'discord.py')
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
@@ -319,7 +320,7 @@ class Help:
             embed.add_field(name=f'Useful Links:',
                             value=f'- No results found on **`{search}`**..\n\n**Additional useful links:**\n- {logging_help}\n- {migrating}\n- {whats_new}')
             embed.add_field(name=f'Additional useful links:',
-                            value=f'- {logging_help}\n- {migrating}\n- {whats_new}')
+                            value=f'{logging_help}\n{migrating}\n{whats_new}')
             msg = await self.bot.say(embed=embed)
             embed.set_footer(text=f'discord.py')
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
