@@ -289,16 +289,6 @@ class Help:
         obj = [x.strip() for x in obj]
         obj = [x for x in obj if x is not ""]
 
-        # Remove section aka filter
-
-        # for i in obj:
-        #     if i == 'html' or 'http' in i or 'library' in i or 'stable' in i or 'readthedocs' in i:
-        #         obj.remove(i)
-        #
-        # for i in obj_links:
-        #     if 'https' in i or len(i) <= 1 or 'stable' in i or 'readthedocs' in i:
-        #         obj_links.remove(i)
-
         if user_input in obj:
             user_input.replace(' ', '_')
             search_match = []
@@ -306,41 +296,11 @@ class Help:
                 if '.' in item:
                     tmp = item.split('.')
                     for i in tmp:
-                        print(i)
                         if re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(i).lower()):
-                            print(f'Found {item}')
                             search_match.append(item)
                 else:
                     if re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(item).lower()):
                         search_match.append(item)
-
-            print(list(set(search_match)))
-
-            # search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if str(user_input).lower().replace(' ', '-') in x or str(user_input).capitalize().replace(' ', '-') in x or str(user_input).upper().replace(' ', '-') in x]
-
-            # result = []
-            # ref_names = []
-            #
-            # for item in search_match:
-            #     item = str(item).replace('.html', '').replace('#', '').replace('_', ' ')
-            #     ref_names.append(item)
-            #
-            # link_number = 0
-            # for i in search_match:
-            #     result.append('- [{}]({})\n'.format(ref_names[link_number], f'http://discordpy.readthedocs.io/en/latest/api.html{i}')) # make hyper links
-            #     link_number += 1
-            #     if len(''.join(result)) >= link_limit_rtfm:
-            #         print(result)
-            #         break
-            #
-            # for item in result:
-            #     if 'readthedocs' in str(item):
-            #         result.remove(item)
-            #
-            # result_list_prettyfy = ''.join(set(result))
-            #
-            # if result_list_prettyfy == '\n' or result_list_prettyfy =='' or result_list_prettyfy is None:
-            #     result_list_prettyfy == '- No results found..'
 
             clean_dict_list = {}
             new_results = []
@@ -348,12 +308,10 @@ class Help:
             for item in clean_set_list:
                 clean_dict_list[str(item).replace('#', '')] = 'http://discord.py.readthedocs.io/en/latest/api.html{}'.format(item)
 
-            print(clean_dict_list)
             for key, value in clean_dict_list.items():
                 new_results.append('- [{}]({})'.format(key, value))
 
             result_list_prettyfy = '\n'.join(new_results[:link_limit_rtfm])
-            print(result_list_prettyfy)
 
             embed.add_field(name=f'Useful Links:',
                             value=f'{result_list_prettyfy}\n\nMore information can be found [here]({url})')
