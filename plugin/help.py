@@ -237,7 +237,7 @@ class Help:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['warning'])
 
     @commands.command(pass_context=True)
-    async def rtfm(self, ctx, *, search:str=None):
+    async def rtfm(self, ctx, search:str=None):
         """
         Discord.py documentation.
         Usefull for developers.
@@ -247,19 +247,22 @@ class Help:
         Example:
           - !!rtfm message
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{search}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{obj}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         hrefs = []
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
         link_limit_rtfm = 8  # 350 == 5 links
+        logging_help = "**['logging']('https://discordpy.readthedocs.io/en/latest/logging.html')**"
+        whats_new = "**['whats_new']('https://discordpy.readthedocs.io/en/latest/whats_new.html'**"
+        migrating = "**['migrating']('https://discordpy.readthedocs.io/en/latest/migrating.html')**"
 
+        # # make bot do stuff
         await self.bot.send_typing(ctx.message.channel)
-
         embed = discord.Embed(title=f'Manual for {ctx.message.author.name}, RTFM!!',
                               description=f'If you miss something, please use the suggest command.\n**`{self.config["prefix"]}help report`** for more info about this command.\nUse a object to search more accurate, More info **`{self.config["prefix"]}help rtfm`**',
                               colour=0xf20006)
         if search is None:
             embed.add_field(name='Useful related links',
-                            value=f'- [API Reference](http://discordpy.readthedocs.io/en/latest/api.html#api-reference)')
+                            value=f'- [API Reference](http://discordpy.readthedocs.io/en/latest/api.html#api-reference)\n- {logging_help}\n- {migrating}\n- {whats_new}')
             none_object = await self.bot.say(embed=embed)
             await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
             return
@@ -274,51 +277,47 @@ class Help:
             if link.has_attr('href'):
                 hrefs.append(link.attrs['href'])
 
-        obj = []
-
-        for item in hrefs:
-            try:
-                item = item.split('.')
-                for i in item:
-                    obj.append(str(i).replace('#', ''))
-            except:
-                obj.append(str(item).replace('#', ''))
-
-        obj = [x.strip() for x in obj]
-        obj = [x for x in obj if x is not ""]
-
-        if search in obj:
-            search.replace(' ', '_')
-            search_match = []
-            for item in hrefs:
-                if '.' in item:
-                    tmp = item.split('.')
-                    for i in tmp:
-                        if re.search(r'^(.*{}.*)$'.format(str(search).lower()), str(i).lower()):
-                            search_match.append(item)
+        # Filter results, remove all != doc pages
+        filtered_hrefs = []
+        for i in hrefs:
+            if str(i).startswith('#'):
+                if str(i) == '#':
+                    pass  ### remove index page
                 else:
-                    if re.search(r'^(.*{}.*)$'.format(str(search).lower()), str(item).lower()):
-                        search_match.append(item)
+                    filtered_hrefs.append(i)
 
-            clean_dict_list = {}
-            new_results = []
-            clean_set_list = list(set(search_match))
-            for item in clean_set_list:
-                clean_dict_list[
-                    str(item).replace('#', '')] = 'https://discordpy.readthedocs.io/en/latest/api.html{}'.format(item)
+        # Make a dictionary out of the hrefs, add also a link to each href
+        dict_hrefs = {}
+        for item in filtered_hrefs:
+            dict_hrefs[str(item)[1:]] = str(item)[1:].split('.')  # remove '#' from tag
 
-            for key, value in clean_dict_list.items():
-                new_results.append('- [{}]({})'.format(key, value))
+            # Filter the dictionary on user input
+            filtered_dict = {}
+            for key, value in dict_hrefs.items():
+                if search in key or search in value:
+                    filtered_dict[key] = 'https://discordpy.readthedocs.io/en/latest/api.html#{}'.format(key)
 
-            result_list_prettyfy = '\n'.join(sorted(new_results[:link_limit_rtfm]))
+        if search in filtered_dict.keys():
+            # format matches
+            search_matches = str(json.dumps(filtered_dict, indent=2))
+            src_match_load = json.loads(search_matches)
+            src_format = []
+            for key, value in src_match_load.items():
+                src_format.append(f"- [{key}]({value})")
 
+            # Pretyfy
+            prety_format = '\n'.join(sorted(src_format, key=len))
+            print(prety_format)
             embed.add_field(name=f'Useful Links:',
-                            value=f'{result_list_prettyfy}\n\nMore information can be found [here]({url}) or [here](https://www.google.com/)')
+                            value=f'**`{prety_format}`**..\n\nMore information can be found [here](http://discordpy.readthedocs.io/en/latest/api.html#api-reference) or [here](https://www.google.nl/search?q={search})**')
+            embed.add_field(name=f'Additional useful links:',
+                            value=f'- {logging_help}\n- {migrating}\n- {whats_new}')
             msg = await self.bot.say(embed=embed)
+            embed.set_footer(text=f'discord.py')
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
         else:
             embed.add_field(name=f'Useful Links:',
-                            value=f'- No results found on **`{search}`**..')
+                            value=f'- No results found on **`{search}`**..\n\n**Additional useful links:**\n- {logging_help}\n- {migrating}\n- {whats_new}')
             msg = await self.bot.say(embed=embed)
             embed.set_footer(text=f'discord.py')
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
