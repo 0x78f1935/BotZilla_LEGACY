@@ -318,29 +318,40 @@ class Help:
 
             # search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if str(user_input).lower().replace(' ', '-') in x or str(user_input).capitalize().replace(' ', '-') in x or str(user_input).upper().replace(' ', '-') in x]
 
-            result = []
-            ref_names = []
+            # result = []
+            # ref_names = []
+            #
+            # for item in search_match:
+            #     item = str(item).replace('.html', '').replace('#', '').replace('_', ' ')
+            #     ref_names.append(item)
+            #
+            # link_number = 0
+            # for i in search_match:
+            #     result.append('- [{}]({})\n'.format(ref_names[link_number], f'http://discordpy.readthedocs.io/en/latest/api.html{i}')) # make hyper links
+            #     link_number += 1
+            #     if len(''.join(result)) >= link_limit_rtfm:
+            #         print(result)
+            #         break
+            #
+            # for item in result:
+            #     if 'readthedocs' in str(item):
+            #         result.remove(item)
+            #
+            # result_list_prettyfy = ''.join(set(result))
+            #
+            # if result_list_prettyfy == '\n' or result_list_prettyfy =='' or result_list_prettyfy is None:
+            #     result_list_prettyfy == '- No results found..'
 
-            for item in search_match:
-                item = str(item).replace('.html', '').replace('#', '').replace('_', ' ')
-                ref_names.append(item)
+            clean_dict_list = {}
+            new_results = []
+            clean_set_list = list(set(search_match))
+            for item in clean_set_list:
+                clean_dict_list[item] = 'http://discord.py.readthedocs.io/en/latest/api.html{}'.format(item)
 
-            link_number = 0
-            for i in search_match:
-                result.append('- [{}]({})\n'.format(ref_names[link_number], f'http://discordpy.readthedocs.io/en/latest/api.html{i}')) # make hyper links
-                link_number += 1
-                if len(''.join(result)) >= link_limit_rtfm:
-                    print(result)
-                    break
+            for key, value in clean_dict_list.items():
+                new_results.append('- [{}]({})'.format(key, value))
 
-            for item in result:
-                if 'readthedocs' in str(item):
-                    result.remove(item)
-
-            result_list_prettyfy = ''.join(set(result))
-
-            if result_list_prettyfy == '\n' or result_list_prettyfy =='' or result_list_prettyfy is None:
-                result_list_prettyfy == '- No results found..'
+            result_list_prettyfy = '\n'.join(new_results)
 
             embed.add_field(name=f'Useful Links:',
                             value=f'{result_list_prettyfy}\nMore information can be found [here]({url})')
