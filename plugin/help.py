@@ -310,8 +310,9 @@ class Help:
                         if re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(i).lower()):
                             print(f'Found {item}')
                             search_match.append(item)
-                elif re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(item).lower()):
-                    search_match.append(item)
+                else:
+                    if re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(item).lower()):
+                        search_match.append(item)
 
             print(search_match)
 
