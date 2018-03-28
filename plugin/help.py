@@ -327,7 +327,8 @@ class Help:
 
             result_list_prettyfy = ''.join(set(result))
 
-            print(result_list_prettyfy)
+            if result_list_prettyfy == '\n' or result_list_prettyfy =='' or result_list_prettyfy is None:
+                result_list_prettyfy == '- No results found..'
 
             embed.add_field(name=f'Useful Links:',
                             value=f'{result_list_prettyfy}\nMore information can be found [here]({url})')
