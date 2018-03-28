@@ -317,23 +317,23 @@ class Help:
 
         print(prety_format)
 
-        if bool(prety_format) == False:
-            print('no results found')
-            embed.add_field(name=f'Useful Links:',
-                            value=f'- No results found on **`{search}`**..')
-            embed.add_field(name=f'Additional links:',
-                            value=f'{logging_help}\n{migrating}\n{whats_new}')
-            msg = await self.bot.say(embed=embed)
-            embed.set_footer(text=f'discord.py')
-            await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
-        else:
-            embed.add_field(name=f'Useful Links:',
-                            value=f'**{prety_format}**..\n\nMore information can be found **{api_ref}** or **[here](https://www.google.nl/search?q=discordpy%20{search})**')
-            embed.add_field(name=f'Additional useful links:',
-                            value=f'{logging_help}\n{migrating}\n{whats_new}')
-            msg = await self.bot.say(embed=embed)
-            embed.set_footer(text=f'discord.py')
-            await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
+        # if bool(prety_format) == False:
+        #     print('no results found')
+        #     embed.add_field(name=f'Useful Links:',
+        #                     value=f'- No results found on **`{search}`**..')
+        #     embed.add_field(name=f'Additional links:',
+        #                     value=f'{logging_help}\n{migrating}\n{whats_new}')
+        #     msg = await self.bot.say(embed=embed)
+        #     embed.set_footer(text=f'discord.py')
+        #     await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
+        # else:
+        embed.add_field(name=f'Useful Links:',
+                        value=f'**{prety_format}**..\n\nMore information can be found **{api_ref}** or **[here](https://www.google.nl/search?q=discordpy%20{search})**')
+        embed.add_field(name=f'Additional useful links:',
+                        value=f'{logging_help}\n{migrating}\n{whats_new}')
+        msg = await self.bot.say(embed=embed)
+        embed.set_footer(text=f'discord.py')
+        await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
 
 
 def setup(bot):
