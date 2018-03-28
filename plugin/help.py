@@ -309,6 +309,8 @@ class Help:
 
         limiter = 0
         for key, value in src_match_load.items():
+            if str(key).startswith('discord.'):
+                key = str(key).replace('discord.', '')
             src_format.append(f"- [{key}]({value})")
             limiter += 1
             if limiter >= link_limit_rtfm:
