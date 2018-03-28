@@ -250,7 +250,6 @@ class Help:
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{obj}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         hrefs = []
         user_input = obj
-        user_input.replace(' ', '_')
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
         link_limit_rtfm = 1000  # 350 == 5 links
 
@@ -299,11 +298,12 @@ class Help:
                 obj_links.remove(i)
 
         if user_input in obj:
+            user_input.replace(' ', '_')
+            print(user_input)
             search_match = []
             for item in obj_links:
                 if '.' in item:
                     tmp = item.split('.')
-                    print(tmp)
                     for i in tmp:
                         if re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(i).lower()):
                             search_match.append(item)
@@ -344,7 +344,7 @@ class Help:
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
         else:
             embed.add_field(name=f'Useful Links:',
-                            value=f'No results found on **`{user_input}`**..')
+                            value=f'No results found on **`{user_input.replace("_", " ")}`**..')
             msg = await self.bot.say(embed=embed)
             embed.set_footer(text=f'discord.py')
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
