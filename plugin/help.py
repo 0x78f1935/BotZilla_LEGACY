@@ -299,7 +299,12 @@ class Help:
         if user_input in obj:
             search_match = []
             for item in obj_links:
-                if re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(item).lower()):
+                if '.' in item:
+                    tmp = item.split('.')
+                    for i in tmp:
+                        if re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(i).lower()):
+                            search_match.append(item)
+                elif re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(item).lower()):
                     search_match.append(item)
 
             # search_match = [f'http://discordpy.readthedocs.io/en/latest/api.html{x}' for x in obj_links if str(user_input).lower().replace(' ', '-') in x or str(user_input).capitalize().replace(' ', '-') in x or str(user_input).upper().replace(' ', '-') in x]
@@ -316,7 +321,7 @@ class Help:
 
             link_number = 0
             for i in search_match:
-                result.append('- [{}]({})\n'.format(ref_names[link_number], f'http://discordpy.readthedocs.io/en/latest/api.html{i}'))
+                result.append('- [{}]({})\n'.format(ref_names[link_number], f'http://discordpy.readthedocs.io/en/latest/api.html{i}')) # make hyper links
                 link_number += 1
                 if len(''.join(result)) >= link_limit_rtfm:
                     break
