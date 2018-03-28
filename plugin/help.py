@@ -264,7 +264,7 @@ class Help:
         if search is None:
             embed.add_field(name='Useful related links',
                             value=f'- [API Reference](http://discordpy.readthedocs.io/en/latest/api.html#api-reference)')
-            embed.add_field(name=f'Additional useful links:',
+            embed.add_field(name=f'Additional links:',
                             value=f'{logging_help}\n{migrating}\n{whats_new}')
             none_object = await self.bot.say(embed=embed)
             await self.bot.add_reaction(none_object, self.emojiUnicode['succes'])
@@ -324,8 +324,8 @@ class Help:
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
         else:
             embed.add_field(name=f'Useful Links:',
-                            value=f'- No results found on **`{search}`**..\n\n**Additional useful links:**\n- {logging_help}\n- {migrating}\n- {whats_new}')
-            embed.add_field(name=f'Additional useful links:',
+                            value=f'- No results found on **`{search}`**..')
+            embed.add_field(name=f'Additional links:',
                             value=f'{logging_help}\n{migrating}\n{whats_new}')
             msg = await self.bot.say(embed=embed)
             embed.set_footer(text=f'discord.py')
