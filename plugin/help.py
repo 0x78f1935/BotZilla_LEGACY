@@ -247,7 +247,7 @@ class Help:
         Example:
           - !!rtfm message
         """
-        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{obj}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{search}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         hrefs = []
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
         link_limit_rtfm = 8  # 350 == 5 links
