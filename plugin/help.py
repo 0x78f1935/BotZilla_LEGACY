@@ -298,7 +298,7 @@ class Help:
         # # make bot do stuff
         await self.bot.send_typing(ctx.message.channel)
         embed = discord.Embed(title=f'Manual for {ctx.message.author.name}, RTFM!!',
-                              description=f'If you miss something, please use the suggest command.\n**`{self.config["prefix"]}help report`** for more info about this command.\nUse a object to search more accurate, More info **`{self.config["prefix"]}help rtfm`**',
+                              description=f'Use a object to search more accurate, More info **`{self.config["prefix"]}help rtfm`**',
                               colour=0xf20006)
         if search is None:
             embed.add_field(name='Useful related links',
