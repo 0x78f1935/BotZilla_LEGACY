@@ -311,7 +311,9 @@ class Help:
             for key, value in clean_dict_list.items():
                 new_results.append('- [{}]({})'.format(key, value))
 
+            print(new_results)
             result_list_prettyfy = '\n'.join(new_results[:link_limit_rtfm])
+            print(result_list_prettyfy)
 
             embed.add_field(name=f'Useful Links:',
                             value=f'{result_list_prettyfy}\n\nMore information can be found [here]({url})')
@@ -319,7 +321,7 @@ class Help:
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
         else:
             embed.add_field(name=f'Useful Links:',
-                            value=f'No results found on **`{user_input.replace("_", " ")}`**..')
+                            value=f'- No results found on **`{user_input.replace("_", " ")}`**..')
             msg = await self.bot.say(embed=embed)
             embed.set_footer(text=f'discord.py')
             await self.bot.add_reaction(msg, self.emojiUnicode['succes'])
