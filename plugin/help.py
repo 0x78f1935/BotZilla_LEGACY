@@ -250,7 +250,7 @@ class Help:
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!rtfm <{search}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         hrefs = []
         url = 'http://discordpy.readthedocs.io/en/latest/api.html'
-        link_limit_rtfm = 20
+        link_limit_rtfm = 5
         logging_help = "[logging](https://discordpy.readthedocs.io/en/latest/logging.html)"
         whats_new = "[whats_new](https://discordpy.readthedocs.io/en/latest/whats_new.html)"
         migrating = "[migrating](https://discordpy.readthedocs.io/en/latest/migrating.html)"
