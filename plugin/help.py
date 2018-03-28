@@ -289,7 +289,7 @@ class Help:
         Example:
           - !!rtfm message
         """
-        link_limit_rtfm = 5
+        link_limit_rtfm = 6
         logging_help = "[logging](https://discordpy.readthedocs.io/en/latest/logging.html)"
         whats_new = "[whats_new](https://discordpy.readthedocs.io/en/latest/whats_new.html)"
         migrating = "[migrating](https://discordpy.readthedocs.io/en/latest/migrating.html)"
@@ -356,7 +356,7 @@ class Help:
 
         # prep and send message
         embed.add_field(name=f'Useful Links:',
-                        value=f'**{prety_format}**\n...\n\nMore information can be found **{api_ref}** or **[here](https://www.google.nl/search?q=discordpy%20{search})**')
+                        value=f'**{prety_format}**\n\nMore information can be found **{api_ref}** or **[here](https://www.google.nl/search?q=discordpy%20{search})**')
         embed.add_field(name=f'Additional useful links:',
                         value=f'{logging_help}\n{migrating}\n{whats_new}')
         msg = await self.bot.say(embed=embed)
