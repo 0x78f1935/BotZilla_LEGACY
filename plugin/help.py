@@ -312,9 +312,10 @@ class Help:
 
         print(search in src_match_load.keys())
         # Pretyfy
-        sort_res = sorted(src_format, key=len)
         for n in range(link_limit_rtfm):
-            prety_format = '\n'.join(sort_res)
+            prety_format = '\n'.join(sorted(src_format, key=len))
+
+        print(prety_format)
 
         if bool(prety_format) == False:
             print('no results found')
