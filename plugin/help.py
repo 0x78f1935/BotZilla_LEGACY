@@ -312,6 +312,10 @@ class Help:
             if key not in src_match_load.keys():
                 del src_match_load[key]
 
+        # Save file
+        async with open('./options/rtfm.js', 'w') as outfile:
+            json.dump(src_match_load, outfile)
+
         limiter = 0
         for key, value in src_match_load.items():
             if str(key).startswith('discord.'):
