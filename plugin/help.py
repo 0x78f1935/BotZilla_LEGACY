@@ -310,7 +310,7 @@ class Help:
         # Remove links duplicates
         for key in src_match_load.keys():
             if key in src_match_load.keys():
-                src_match_load.delete(key)
+                del src_match_load[key]
 
         limiter = 0
         for key, value in src_match_load.items():
