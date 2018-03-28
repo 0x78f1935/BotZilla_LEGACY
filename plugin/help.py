@@ -346,7 +346,7 @@ class Help:
             new_results = []
             clean_set_list = list(set(search_match))
             for item in clean_set_list:
-                clean_dict_list[item] = 'http://discord.py.readthedocs.io/en/latest/api.html{}'.format(item)
+                clean_dict_list[str(item).replace('#', '')] = 'http://discord.py.readthedocs.io/en/latest/api.html{}'.format(item)
 
             print(clean_dict_list)
             for key, value in clean_dict_list.items():
