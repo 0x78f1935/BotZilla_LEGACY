@@ -301,6 +301,7 @@ class Help:
             for item in obj_links:
                 if '.' in item:
                     tmp = item.split('.')
+                    print(tmp)
                     for i in tmp:
                         if re.search(r'^.*{}.*$'.format(str(user_input).lower()), str(i).lower()):
                             search_match.append(item)
