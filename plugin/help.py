@@ -218,7 +218,7 @@ class Help:
                 embed.set_footer(text=f'Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
                 await self.bot.edit_message(start, embed=embed)
 
-        if command != None:
+        if command:
             commanden = get_command_by_name()
             print(commanden)
             if str(command).lower() in commanden:
@@ -227,7 +227,7 @@ class Help:
                 self.database.cur.execute("ROLLBACK;")
                 desc = str(command_object[2]).replace('<insert semicolon here>', ';')
                 embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
-                                      description=f'**Category:** - **`{command_object[1]}`**\n\n**Description:**\n**```\n{desc}\n```**',
+                                      description=f'**\nCommand:** - **`{self.config["prefix"]}{command_object[0]}`**\n**Category:** - **`{command_object[1]}`**\n\n**Description:**\n**```\n{desc}\n```**',
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
