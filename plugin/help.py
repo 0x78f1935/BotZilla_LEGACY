@@ -216,7 +216,7 @@ class Help:
                         # print(page_number)
 
                 embed = paginator[str(page_number)]
-                embed.set_footer(text=f'Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))}')
+                embed.set_footer(text=f'| Category: {cog} | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
                 await self.bot.edit_message(start, embed=embed)
 
         # if command give info about that command
