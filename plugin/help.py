@@ -212,8 +212,7 @@ class Help:
                     number__input = await self.bot.say(embed=embed)
                     msg = await self.bot.wait_for_message(author=ctx.message.author, timeout=120)
                     if msg.content is int(msg.content):
-                        old_page_number = page_number
-                        if old_page_number >= 0 and old_page_number <= lenght_help:
+                        if int(msg.content) >= 0 and int(msg.content) <= lenght_help:
                             page_number = int(msg.content)
                     else:
                         embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
