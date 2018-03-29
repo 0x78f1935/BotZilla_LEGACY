@@ -404,7 +404,7 @@ class Fun:
         print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!hack <{account}> in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
         if account == None:
             embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
-                                  description='You should use **`{}help hacked`** first.'.format(self.config['prefix']),
+                                  description='You should use **`{}help hack`** first.'.format(self.config['prefix']),
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
