@@ -114,7 +114,7 @@ class Help:
         def generate_pages():
             # print('generate_pages Function')
             all = []
-            cogs = ['Games', 'GameStats', 'Information', 'Fun', 'Music', 'Utils', 'Images', 'Echange']
+            cogs = ['Games', 'GameStats', 'Information', 'Fun', 'Music', 'Utils', 'Images', 'Exchange']
             for each in cogs:
                 all.append(create_new_page(each))
 
