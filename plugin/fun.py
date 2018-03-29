@@ -158,6 +158,7 @@ class Images:
         user_search = emoji
         for emo in all_bot_emoji:
             if emoji.lower() in str(emo.name).lower():
+                emo = discord.utils.get(self.bot.get_all_emojis(), id=emo.id)
                 if len(all_emoji) >= limit:
                     break
                 all_emoji.append(str(emo))
