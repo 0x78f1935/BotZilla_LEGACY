@@ -210,7 +210,7 @@ class Help:
                     print(content_embed)
                     content_embed = content_embed.split('\n', 1)[0].replace('-- !!', '')
                     print(content_embed)
-                    self.database.cur.execute(f"select * from botzilla.help where name = {content_embed}")
+                    self.database.cur.execute(f"select * from botzilla.help where name = {content_embed};")
                     catagory = self.database.cur.fetchone()
                     self.database.cur.execute(f"ROLLBACK;")
                     embed.set_footer(text=f'| Category: {catagory[1]} | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
