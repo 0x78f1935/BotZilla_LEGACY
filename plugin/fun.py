@@ -135,8 +135,12 @@ class Images:
           - !!lookup
         Example:
           - !!lookup kappa
+
+        Known bug: - If there is a gif in the results
+                     good chance that the emoji is a text
+                     instead of a emoji
         """
-        limit = 50
+        limit = 15 # level for total emoji's to return
         tmp = self.bot.get_all_emojis()
 
         if emoji is None:
