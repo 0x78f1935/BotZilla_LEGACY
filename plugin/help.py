@@ -212,13 +212,19 @@ class Help:
                     number__input = await self.bot.say(embed=embed)
                     msg = await self.bot.wait_for_message(author=ctx.message.author, timeout=120)
                     if msg.content is int:
+                        page_number = int(msg.content)
                         if page_number >= 0 and page_number <= lenght_help:
-                            page_number = int(msg.content) - 1
+
                             try:
                                 await self.bot.delete_message(number__input)
                                 await self.bot.delete_message(msg)
                             except:
                                 pass
+                        else:
+                            embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
+                                                  description=f'Please provide a number, Between **`0`** / **`{lenght_help}`**',
+                                                  colour=0xf20006)
+                            await self.bot.edit_message(start, embed=embed)
                     else:
                         embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
                                               description=f'Please provide a number, If you are stuck try : **`{self.config["prefix"]}help`**',
