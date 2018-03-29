@@ -201,15 +201,12 @@ class Help:
                         page_number = lenght_help
                         # print(page_number)
 
-                # to do - ignore page 0
+                # Send message and looks for category, edit category to footer
                 embed = paginator[str(page_number)]
                 embed.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
                 new = await self.bot.edit_message(start, embed=embed)
                 try:
-                    content_embed = new.embeds[0]['fields'][0]['name']
-                    print(content_embed)
-                    content_embed = content_embed.split('\n', 1)[0].replace('-- !!', '')
-                    print(content_embed)
+                    content_embed = new.embeds[0]['fields'][0]['name'].split('\n', 1)[0].replace('-- !!', '')
                     self.database.cur.execute(f"select * from botzilla.help where name = '{content_embed}';")
                     catagory = self.database.cur.fetchone()
                     self.database.cur.execute(f"ROLLBACK;")
