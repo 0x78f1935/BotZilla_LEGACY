@@ -114,23 +114,9 @@ class Help:
         def generate_pages():
             # print('generate_pages Function')
             all = []
-            # print('all')
-            all.append(create_new_page('Games'))
-            # print('Games DONE')
-            all.append(create_new_page('GameStats'))
-            # print('GameStats DONE')
-            all.append(create_new_page('Information'))
-            # print('Information DONE')
-            all.append(create_new_page('Fun'))
-            # print('Fun DONE')
-            all.append(create_new_page('Music'))
-             #print('Music DONE')
-            all.append(create_new_page('Utils'))
-            # print('Utils DONE')
-            all.append(create_new_page('Images'))
-            # print('Images DONE')
-            all.append(create_new_page('Exchange'))
-            # print('Exchange DONE')
+            cogs = ['Games', 'GameStats', 'Information', 'Fun', 'Music', 'Utils', 'Images', 'Echange']
+            for each in cogs:
+                all.append(create_new_page(each))
 
             paginator = {}
             page_number = 0
@@ -216,7 +202,7 @@ class Help:
                         # print(page_number)
 
                 embed = paginator[str(page_number)]
-                embed.set_footer(text=f'| Category: {footer_cog} | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
+                embed.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
                 await self.bot.edit_message(start, embed=embed)
 
         # if command give info about that command
