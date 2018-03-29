@@ -181,6 +181,8 @@ class Images:
 
         if all_emoji:
             thumbnail_random = random.choice(all_emoji)
+            print(thumbnail_random)
+            print(thumbnail_random.url)
             emoji = ' -- '.join(all_emoji)
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
                                   description=emoji,
