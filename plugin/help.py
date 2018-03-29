@@ -231,13 +231,13 @@ class Help:
                         if int(msg.content) >= 0 and int(msg.content) <= lenght_help+1:
                             pass # Make sure user input is equal to a existing page
                         else:
-                            page_number = 0
+                            page_number = 1
                             embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
                                                   description=f'Please provide a number, Between **`1`** / **`{lenght_help+1}`**',
                                                   colour=0xf20006)
                             await self.bot.edit_message(number__input, embed=embed)
                     except ValueError:
-                        page_number = 0
+                        page_number = 1
                         embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
                                               description=f'Please provide a number, Between **`1`** / **`{lenght_help+1}`**',
                                               colour=0xf20006)
