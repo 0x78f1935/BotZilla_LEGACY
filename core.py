@@ -541,6 +541,7 @@ async def on_message(message):
         database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'gay', total = (total+{}) where swearword = 'gay';".format(total))
         database.cur.execute("ROLLBACK;")
 
+    message.content = f"{message.content.split()[0].lower()} {' '.join(message.content.split()[1:])}"
     await bot.process_commands(message)
 
 
