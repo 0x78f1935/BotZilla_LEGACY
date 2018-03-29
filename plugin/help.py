@@ -264,9 +264,10 @@ class Help:
                 # Send message and looks for category, edit category to footer
                 embed = paginator[str(page_number)]
                 if page_number != 0:
-                    embed.set_footer(text=f'| Category: Index | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} | Done loading |')
-                else:
                     embed.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} | Loading.. |')
+                else:
+                    embed.set_footer(text=f'| Category: Index | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} | Done loading |')
+
                 new = await self.bot.edit_message(start, embed=embed)
                 try:
                     content_embed = new.embeds[0]['fields'][0]['name'].split('\n', 1)[0].replace('-- !!', '')
