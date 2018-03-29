@@ -140,7 +140,7 @@ class Images:
                      good chance that the emoji is a text
                      instead of a emoji
         """
-        limit = 15 # level for total emoji's to return
+        limit = 12 # level for total emoji's to return
         tmp = self.bot.get_all_emojis()
 
         if emoji is None:
