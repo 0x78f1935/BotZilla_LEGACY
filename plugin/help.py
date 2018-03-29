@@ -203,7 +203,7 @@ class Help:
 
                 # to do - ignore page 0
                 embed = paginator[str(page_number)]
-                content_embed = start.embeds[0]['description'.split('\n')[0].replace(f'-- {self.config["prefix"]}', '')]
+                content_embed = start.embeds[0]['description'.split('\n')[0].replace(f'-- !!', '')]
                 print(content_embed)
                 # self.database.cur.execute(f"select * from botzilla.help where name = {content_embed}")
                 # catagory = self.database.cur.fetchone()
