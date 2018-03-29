@@ -137,7 +137,7 @@ class Images:
           - !!lookup kappa
         """
         limit = 20
-        tmp = self.bot.get_all_emoji()
+        tmp = self.bot.get_all_emojis()
         if emoji is None:
             all_other_emoji = []
             for emoji in tmp:
