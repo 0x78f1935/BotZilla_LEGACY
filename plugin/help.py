@@ -212,8 +212,8 @@ class Help:
                 # self.database.cur.execute(f"select * from botzilla.help where name = {content_embed}")
                 # catagory = self.database.cur.fetchone()
 
-                embed.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
-                await self.bot.edit_message(start, embed=embed)
+                new.embeds.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
+                # await self.bot.edit_message(start, embed=embed)
 
         # if command give info about that command
         if command:
