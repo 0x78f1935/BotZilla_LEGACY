@@ -117,6 +117,10 @@ class Help:
             # print('generate_pages Function')
             all = []
             cogs = ['Games', 'GameStats', 'Information', 'Fun', 'Music', 'Utils', 'Images', 'Exchange']
+
+            if ctx.message.author.id in self.owner_list:
+                cogs.append('AdminCommands')
+
             for each in sorted(cogs):
                 all.append(create_new_page(each))
 
