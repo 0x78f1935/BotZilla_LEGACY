@@ -163,7 +163,8 @@ class Images:
                     break
                 all_emoji.append(emo)
 
-        all_emoji = sorted(list(set(all_emoji)))
+        print(emo)
+
         if all_emoji:
             emoji = ' -- '.join(all_emoji)
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
