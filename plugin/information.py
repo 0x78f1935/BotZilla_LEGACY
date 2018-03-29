@@ -1426,9 +1426,6 @@ class Utils:
         embed.add_field(name=f'Security',
                         value=f'Owner: **`{server.owner}`**\nVerification Level: **`{server.verification_level}`**\nMFA Level: **`{mfa_level}`**\nDefault Channel: **`{server.default_channel}`**\nAvailability: **`{av}`**',
                         inline=True)
-        embed.add_field(name=f'Voice',
-                        value=f'AFK Channel: **`{server.afk_channel}`**\nAFK Timeout: **`{server.afk_timeout//60} Minutes`**',
-                        inline=True)
 
         invite_obj = await self.bot.invites_from(server)
         if invite_obj:
@@ -1440,6 +1437,10 @@ class Utils:
             embed.add_field(name=f'Invite information:',
                             value=f'Invite Link: **{invite_obj[0]}**\nUses: **`{invite_obj[0].uses}`**\nTotal Uses: **`{max_uses}`**\nTemporary: **`{invite_obj[0].temporary}`**\nInvite Creator: **`{invite_obj[0].inviter}`**\nRevoked: **`{invite_obj[0].revoked}`**',
                             inline=True)
+
+        embed.add_field(name=f'Voice',
+                        value=f'AFK Channel: **`{server.afk_channel}`**\nAFK Timeout: **`{server.afk_timeout//60} Minutes`**',
+                        inline=True)
 
         embed.set_thumbnail(url=server.icon_url)
 
