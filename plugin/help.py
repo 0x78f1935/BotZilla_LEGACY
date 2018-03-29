@@ -35,12 +35,14 @@ class Help:
         self.emoji_oneahead = '\u25b6'
         self.emoji_five_ahead = '\u23e9'
         self.emoji_end = '\u23ed'
+        self.emoji_number = '\U0001f522'
         self.emoji_start_txt = '⏮'
         self.emoji_five_back_txt = '⏪'
         self.emoji_oneback_txt = '◀'
         self.emoji_oneahead_txt = '▶'
         self.emoji_five_ahead_txt = '⏩'
         self.emoji_end_txt = '⏭'
+        self.emoji_number_txt = '🔢'
 
         try:
             self.database = Database(self.bot)
@@ -148,6 +150,7 @@ class Help:
             await self.bot.add_reaction(start, self.emoji_oneahead)
             # await self.bot.add_reaction(start, self.emoji_five_ahead) #Maybe if there are more commands
             await self.bot.add_reaction(start, self.emoji_end)
+            await self.bot.add_reaction(start, self.emoji_number)
 
             await asyncio.sleep(0.6)
 
@@ -200,6 +203,27 @@ class Help:
                     if page_number <= lenght_help:
                         page_number = lenght_help
                         # print(page_number)
+
+                if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_number):
+                    embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
+                                          description=f'Please {ctx.message.author.name} provide a number :',
+                                          colour=0xf20006)
+                    number__input = await self.bot.say(embed=embed)
+                    msg = await self.bot.wait_for_message(author=ctx.message.author, timeout=120)
+                    try:
+                        user_page_number = int(msg.content)
+                        if page_number >= 0 and page_number <= lenght_help:
+                            page_number = user_page_number
+                        try:
+                            await self.bot.delete_message(number__input)
+                        except:
+                            pass
+                    except Exception as e:
+                        embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
+                                              description=f'Please provide a number, If you are stuck try : **`{self.config["prefix"]}help`**',
+                                              colour=0xf20006)
+                        await self.bot.edit_message(start, embed=embed)
+
 
                 # Send message and looks for category, edit category to footer
                 embed = paginator[str(page_number)]
