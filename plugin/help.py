@@ -222,13 +222,13 @@ class Help:
                 # let user choose page number
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_number):
                     embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
-                                          description=f'Please {ctx.message.author.name} provide a number :',
+                                          description=f'Please {ctx.message.author.name} provide a number, Between **`0`** / **`{lenght_help}`**',
                                           colour=0xf20006)
                     number__input = await self.bot.say(embed=embed)
                     msg = await self.bot.wait_for_message(author=ctx.message.author, timeout=120)
                     try:
-                        page_number = int(msg.content) - 1
-                        if int(msg.content) >= 0 and int(msg.content) <= lenght_help:
+                        page_check = int(msg.content)
+                        if page_check >= 0 and page_check <= lenght_help:
                             pass # Make sure user input is equal to a existing page
                         else:
                             page_number = 0
@@ -250,7 +250,6 @@ class Help:
                         await self.bot.delete_message(msg)
                     except:
                         pass
-
 
                 # Send message and looks for category, edit category to footer
                 embed = paginator[str(page_number)]
