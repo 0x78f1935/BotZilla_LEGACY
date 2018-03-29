@@ -125,6 +125,55 @@ class Images:
                 await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
 
     @commands.command(pass_context=True)
+    async def lookup(self, ctx, emoji:str=None):
+        """
+        Search in a wide variety of emojis.
+        A emoji collection of all servers where botzilla is in.
+
+        Usage:
+          - !!lookup <emoji name>
+          - !!lookup
+        Example:
+          - !!lookup kappa
+        """
+        limit = 20
+        if emoji is None:
+            all_other_emoji = []
+            for emoji in self.bot.get_all_emoji():
+                if len(all_other_emoji) >+ limit:
+                    break
+                all_other_emoji.append(str(emoji))
+            emoji = ' -- '.join(all_other_emoji)
+            embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                  description=emoji,
+                                  color=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+            return
+
+        all_bot_emoji = self.bot.get_all_emojis()
+        all_emoji = []
+        user_search = emoji
+        for emo in all_bot_emoji:
+            if emoji.lower() in str(emo.name).lower():
+                if len(all_emoji) >= limit:
+                    break
+                all_emoji.append(str(emo))
+        if all_emoji:
+            emoji = ' -- '.join(all_emoji)
+            embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                  description=emoji,
+                                  color=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
+        else:
+            embed = discord.Embed(title="{}".format(ctx.message.author.name),
+                                  description=f'Emoji **`{user_search}`** not found..',
+                                  color=0xf20006)
+            last_message = await self.bot.say(embed=embed)
+            await self.bot.add_reaction(last_message, self.emojiUnicode['error'])
+
+    @commands.command(pass_context=True)
     async def big(self, ctx, *, emoji : str = None):
         """
         Make custom emojis 10x time bigger!
