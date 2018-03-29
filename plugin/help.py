@@ -112,7 +112,7 @@ class Help:
             # print('DONE New_page Function')
             return pages
 
-        def generate_pages(ctx):
+        def generate_pages():
             # print('generate_pages Function')
             all = []
             # print('all')
@@ -132,12 +132,11 @@ class Help:
             # print('Images DONE')
             all.append(create_new_page('Exchange'))
             # print('Exchange DONE')
-            if ctx.message.author.id in self.owner_list:
-                all.append(create_new_page('admin'))
 
             paginator = {}
             page_number = 0
             for item in all:
+
                 page_number += 1
                 paginator[str(page_number)] = item
             # print('DONE generate_pages Function')
@@ -155,7 +154,7 @@ class Help:
                                   colour=0xf20006)
             start = await self.bot.say(embed=page0)
 
-            generate_pages_result = generate_pages(ctx)
+            generate_pages_result = generate_pages()
 
             await self.bot.add_reaction(start, self.emoji_start)
             await self.bot.add_reaction(start, self.emoji_five_back) #Maybe if there are more commands
