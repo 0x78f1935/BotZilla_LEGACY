@@ -168,9 +168,11 @@ class Images:
         all_bot_emoji = self.bot.get_all_emojis()
         all_emoji = []
         user_search = emoji
+        emoji_obj = []
         for emo in all_bot_emoji:
             if emoji.lower() in str(emo.name).lower():
                 emo = discord.utils.get(self.bot.get_all_emojis(), id=emo.id)
+                emoji_obj.append(emo)
                 if 'gif' in str(emo).lower():
                     pass
                 else:
@@ -180,7 +182,7 @@ class Images:
                     break
 
         if all_emoji:
-            thumbnail_random = random.choice(all_emoji)
+            thumbnail_random = random.choice(emoji_obj)
             print(thumbnail_random)
             print(thumbnail_random.url)
             emoji = ' -- '.join(all_emoji)
