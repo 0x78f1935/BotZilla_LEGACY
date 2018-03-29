@@ -112,7 +112,7 @@ class Help:
             # print('DONE New_page Function')
             return pages
 
-        def generate_pages():
+        def generate_pages(ctx):
             # print('generate_pages Function')
             all = []
             # print('all')
@@ -155,7 +155,7 @@ class Help:
                                   colour=0xf20006)
             start = await self.bot.say(embed=page0)
 
-            generate_pages_result = generate_pages()
+            generate_pages_result = generate_pages(ctx)
 
             await self.bot.add_reaction(start, self.emoji_start)
             await self.bot.add_reaction(start, self.emoji_five_back) #Maybe if there are more commands
