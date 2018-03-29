@@ -207,6 +207,9 @@ class Help:
                 new = await self.bot.edit_message(start, embed=embed)
                 try:
                     content_embed = new.embeds[0]['fields'][0]['name']
+                    print(content_embed)
+                    content_embed = content_embed.split('\n')[0]
+                    print(content_embed)
                     self.database.cur.execute(f"select * from botzilla.help where name = {content_embed}")
                     catagory = self.database.cur.fetchone()
                     self.database.cur.execute(f"ROLLBACK;")
