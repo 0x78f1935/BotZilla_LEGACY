@@ -1411,8 +1411,7 @@ class Utils:
                               colour=0xf20006)
 
         embed.add_field(name=f'Information',
-                        value=f'ID: **`{server.id}`**\nRegion: **`{server.region}`**\nCreated: **`{server.created_at.strftime("%Y-%m-%d %H:%M:%S")}`**\nMember Count: **`{server.member_count}`**\nCustom Emoji\'s: **`{len(server.emojis)}`**\nRoles: **`{len(server.roles)}`**\nChannels: **`{len(server.channels)}`**',
-                        inline=True)
+                        value=f'ID: **`{server.id}`**\nRegion: **`{server.region}`**\nCreated: **`{server.created_at.strftime("%Y-%m-%d %H:%M:%S")}`**\nMember Count: **`{server.member_count}`**\nCustom Emoji\'s: **`{len(server.emojis)}`**\nRoles: **`{len(server.roles)}`**\nChannels: **`{len(server.channels)}`**')
 
         if server.mfa_level == 0:
             mfa_level = 'False'
@@ -1424,8 +1423,7 @@ class Utils:
             av = 'False'
 
         embed.add_field(name=f'Security',
-                        value=f'Owner: **`{server.owner}`**\nVerification Level: **`{server.verification_level}`**\nMFA Level: **`{mfa_level}`**\nDefault Channel: **`{server.default_channel}`**\nAvailability: **`{av}`**\n**Voice**\n\nAFK Channel: **`{server.afk_channel}`**\nAFK Timeout: **`{server.afk_timeout//60} Minutes`**',
-                        inline=True)
+                        value=f'Owner: **`{server.owner}`**\nVerification Level: **`{server.verification_level}`**\nMFA Level: **`{mfa_level}`**\nDefault Channel: **`{server.default_channel}`**\nAvailability: **`{av}`**\n\n**Voice**\nAFK Channel: **`{server.afk_channel}`**\nAFK Timeout: **`{server.afk_timeout//60} Minutes`**')
 
         invite_obj = await self.bot.invites_from(server)
         if invite_obj:
@@ -1435,8 +1433,7 @@ class Utils:
                 max_uses = invite_obj[0].max_uses
 
             embed.add_field(name=f'Invite information:',
-                            value=f'Invite Link: **{invite_obj[0]}**\nUses: **`{invite_obj[0].uses}`**\nTotal Uses: **`{max_uses}`**\nTemporary: **`{invite_obj[0].temporary}`**\nInvite Creator: **`{invite_obj[0].inviter}`**\nRevoked: **`{invite_obj[0].revoked}`**',
-                            inline=True)
+                            value=f'Invite Link: **{invite_obj[0]}**\nUses: **`{invite_obj[0].uses}`**\nTotal Uses: **`{max_uses}`**\nTemporary: **`{invite_obj[0].temporary}`**\nInvite Creator: **`{invite_obj[0].inviter}`**\nRevoked: **`{invite_obj[0].revoked}`**')
 
         embed.set_thumbnail(url=server.icon_url)
 
