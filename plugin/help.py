@@ -133,7 +133,6 @@ class Help:
             all.append(create_new_page('Exchange'))
             # print('Exchange DONE')
             if ctx.message.author.id in self.owner_list:
-                all.append(create_new_page('python_code_in_dc'))
                 all.append(create_new_page('admin'))
 
             paginator = {}
