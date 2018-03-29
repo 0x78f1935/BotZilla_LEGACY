@@ -102,7 +102,7 @@ class Help:
             data = sorted(data)
             pages = []
             new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                     description=f'**Category:** ***`{cog}`***',
+                                     description=f'**Category:** ***`{cog}`***'.replace('emoji\'s!!help', ''),
                                      colour=0xf20006)
             for item in data:
                 new_page.add_field(name=f"-- {self.config['prefix']}{item[0]}\n\n",
