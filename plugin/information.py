@@ -1433,7 +1433,7 @@ class Utils:
                 max_uses = 'Unlimited'
 
             embed.add_field(name=f'Invite information:',
-                            value=f'Invite Link: **{invite_obj[0]}**\nTotal Uses: **`{invite_obj[0].uses}`**\nMax Uses: **`{max_uses}`**\nTemporary: **`{invite_obj[0].temporary}`**\nInvite Creator: **`{invite_obj[0].inviter}`**\nRevoked: **`{invite_obj[0].revoked}`**')
+                            value=f'Invite Link: **{invite_obj[0]}**\nTotal Uses: **`{invite_obj[0].uses}`**\nMax Uses: **`{max_uses}`**\nTemporary: **`{invite_obj[0].temporary}`**\nInvite Creator: **`{invite_obj[0].inviter}`**')
 
         embed.set_thumbnail(url=server.icon_url)
 
