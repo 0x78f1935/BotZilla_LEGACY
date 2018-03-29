@@ -144,6 +144,7 @@ class Images:
                 if len(all_other_emoji) >= limit:
                     break
                 all_other_emoji.append(str(emoji))
+            all_other_emoji = sorted(list(set(all_other_emoji)))
             emoji = ' -- '.join(all_other_emoji)
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
                                   description=emoji,
@@ -160,6 +161,8 @@ class Images:
                 if len(all_emoji) >= limit:
                     break
                 all_emoji.append(str(emo))
+
+        all_emoji = sorted(list(set(all_emoji)))
         if all_emoji:
             emoji = ' -- '.join(all_emoji)
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
