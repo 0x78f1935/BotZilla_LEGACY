@@ -141,6 +141,8 @@ class Images:
                      instead of a emoji
         """
         limit = 12 # level for total emoji's to return
+
+        await self.bot.send_typing(ctx.message.channel)
         tmp = self.bot.get_all_emojis()
 
         if emoji is None:
@@ -190,6 +192,7 @@ class Images:
                                   description=emoji,
                                   color=0xf20006)
             embed.set_image(url=thumbnail_random.url)
+            embed.set_thumbnail(url=thumbnail_random.url)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
         else:
