@@ -650,7 +650,7 @@ class Fun:
 
         if str(member.id) in str(members_who_already_infected):
             embed = discord.Embed(title=f'{ctx.message.author.name}',
-                                  description=f'**`{member.name}`** is already infected',
+                                  description=f'**`{member.display.name}`** is already infected',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, '\U0001f480')
@@ -667,7 +667,7 @@ class Fun:
             self.database.conn.commit()
             self.database.cur.execute("ROLLBACK;")
             embed = discord.Embed(title=f'{ctx.message.author.name}',
-                                  description=f'**`{member.name}`** has been infected with **{emoji}** for **`one`** hour',
+                                  description=f'**`{member.display_name}`** has been infected with **{emoji}** for **`one`** hour',
                                   colour=0xf20006)
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['succes'])
