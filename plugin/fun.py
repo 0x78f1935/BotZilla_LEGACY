@@ -166,7 +166,7 @@ class Images:
         print(all_emoji)
 
         if all_emoji:
-            emoji = ' -- '.join([f':{x.name}:' for x in all_emoji])
+            emoji = ' -- '.join(all_emoji)
             print(emoji)
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
                                   description=emoji,
