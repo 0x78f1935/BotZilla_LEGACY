@@ -203,6 +203,7 @@ class Help:
 
                 # to do - ignore page 0
                 embed = paginator[str(page_number)]
+                embed.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
                 new = await self.bot.edit_message(start, embed=embed)
                 try:
                     content_embed = new.embeds[0] # ['description'].split('\n')[0].replace(f'-- !!', '')
@@ -212,8 +213,8 @@ class Help:
                 # self.database.cur.execute(f"select * from botzilla.help where name = {content_embed}")
                 # catagory = self.database.cur.fetchone()
 
-                new.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
-                # await self.bot.edit_message(start, embed=embed)
+                embed.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
+                await self.bot.edit_message(start, embed=embed)
 
         # if command give info about that command
         if command:
