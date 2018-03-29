@@ -161,8 +161,6 @@ class Images:
                 emo = discord.utils.get(self.bot.get_all_emojis(), id=emo.id)
                 if len(all_emoji) >= limit:
                     break
-                if 'gif' in emo:
-                    emo = f'<a{emo[1]}'
                 all_emoji.append(emo)
 
         print(all_emoji)
