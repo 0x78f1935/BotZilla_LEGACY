@@ -102,7 +102,7 @@ class Help:
             data = sorted(data)
             pages = []
             new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                     description=f'**Category:** ***`{cog}`***'.replace("emoji's", '').replace("!!help", ''),
+                                     description=f'**Category:** ***`{cog}`***',
                                      colour=0xf20006)
             for item in data:
                 new_page.add_field(name=f"-- {self.config['prefix']}{item[0]}\n\n",
@@ -227,7 +227,7 @@ class Help:
                 self.database.cur.execute("ROLLBACK;")
                 desc = str(command_object[2]).replace('<insert semicolon here>', ';')
                 embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
-                                      description=f'**\nCommand:** - **`{self.config["prefix"]}{command_object[0]}`**\n**Category:** - **`{command_object[1]}`**\n\n**Description:**\n**```\n{desc}\n```**',
+                                      description=f'**Category:** - **`{command_object[1]}`**\n\n**Description:**\n**```\n{desc}\n```**',
                                       colour=0xf20006)
                 last_message = await self.bot.say(embed=embed)
                 await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
