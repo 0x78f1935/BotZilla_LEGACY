@@ -152,7 +152,7 @@ class Help:
             await asyncio.sleep(0.6)
 
             page0.set_footer(text=f'Version: {self.version}\t|\tDev help: !!rtfm\t|\tReady...')
-            new = await self.bot.edit_message(start, embed=page0)
+            await self.bot.edit_message(start, embed=page0)
 
             # print('Reactions added')
 
@@ -203,13 +203,17 @@ class Help:
 
                 # to do - ignore page 0
                 embed = paginator[str(page_number)]
-                content_embed = new.embeds[0]['description'.split('\n')[0].replace(f'-- !!', '')]
-                print(content_embed)
+
+                try:
+                    content_embed = new.embeds[0]['description'.split('\n')[0].replace(f'-- !!', '')]
+                    print(content_embed)
+                except Exception as e:
+                    print(e.args)
                 # self.database.cur.execute(f"select * from botzilla.help where name = {content_embed}")
                 # catagory = self.database.cur.fetchone()
 
                 embed.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
-                new =await self.bot.edit_message(start, embed=embed)
+                new = await self.bot.edit_message(start, embed=embed)
 
         # if command give info about that command
         if command:
