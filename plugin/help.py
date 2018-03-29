@@ -109,7 +109,7 @@ class Help:
                                 inline=False)
                 pages.append(new_page)
             # print('DONE New_page Function')
-            return pages
+            return (pages, cog)
 
         def generate_pages():
             # print('generate_pages Function')
@@ -173,7 +173,7 @@ class Help:
             # remove duplicates
             page = 0
             paginator = {}
-            paginator['0'] = page0
+            paginator['0'] = (page0, 'Welkom')
             for key, value in generate_pages_result.items():
                 paginator[key] = value[0]
                 page += 1
@@ -216,7 +216,7 @@ class Help:
                         # print(page_number)
 
                 embed = paginator[str(page_number)]
-                embed.set_footer(text=f'| Category: {cog} | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
+                embed[0].set_footer(text=f'| Category: {embed[1]} | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
                 await self.bot.edit_message(start, embed=embed)
 
         # if command give info about that command
