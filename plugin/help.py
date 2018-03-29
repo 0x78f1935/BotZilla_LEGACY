@@ -115,7 +115,7 @@ class Help:
             # print('generate_pages Function')
             all = []
             cogs = ['Games', 'GameStats', 'Information', 'Fun', 'Music', 'Utils', 'Images', 'Exchange']
-            for each in cogs:
+            for each in sorted(cogs):
                 all.append(create_new_page(each))
 
             paginator = {}
@@ -125,7 +125,7 @@ class Help:
                 page_number += 1
                 paginator[str(page_number)] = item
             # print('DONE generate_pages Function')
-            return paginator
+            return paginator, sorted(cogs)
 
         #test
 
@@ -139,7 +139,7 @@ class Help:
                                   colour=0xf20006)
             start = await self.bot.say(embed=page0)
 
-            generate_pages_result = generate_pages()
+            generate_pages_result, cog_list = generate_pages()
 
 
             await self.bot.add_reaction(start, self.emoji_start)
@@ -202,7 +202,7 @@ class Help:
                         # print(page_number)
 
                 embed = paginator[str(page_number)]
-                embed.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
+                embed.set_footer(text=f'| Category: {cog_list[page_number]} | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
                 await self.bot.edit_message(start, embed=embed)
 
         # if command give info about that command
