@@ -1395,6 +1395,58 @@ class Utils:
             a = await self.bot.say(embed=embed)
             await self.bot.add_reaction(a, self.emojiUnicode['error'])
 
+    @commands.command(pass_context=True)
+    async def server(self, ctx):
+        """
+        Shows information about this server.
+        Most info is displayed here.
+
+        Usage:
+          - !!server
+        """
+        print(f'{datetime.date.today()} {datetime.datetime.now()} - {ctx.message.author} ran command !!server in -- Channel: {ctx.message.channel.name} Guild: {ctx.message.server.name}')
+        server = self.bot.get_server(f'{ctx.message.server.id}')
+
+        embed = discord.Embed(title='{}\'s server info:'.format(ctx.message.server.name),
+                              description=f'**`{ctx.message.author.name}`**\nrequest server info for\n*`{ctx.message.server.name}`**',
+                              colour=0xf20006)
+
+        embed.add_field(name=f'Information',
+                        value=f'ID: **`{server.id}`**\nRegion: **`{server.region}`**\nCreated: **`{server.created_at.strftime("%Y-%m-%d %H:%M:%S")}`**\nMember Count: **`{server.member_count}`**\nCustom Emoji\'s: **`{len(server.emojis)}`**\nRoles: **`{len(server.roles)}`**\nChannels: **`{len(server.channels)}`**',
+                        inline=True)
+
+        if server.mfa_level == 0:
+            mfa_level = 'False'
+        else:
+            mfa_level = 'True'
+        if not server.unavailable:
+            av = 'True'
+        else:
+            av = 'False'
+
+        embed.add_field(name=f'Security',
+                        value=f'Owner: **`{server.owner}`**\nVerification Level: **`{server.verification_level}`**\nMFA Level: **`{mfa_level}`**\nDefault Channel: **`{server.default_channel}`**\nAvailability: **`{av}`**',
+                        inline=True)
+        embed.add_field(name=f'Voice',
+                        value=f'AFK Channel: **`{server.afk_channel}`**\nAFK Timeout: **`{server.afk_timeout//60} Minutes`**',
+                        inline=True)
+
+        invite_obj = await self.bot.invites_from(server)
+        if invite_obj:
+            if invite_obj[0].uses == 0:
+                max_uses = 'unlimited'
+            else:
+                max_uses = invite_obj[0].max_uses
+
+            embed.add_field(name=f'Invite information:',
+                            value=f'Invite Link: **`{invite_obj[0]}`**\nUses: **`{invite_obj[0].uses}`**\nTotal Uses: **`{max_uses}`**\nTemporary: **`{invite_obj[0].temporary}`**\nInvite Creator: **`{invite_obj[0].inviter}`**\nRevoked: **`{invite_obj[0].revoked}`**',
+                            inline=True)
+
+        embed.set_thumbnail(url=server.icon_url)
+
+        a = await self.bot.say(embed=embed)
+        await self.bot.add_reaction(a, self.emojiUnicode['succes'])
+
 
 def setup(bot):
     bot.add_cog(Information(bot))
