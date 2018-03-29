@@ -222,24 +222,24 @@ class Help:
                 # let user choose page number
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_number):
                     embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
-                                          description=f'Please {ctx.message.author.name} provide a number, Between **`0`** / **`{lenght_help}`**',
+                                          description=f'Please {ctx.message.author.name} provide a number, Between **`0`** / **`{lenght_help+1}`**',
                                           colour=0xf20006)
                     number__input = await self.bot.say(embed=embed)
                     msg = await self.bot.wait_for_message(author=ctx.message.author, timeout=120)
                     try:
-                        page_check = int(msg.content) + 1
-                        if page_check >= 0 and page_check <= lenght_help:
+                        page_check = int(msg.content) - 1
+                        if page_check >= 0 and page_check <= lenght_help+1:
                             pass # Make sure user input is equal to a existing page
                         else:
                             page_number = 0
                             embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
-                                                  description=f'Please provide a number, Between **`0`** / **`{lenght_help}`**',
+                                                  description=f'Please provide a number, Between **`0`** / **`{lenght_help+1}`**',
                                                   colour=0xf20006)
                             await self.bot.edit_message(number__input, embed=embed)
                     except ValueError:
                         page_number = 0
                         embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
-                                              description=f'Please provide a number, Between **`0`** / **`{lenght_help}`**',
+                                              description=f'Please provide a number, Between **`0`** / **`{lenght_help+1}`**',
                                               colour=0xf20006)
                         await self.bot.edit_message(number__input, embed=embed)
 
