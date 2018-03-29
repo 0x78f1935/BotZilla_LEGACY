@@ -146,7 +146,7 @@ class Images:
                 if len(all_other_emoji) >= limit:
                     break
                 emo = discord.utils.get(self.bot.get_all_emojis(), id=emoji.id)
-                if 'gif' in str(emo):
+                if 'gif' in str(emo).lower():
                     pass
                 else:
                     all_other_emoji.append(str(emo))
@@ -167,7 +167,7 @@ class Images:
         for emo in all_bot_emoji:
             if emoji.lower() in str(emo.name).lower():
                 emo = discord.utils.get(self.bot.get_all_emojis(), id=emo.id)
-                if 'gif' in str(emo):
+                if 'gif' in str(emo).lower():
                     pass
                 else:
                     all_emoji.append(str(emo))
