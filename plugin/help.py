@@ -211,16 +211,15 @@ class Help:
                                           colour=0xf20006)
                     number__input = await self.bot.say(embed=embed)
                     msg = await self.bot.wait_for_message(author=ctx.message.author, timeout=120)
-                    try:
-                        user_page_number = int(msg.content)
+                    if msg.content is int:
                         if page_number >= 0 and page_number <= lenght_help:
-                            page_number = user_page_number - 1
-                        try:
-                            await self.bot.delete_message(number__input)
-                            await self.bot.delete_message(msg)
-                        except:
-                            pass
-                    except Exception as e:
+                            page_number = int(msg.content) - 1
+                            try:
+                                await self.bot.delete_message(number__input)
+                                await self.bot.delete_message(msg)
+                            except:
+                                pass
+                    else:
                         embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
                                               description=f'Please provide a number, If you are stuck try : **`{self.config["prefix"]}help`**',
                                               colour=0xf20006)
