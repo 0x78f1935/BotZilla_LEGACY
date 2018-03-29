@@ -140,7 +140,7 @@ class Images:
         if emoji is None:
             all_other_emoji = []
             for emoji in self.bot.get_all_emoji():
-                if len(all_other_emoji) >+ limit:
+                if len(all_other_emoji) >= limit:
                     break
                 all_other_emoji.append(str(emoji))
             emoji = ' -- '.join(all_other_emoji)
