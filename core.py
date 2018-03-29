@@ -426,7 +426,8 @@ async def on_message_edit(before, message):
         database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'gay', total = (total+{}) where swearword = 'gay';".format(total))
         database.cur.execute("ROLLBACK;")
 
-    message.content = message.content.lower()
+    if not (message.content.startswith(f'{config["prefix"]}exec') or message.content.startswith(f'{config["prefix"]}repl')):
+        message.content = message.content.lower()
     await bot.process_commands(message)
 
 
@@ -541,7 +542,8 @@ async def on_message(message):
         database.cur.execute("UPDATE botzilla.swearwords SET swearword = 'gay', total = (total+{}) where swearword = 'gay';".format(total))
         database.cur.execute("ROLLBACK;")
 
-    message.content = message.content.lower()
+    if not (message.content.startswith(f'{config["prefix"]}exec') or message.content.startswith(f'{config["prefix"]}repl')):
+        message.content = message.content.lower()
     await bot.process_commands(message)
 
 
