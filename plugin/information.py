@@ -1427,9 +1427,9 @@ class Utils:
 
         invite_obj = await self.bot.invites_from(server)
         if invite_obj:
-            if invite_obj[0].uses:
-                max_uses = invite_obj[0].max_uses
-            else:
+            max_uses = invite_obj[0].max_uses
+
+            if not max_uses:
                 max_uses = 'Unlimited'
 
             embed.add_field(name=f'Invite information:',
