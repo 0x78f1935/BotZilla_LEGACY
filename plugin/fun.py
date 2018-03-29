@@ -164,9 +164,11 @@ class Images:
                 all_emoji.append(emo)
 
         print(all_emoji)
-
+        names = []
         if all_emoji:
-            emoji = ' -- '.join(all_emoji)
+            for i in all_emoji:
+                names.append(i)
+            emoji = ' -- '.join(names)
             print(emoji)
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
                                   description=emoji,
