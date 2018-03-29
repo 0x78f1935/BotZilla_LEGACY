@@ -120,7 +120,7 @@ class Help:
 
             paginator = {}
             page_number = 0
-            for item in all:
+            for item in sorted(all):
 
                 page_number += 1
                 paginator[str(page_number)] = item
