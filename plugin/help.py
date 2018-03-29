@@ -225,11 +225,6 @@ class Help:
                             await self.bot.delete_message(msg)
                         except:
                             pass
-                    else:
-                        embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
-                                              description=f'Please provide a number, If you are stuck try : **`{self.config["prefix"]}help`**',
-                                              colour=0xf20006)
-                        await self.bot.edit_message(start, embed=embed)
 
 
                 # Send message and looks for category, edit category to footer
