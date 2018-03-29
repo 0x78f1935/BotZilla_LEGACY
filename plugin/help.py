@@ -124,6 +124,8 @@ class Help:
             for each in sorted(cogs):
                 all.append(create_new_page(each))
 
+            print(all)
+
             paginator = {}
             page_number = 0
             for item in all:
@@ -131,6 +133,7 @@ class Help:
                 page_number += 1
                 paginator[str(page_number)] = item
             # print('DONE generate_pages Function')
+            print(paginator)
             return paginator
 
         #test
