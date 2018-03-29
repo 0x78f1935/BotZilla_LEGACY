@@ -227,7 +227,7 @@ class Help:
                     number__input = await self.bot.say(embed=embed)
                     msg = await self.bot.wait_for_message(author=ctx.message.author, timeout=120)
                     try:
-                        page_check = int(msg.content)
+                        page_check = int(msg.content) + 1
                         if page_check >= 0 and page_check <= lenght_help:
                             pass # Make sure user input is equal to a existing page
                         else:
