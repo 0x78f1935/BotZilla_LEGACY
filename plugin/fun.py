@@ -137,9 +137,10 @@ class Images:
           - !!lookup kappa
         """
         limit = 20
+        tmp = self.bot.get_all_emoji()
         if emoji is None:
             all_other_emoji = []
-            for emoji in self.bot.get_all_emoji():
+            for emoji in tmp:
                 if len(all_other_emoji) >= limit:
                     break
                 all_other_emoji.append(str(emoji))
