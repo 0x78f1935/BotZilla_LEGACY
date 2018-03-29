@@ -140,7 +140,7 @@ class Images:
                      good chance that the emoji is a text
                      instead of a emoji
         """
-        limit = 12 # level for total emoji's to return
+        limit = 25 # level for total emoji's to return
 
         await self.bot.send_typing(ctx.message.channel)
         tmp = self.bot.get_all_emojis()
@@ -185,14 +185,14 @@ class Images:
 
         if all_emoji:
             thumbnail_random = random.choice(emoji_obj)
-            print(thumbnail_random)
-            print(thumbnail_random.url)
+            thumbnail_random2 = random.choice(emoji_obj)
+
             emoji = ' -- '.join(all_emoji)
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
                                   description=emoji,
                                   color=0xf20006)
             embed.set_image(url=thumbnail_random.url)
-            embed.set_thumbnail(url=thumbnail_random.url)
+            embed.set_thumbnail(url=thumbnail_random2.url)
             last_message = await self.bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
         else:
