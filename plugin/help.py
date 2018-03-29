@@ -173,32 +173,40 @@ class Help:
             # print(f'QUery lenght: {lenght_help}')
 
             for i in range(100):
+                # wait for reaction
                 reaction = await wait_for_reaction(start)
+
+                # First page
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_start):
                     if page_number >= 1 and page_number <= lenght_help:
                         page_number = 0
                         # print(page_number)
 
+                # 5 pages back
                 # if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_back):
                 #     if page_number >= 5 and page_number <= lenght_help:
                 #         page_number = page_number - 5
                 #         # print(page)
 
+                # previous page
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneback):
                     if page_number >= 1 and page_number <= lenght_help:
                         page_number = page_number - 1
                         # print(page)
 
+                # next page
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_oneahead):
                     if page_number >= 0 and page_number <= lenght_help - 1:
                         page_number = page_number + 1
                         # print(page_number)
 
+                # 5 pages ahead
                 # if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_five_ahead):
                 #     if page_number >= 0 and page_number <= lenght_help - 5:
                 #         page_number = page_number + 5
                 #         # print(page)
 
+                #last page
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_end):
                     if page_number <= lenght_help:
                         page_number = lenght_help
