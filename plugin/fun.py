@@ -136,7 +136,7 @@ class Images:
         Example:
           - !!lookup kappa
         """
-        limit = 25
+        limit = 50
         tmp = self.bot.get_all_emojis()
 
         if emoji is None:
