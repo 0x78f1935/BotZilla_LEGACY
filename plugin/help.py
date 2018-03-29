@@ -102,7 +102,7 @@ class Help:
             data = sorted(data)
             pages = []
             new_page = discord.Embed(title=f'Help for {ctx.message.author.display_name}',
-                                     description=f'**Category:** ***`{cog}`***',
+                                     description=f'**Category:** ***`{cog}`***'.replace("emoji's !!help"),
                                      colour=0xf20006)
             for item in data:
                 new_page.add_field(name=f"-- {self.config['prefix']}{item[0]}\n\n",
@@ -149,12 +149,13 @@ class Help:
 
             # Pages
             page0 = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
-                                  description='If you are stuck this console is for you.\nNavigate around with the **`emoji\'s`** underneath.\n\n`{0}`: First page\n`{1}`: Five pages back\n`{2}`: One page back\n`{3}`: Next page\n`{4}`: Skip next five pages\n`{5}`: Last page\n\nIf you like to retrieve more information about a command.\nSimply add any command name behind **`{6}help`**\nFor example: Their is a command called **`battleship`**.\nIt\'s a game what you can play in discord.\nFor more information on how to play battleship use **`{6}help battleship`**\n\nIf this console is **`2`** minutes inactive it will shutdown'.replace('emoji\'s!!help', '').format(
+                                  description='If you are stuck this console is for you.\nNavigate around with the **`emoji\'s`** underneath.\n\n`{0}`: First page\n`{1}`: Five pages back\n`{2}`: One page back\n`{3}`: Next page\n`{4}`: Skip next five pages\n`{5}`: Last page\n\nIf you like to retrieve more information about a command.\nSimply add any command name behind **`{6}help`**\nFor example: Their is a command called **`battleship`**.\nIt\'s a game what you can play in discord.\nFor more information on how to play battleship use **`{6}help battleship`**\n\nIf this console is **`2`** minutes inactive it will shutdown'.format(
                                       self.emoji_start_txt, self.emoji_five_back_txt, self.emoji_oneback_txt, self.emoji_oneahead_txt, self.emoji_five_ahead_txt, self.emoji_end_txt, self.config['prefix']),
                                   colour=0xf20006)
             start = await self.bot.say(embed=page0)
 
             generate_pages_result = generate_pages()
+
 
             await self.bot.add_reaction(start, self.emoji_start)
             await self.bot.add_reaction(start, self.emoji_five_back) #Maybe if there are more commands
