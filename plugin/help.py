@@ -205,7 +205,7 @@ class Help:
                 embed = paginator[str(page_number)]
 
                 try:
-                    content_embed = new.embeds[0] # ['description'].split('\n')[0].replace(f'-- !!', '')
+                    content_embed = start.embeds[0] # ['description'].split('\n')[0].replace(f'-- !!', '')
                     print(content_embed)
                 except Exception as e:
                     print(e.args)
