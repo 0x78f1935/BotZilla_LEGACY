@@ -203,9 +203,9 @@ class Help:
 
                 # to do - ignore page 0
                 embed = paginator[str(page_number)]
-
+                new = await self.bot.edit_message(start, embed=embed)
                 try:
-                    content_embed = embed.embeds[0] # ['description'].split('\n')[0].replace(f'-- !!', '')
+                    content_embed = new.embeds[0] # ['description'].split('\n')[0].replace(f'-- !!', '')
                     print(content_embed)
                 except Exception as e:
                     print(e.args)
@@ -213,7 +213,7 @@ class Help:
                 # catagory = self.database.cur.fetchone()
 
                 embed.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
-                new = await self.bot.edit_message(start, embed=embed)
+                await self.bot.edit_message(start, embed=embed)
 
         # if command give info about that command
         if command:
