@@ -211,7 +211,7 @@ class Help:
                                           colour=0xf20006)
                     number__input = await self.bot.say(embed=embed)
                     msg = await self.bot.wait_for_message(author=ctx.message.author, timeout=120)
-                    if msg.content is int(msg.content):
+                    try:
                         page_number = int(msg.content)
                         if int(msg.content) >= 0 and int(msg.content) <= lenght_help:
                             print('test')
@@ -227,6 +227,8 @@ class Help:
                             await self.bot.delete_message(msg)
                         except:
                             pass
+                    except ValueError:
+                        print(f'Please provide a number, Between **`0`** / **`{lenght_help}`**')
 
 
                 # Send message and looks for category, edit category to footer
