@@ -263,22 +263,24 @@ class Help:
 
                 # Send message and looks for category, edit category to footer
                 embed = paginator[str(page_number)]
-                embed.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} | Loading.. |')
+                if page_number != 0:
+                    embed.set_footer(text=f'| Category: Index | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} | Done loading |')
+                else:
+                    embed.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} | Loading.. |')
                 new = await self.bot.edit_message(start, embed=embed)
                 try:
                     content_embed = new.embeds[0]['fields'][0]['name'].split('\n', 1)[0].replace('-- !!', '')
                     self.database.cur.execute(f"select * from botzilla.help where name = '{content_embed}';")
                     catagory = self.database.cur.fetchone()
                     self.database.cur.execute(f"ROLLBACK;")
-                    embed.set_footer(text=f'| Category: {catagory[1]} | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} | Done |')
+                    embed.set_footer(text=f'| Category: {catagory[1]} | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} | Done loading |')
                     await self.bot.edit_message(start, embed=embed)
                 except Exception as e:
-                    print(e.args)
+                    pass
 
         # if command give info about that command
         if command:
             commanden = get_command_by_name()
-            print(commanden)
             if str(command).lower() in commanden:
                 self.database.cur.execute("select * from botzilla.help where name = '{}';".format(str(command).lower()))
                 command_object = self.database.cur.fetchone()
