@@ -206,7 +206,7 @@ class Help:
                 embed.set_footer(text=f'| Category: - | Version: {self.version}\t|\tDev help: !!rtfm\t|\tPage: {int(page_number + 1)}/{int(len(paginator.keys()))} |')
                 new = await self.bot.edit_message(start, embed=embed)
                 try:
-                    content_embed = new.embeds[0]['fields'][0]['name'].replace(f'-- !!', '').split('\n')[0]
+                    content_embed = new.embeds[0]['fields'][0]['name']
                     self.database.cur.execute(f"select * from botzilla.help where name = {content_embed}")
                     catagory = self.database.cur.fetchone()
                     self.database.cur.execute(f"ROLLBACK;")
