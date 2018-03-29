@@ -143,7 +143,8 @@ class Images:
             for emoji in tmp:
                 if len(all_other_emoji) >= limit:
                     break
-                all_other_emoji.append(str(emoji))
+                emo = discord.utils.get(self.bot.get_all_emojis(), id=emoji.id)
+                all_other_emoji.append(str(emo))
             all_other_emoji = sorted(list(set(all_other_emoji)))
             emoji = ' -- '.join(all_other_emoji)
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
