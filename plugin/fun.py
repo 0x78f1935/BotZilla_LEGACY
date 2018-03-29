@@ -167,13 +167,13 @@ class Images:
         names = []
         if all_emoji:
             for i in all_emoji:
-                names.append(i)
+                names.append(i.name)
             emoji = ' -- '.join(names)
             print(emoji)
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
                                   description=emoji,
                                   color=0xf20006)
-            last_message = await self.bot.say(embed=embed)
+            last_message = await bot.say(embed=embed)
             await self.bot.add_reaction(last_message, self.emojiUnicode['succes'])
         else:
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
