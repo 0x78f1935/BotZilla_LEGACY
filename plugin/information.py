@@ -1427,7 +1427,7 @@ class Utils:
 
         invite_obj = await self.bot.invites_from(server)
         if invite_obj:
-            if invite_obj[0].uses == '0':
+            if not invite_obj[0].uses:
                 max_uses = 'unlimited'
             else:
                 max_uses = invite_obj[0].max_uses
