@@ -158,17 +158,12 @@ class Images:
         user_search = emoji
         for emo in all_bot_emoji:
             if emoji.lower() in str(emo.name).lower():
-                emo = discord.utils.get(self.bot.get_all_emojis(), id=emo.id)
                 if len(all_emoji) >= limit:
                     break
-                all_emoji.append(ascii(emo))
-
-        names = []
+                all_emoji.append(str(emo))
         if all_emoji:
-            for i in all_emoji:
-                names.append(i.name)
-            emoji = ' -- '.join(names)
-            print(emoji)
+            emoji = ' -- '.join([str(x) for x in c])
+
             embed = discord.Embed(title="{}".format(ctx.message.author.name),
                                   description=emoji,
                                   color=0xf20006)
