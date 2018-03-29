@@ -427,9 +427,10 @@ async def on_message_edit(before, message):
         database.cur.execute("ROLLBACK;")
 
     sp = message.content.split(None, 1)
-    sp[0] = sp[0].lower()
-    message.content = ' '.join(sp)
-    await bot.process_commands(message)
+    if sp:
+        sp[0] = sp[0].lower()
+        message.content = ' '.join(sp)
+        await bot.process_commands(message)
 
 
 @bot.event
@@ -544,9 +545,10 @@ async def on_message(message):
         database.cur.execute("ROLLBACK;")
 
     sp = message.content.split(None, 1)
-    sp[0] = sp[0].lower()
-    message.content = ' '.join(sp)
-    await bot.process_commands(message)
+    if sp:
+        sp[0] = sp[0].lower()
+        message.content = ' '.join(sp)
+        await bot.process_commands(message)
 
 
 @bot.event
