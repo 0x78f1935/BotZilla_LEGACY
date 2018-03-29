@@ -204,6 +204,7 @@ class Help:
                         page_number = lenght_help
                         # print(page_number)
 
+                # let user choose page number
                 if ascii(str(reaction.reaction.emoji)) == ascii(self.emoji_number):
                     embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
                                           description=f'Please {ctx.message.author.name} provide a number :',
@@ -213,9 +214,10 @@ class Help:
                     try:
                         user_page_number = int(msg.content)
                         if page_number >= 0 and page_number <= lenght_help:
-                            page_number = user_page_number
+                            page_number = user_page_number - 1
                         try:
                             await self.bot.delete_message(number__input)
+                            await self.bot.delete_message(msg)
                         except:
                             pass
                     except Exception as e:
