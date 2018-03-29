@@ -1408,7 +1408,6 @@ class Utils:
         server = self.bot.get_server(f'{ctx.message.server.id}')
 
         embed = discord.Embed(title='{}\'s server info:'.format(ctx.message.server.name),
-                              description=f'**`{ctx.message.author.name}`**\nrequest server info for\n*`{ctx.message.server.name}`**',
                               colour=0xf20006)
 
         embed.add_field(name=f'Information',
@@ -1439,7 +1438,7 @@ class Utils:
                 max_uses = invite_obj[0].max_uses
 
             embed.add_field(name=f'Invite information:',
-                            value=f'Invite Link: **`{invite_obj[0]}`**\nUses: **`{invite_obj[0].uses}`**\nTotal Uses: **`{max_uses}`**\nTemporary: **`{invite_obj[0].temporary}`**\nInvite Creator: **`{invite_obj[0].inviter}`**\nRevoked: **`{invite_obj[0].revoked}`**',
+                            value=f'Invite Link: **{invite_obj[0]}**\nUses: **`{invite_obj[0].uses}`**\nTotal Uses: **`{max_uses}`**\nTemporary: **`{invite_obj[0].temporary}`**\nInvite Creator: **`{invite_obj[0].inviter}`**\nRevoked: **`{invite_obj[0].revoked}`**',
                             inline=True)
 
         embed.set_thumbnail(url=server.icon_url)
