@@ -221,16 +221,20 @@ class Help:
                                                   description=f'Please provide a number, Between **`0`** / **`{lenght_help}`**',
                                                   colour=0xf20006)
                             await self.bot.edit_message(number__input, embed=embed)
-
-                        # remove excess msg
-                        try:
-                            await asyncio.sleep(2)
-                            await self.bot.delete_message(number__input)
-                            await self.bot.delete_message(msg)
-                        except:
-                            pass
                     except ValueError:
-                        print(f'Please provide a number, Between **`0`** / **`{lenght_help}`**')
+                        page_number = 0
+                        embed = discord.Embed(title=f'Help for: {ctx.message.author.display_name}',
+                                              description=f'Please provide a number, Between **`0`** / **`{lenght_help}`**',
+                                              colour=0xf20006)
+                        await self.bot.edit_message(number__input, embed=embed)
+
+                    # remove excess msg
+                    try:
+                        await asyncio.sleep(2)
+                        await self.bot.delete_message(number__input)
+                        await self.bot.delete_message(msg)
+                    except:
+                        pass
 
 
                 # Send message and looks for category, edit category to footer
