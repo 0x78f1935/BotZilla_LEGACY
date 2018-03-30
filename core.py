@@ -336,7 +336,7 @@ async def on_member_join(member):
 
 
 
-@bot.listen()
+@bot.even
 async def on_message_edit(before, message):
     if message.author.bot: return
     if str(message.content).startswith('{}play'.format(config['prefix'])): return
