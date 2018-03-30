@@ -195,7 +195,7 @@ async def total_online_user_tracker():
         await asyncio.sleep(8)
 
 
-@bot.listen()
+@bot.listen
 async def on_ready():
     print('Logged in as ' + bot.user.name + ' (ID:' + bot.user.id + ') | Connected to ' + str(
         len(bot.servers)) + ' servers | Connected to ' + str(len(set(bot.get_all_members()))) + ' users')
@@ -245,7 +245,7 @@ async def on_ready():
     bot.loop.create_task(total_online_user_tracker())
 
 
-@bot.listen()
+@bot.listen
 async def on_member_remove(member):
     # sebi server
     if member.server.id == '265828729970753537':
@@ -278,7 +278,7 @@ async def on_member_remove(member):
         await bot.add_reaction(last_message, emojiUnicode['succes'])
 
 
-@bot.listen()
+@bot.listen
 async def on_member_join(member):
     print('MEMBER JOINED {} | {} Joined: {}'.format(member.name, member.id, member.server))
     # sebi server
@@ -336,7 +336,7 @@ async def on_member_join(member):
 
 
 
-@bot.even
+@bot.event
 async def on_message_edit(before, message):
     if message.author.bot: return
     if str(message.content).startswith('{}play'.format(config['prefix'])): return
@@ -433,7 +433,7 @@ async def on_message_edit(before, message):
         await bot.process_commands(message)
 
 
-@bot.listen()
+@bot.listen
 async def on_message(message):
     # infect system
     database.cur.execute(f"SELECT * FROM botzilla.infect WHERE ID = {message.author.id}")
@@ -551,7 +551,7 @@ async def on_message(message):
         await bot.process_commands(message)
 
 
-@bot.listen()
+@bot.listen
 async def on_server_join(server):
     print('SERVER ADDED {} | {} BotZilla has been added'.format(server.name, server.id))
     if database_file_found:
@@ -565,7 +565,7 @@ async def on_server_join(server):
             await aioclient.post(url=url, data=payload, headers=headers)
 
 
-@bot.listen()
+@bot.listen
 async def on_server_remove(server):
     print('SERVER REMOVED {} | {} BotZilla has been removed'.format(server.name, server.id))
     if dbl is True:
@@ -574,7 +574,7 @@ async def on_server_remove(server):
         async with aiohttp.ClientSession() as aioclient:
             await aioclient.post(url=url, data=payload, headers=headers)
 
-@bot.listen()
+@bot.listen
 async def on_command_error(error, ctx):
     if isinstance(error, commands.CommandOnCooldown):
         embed = discord.Embed(title='{}:'.format(ctx.message.author.name),
